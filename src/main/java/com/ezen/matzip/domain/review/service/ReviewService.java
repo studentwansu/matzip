@@ -7,6 +7,9 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
+
 @Service
 @RequiredArgsConstructor
 public class ReviewService {
@@ -14,10 +17,10 @@ public class ReviewService {
     private final ReviewRepository reviewRepository;
     private final ModelMapper modelMapper;
 
-    public ReviewDTO findByRestaurantCode(int restaurantCode){
+    public List<ReviewDTO> findReviewByUserCode(int userCode) {
 
-        ReviewEntity foundReview = reviewRepository.findById(restaurantCode).orElseThrow(IllegalAccessError::new);
+        List<ReviewEntity> reviewList = reviewRepository.findByUserCode(userCode);
 
-        return modelMapper.map(foundReview, ReviewDTO.class);
+        return reviewList.stream().map(entity -> modelMapper.map(entity, ReviewDTO.class)).toList();
     }
 }

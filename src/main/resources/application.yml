@@ -1,5 +1,4 @@
 #spring.application.name=matzip
-
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -19,3 +18,7 @@ spring:
     #?????? ??
     #?? ??
     #?? ?? ? ??
+  security:
+    user:
+      name: admin
+      password: admin
