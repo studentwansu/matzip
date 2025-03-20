@@ -1,0 +1,66 @@
+package com.ezen.matzip.domain.restaurant.dto;
+
+import com.ezen.matzip.domain.restaurant.entity.Menu;
+import com.ezen.matzip.domain.restaurant.entity.Restaurant;
+import com.ezen.matzip.domain.restaurant.entity.RestaurantStarKeyword;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+import java.sql.Time;
+import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Getter
+@Setter
+@ToString
+public class RestaurantDTO {
+
+    private String restaurantName;
+    private List<MenuDTO> restaurantMenus;
+    private List<String> restaurantKeywords;
+    private int restaurantCode;
+    private String restaurantLocation;
+    private String restaurantContactNumber;
+    private String restaurantDescription;
+    private Date restaurantRegistrationDate;
+    private int restaurantActiveStatus;
+    private String restaurantUniqueKeywords;
+    private String mainMenu;
+    private int businessCode;
+    private CategoryDTO categoryCode;
+    private Time restaurantStartTime;
+    private Time restaurantEndTime;
+    private int restaurantStatus;
+    private String restaurantService;
+
+    private int score;
+
+
+
+    public RestaurantDTO (Restaurant restaurant, List<Menu> menus, List<RestaurantStarKeyword> keywords)
+    {
+        this.restaurantName = restaurant.getRestaurantName();
+        this.restaurantMenus = menus.stream().map
+                (menu -> new MenuDTO(menu.getMenuCode(), menu.getMenuName(), menu.getMenuPrice(), restaurant))
+                .collect(Collectors.toList());
+        this.restaurantKeywords = keywords.stream().map(RestaurantStarKeyword::getRestaurantKeyword).collect(Collectors.toList());
+        this.restaurantCode = restaurant.getRestaurantCode();
+        this.restaurantLocation = restaurant.getRestaurantLocation();
+        this.restaurantContactNumber = restaurant.getRestaurantContactNumber();
+        this.restaurantDescription = restaurant.getRestaurantDescription();
+        this.restaurantRegistrationDate = restaurant.getRestaurantRegistrationDate();
+        this.restaurantActiveStatus = restaurant.getRestaurantActiveStatus();
+        this.restaurantUniqueKeywords = restaurant.getRestaurantUniqueKeywords();
+        this.mainMenu = restaurant.getMainMenu();
+        this.businessCode = restaurant.getBusinessCode();
+        this.categoryCode = new CategoryDTO(restaurant.getCategory().getCategoryCode(), restaurant.getCategory().getCategory());
+        this.restaurantStartTime = restaurant.getRestaurantStartTime();
+        this.restaurantEndTime = restaurant.getRestaurantEndTime();
+        this.restaurantStatus = restaurant.getRestaurantStatus();
+        this.restaurantService = restaurant.getRestaurantService();
+        this.score = 0;
+    }
+
+}
