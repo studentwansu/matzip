@@ -1,9 +1,9 @@
-package com.ezen.matzip.domain.restaurant.controller;
+package com.ezen.matzip.domain.weather.controller;
 
-public class RestaurantsController {
+public class WeatherController {
 }
 
-//restaurant/ → 식당 관리 (등록, 수정, 조회)
+//weather/ → 날씨 기반 추천 기능
 
 //Controller → 클라이언트 요청을 처리
 //Service → 비즈니스 로직을 처리
