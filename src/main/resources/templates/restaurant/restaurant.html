@@ -551,25 +551,8 @@
                         <br>
                         <p style="font-size:2.5vh;">메뉴</p>
                         <table>
-                            <tr>
-                                <td>토마호크 포크 커틀렛</td>
-                                <td>---------- </td>
-                                <td>32,000원</td>
-                            </tr>
-                            <tr>
-                                <td>스파이시 로제 파스타</td>
-                                <td>---------- </td>
-                                <td>18,000원</td>
-                            </tr>
-                            <tr>
-                                <td>콰트로 크림 리소토</td>
-                                <td>---------- </td>
-                                <td> 19,000원</td>
-                            </tr>
-                            <tr>
-                                <td>만조 크림 파스타</td>
-                                <td>---------- </td>
-                                <td>19,000원</td>
+                            <tr th:each="menu : ${restaurant.menus}">
+                                <td th:text="${menu.menuName}"> --- <td th:text="${menu.menuPrice}"></td>
                             </tr>
                         </table>
                         <br>
@@ -598,69 +581,8 @@
                 <div class="store-inner-container3">
                     <p style="font-size:2.5vh;">리뷰</p>
                     <div class="reviewbox">
-                        <span style="font-size:1.5vh;">홍성경님의 리뷰 2025.03.08 12:10</span>
-                        <i class="fa fa-star" style="color:red;"></i> <!-- 꽉 찬 별 -->
-                        <i class="fa fa-star" style="color:red;"></i> <!-- 꽉 찬 별 -->
-                        <i class="fa fa-star" style="color:red;"></i> <!-- 꽉 찬 별 -->
-                        <i class="fa fa-star" style="color:red;"></i> <!-- 꽉 찬 별 -->
-                        <i class="fa fa-star" style="color:red;"></i> <!-- 꽉 찬 별 -->
-                        <a href=""><img src="../img/report.png"></a>
-                        <br>
-                        <span style="font-size:1.5vh;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione itaque expedita quasi nisi iste harum reprehenderit, recusandae rem temporibus consequuntur officia voluptatibus provident neque, necessitatibus mollitia. Possimus temporibus iste veniam! Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus at quidem tempore beatae libero veritatis sunt autem accusantium, perspiciatis corrupti alias eius numquam nobis</span>
-                        <div class="reviewimgbox">
-                            <img class="reviewimg" src="../img/example.png">
-                            <img class="reviewimg" src="../img/example.png">
-                            <img class="reviewimg" src="../img/example.png">
-                        </div>
-                        <div class="reviewreply">
-                            <span style="font-size:1.5vh;">온량의 답글 2025.03.08</span>
-                            <br>
-                            <span style="font-size:1.5vh;">ipsum dolor sit amet consectetur adipisicing elit. Doloribus at quidem tempore beatae libero veritatis sunt autem accusantium, perspiciatis corrupti alias eius numquam nobis</span>
-
-                        </div>
-                    </div>
-                    <div class="reviewbox">
-                        <span style="font-size:1.5vh;">홍성경님의 리뷰 2025.03.08 12:10</span>
-                        <i class="fa fa-star" style="color:red;"></i> <!-- 꽉 찬 별 -->
-                        <i class="fa fa-star" style="color:red;"></i> <!-- 꽉 찬 별 -->
-                        <i class="fa fa-star" style="color:red;"></i> <!-- 꽉 찬 별 -->
-                        <i class="fa fa-star" style="color:red;"></i> <!-- 꽉 찬 별 -->
-                        <i class="fa fa-star" style="color:red;"></i> <!-- 꽉 찬 별 -->
-                        <a href=""><img src="../img/report.png"></a>
-                        <br>
-                        <span style="font-size:1.5vh;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione itaque expedita quasi nisi iste harum reprehenderit, recusandae rem temporibus consequuntur officia voluptatibus provident neque, necessitatibus mollitia. Possimus temporibus iste veniam! Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus at quidem tempore beatae libero veritatis sunt autem accusantium, perspiciatis corrupti alias eius numquam nobis</span>
-                        <div class="reviewimgbox">
-                            <img class="reviewimg" src="../img/example.png">
-                            <img class="reviewimg" src="../img/example.png">
-                            <img class="reviewimg" src="../img/example.png">
-                        </div>
-                        <div class="reviewreply">
-                            <span style="font-size:1.5vh;">온량의 답글 2025.03.08</span>
-                            <br>
-                            <span style="font-size:1.5vh;">ipsum dolor sit amet consectetur adipisicing elit. Doloribus at quidem tempore beatae libero veritatis sunt autem accusantium, perspiciatis corrupti alias eius numquam nobis</span>
-
-                        </div>
-                    </div>
-                    <div class="reviewbox">
-                        <span style="font-size:1.5vh;">홍성경님의 리뷰 2025.03.08 12:10</span>
-                        <i class="fa fa-star" style="color:red;"></i> <!-- 꽉 찬 별 -->
-                        <i class="fa fa-star" style="color:red;"></i> <!-- 꽉 찬 별 -->
-                        <i class="fa fa-star" style="color:red;"></i> <!-- 꽉 찬 별 -->
-                        <i class="fa fa-star" style="color:red;"></i> <!-- 꽉 찬 별 -->
-                        <i class="fa fa-star" style="color:red;"></i> <!-- 꽉 찬 별 -->
-                        <a href=""><img src="../img/report.png"></a>
-                        <br>
-                        <span style="font-size:1.5vh;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione itaque expedita quasi nisi iste harum reprehenderit, recusandae rem temporibus consequuntur officia voluptatibus provident neque, necessitatibus mollitia. Possimus temporibus iste veniam! Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus at quidem tempore beatae libero veritatis sunt autem accusantium, perspiciatis corrupti alias eius numquam nobis</span>
-                        <div class="reviewimgbox">
-                            <img class="reviewimg" src="../img/example.png">
-                            <img class="reviewimg" src="../img/example.png">
-                            <img class="reviewimg" src="../img/example.png">
-                        </div>
-                        <div class="reviewreply">
-                            <span style="font-size:1.5vh;">온량의 답글 2025.03.08</span>
-                            <br>
-                            <span style="font-size:1.5vh;">ipsum dolor sit amet consectetur adipisicing elit. Doloribus at quidem tempore beatae libero veritatis sunt autem accusantium, perspiciatis corrupti alias eius numquam nobis</span>
-
+                        <div th:each="review : ${restaurant.reviews}">
+                            <span style="font-size:1.5vh;" th:text="${review.reviewContent}"></span>
                         </div>
                     </div>
                 </div>
