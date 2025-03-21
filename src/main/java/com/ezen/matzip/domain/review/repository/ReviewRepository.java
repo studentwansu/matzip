@@ -12,9 +12,12 @@ import java.util.List;
 public interface ReviewRepository extends JpaRepository<Review, Integer> {
 
     // 특정 사용자(userCode)의 리뷰 목록을 조회하는 메서드
-    List<Review> findByUserCode(int userCode);
+    @Query("SELECT r, r.restaurantCode FROM Review r where r.userCode = :userCode")
+    List<Object[]> findByUserCode(int userCode);
 
-    @Query("SELECT r.restaurantCode, AVG(r.rating) FROM Review r WHERE r.restaurantCode IN :restaurantCodes GROUP BY r.restaurantCode")
-    List<Object[]> findAvgRatingByRestaurantCodes(@Param("restaurantCodes") List<Integer> restaurantCodes);
+//    @Query("SELECT r.restaurantCode, AVG(r.rating) FROM Review r WHERE r.restaurantCode IN :restaurantCodes GROUP BY r.restaurantCode")
+//    List<Object[]> findAvgRatingByRestaurantCodes(@Param("restaurantCodes") List<Integer> restaurantCodes);
+
+//    @Query("SELECT r.reviewCode, r.reviewDate, r.restaurantCode ,r.reviewContent FROM Review r WHERE")
 
 }

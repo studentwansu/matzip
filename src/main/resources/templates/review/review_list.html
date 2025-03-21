@@ -372,7 +372,7 @@
             <tr th:each="review : ${review}">
                 <td th:text="${review.reviewCode}"></td>
                 <td th:text="${#dates.format(review.reviewDate, 'yyyy-MM-dd HH:mm')}"></td>
-                <td th:text="${review.restaurantCode}"></td>
+                <td th:text="${review.restaurantName}"></td>
                 <td th:text="${review.reviewContent}"></td>
                 <td>
                     <button class="edit-btn">수정</button>

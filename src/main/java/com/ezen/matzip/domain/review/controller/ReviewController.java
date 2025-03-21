@@ -19,22 +19,26 @@ public class ReviewController {
     private final ReviewService reviewService;
 
 
-//    @GetMapping("/{userCode}")
-//    public String findReviewByUserCode(@PathVariable int userCode, Model model) {
-//
-//        List<ReviewDTO> resultReview = reviewService.findReviewByUserCode(userCode);
-//
-//        model.addAttribute("review", resultReview);
-//
-//        return "review/review_list";
-//    }
+    @GetMapping(value = {"/{userCode}"})
+    public String findReviewByUserCode(@PathVariable int userCode, Model model) {
 
 
-//    @PostMapping("/delete/{reviewCode}")
-//    public String deleteReview(@PathVariable int reviewCode){
-//        reviewService.deleteReview(reviewCode);
-//        return "redirect:/review_list";
-//    }
+//        // 세션에서 로그인된 유저의 userCode 가져오기
+//        Integer loggedInUserCode = (Integer) session.getAttribute("userCode");
+//
+//        // 로그인된 유저가 없거나, userCode가 맞지 않으면 접근을 막는다.
+//        if (loggedInUserCode == null || loggedInUserCode != userCode) {
+//            // 해당 유저의 리뷰 목록이 아닌 경우 접근 제한 처리
+//            return "redirect:/login";  // 로그인 페이지로 리디렉션
+//        }
+
+
+        List<ReviewDTO> resultReview = reviewService.findReviewByUserCode(userCode);
+
+        model.addAttribute("review", resultReview);
+
+        return "review/review_list";
+    }
 
     @PostMapping("/delete/{reviewCode}/{userCode}")
     public String deleteReview(@PathVariable int reviewCode, @PathVariable int userCode) {

@@ -1,5 +1,6 @@
 package com.ezen.matzip.domain.review.entity;
 
+import com.ezen.matzip.domain.restaurant.entity.Restaurant;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -24,7 +25,9 @@ public class Review {
     private int rating;
     private int userCode;
     private int businessCode;
-    private int restaurantCode;
+    @ManyToOne
+    @JoinColumn(name = "restaurant_code")
+    private Restaurant restaurantCode;
     private int reservationCode;
 
 //    setter 필요한 필드만 setter 만들어서 사용
