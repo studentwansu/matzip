@@ -24,4 +24,5 @@ public interface MenuRepository extends JpaRepository<Menu, Integer> {
             "group by m.restaurantCode.restaurantCode")
     List<Object[]> findRestaurantAndScoreByMenuName(@Param("menuName") String menuName);
 
+
 }

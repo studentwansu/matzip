@@ -22,4 +22,12 @@ public interface RestaurantStarKeywordRepository extends JpaRepository<Restauran
             "from RestaurantStarKeyword k where k.restaurantKeyword Like CONCAT('%', :keyword, '%') " +
             "group by k.restaurantCode.restaurantCode")
     List<Object[]> findRestaurantAndScoreByRestaurantKeyword(@Param("keyword") String keyword);
+
+//    @Query(value = "SELECT k.restaurant_code, SUM(CASE " +
+//            "WHEN k.restaurant_keyword LIKE ANY (array[:keywords]) THEN 1 ELSE 0 END) AS score " +
+//            "FROM restaurant_star_keyword k " +
+//            "WHERE k.restaurant_keyword LIKE ANY (array[:keywords]) " +
+//            "GROUP BY k.restaurant_code",
+//            nativeQuery = true)
+//    List<Object[]> findRestaurantAndScoreByRestaurantKeyword(@Param("keywords") String[] keywords);
 }
