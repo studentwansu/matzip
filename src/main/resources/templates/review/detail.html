@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+  <h1>나의 리뷰 목록 보기</h1>
+    <table>
+      <tr>
+        <td th:text="${review.reviewCode}"></td>
+        <td th:text="${review.reviewDate}"></td>
+        <td th:text="${review.restaurantCode}"></td>
+        <td><button>수정</button></td>
+        <td><button>삭제</button></td>
+      </tr>
+    </table>
+</body>
+</html>
