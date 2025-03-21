@@ -17,7 +17,7 @@ public class Category {
     private int categoryCode;
     private String category;
 
-    @OneToMany(mappedBy = "category", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "category", cascade = CascadeType.PERSIST)
     private List<Restaurant> restaurants = new ArrayList<>();
 
 }

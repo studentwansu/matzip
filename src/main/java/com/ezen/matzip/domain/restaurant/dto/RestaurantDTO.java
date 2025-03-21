@@ -63,4 +63,28 @@ public class RestaurantDTO {
         this.score = 0;
     }
 
+    public RestaurantDTO (Restaurant restaurant, List<Menu> menus, List<RestaurantStarKeyword> keywords, int score)
+    {
+        this.restaurantName = restaurant.getRestaurantName();
+        this.restaurantMenus = menus.stream().map
+                        (menu -> new MenuDTO(menu.getMenuCode(), menu.getMenuName(), menu.getMenuPrice(), restaurant))
+                .collect(Collectors.toList());
+        this.restaurantKeywords = keywords.stream().map(RestaurantStarKeyword::getRestaurantKeyword).collect(Collectors.toList());
+        this.restaurantCode = restaurant.getRestaurantCode();
+        this.restaurantLocation = restaurant.getRestaurantLocation();
+        this.restaurantContactNumber = restaurant.getRestaurantContactNumber();
+        this.restaurantDescription = restaurant.getRestaurantDescription();
+        this.restaurantRegistrationDate = restaurant.getRestaurantRegistrationDate();
+        this.restaurantActiveStatus = restaurant.getRestaurantActiveStatus();
+        this.restaurantUniqueKeywords = restaurant.getRestaurantUniqueKeywords();
+        this.mainMenu = restaurant.getMainMenu();
+        this.businessCode = restaurant.getBusinessCode();
+        this.categoryCode = new CategoryDTO(restaurant.getCategory().getCategoryCode(), restaurant.getCategory().getCategory());
+        this.restaurantStartTime = restaurant.getRestaurantStartTime();
+        this.restaurantEndTime = restaurant.getRestaurantEndTime();
+        this.restaurantStatus = restaurant.getRestaurantStatus();
+        this.restaurantService = restaurant.getRestaurantService();
+        this.score = score;
+    }
+
 }

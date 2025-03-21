@@ -20,5 +20,19 @@ public interface RestaurantRepository extends JpaRepository<Restaurant, Integer>
             "OR r.restaurantLocation LIKE %:keyword%")
     List<Restaurant> findByRestaurantInfo(@Param("keyword") String keyword);
 
+    @Query("SELECT r, " +
+            "(CASE WHEN r.restaurantUniqueKeywords LIKE %:keyword% THEN 1 ELSE 0 END) + " +
+            "(CASE WHEN r.restaurantDescription LIKE %:keyword% THEN 1 ELSE 0 END) + " +
+            "(CASE WHEN r.restaurantName LIKE %:keyword% THEN 1 ELSE 0 END) + " +
+            "(CASE WHEN r.restaurantService LIKE %:keyword% THEN 1 ELSE 0 END) + " +
+            "(CASE WHEN r.restaurantLocation LIKE %:keyword% THEN 1 ELSE 0 END) AS score " +
+            "FROM Restaurant r " +
+            "WHERE r.restaurantUniqueKeywords LIKE CONCAT('%', :keyword, '%') " +
+            "OR r.restaurantDescription LIKE CONCAT('%', :keyword, '%') " +
+            "OR r.restaurantName LIKE CONCAT('%', :keyword, '%') " +
+            "OR r.restaurantService LIKE CONCAT('%', :keyword, '%') " +
+            "OR r.restaurantLocation LIKE CONCAT('%', :keyword, '%') " +
+            "ORDER BY score DESC")
+    List<Object[]> findRestaurantsByKeywordWithScore(@Param("keyword") String keyword);
 
 }

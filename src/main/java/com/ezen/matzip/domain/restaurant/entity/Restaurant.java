@@ -26,7 +26,7 @@ public class Restaurant {
     private String restaurantUniqueKeywords;
     private String mainMenu;
     private int businessCode;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "category_code")
     private Category category;
     private Time restaurantStartTime;

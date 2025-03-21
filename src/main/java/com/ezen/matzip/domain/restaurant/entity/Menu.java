@@ -17,7 +17,7 @@ public class Menu {
     private String menuName;
     private int menuPrice;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "restaurant_code")
     private Restaurant restaurantCode;
 
