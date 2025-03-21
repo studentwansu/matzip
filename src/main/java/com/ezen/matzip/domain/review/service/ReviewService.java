@@ -1,7 +1,7 @@
 package com.ezen.matzip.domain.review.service;
 
 import com.ezen.matzip.domain.review.dto.ReviewDTO;
-import com.ezen.matzip.domain.review.entity.ReviewEntity;
+import com.ezen.matzip.domain.review.entity.Review;
 import com.ezen.matzip.domain.review.repository.ReviewRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -19,7 +19,7 @@ public class ReviewService {
 
     public List<ReviewDTO> findReviewByUserCode(int userCode) {
 
-        List<ReviewEntity> reviewList = reviewRepository.findByUserCode(userCode);
+        List<Review> reviewList = reviewRepository.findByUserCode(userCode);
 
         return reviewList.stream().map(entity -> modelMapper.map(entity, ReviewDTO.class)).toList();
     }

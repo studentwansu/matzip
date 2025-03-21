@@ -21,15 +21,15 @@ public class ReviewController {
     private final ReviewService reviewService;
 
 
-    @GetMapping("/{userCode}")
-    public String findReviewByUserCode(@PathVariable int userCode, Model model) {
-
-        List<ReviewDTO> resultReview = reviewService.findReviewByUserCode(userCode);
-
-        model.addAttribute("review", resultReview);
-
-        return "review/review_list";
-    }
+//    @GetMapping("/{userCode}")
+//    public String findReviewByUserCode(@PathVariable int userCode, Model model) {
+//
+//        List<ReviewDTO> resultReview = reviewService.findReviewByUserCode(userCode);
+//
+//        model.addAttribute("review", resultReview);
+//
+//        return "review/review_list";
+//    }
 
 }
 

@@ -68,57 +68,75 @@ public class RestaurantService {
         return new ArrayList<>(resultSet);
     }
 
-    public List<RestaurantDTO> findByKeywordOrderByScore(String keyword, Sort sort)
+    public List<RestaurantDTO> findByKeywordOrderByScore(String keyword)
     {
         List<Object[]> foundByMenu = menuRepository.findRestaurantAndScoreByMenuName(keyword);
         List<Object[]> foundByRestInfo = restaurantRepository.findRestaurantsByKeywordWithScore(keyword);
         List<Object[]> foundByKeyword = keywordRepository.findRestaurantAndScoreByRestaurantKeyword(keyword);
 
-        Set<RestaurantDTO> resultSet = new TreeSet<>(Comparator.comparing(RestaurantDTO::getScore)
-                .thenComparing(p -> p.getrestaurant));
+        Map<RestaurantDTO, Integer> resultSet = new HashMap<>();
 
         for (Object[] fmenu : foundByMenu)
         {
             Restaurant menu = (Restaurant)fmenu[0];
-            int score = (int)fmenu[1];
-            resultSet.add(
+            Integer score = ((Number) fmenu[1]).intValue();
+
+            resultSet.put(
                     new RestaurantDTO(
                             menu,
                             menuRepository.findByRestaurantCode(menu),
-                            keywordRepository.findByRestaurantCode(menu),
-                            score
-                    )
+                            keywordRepository.findByRestaurantCode(menu)
+                    ), score
             );
         }
 
         for (Object[] frest : foundByRestInfo)
         {
             Restaurant rest = (Restaurant)frest[0];
-            int score = (int)frest[1];
-            resultSet.add(
-                    new RestaurantDTO(
-                            rest,
-                            menuRepository.findByRestaurantCode(rest),
-                            keywordRepository.findByRestaurantCode(rest),
-                            score
-                    )
-            );
+            Integer score = ((Number) frest[1]).intValue();
+            RestaurantDTO dto = new RestaurantDTO(rest,
+                    menuRepository.findByRestaurantCode(rest),
+                    keywordRepository.findByRestaurantCode(rest));
+
+            if(resultSet.containsKey(dto))
+            {
+                Integer newScore = resultSet.get(dto) + score;
+                resultSet.put(dto, newScore);
+            }
+            else
+                resultSet.put(dto, score);
         }
 
         for (Object[] fkeyw : foundByKeyword)
         {
-            Restaurant keyw = (Restaurant)fkeyw[0];
-            int score = (int)fkeyw[1];
-            resultSet.add(
-                    new RestaurantDTO(
-                            keyw,
-                            menuRepository.findByRestaurantCode(keyw),
-                            keywordRepository.findByRestaurantCode(keyw),
-                            score
-                    )
-            );
+            Restaurant rest = (Restaurant)fkeyw[0];
+            Integer score = ((Number) fkeyw[1]).intValue();
+            RestaurantDTO dto = new RestaurantDTO(rest,
+                    menuRepository.findByRestaurantCode(rest),
+                    keywordRepository.findByRestaurantCode(rest));
+
+            if(resultSet.containsKey(dto))
+            {
+                Integer newScore = resultSet.get(dto) + score;
+                resultSet.put(dto, newScore);
+            }
+            else
+                resultSet.put(dto, score);
         }
 
-        return null;
+        resultSet.forEach((key, value) -> {
+            System.out.println("Key: " + key + ", Value: " + value);
+        });
+
+        List<Map.Entry<RestaurantDTO, Integer>> sortedList = new ArrayList<>(resultSet.entrySet());
+        sortedList.sort(Map.Entry.comparingByValue(Comparator.reverseOrder()));
+        List<RestaurantDTO> finalList = new ArrayList<>();
+        for (Map.Entry<RestaurantDTO, Integer> restaurant : sortedList)
+        {
+            finalList.add(restaurant.getKey());
+            System.out.println("final: " + restaurant.getKey());
+        }
+
+        return finalList;
     }
 }

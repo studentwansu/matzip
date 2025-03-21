@@ -24,7 +24,7 @@ public class RestaurantController {
     @GetMapping("/result")
     public String findByKeyword(@RequestParam String keyword, Model model)
     {
-        List<RestaurantDTO> restaurants = restaurantService.findByKeyword(keyword);
+        List<RestaurantDTO> restaurants = restaurantService.findByKeywordOrderByScore(keyword);
         model.addAttribute("restaurantList", restaurants);
         return "test/result";
     }
