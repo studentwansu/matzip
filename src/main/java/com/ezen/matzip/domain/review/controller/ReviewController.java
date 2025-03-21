@@ -6,15 +6,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @Slf4j
 @Controller
-@RequestMapping("/review")
+@RequestMapping("review")
 @RequiredArgsConstructor
 public class ReviewController {
 
@@ -30,6 +28,21 @@ public class ReviewController {
 
         return "review/review_list";
     }
+
+
+//    @PostMapping("/delete/{reviewCode}")
+//    public String deleteReview(@PathVariable int reviewCode){
+//        reviewService.deleteReview(reviewCode);
+//        return "redirect:/review_list";
+//    }
+
+    @PostMapping("/delete/{reviewCode}/{userCode}")
+    public String deleteReview(@PathVariable int reviewCode, @PathVariable int userCode) {
+        reviewService.deleteReview(reviewCode);  // 리뷰 삭제 처리
+        // 삭제 후 해당 userCode의 리뷰 목록으로 리디렉션
+        return "redirect:/review/" + userCode;  // 삭제 후 해당 사용자의 리뷰 목록으로 리디렉션
+    }
+
 
 }
 

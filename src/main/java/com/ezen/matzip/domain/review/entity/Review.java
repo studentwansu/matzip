@@ -11,7 +11,7 @@ import java.util.Date;
 @Table(name = "review")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class ReviewEntity {
+public class Review {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,4 +26,6 @@ public class ReviewEntity {
     private int businessCode;
     private int restaurantCode;
     private int reservationCode;
+
+//    setter 필요한 필드만 setter 만들어서 사용
 }
