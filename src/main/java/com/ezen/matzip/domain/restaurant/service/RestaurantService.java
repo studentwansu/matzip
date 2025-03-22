@@ -20,7 +20,7 @@ public class RestaurantService {
     public RestaurantDTO getRestaurantDetail(int restaurantCode) {
         Restaurant restaurant = restaurantRepository.findByRestaurantCode(restaurantCode)
                 .orElseThrow(IllegalArgumentException::new);
-        System.out.println("리뷰 : " + restaurant.getReviews());
+        System.out.println("리뷰 : " + restaurant.getKeywords());
         return modelMapper.map(restaurant, RestaurantDTO.class);
 
     }

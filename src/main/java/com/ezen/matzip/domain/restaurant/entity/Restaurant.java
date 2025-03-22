@@ -35,4 +35,8 @@ public class Restaurant {
     @JoinColumn(name="restaurantCode")
     private List<Review> reviews;
 
+    @OneToMany
+    @JoinColumn(name="restaurantCode")
+    private List<Keyword> keywords;
+
 }

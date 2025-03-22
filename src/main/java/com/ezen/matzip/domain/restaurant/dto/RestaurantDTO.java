@@ -1,5 +1,6 @@
 package com.ezen.matzip.domain.restaurant.dto;
 
+import com.ezen.matzip.domain.restaurant.entity.Keyword;
 import com.ezen.matzip.domain.restaurant.entity.Menu;
 import com.ezen.matzip.domain.restaurant.entity.Review;
 import lombok.*;
@@ -26,5 +27,7 @@ public class RestaurantDTO {
     private List<Menu> menus;
 
     private List<Review> reviews;
+
+    private List<Keyword> keywords;
 
 }

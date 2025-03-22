@@ -539,10 +539,14 @@
                                 <td style="font-size:2vh;">전화번호</td>
                                 <td style="font-size:1.5vh;" th:text="${restaurant.restaurantContactNumber}"></td>
                             </tr>
+                        </table>
                             <tr>
                                 <td style="font-size:2vh;">키워드</td>
-                                <td style="font-size:1.5vh;">#양식 #파스타 #서울숲맛집</td>
                             </tr>
+                            <tr th:each="keyword : ${restaurant.keywords}">
+                                <td style="font-size:2vh;" th:text=" '#' + ${keyword.restaurantKeyword}"></td>
+                            </tr>
+                        <table>
                             <tr>
                                 <td style="font-size:2vh;">영업시간</td>
                                 <td style="font-size:1.5vh;" th:text="${restaurant.restaurantStartTime}"> - <td th:text="${restaurant.restaurantEndTime}"></td>
@@ -579,10 +583,13 @@
                     </div>
                 </div>
                 <div class="store-inner-container3">
-                    <p style="font-size:2.5vh;">리뷰</p>
+                    <p style="font-size:2.5vh;">리뷰</p><br>
                     <div class="reviewbox">
                         <div th:each="review : ${restaurant.reviews}">
-                            <span style="font-size:1.5vh;" th:text="${review.reviewContent}"></span>
+                            <span style="font-size:1.5vh;" th:text="${review.reviewDate}"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="font-size:1.5vh;" th:text="${review.rating}"></span><br>
+                            <span style="font-size:1.5vh;" th:text="${review.reviewContent}"></span><br>
+                            <span style="font-size:1.5vh;" th:text="${review.reviewReply}"></span><br>
+
                         </div>
                     </div>
                 </div>
