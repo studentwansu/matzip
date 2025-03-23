@@ -1,27 +1,34 @@
 package com.ezen.matzip.domain.user.entity;
 
-import com.ezen.matzip.domain.Role;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Data
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "business")
 public class Business {
 
     @Id
-    private String id;  //사업자가 직접 입력한 아이디
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "business_code")
+    private int businessCode;
 
-    private String restaurantName;  //상호명
-    private String password;        //비밀번호
-    private String question;        //비밀번호 찾기 질문
-    private String answer;          //비밀번호 찾기 답변
-    private String email;           //이메일
-    private String phone;           //전화번호
-    private Role role;            //권한
-    private String restaurantNumber;//사업자 등록 번호
+    @Column(name = "user_id", nullable = false, unique = true)
+    private String userId;
+    @Column(name = "password", nullable = false)
+    private String password;
+    @Column(name = "phone_number")
+    private String phoneNumber;
+    @Column(name = "password_question", nullable = false)
+    private String passwordQuestion;
+    @Column(name = "password_answer", nullable = false)
+    private String passwordAnswer;
+    @Column(name = "business_number", nullable = false, unique = true)
+    private String businessNumber;
+    @Column(name = "restaurant_name", unique = true)
+    private String restaurantName;
 }

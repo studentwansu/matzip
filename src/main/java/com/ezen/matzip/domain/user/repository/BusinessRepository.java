@@ -12,4 +12,3 @@ public interface BusinessRepository  extends JpaRepository<Business, String> {
     boolean existsByBusinessid(String id);
 }
 
-//사업자 DB 접근

@@ -20,9 +20,10 @@ public class BusinessService {
             throw new RuntimeException("이미 존재하는 아이디입니다.");
         }
 
-        Business business = new Business(bsdto.getRestaurantName(), bsdto.getId(), bsdto.getPassword(), bsdto.getQuestion(), bsdto.getAnswer(), bsdto.getEmail(), bsdto.getPhone(), bsdto.getRole(), bsdto.getRestaurantNumber());
+        Business business = new Business(bsdto.getRestaurantName(), bsdto.getId(), bsdto.getPassword(), bsdto.getQuestion(),
+                bsdto.getAnswer(), bsdto.getEmail(), bsdto.getPhone(), bsdto.getRole(), bsdto.getRestaurantNumber());
         businessRepository.save(business);
     }
 }
 
-//사업자 회원가입 관련
+

@@ -21,9 +21,10 @@ public class UserService {
             throw new DuplicateUserIdException("이미 존재하는 아이디입니다.");
         }
 
-        User user = new User(urdto.getUserName(), urdto.getId(), urdto.getPassword(), urdto.getQuestion(), urdto.getAnswer(), urdto.getEmail(), urdto.getPhone(), urdto.getCountry(), urdto.getRole(), urdto.getPreference(), urdto.getVegan());
+        User user = new User(urdto.getUserName(), urdto.getId(), urdto.getPassword(), urdto.getQuestion(), urdto.getAnswer(),
+                urdto.getEmail(), urdto.getPhone(), urdto.getCountry(), urdto.getRole(), urdto.getPreference(), urdto.getVegan());
         userRepository.save(user);
     }
 }
 
-//일반회원 회원가입 관련
+

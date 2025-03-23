@@ -11,4 +11,3 @@ public interface UserRepository extends JpaRepository<User, String> {
     boolean existsByUserid(String id);
 }
 
-//사용자 DB 접근

@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>signup</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poor+Story&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poor Story", system-ui;
+            font-weight: 400;
+            font-style: normal;
+
+        }
+
+
+        /* header */
+        header {
+            width: 100%;
+            height: 180px;
+            background-color: #fff3e0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+        }
+
+        .header-container {
+            width: 100%;
+            max-width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+        }
+
+        /* logo */
+        /* .logo img {
+            height: 300px;
+            width: 300px;
+        } */
+
+        /* search */
+        .search-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+            position: relative;
+
+        }
+
+        .search-word {}
+
+        .search-container input {
+            width: 500px;
+            height: 40px;
+            padding: 25px;
+            border: 1px solid #ccc;
+            border-radius: 20px;
+            outline: none;
+
+        }
+
+        .search-container .search-btn {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .search-container .search-btn img {
+            width: 25px;
+        }
+
+        /* popular-searches */
+        .popular-searches {
+            display: flex;
+            gap: 10px;
+            margin-top: 5px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .popular-searches .nearby {
+            color: #fa4032;
+            font-weight: bold;
+        }
+
+        /* menu */
+        .menu {
+            display: flex;
+            align-items: flex-end;
+            padding: 25px;
+            margin-bottom: 120px;
+            gap: 10px;
+        }
+
+        .menu a {
+            text-decoration: none;
+            color: #000;
+            font-size: 13px;
+        }
+
+        .menu .login {
+            padding: 7px 20px;
+            border: 1px solid #f58031;
+            border-radius: 10px;
+
+        }
+
+        .menu .signup {
+            background-color: #fa4032;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 10px;
+            margin-left: 5px;
+        }
+
+        .menu .menu-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        .menu .menu-btn img {
+            width: 30px;
+
+        }
+
+        #game {
+            width: 25px;
+        }
+
+        .main {
+            display: flex;
+            flex-direction: column;
+            background-color: #fff3e0;
+            height: 100%;
+        }
+
+        /* foryou */
+        .foryou {
+            margin: 50px auto;
+            padding: 20px;
+            width: 80%;
+            background: white;
+            border-radius: 10px;
+            border: 1px solid #f58031;
+        }
+
+        .foryou p {
+            margin-bottom: 20px;
+            color: black;
+            font-size: 18px;
+            text-align: left;
+        }
+
+        /* food-list */
+        .food-list {
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .food-item {
+            position: relative;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .food-item img {
+            width: 150px;
+            height: 150px;
+            border-radius: 10px;
+        }
+
+        .food-item p {
+            position: absolute;
+            right: 5px;
+            bottom: 5px;
+            margin-top: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            padding: 0px 5px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 5px;
+            color: white;
+        }
+
+        /* foorer */
+        footer {
+            width: 100%;
+            background: #f58031;
+            color: white;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .footer-container {
+            width: 90%;
+            max-width: 1440px;
+            display: flex;
+            justify-content: space-between;
+            /* 좌우 정렬 */
+            align-items: center;
+        }
+
+        .footer-menu {
+            list-style: none;
+            display: flex;
+            gap: 100px;
+        }
+
+        .footer-menu li a {
+            text-decoration: none;
+            color: white;
+            font-size: 16px;
+        }
+
+        .inside {
+            display: flex;
+            justify-content: center; /* 수평 가운데 정렬 */
+            align-items: center; /* 수직 가운데 정렬 */
+            text-align: center; /* 텍스트 가운데 정렬 */
+            background-color: #fff3e0;
+            padding-bottom: 10vh;
+        }
+
+        .inside_main{
+            /* display: flex; */
+            width: 85vh;
+            /* height: 55vh; */
+            background-color: white;
+            border: 1px solid #D9D9D9;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column; /* 기본적으로 세로로 배치 */
+            padding: 20px;
+        }
+
+        .inside_main p {
+            /* padding-top: 3vh; */
+            font-size: 2.5vh;
+            /* display: inline; */
+        }
+
+        .inside_left{
+            display: inline;
+            width: 40vh;
+            justify-items: center;
+            /* height: 50px; */
+        }
+
+        .inside_left input{
+            display: block;
+            position:relative;
+            width: 25vh;
+            height: 4vh;
+            border-radius: 1vh;
+            border: 1px solid #747474;
+            margin: 1vh;
+        }
+
+        .inside_right{
+            display: inline;
+            width: 40vh;
+            justify-items: center;
+
+            /* height: 50px; */
+        }
+
+        .inside_right input{
+            display: block;
+            position:relative;
+            width: 25vh;
+            height: 4vh;
+            border-radius: 1vh;
+            border: 1px solid #747474;
+            margin: 1vh;
+        }
+
+        .vegan {
+            display: flex; /* 체크박스와 라벨을 가로로 배치 */
+            align-items: center; /* 수직 정렬 */
+            margin-bottom: 10px; /* 아래 여백 */
+            justify-content: left;
+        }
+
+        .inside_full{
+            display:flex;
+            justify-content: center;
+            margin: 3vh auto;
+
+        }
+
+        select {
+            height:4vh;
+        }
+
+
+        pre {
+            white-space: pre-wrap;
+            text-align: left;
+            overflow: auto;
+        }
+
+        .inside_signup_btn{
+            background-color: #FA4032;
+            color: white;
+            padding: 10px 20px;
+            width: 15vh;
+            height: 6vh;
+            border: none;
+            border-radius: 10px;
+            margin: 1vh;
+            cursor: pointer;
+            text-align: center;
+
+            float: right;
+            margin-left: auto;
+        }
+
+        .inside_signup_btn a{
+            text-decoration: none;
+            font-size: 3vh;
+            color: white;
+        }
+
+        .inside_signup_btn:hover {
+            background-color: #cd3429; /* 버튼 호버 시 배경색 */
+        }
+
+        .label{
+            display: block;
+        }
+    </style>
+<body>
+<!-- header -->
+<header>
+    <div class="header-container">
+        <!-- logo -->
+        <div class="logo">
+            <a href="메인.html"><img src="images/맛zip.png" alt="맛.zip 로고"></a>
+        </div>
+
+        <!-- search -->
+        <div class="search-container">
+            <div class="search-word">
+                <input type="text" placeholder="검색어를 입력하세요...">
+            </div>
+
+            <div class="popular-searches">
+                <span>인기검색어1</span>
+                <span>인기검색어2</span>
+                <span>인기검색어3</span>
+                <span>인기검색어4</span>
+                <span>인기검색어5</span>
+                <a href="" class="nearby">가까운 곳 찾기</a>
+                <a href="" class="game">
+                    <img id="game" src="images/gamepad-icon.png" alt="게임패드"></a>
+            </div>
+
+        </div>
+
+        <!-- menu -->
+        <div class="menu">
+            <a href="로그인.html" class="login">로그인</a>
+            <a href="회원가입.html" class="signup">회원가입</a>
+            <button class="menu-btn">
+                <img src="images/menu-icon.png" alt="마이페이지">
+            </button>
+        </div>
+    </div>
+</header>
+
+<!-- main -->
+<div class="inside">
+
+    <section class="inside_main">
+        <p>일반회원 회원가입</p>
+
+        <div class="inside_full">
+
+            <div class="inside_left">
+                <input id="name" name="name" placeholder="이름">
+                <input id="id" name="id" placeholder="아이디"><button>중복확인</button>
+                <input id="pwd" name="pwd" placeholder="비밀번호">
+                <input id="pwd_check" name="pwd_check" placeholder="비밀번호확인">
+                <select>
+                    <option value="question1">당신의 초등학교는?</option>
+                    <option value="question2">당신의 중학교는?</option>
+                    <option value="question3">당신의 고등학교는?</option>
+                </select>
+                <input id="pwd_answer" name="pwd_answer" placeholder="비밀번호찾기답">
+            </div>
+
+            <div class="inside_right">
+                <input id="email" name="email" placeholder="이메일">
+                <input id="phone" name="phone" placeholder="전화번호">
+
+                <div class="label">
+                    <label>국적: </label>
+                    <select>
+                        <option value="korea">한국</option>
+                        <option value="japan">일본</option>
+                    </select>
+                </div>
+
+                <label>좋아하는 음식 카테고리: </label>
+                <select>
+                    <option value="korea">한식</option>
+                    <option value="japan">일식</option>
+                </select>
+                <div class="vegan">
+                    <input type="checkbox" name="vegan" value="비건" id="vegan" style="width:10vh;">
+                    <label for="vegan">비건</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="inside_bottom">
+            <div class="agree">
+                    <pre>제1조 (목적)
+                        본 약관은'AIG손해보험 주식회사'(이하 “회사”)에서 운영하는 AIG손해보험 홈페이지(이하 "홈페이지")의 서비스 이용 및 제공에 관한 제반 사항의 규정을 목적으로 한다.
+                        제2조 (용어의 정의)
+                        ① 홈페이지란 회사가 컴퓨터 등 정보통신설비를 이용하여 보험상품 또는 용역을 이용자에게 제공하고 거래할 수 있도록 설정한 가상의 영업장을 말하며, 아울러 홈페이지를 운영하는 사업자의 의미로도 사용한다.
+                        ② 이용자란 "홈페이지"에 접속하여 이 약관에 따라 "홈페이지"가 제공하는 서비스를 받는 회원 및 비회원을 말한다.
+                        ③ 회원이라 함은 "홈페이지"에 개인정보를 제공하여 회원등록을 한 자로서, "홈페이지"의 정보를 지속적으로 제공받으며 "홈페이지"가 제공하는 서비스를 계속적으로 이용할 수 있는 자를 말한다.
+                        ④ 비회원이라 함은 회원에 가입하지 않고 "홈페이지"가 제공하는 서비스를 이용하는 자를 말한다.
+                        ⑤ 게시물이라 함은 회원이 홈페이지를 이용함에 있어서 홈페이지에 게시한 부호, 문자, 음성, 음향, 화상, 동영상 등의 정보 형태의 글, 사진, 동영상 및 각종 파일과 링크 등을 의미한다.
+                        제3조 (약관의 효력 및 변경)
+                        ① 홈페이지는 이 약관의 내용과 상호, 영업소 소재지, 대표자의 성명, 사업자 등록번호, 연락처(전화, 팩스, 전자우편 주소), 개인정보관리 책임자 등을 이용자가 알 수 있도록 홈페이지의 초기화면(전면)에 게시한다.
+                        ② 홈페이지는 전자상거래 등에서의 소비자보호에 관한 법률, 약관의 규제에 관한 법률, 전자거래기본법, 전자서명법, 정보통신망 이용촉진 등에 관한 법률, 방문판매 등에 관한 법률, 소비자보호법 등 관련법을 위배하지 않는 범위에서 이 약관을 개정할 수 있다.
+                        ③ 홈페이지가 약관을 개정할 경우에는 적용 일자 및 개정사유를 명시하여 현행약관과 함께 "홈페이지"의 초기화면에 그 적용일자 7일이전부터 적용일자 전일까지 공지한다. 다만, 이용자에게 불리하게 약관내용을 변경하는 경우에는 최소한 30일 이상의 사전 유예기간을 두고 공지한다. 이 경우 홈페이지가 개정 전 내용과 개정 후 내용을 명확하게 비교하여 이용자가 알기 쉽도록 표시한다.
+                        ④ 이 약관에서 정하지 아니한 사항과 이 약관의 해석에 관하여는 전자상거래 등에서의 소비자보호에 관한 법률, 약관의 규제 등에 관한 법률, 공정거래위원회가 정하는 전자상거래 등에서의 소비자보호지침 및 관계법령 또는 상관례에 따른다.
+                        제4조 (회원가입)
+                        ① 이용자는 "홈페이지"가 정한 양식에 따라 회원정보를 기입한 후 본 약관에 동의함으로써 회원으로 가입된다.
+                        ② 모든 회원은 반드시 회원 본인의 이름과 주민등록번호 혹은 본인인증 정보를 제공하여야만 서비스를 이용할 수 있으며, 실명으로 등록하지 않을 경우에는 일체의 회원으로서의 권리를 주장할 수 없다.
+                        ③ 타인의 명의(이름 및 주민등록번호)를 도용하여 가입 신청을 한 회원의 모든 ID는 삭제되며, 관계법령에 따라 처벌을 받을 수 있다.
+                        ④ "홈페이지"는 회원가입신청 이용자 중 다음 각 호에 해당하지 않는 한 회원으로 등록하여야 한다.
+                        1. 가입신청자가 본 약관 제5조 2항에 의거 이전에 회원자격을 상실한 적이 있는 경우
+                        2. 등록내용을 허위, 기재누락, 오기가 있는 경우
+                        3. 기타 회원으로 등록하는 것이 "홈페이지"의 기술상 현저히 지장이 있다고 판단되는 경우
+                        4. 만 14세 미만인 자
+                        ⑤ 회원은 가입 시 등록한 회원정보의 변경이 발생한 경우, 즉시 “홈페이지”에서 직접 수정 또는 전자우편, 기타 방법으로 “홈페이지”에 그 변경 사실을 알려야 한다.</pre>
+                <input type="checkbox" name="agree" value="동의" id="agree">
+                <label for="agree">[필수] 만 14세 이상이며 모두 동의합니다.</label>
+            </div>
+        </div>
+
+        <button class="inside_signup_btn"><a href="로그인.html">가입</a></button>
+    </section>
+</div>
+
+<!-- footer -->
+<footer>
+    <div class="footer-container">
+        <p>Copyright 2025 맛zip All Right Reserved</p>
+        <ul class="footer-menu">
+            <li><a href="#">공지사항</a></li>
+            <li><a href="#">FAQ</a></li>
+            <li><a href="#">Q&A</a></li>
+        </ul>
+    </div>
+</footer>
+</body>
+</html>

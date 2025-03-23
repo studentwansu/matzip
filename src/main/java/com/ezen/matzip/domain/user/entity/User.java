@@ -1,31 +1,43 @@
 package com.ezen.matzip.domain.user.entity;
 
-import com.ezen.matzip.domain.Role;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Data
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "user")
 public class User {
 
     @Id
-    private String id;  //사용자가 직접 입력한 아이디
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_code")
+    private int userCode;
 
-    private String username;    //일반회원 이름
-    private String password;    //비밀번호
-    private String question;    //비밀번호 찾기 질문
-    private String answer;      //비밀번호 찾기 답변
-    private String email;       //이메일
-    private String phone;       //전화번호
-    private String country;     //국가
-    private Role role;        //권한
-    private String preference;  //선호 음식 취향
-    private Boolean vegan;      //채식 여부
+    @Column(name = "user_id", nullable = false, unique = true)
+    private String userId;
+    @Column(name = "password", nullable = false)
+    private String password;
+    @Column(name = "phone_number", unique = true)
+    private String phoneNumber;
+    @Column(name = "password_question", nullable = false)
+    private String passwordQuestion;
+    @Column(name = "password_answer", nullable = false)
+    private String passwordAnswer;
+    @Column(name = "name", nullable = false)
+    private String name;
+    @Column(name = "nationality", nullable = false)
+    private String nationality;
+    @Column(name = "is_vegan", nullable = false)
+    private Boolean isVegan;
+    @Column(name = "category_code")
+    private int categoryCode;
+    @Column(name = "user_report_count", nullable = false)
+    private int userReportCount;
+    @Column(name = "account_status")
+    private Boolean accountStatus;
 }
 
-//사용자 엔티티(Role 포함)
