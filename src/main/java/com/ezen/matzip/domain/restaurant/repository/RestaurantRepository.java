@@ -15,6 +15,7 @@ import java.util.Optional;
 public interface RestaurantRepository extends JpaRepository<Restaurant, Integer> {
 
     Optional<Restaurant> findByRestaurantCode(int restaurantCode);
+    Restaurant findByRestaurantCode(Integer restaurantCode);
 
     @Query("SELECT r FROM Restaurant r WHERE r.restaurantUniqueKeywords LIKE %:keyword% " +
             "OR r.restaurantDescription LIKE %:keyword% " +
@@ -37,5 +38,6 @@ public interface RestaurantRepository extends JpaRepository<Restaurant, Integer>
             "OR r.restaurantLocation LIKE CONCAT('%', :keyword, '%') " +
             "ORDER BY score DESC")
     List<Object[]> findRestaurantsByKeywordWithScore(@Param("keyword") String keyword);
+
 
 }

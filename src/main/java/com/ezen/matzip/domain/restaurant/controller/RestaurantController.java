@@ -5,24 +5,22 @@ import com.ezen.matzip.domain.restaurant.service.RestaurantService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
-import java.util.Set;
 
 @Slf4j
 @Controller
-@RequestMapping("/test")
+@RequestMapping
+@RequiredArgsConstructor
 public class RestaurantController {
 
     private final RestaurantService restaurantService;
 
-    public RestaurantController(RestaurantService restaurantService) {
-        this.restaurantService = restaurantService;
-    }
 
     @GetMapping("/{restaurantCode}")
     public String getRestaurantDetail(@PathVariable int restaurantCode, Model model) {
@@ -38,6 +36,14 @@ public class RestaurantController {
         List<RestaurantDTO> restaurants = restaurantService.findByKeywordOrderByScore(keyword);
         model.addAttribute("restaurantList", restaurants);
         return "test/result";
+    }
+
+    @GetMapping("/store/storeinfo")
+    public String markingLocation(@RequestParam Integer restaurantCode, Model model)
+    {
+        String location = restaurantService.findLocationByRestaurantCode(restaurantCode);
+        model.addAttribute("restaurantLocation", location);
+        return "/store/storeinfo";
     }
 
 }

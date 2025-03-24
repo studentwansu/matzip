@@ -36,49 +36,10 @@ public class RestaurantService {
 
     }
 
-    public List<RestaurantDTO> findByKeyword(String keyword)
+    public String[] splitKeywords(String keyword)
     {
-        List<Restaurant> foundByMenu = menuRepository.findRestaurantsByMenuName(keyword);
-        List<Restaurant> foundByRestInfo = restaurantRepository.findByRestaurantInfo(keyword);
-        List<Restaurant> foundByKeyword = keywordRepository.findRestaurantsByRestaurantKeyword(keyword);
-
-        Set<RestaurantDTO> resultSet = new HashSet<>();
-
-        for (Restaurant menu : foundByMenu)
-        {
-            resultSet.add(
-                    new RestaurantDTO(
-                            menu,
-                            menuRepository.findByRestaurantCode(menu),
-                            keywordRepository.findByRestaurantCode(menu)
-                    )
-            );
-        }
-
-        for (Restaurant rest : foundByRestInfo)
-        {
-            resultSet.add(
-                    new RestaurantDTO(
-                            rest,
-                            menuRepository.findByRestaurantCode(rest),
-                            keywordRepository.findByRestaurantCode(rest)
-                    )
-            );
-        }
-
-        for (Restaurant keyw : foundByKeyword)
-        {
-            resultSet.add(
-                    new RestaurantDTO(
-                            keyw,
-                            menuRepository.findByRestaurantCode(keyw),
-                            keywordRepository.findByRestaurantCode(keyw)
-                    )
-            );
-        }
-
-
-        return new ArrayList<>(resultSet);
+        String[] keywords = keyword.split("\\s");
+        return keywords;
     }
 
     public List<RestaurantDTO> findByKeywordOrderByScore(String keyword)
@@ -151,5 +112,12 @@ public class RestaurantService {
         }
 
         return finalList;
+    }
+
+    public String findLocationByRestaurantCode(Integer restaurantCode)
+    {
+        Restaurant restarant = restaurantRepository.findByRestaurantCode(restaurantCode);
+        System.out.println("location: " + restarant.getRestaurantLocation());
+        return restarant.getRestaurantLocation();
     }
 }
