@@ -25,7 +25,18 @@ public class Restaurant {
     private String restaurantStartTime;
     private String restaurantEndTime;
     private String restaurantService;
+    private Date restaurantRegistrationDate;
+    private int restaurantActiveStatus;
+    private String restaurantUniqueKeywords;
+    private int businessCode;
+    private int restaurantStatus;
 
+    @ManyToOne
+    @JoinColumn(name = "category_code")
+    private Category category;
+
+
+    
     @OneToMany
     @JoinColumn(name="restaurantCode")
 //    @OneToMany(mappedBy = "restaurant", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
@@ -38,5 +49,7 @@ public class Restaurant {
     @OneToMany
     @JoinColumn(name="restaurantCode")
     private List<Keyword> keywords;
+
+
 
 }

@@ -1,5 +1,6 @@
 package com.ezen.matzip.domain.restaurant.entity;
 
+import com.ezen.matzip.domain.restaurant.dto.RestaurantDTO;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -19,9 +20,9 @@ public class Menu {
     private int menuCode;
     private String menuName;
     private int menuPrice;
-    private int restaurantCode;
+    // private int restaurantCode;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "restaurant_code")
-//    private Restaurant restaurant;
+   @ManyToOne(fetch = FetchType.LAZY)
+   @JoinColumn(name = "restaurant_code")
+   private Restaurant restaurant;
 }
