@@ -9,9 +9,13 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface RestaurantRepository extends JpaRepository<Restaurant, Integer> {
+
+    Optional<Restaurant> findByRestaurantCode(int restaurantCode);
+    Restaurant findByRestaurantCode(Integer restaurantCode);
 
     @Query("SELECT r FROM Restaurant r WHERE r.restaurantUniqueKeywords LIKE %:keyword% " +
             "OR r.restaurantDescription LIKE %:keyword% " +
@@ -35,6 +39,5 @@ public interface RestaurantRepository extends JpaRepository<Restaurant, Integer>
             "ORDER BY score DESC")
     List<Object[]> findRestaurantsByKeywordWithScore(@Param("keyword") String keyword);
 
-    Restaurant findByRestaurantCode(Integer restaurantCode);
 
 }

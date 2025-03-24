@@ -4,33 +4,52 @@ import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
-import java.sql.Time;
-import java.util.Date;
+import java.util.List;
 
 @Entity
-@Table(name="restaurant")
+@Table(name = "restaurant")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@ToString
 public class Restaurant {
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "restaurant_code")
     private int restaurantCode;
     private String restaurantName;
     private String restaurantLocation;
     private String restaurantContactNumber;
     private String restaurantDescription;
+    private String mainMenu;
+    private String restaurantStartTime;
+    private String restaurantEndTime;
+    private String restaurantService;
     private Date restaurantRegistrationDate;
     private int restaurantActiveStatus;
     private String restaurantUniqueKeywords;
-    private String mainMenu;
     private int businessCode;
+    private int restaurantStatus;
+
     @ManyToOne
     @JoinColumn(name = "category_code")
     private Category category;
-    private Time restaurantStartTime;
-    private Time restaurantEndTime;
-    private int restaurantStatus;
-    private String restaurantService;
+
+
+    
+    @OneToMany
+    @JoinColumn(name="restaurantCode")
+//    @OneToMany(mappedBy = "restaurant", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    private List<Menu> menus;
+
+    @OneToMany
+    @JoinColumn(name="restaurantCode")
+    private List<Review> reviews;
+
+    @OneToMany
+    @JoinColumn(name="restaurantCode")
+    private List<Keyword> keywords;
+
+
+
 }

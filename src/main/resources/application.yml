@@ -2,8 +2,8 @@
 spring:
   security:
     user:
-      name: admin
-      password: admin
+      name: 1234
+      password: 1234
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://54.180.86.92:3306/matzipdb
@@ -22,3 +22,4 @@ spring:
     #?????? ??
     #?? ??
     #?? ?? ? ??
+

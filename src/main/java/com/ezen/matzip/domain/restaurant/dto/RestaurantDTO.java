@@ -3,9 +3,9 @@ package com.ezen.matzip.domain.restaurant.dto;
 import com.ezen.matzip.domain.restaurant.entity.Menu;
 import com.ezen.matzip.domain.restaurant.entity.Restaurant;
 import com.ezen.matzip.domain.restaurant.entity.RestaurantStarKeyword;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import com.ezen.matzip.domain.restaurant.entity.Review;
+
+import lombok.*;
 
 import java.sql.Time;
 import java.util.Date;

@@ -16,12 +16,25 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 
 @Service
-@RequiredArgsConstructor
 public class RestaurantService {
 
     private final RestaurantRepository restaurantRepository;
     private final MenuRepository menuRepository;
     private final RestaurantStarKeywordRepository keywordRepository;
+    private final ModelMapper modelMapper;
+
+    public RestaurantService(RestaurantRepository restaurantRepository, ModelMapper modelMapper) {
+        this.restaurantRepository = restaurantRepository;
+        this.modelMapper = modelMapper;
+    }
+
+    public RestaurantDTO getRestaurantDetail(int restaurantCode) {
+        Restaurant restaurant = restaurantRepository.findByRestaurantCode(restaurantCode)
+                .orElseThrow(IllegalArgumentException::new);
+        System.out.println("리뷰 : " + restaurant.getKeywords());
+        return modelMapper.map(restaurant, RestaurantDTO.class);
+
+    }
 
     public String[] splitKeywords(String keyword)
     {

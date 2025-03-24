@@ -21,7 +21,16 @@ public class RestaurantController {
 
     private final RestaurantService restaurantService;
 
-    @GetMapping("/test/result")
+
+    @GetMapping("/{restaurantCode}")
+    public String getRestaurantDetail(@PathVariable int restaurantCode, Model model) {
+        RestaurantDTO restaurant = restaurantService.getRestaurantDetail(restaurantCode);
+        model.addAttribute("restaurant", restaurant);
+        return "restaurant/restaurant";
+    }
+
+
+    @GetMapping("/result")
     public String findByKeyword(@RequestParam String keyword, Model model)
     {
         List<RestaurantDTO> restaurants = restaurantService.findByKeywordOrderByScore(keyword);
