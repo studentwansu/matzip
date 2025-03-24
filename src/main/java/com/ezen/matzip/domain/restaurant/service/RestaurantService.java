@@ -1,32 +1,24 @@
 package com.ezen.matzip.domain.restaurant.service;
 
 import com.ezen.matzip.domain.restaurant.dto.RestaurantDTO;
-import com.ezen.matzip.domain.restaurant.entity.Menu;
 import com.ezen.matzip.domain.restaurant.entity.Restaurant;
-import com.ezen.matzip.domain.restaurant.entity.RestaurantStarKeyword;
 import com.ezen.matzip.domain.restaurant.repository.MenuRepository;
 import com.ezen.matzip.domain.restaurant.repository.RestaurantRepository;
-import com.ezen.matzip.domain.restaurant.repository.RestaurantStarKeywordRepository;
-import com.sun.source.util.Trees;
+import com.ezen.matzip.domain.restaurant.repository.KeywordRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 
 @Service
+@RequiredArgsConstructor
 public class RestaurantService {
 
     private final RestaurantRepository restaurantRepository;
     private final MenuRepository menuRepository;
-    private final RestaurantStarKeywordRepository keywordRepository;
-    private final ModelMapper modelMapper;
-
-    public RestaurantService(RestaurantRepository restaurantRepository, ModelMapper modelMapper) {
-        this.restaurantRepository = restaurantRepository;
-        this.modelMapper = modelMapper;
-    }
+    private final KeywordRepository keywordRepository;
+    private ModelMapper modelMapper;
 
     public RestaurantDTO getRestaurantDetail(int restaurantCode) {
         Restaurant restaurant = restaurantRepository.findByRestaurantCode(restaurantCode)

@@ -5,9 +5,9 @@ import com.ezen.matzip.domain.restaurant.service.RestaurantService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -32,6 +32,14 @@ public class RestaurantController {
 
     @GetMapping("/result")
     public String findByKeyword(@RequestParam String keyword, Model model)
+    {
+        List<RestaurantDTO> restaurants = restaurantService.findByKeywordOrderByScore(keyword);
+        model.addAttribute("restaurantList", restaurants);
+        return "test/result";
+    }
+
+    @GetMapping("/test/result2")
+    public String findByMyLocation(@RequestParam String keyword, Model model)
     {
         List<RestaurantDTO> restaurants = restaurantService.findByKeywordOrderByScore(keyword);
         model.addAttribute("restaurantList", restaurants);

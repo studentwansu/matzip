@@ -15,9 +15,8 @@ public class Keyword {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "restaurant_keyword_code")
-
     private int restaurantKeywordCode;
-    private int restaurantCode;
-    private String restaurantKeyword;
-}
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "restaurant_code")
+    private Restaurant restaurantCode;
+    private String restaurantKeyword;}
