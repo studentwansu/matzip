@@ -18,13 +18,15 @@ public class RestaurantService {
     private final RestaurantRepository restaurantRepository;
     private final MenuRepository menuRepository;
     private final KeywordRepository keywordRepository;
-    private ModelMapper modelMapper;
 
     public RestaurantDTO getRestaurantDetail(int restaurantCode) {
-        Restaurant restaurant = restaurantRepository.findByRestaurantCode(restaurantCode)
-                .orElseThrow(IllegalArgumentException::new);
+        Restaurant restaurant = restaurantRepository.findByRestaurantCode(restaurantCode);
         System.out.println("리뷰 : " + restaurant.getKeywords());
-        return modelMapper.map(restaurant, RestaurantDTO.class);
+        return new RestaurantDTO(
+                restaurant,
+                menuRepository.findByRestaurantCode(restaurant),
+                keywordRepository.findByRestaurantCode(restaurant)
+        );
 
     }
 

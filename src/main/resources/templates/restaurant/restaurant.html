@@ -543,8 +543,8 @@
                             <tr>
                                 <td style="font-size:2vh;">키워드</td>
                             </tr>
-                            <tr th:each="keyword : ${restaurant.keywords}">
-                                <td style="font-size:2vh;" th:text=" '#' + ${keyword.restaurantKeyword}"></td>
+                            <tr th:each="keyword : ${restaurant.restaurantKeywords}">
+                                <td style="font-size:2vh;" th:text=" '#' + ${keyword.getRestaurantKeyword()}"></td>
                             </tr>
                         <table>
                             <tr>
@@ -555,8 +555,8 @@
                         <br>
                         <p style="font-size:2.5vh;">메뉴</p>
                         <table>
-                            <tr th:each="menu : ${restaurant.menus}">
-                                <td th:text="${menu.menuName}"> --- <td th:text="${menu.menuPrice}"></td>
+                            <tr th:each="menu : ${restaurant.restaurantMenus}">
+                                <td th:text="${menu.getMenuName()}"> --- <td th:text="${menu.getMenuPrice()}"></td>
                             </tr>
                         </table>
                         <br>

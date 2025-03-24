@@ -19,7 +19,7 @@ public class RestaurantDTO {
 
     private String restaurantName;
     private List<MenuDTO> restaurantMenus;
-    private List<String> restaurantKeywords;
+    private List<RestaurantStarKeywordDTO> restaurantKeywords;
     private int restaurantCode;
     private String restaurantLocation;
     private String restaurantContactNumber;
@@ -41,7 +41,9 @@ public class RestaurantDTO {
         this.restaurantMenus = menus.stream().map
                 (menu -> new MenuDTO(menu.getMenuCode(), menu.getMenuName(), menu.getMenuPrice(), restaurant))
                 .collect(Collectors.toList());
-        this.restaurantKeywords = keywords.stream().map(Keyword::getRestaurantKeyword).collect(Collectors.toList());
+        this.restaurantKeywords = keywords.stream().map
+                (keyword -> new RestaurantStarKeywordDTO(keyword.getRestaurantKeywordCode(), keyword.getRestaurantCode().getRestaurantCode(), keyword.getRestaurantKeyword()))
+                .collect(Collectors.toList());
         this.restaurantCode = restaurant.getRestaurantCode();
         this.restaurantLocation = restaurant.getRestaurantLocation();
         this.restaurantContactNumber = restaurant.getRestaurantContactNumber();
