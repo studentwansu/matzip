@@ -1,4 +1,4 @@
-package com.ezen.matzip.domain.restaurant.config;
+package com.ezen.matzip.config;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;

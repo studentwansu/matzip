@@ -1,10 +1,13 @@
 package com.ezen.matzip.domain.restaurant.entity;
 
+import com.ezen.matzip.domain.review.entity.Review;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.sql.Time;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -22,8 +25,8 @@ public class Restaurant {
     private String restaurantContactNumber;
     private String restaurantDescription;
     private String mainMenu;
-    private String restaurantStartTime;
-    private String restaurantEndTime;
+    private Time restaurantStartTime;
+    private Time restaurantEndTime;
     private String restaurantService;
     private Date restaurantRegistrationDate;
     private int restaurantActiveStatus;
@@ -36,18 +39,16 @@ public class Restaurant {
     private Category category;
 
 
-    
     @OneToMany
-    @JoinColumn(name="restaurantCode")
-//    @OneToMany(mappedBy = "restaurant", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @JoinColumn(name="restaurant_code")
     private List<Menu> menus;
 
     @OneToMany
-    @JoinColumn(name="restaurantCode")
+    @JoinColumn(name="restaurant_code")
     private List<Review> reviews;
 
     @OneToMany
-    @JoinColumn(name="restaurantCode")
+    @JoinColumn(name="restaurant_code")
     private List<Keyword> keywords;
 
 
