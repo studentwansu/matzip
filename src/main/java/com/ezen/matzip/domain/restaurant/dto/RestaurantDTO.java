@@ -3,7 +3,7 @@ package com.ezen.matzip.domain.restaurant.dto;
 import com.ezen.matzip.domain.restaurant.entity.Menu;
 import com.ezen.matzip.domain.restaurant.entity.Restaurant;
 import com.ezen.matzip.domain.restaurant.entity.Keyword;
-//import com.ezen.matzip.domain.restaurant.entity.Review;
+import com.ezen.matzip.domain.review.entity.Review;
 
 import lombok.*;
 
@@ -20,6 +20,7 @@ public class RestaurantDTO {
     private String restaurantName;
     private List<MenuDTO> restaurantMenus;
     private List<RestaurantStarKeywordDTO> restaurantKeywords;
+    private List<Review> reviews;
     private int restaurantCode;
     private String restaurantLocation;
     private String restaurantContactNumber;

@@ -5,6 +5,9 @@ import com.ezen.matzip.domain.restaurant.entity.Restaurant;
 import com.ezen.matzip.domain.restaurant.repository.MenuRepository;
 import com.ezen.matzip.domain.restaurant.repository.RestaurantRepository;
 import com.ezen.matzip.domain.restaurant.repository.KeywordRepository;
+import com.ezen.matzip.domain.review.dto.ReviewDTO;
+import com.ezen.matzip.domain.review.entity.Review;
+import com.ezen.matzip.domain.review.repository.ReviewRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -18,6 +21,28 @@ public class RestaurantService {
     private final RestaurantRepository restaurantRepository;
     private final MenuRepository menuRepository;
     private final KeywordRepository keywordRepository;
+    private final ReviewRepository reviewRepository;
+
+    public List<ReviewDTO> getReviewsByRestaurant(int restaurantCode)
+    {
+        Restaurant restaurant = restaurantRepository.findByRestaurantCode(restaurantCode);
+        List<Review> reviews = reviewRepository.findByRestaurantCode(restaurant);
+        List<ReviewDTO> result = new ArrayList<>();
+        for (Review review : reviews)
+        {
+            ReviewDTO dto = new ReviewDTO();
+            dto.setRestaurantName(restaurant);
+            dto.setRestaurantCode(restaurant);
+            dto.setReviewCode(review.getReviewCode());
+            dto.setReviewDate(review.getReviewDate());
+            dto.setReviewContent(review.getReviewContent());
+            dto.setRating(review.getRating());
+
+            result.add(dto);
+        }
+
+        return result;
+    }
 
     public RestaurantDTO getRestaurantDetail(int restaurantCode) {
         Restaurant restaurant = restaurantRepository.findByRestaurantCode(restaurantCode);
@@ -27,7 +52,6 @@ public class RestaurantService {
                 menuRepository.findByRestaurantCode(restaurant),
                 keywordRepository.findByRestaurantCode(restaurant)
         );
-
     }
 
     public String[] splitKeywords(String keyword)

@@ -1,7 +1,10 @@
 package com.ezen.matzip.domain.restaurant.controller;
 
 import com.ezen.matzip.domain.restaurant.dto.RestaurantDTO;
+import com.ezen.matzip.domain.restaurant.entity.Restaurant;
 import com.ezen.matzip.domain.restaurant.service.RestaurantService;
+import com.ezen.matzip.domain.review.dto.ReviewDTO;
+import com.ezen.matzip.domain.review.service.ReviewService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -15,19 +18,37 @@ import java.util.List;
 
 @Slf4j
 @Controller
-@RequestMapping("/restaurants")
+@RequestMapping("/restaurant")
 @RequiredArgsConstructor
 public class RestaurantController {
 
     private final RestaurantService restaurantService;
+    private final ReviewService reviewService;
 
 
     @GetMapping("/{restaurantCode}")
     public String getRestaurantDetail(@PathVariable int restaurantCode, Model model) {
         RestaurantDTO restaurant = restaurantService.getRestaurantDetail(restaurantCode);
         model.addAttribute("restaurant", restaurant);
+
+        List<ReviewDTO> resultReview = restaurantService.getReviewsByRestaurant(restaurantCode);
+        model.addAttribute("reviews", resultReview);
+        System.out.println("test: " + resultReview.get(0));
+
+
         return "restaurant/restaurant";
     }
+
+//    @GetMapping(value = {"/{restaurantCode}"})
+//    public String findReviewByRestaurantCode(@PathVariable int restaurantCode, Model model) {
+//
+//        List<ReviewDTO> resultReview = restaurantService.getReviewsByRestaurant(restaurantCode);
+//        model.addAttribute("review2", resultReview);
+//        System.out.println("test: " + resultReview.get(0));
+//
+//        return "restaurant/restaurant";
+//    }
+
 
 
     @GetMapping("/result")

@@ -36,4 +36,5 @@ public void setRestaurantName(Restaurant restaurant)
 {
     this.restaurantName = restaurant.getRestaurantName();
 }
+
 }
