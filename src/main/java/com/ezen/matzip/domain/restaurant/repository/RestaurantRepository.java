@@ -35,4 +35,6 @@ public interface RestaurantRepository extends JpaRepository<Restaurant, Integer>
             "ORDER BY score DESC")
     List<Object[]> findRestaurantsByKeywordWithScore(@Param("keyword") String keyword);
 
+    Restaurant findByRestaurantCode(Integer restaurantCode);
+
 }
