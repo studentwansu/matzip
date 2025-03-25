@@ -1,0 +1,226 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poor Story", system-ui;
+    font-weight: 400;
+    font-style: normal;
+
+}
+
+
+/* header */
+header {
+    width: 100%;
+    height: 180px;
+    background-color: #fff3e0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.header-container {
+    width: 100%;
+    max-width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+}
+
+/* logo */
+/* .logo img {
+    height: 300px;
+    width: 300px;
+} */
+
+/* search */
+.search-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    position: relative;
+
+}
+
+.search-container input {
+    width: 500px;
+    height: 40px;
+    padding: 25px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    outline: none;
+
+}
+
+.search-container .search-btn {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.search-container .search-btn img {
+    width: 25px;
+}
+
+/* popular-searches */
+.popular-searches {
+    display: flex;
+    gap: 10px;
+    margin-top: 5px;
+    font-size: 14px;
+    color: #666;
+}
+
+.popular-searches .nearby {
+    color: #fa4032;
+    font-weight: bold;
+}
+
+/* menu */
+.menu {
+    display: flex;
+    align-items: flex-end;
+    padding: 25px;
+    margin-bottom: 120px;
+    gap: 10px;
+}
+
+.menu a {
+    text-decoration: none;
+    color: #000;
+    font-size: 13px;
+}
+
+.menu .login {
+    padding: 7px 20px;
+    border: 1px solid #f58031;
+    border-radius: 10px;
+
+}
+
+.menu .signup {
+    background-color: #fa4032;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 10px;
+    margin-left: 5px;
+}
+
+.menu .menu-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.menu .menu-btn img {
+    width: 30px;
+
+}
+
+#game {
+    width: 25px;
+}
+
+.main {
+    display: flex;
+    flex-direction: column;
+    background-color: #fff3e0;
+    height: 100%;
+}
+
+/* foryou */
+.foryou {
+    margin: 50px auto;
+    padding: 20px;
+    width: 80%;
+    background: white;
+    border-radius: 10px;
+    border: 1px solid #f58031;
+}
+
+.foryou p {
+    margin-bottom: 20px;
+    color: black;
+    font-size: 18px;
+    text-align: left;
+}
+
+/* food-list */
+.food-list {
+    display: flex;
+    justify-content: space-around;
+}
+
+.food-item {
+    position: relative;
+    display: inline-block;
+    text-align: center;
+}
+
+.food-item img {
+    width: 150px;
+    height: 150px;
+    border-radius: 10px;
+}
+
+.food-item p {
+    position: absolute;
+    right: 5px;
+    bottom: 5px;
+    margin-top: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 0px 5px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 5px;
+    color: white;
+}
+
+/* foorer */
+footer {
+    width: 100%;
+    background: #f58031;
+    color: white;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.footer-container {
+    width: 90%;
+    max-width: 1440px;
+    display: flex;
+    justify-content: space-between;
+    /* 좌우 정렬 */
+    align-items: center;
+}
+
+.footer-menu {
+    list-style: none;
+    display: flex;
+    gap: 100px;
+}
+
+.footer-menu li a {
+    text-decoration: none;
+    color: white;
+    font-size: 16px;
+} 
+
+.main-container {
+    display: flex;
+    justify-content: center; /* 수평 가운데 정렬 */
+    align-items: center; /* 수직 가운데 정렬 */
+    text-align: center; /* 텍스트 가운데 정렬 */
+    background-color: #fff3e0;
+    padding-bottom: 10vh;
+}

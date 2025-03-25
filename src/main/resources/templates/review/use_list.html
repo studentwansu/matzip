@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <table>
+        <tbody>
+        <tr th:each="restaurant, stat : ${restaurantList}">
+            <td th:text="${stat.index + 1}"></td>
+            <td th:text="${restaurant.date}"></td>
+            <td th:text="${restaurant.name}"></td>
+            <td>
+                <button class="review-btn" onclick="openReviewModal('[[$restaurant.name]]')">리뷰작성</button>
+            </td>
+            <td>
+                <button class="recipe-btn">레시피 보기</button>
+            </td>
+        </tr>
+        </tbody>
+
+        <!-- 모달창 -->
+        <div id="reviewModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeReviewModal()">&times;</span>
+                <h3>리뷰 작성 - <span id="modalRestaurantName"></span></h3>
+                <form id="reviewForm" enctype="multipart/form-data">
+                    <input type="hidden" id="hiddenRestaurantName" name="restaurantName">
+                    <label for="reviewStar">별점:</label>
+                    <input type="radio" name="reviewStar" value="5"> ★★★★★
+                    <input type="radio" name="reviewStar" value="4"> ★★★★
+                    <input type="radio" name="reviewStar" value="3"> ★★★
+                    <input type="radio" name="reviewStar" value="2"> ★★
+                    <input type="radio" name="reviewStar" value="1"> ★
+                    <br>
+                    <textarea name="reviewContent" placeholder="리뷰 내용을 작성하세요"></textarea>
+                    <input type="file" name="imageFile">
+                    <br>
+                    <button type="button" onclick="submitReview()">작성하기</button>
+                </form>
+            </div>
+        </div>
+
+        <script>
+            function openReviewModal(restaurantName) {
+                document.getElementById("modalRestaurantName").innerText = restaurantName;
+                document.getElementById("hiddenRestaurantName").value = restaurantName;
+                document.getElementById("reviewModal").style.display = "block";
+            }
+
+            function closeReviewModal() {
+                document.getElementById("reviewModal").style.display = "none";
+            }
+
+            function submitReview() {
+                const formData = new FormData(document.getElementById("reviewForm"));
+                fetch("/review/create", {
+                    method: "POST",
+                    body: formData
+                })
+                    .then(response => response.text())
+                    .then(data => {
+                        alert(data);
+                        closeReviewModal();
+                        location.reload();
+                    })
+                    .catch(error => alert("리뷰 작성 실패: " + error));
+            }
+        </script>
+
+    </table>
+</body>
+</html>

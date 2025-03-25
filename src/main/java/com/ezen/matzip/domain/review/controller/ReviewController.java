@@ -1,13 +1,19 @@
 package com.ezen.matzip.domain.review.controller;
 
 import com.ezen.matzip.domain.review.dto.ReviewDTO;
+import com.ezen.matzip.domain.review.entity.ReviewImage;
 import com.ezen.matzip.domain.review.service.ReviewService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 @Slf4j
@@ -33,19 +39,32 @@ public class ReviewController {
 //        }
 
 
-        List<ReviewDTO> resultReview = reviewService.findReviewByUserCode(userCode);
-
-        model.addAttribute("review", resultReview);
+//        List<ReviewDTO> resultReview = reviewService.findReviewByUserCode(userCode);
+        List<ReviewDTO> resultReview = reviewService.findReviewByReviewCode(userCode);
+        model.addAttribute("testReview", resultReview);
 
         return "review/review_list";
     }
 
+
     @PostMapping("/delete/{reviewCode}/{userCode}")
     public String deleteReview(@PathVariable int reviewCode, @PathVariable int userCode) {
         reviewService.deleteReview(reviewCode);  // 리뷰 삭제 처리
+
         // 삭제 후 해당 userCode의 리뷰 목록으로 리디렉션
         return "redirect:/review/" + userCode;  // 삭제 후 해당 사용자의 리뷰 목록으로 리디렉션
     }
+
+
+
+//    @GetMapping(value = "/{reviewCode}")
+//    public String findReviewByReviewCode(@PathVariable int reviewCode, Model model) {
+//        List<ReviewImage> resultImageReview = reviewService.findReviewByReviewCode(reviewCode);
+//        model.addAttribute("reviewImage", resultImageReview);
+//
+//        return "review/review_list";
+//    }
+
 
 
 }
