@@ -8,6 +8,7 @@ import com.ezen.matzip.domain.review.entity.Review;
 import lombok.*;
 
 import java.sql.Time;
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -31,8 +32,8 @@ public class RestaurantDTO {
     private String mainMenu;
     private int businessCode;
     private CategoryDTO categoryCode;
-    private Time restaurantStartTime;
-    private Time restaurantEndTime;
+    private String restaurantStartTime;
+    private String restaurantEndTime;
     private int restaurantStatus;
     private String restaurantService;
 
@@ -55,8 +56,8 @@ public class RestaurantDTO {
         this.mainMenu = restaurant.getMainMenu();
         this.businessCode = restaurant.getBusinessCode();
         this.categoryCode = new CategoryDTO(restaurant.getCategory().getCategoryCode(), restaurant.getCategory().getCategory());
-        this.restaurantStartTime = restaurant.getRestaurantStartTime();
-        this.restaurantEndTime = restaurant.getRestaurantEndTime();
+        this.restaurantStartTime = getRestaurantStartTime();
+        this.restaurantEndTime = getRestaurantEndTime();
         this.restaurantStatus = restaurant.getRestaurantStatus();
         this.restaurantService = restaurant.getRestaurantService();
     }

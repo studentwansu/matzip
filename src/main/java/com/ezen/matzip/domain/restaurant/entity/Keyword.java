@@ -19,4 +19,13 @@ public class Keyword {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "restaurant_code")
     private Restaurant restaurantCode;
-    private String restaurantKeyword;}
+    private String restaurantKeyword;
+
+    public Keyword(String restaurantKeyword, Restaurant restaurant) {
+        this.restaurantKeyword = restaurantKeyword;
+        this.restaurantCode = restaurant;
+    }
+
+}
+
+

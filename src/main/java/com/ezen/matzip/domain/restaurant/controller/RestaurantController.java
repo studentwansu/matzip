@@ -1,5 +1,6 @@
 package com.ezen.matzip.domain.restaurant.controller;
 
+import com.ezen.matzip.domain.restaurant.dto.RegistDTO;
 import com.ezen.matzip.domain.restaurant.dto.RestaurantDTO;
 import com.ezen.matzip.domain.restaurant.entity.Restaurant;
 import com.ezen.matzip.domain.restaurant.service.RestaurantService;
@@ -9,10 +10,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -39,6 +37,20 @@ public class RestaurantController {
         return "restaurant/restaurant";
     }
 
+    @GetMapping("/regist")
+    public String registPage() {
+        return "restaurant/restaurant-regist";
+    }
+
+    @PostMapping("/regist")
+    public String regist(@ModelAttribute RegistDTO registDTO) {
+
+        System.out.println("=== DTO 로그 ===");
+        System.out.println(registDTO.toString());
+     restaurantService.registRestaurant(registDTO);
+
+        return "redirect:/restaurant";
+    }
 //    @GetMapping(value = {"/{restaurantCode}"})
 //    public String findReviewByRestaurantCode(@PathVariable int restaurantCode, Model model) {
 //

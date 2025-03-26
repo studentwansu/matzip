@@ -1,18 +1,25 @@
 package com.ezen.matzip.domain.restaurant.service;
 
+import com.ezen.matzip.domain.restaurant.dto.RegistDTO;
 import com.ezen.matzip.domain.restaurant.dto.RestaurantDTO;
-import com.ezen.matzip.domain.restaurant.entity.Restaurant;
+import com.ezen.matzip.domain.restaurant.entity.*;
 import com.ezen.matzip.domain.restaurant.repository.MenuRepository;
+import com.ezen.matzip.domain.restaurant.repository.RegistRepository;
 import com.ezen.matzip.domain.restaurant.repository.RestaurantRepository;
 import com.ezen.matzip.domain.restaurant.repository.KeywordRepository;
 import com.ezen.matzip.domain.review.dto.ReviewDTO;
 import com.ezen.matzip.domain.review.entity.Review;
 import com.ezen.matzip.domain.review.repository.ReviewRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.sql.Time;
+import java.time.LocalTime;
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Service
 @RequiredArgsConstructor
@@ -22,6 +29,8 @@ public class RestaurantService {
     private final MenuRepository menuRepository;
     private final KeywordRepository keywordRepository;
     private final ReviewRepository reviewRepository;
+    private final ModelMapper modelMapper;
+    private final RegistRepository registRepository;
 
     public List<ReviewDTO> getReviewsByRestaurant(int restaurantCode)
     {
@@ -46,7 +55,11 @@ public class RestaurantService {
 
     public RestaurantDTO getRestaurantDetail(int restaurantCode) {
         Restaurant restaurant = restaurantRepository.findByRestaurantCode(restaurantCode);
-        System.out.println("리뷰 : " + restaurant.getKeywords());
+        if (restaurant == null) {
+            System.out.println("🚨 restaurantCode " + restaurantCode + "에 해당하는 레스토랑이 존재하지 않습니다.");
+        } else {
+            System.out.println("✅ restaurantCode " + restaurantCode + "에 해당하는 레스토랑 이름: " + restaurant.getRestaurantName());
+        }
         return new RestaurantDTO(
                 restaurant,
                 menuRepository.findByRestaurantCode(restaurant),
@@ -138,4 +151,62 @@ public class RestaurantService {
         System.out.println("location: " + restarant.getRestaurantLocation());
         return restarant.getRestaurantLocation();
     }
+
+    private Category convertToCategory(String categoryString) {
+        return new Category(Integer.parseInt(categoryString), categoryString);
+    }
+
+    @Transactional
+    public void registRestaurant(RegistDTO registDTO) {
+
+        String startTimeString = registDTO.getRestaurantStartTime();
+        String endTimeString = registDTO.getRestaurantEndTime();
+
+        Time startTime = Time.valueOf(startTimeString + ":00");
+        Time endTime = Time.valueOf(endTimeString + ":00");
+
+//        String categoryString = registDTO.getRestaurantCategory();
+//        Category category = Category.(categoryString);
+
+        Category category = convertToCategory(registDTO.getRestaurantCategory());
+
+        Restaurant regist =
+                new Restaurant(
+                        registDTO.getRestaurantCode(),
+                        registDTO.getRestaurantName(),
+                        registDTO.getRestaurantLocation(),
+                        registDTO.getRestaurantContactNumber(),
+                        registDTO.getRestaurantDescription(),
+                        registDTO.getMainMenu(),
+                        startTime,
+                        endTime,
+                        registDTO.getRestaurantService(),
+                        category);
+
+
+
+        regist.setRestaurantRegistrationDate(new Date());
+        regist.setRestaurantActiveStatus(0);  // 활성 상태
+        regist.setRestaurantUniqueKeywords(null);  // 예시 키워드
+        regist.setRestaurantStatus(0);
+        regist.setBusinessCode(11);
+
+        List<Menu> menuList = IntStream.range(0, registDTO.getMenuName().size())
+                .mapToObj(i -> new Menu(registDTO.getMenuName().get(i), registDTO.getMenuPrice().get(i), regist))
+                .collect(Collectors.toList());
+
+        regist.setMenus(menuList);
+
+        List<Keyword> keywordList = registDTO.getRestaurantKeyword().stream()
+                .map(keyword -> new Keyword(keyword, regist))
+                .collect(Collectors.toList());
+
+        regist.setKeywords(keywordList);
+
+
+        System.out.println(regist);
+        registRepository.save(regist);
+
+    }
+
 }

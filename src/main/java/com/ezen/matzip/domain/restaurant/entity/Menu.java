@@ -21,5 +21,11 @@ public class Menu {
     @JoinColumn(name = "restaurant_code")
     private Restaurant restaurantCode;
 
+    public Menu(String menuName, Integer menuPrice, Restaurant restaurantCode) {
+        this.restaurantCode =restaurantCode;
+        this.menuName = menuName;
+        this.menuPrice = menuPrice;
+    }
+
 
 }
