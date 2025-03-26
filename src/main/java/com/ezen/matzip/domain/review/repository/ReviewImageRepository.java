@@ -12,4 +12,6 @@ public interface ReviewImageRepository extends JpaRepository<ReviewImage, Intege
 
     @Query("SELECT Review, i.reviewImagePath FROM Review r JOIN ReviewImage i ON r.reviewCode = i.reviewCode")
     List<Object[]> findReviewImagesByReviewCodes(List<Review> reviewCode);
+
+
 }

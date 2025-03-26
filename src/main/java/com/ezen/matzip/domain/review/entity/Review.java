@@ -48,9 +48,9 @@ public class Review {
         this.restaurantCode = restaurantCode;
     }
 
-    public void updateReview(String reviewContent, int rating){
+    public void modifyReview(String reviewContent) {
         this.reviewContent = reviewContent;
-        this.rating = rating;
+//        this.rating = rating;
         this.reviewDate = new Date();
     }
 

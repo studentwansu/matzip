@@ -48,6 +48,15 @@ public class ReviewService {
         reviewRepository.deleteById(reviewCode);
     }
 
+    @Transactional
+    public void modifyReview(ReviewDTO reviewDTO) {
+        System.out.println("test231231:" + reviewDTO.getReviewCode());
+        Review foundReview = reviewRepository.findByReviewCode(reviewDTO.getReviewCode());
+//        Review foundReview = reviewRepository.findByReviewCode(reviewDTO.getReviewCode());
+
+//        reviewRepository.updateReviewByReviewCode(dto.getReviewCode(), );
+        foundReview.modifyReview(reviewDTO.getReviewContent());
+    }
 
 
     public List<ReviewDTO> findReviewByReviewCode(int userCode) {

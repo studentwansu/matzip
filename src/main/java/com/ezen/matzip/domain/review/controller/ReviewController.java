@@ -55,15 +55,14 @@ public class ReviewController {
         return "redirect:/review/" + userCode;  // 삭제 후 해당 사용자의 리뷰 목록으로 리디렉션
     }
 
+    @GetMapping("/modify")
+    public void modifyPage(){}
 
-
-//    @GetMapping(value = "/{reviewCode}")
-//    public String findReviewByReviewCode(@PathVariable int reviewCode, Model model) {
-//        List<ReviewImage> resultImageReview = reviewService.findReviewByReviewCode(reviewCode);
-//        model.addAttribute("reviewImage", resultImageReview);
-//
-//        return "review/review_list";
-//    }
+    @PostMapping("/modify")
+    public String modifyReview(@ModelAttribute ReviewDTO reviewDTO) {
+        reviewService.modifyReview(reviewDTO);
+        return "redirect:/review/" + reviewDTO.getUserCode();
+    }
 
 
 
