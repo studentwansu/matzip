@@ -25,6 +25,7 @@ public class ReviewService {
     private final ReviewRepository reviewRepository;
     private final ReviewImageRepository reviewImageRepository;
     private final ReservationRepository reservationRepository;
+    private final RestaurantRepository restaurantRepository;
     private final ModelMapper modelMapper;
 
     public List<ReviewDTO> findReviewByUserCode(int userCode) {
@@ -84,6 +85,27 @@ public class ReviewService {
 
         return reservations.stream()
                 .map(reservation -> modelMapper.map(reservation, ReservationDTO.class)).toList();
+    }
+
+    @Transactional
+    public void writeReview(ReviewDTO reviewDTO) {
+        // 레스토랑 조회
+        Restaurant restaurant = restaurantRepository.findById(reviewDTO.getRestaurantCode())
+                .orElseThrow(() -> new IllegalArgumentException("해당 레스토랑을 찾을 수 없습니다."));
+
+        // 리뷰 엔티티 생성
+        Review review = Review.builder()
+                .reviewContent(reviewDTO.getReviewContent())
+                .rating(reviewDTO.getRating())
+                .userCode(reviewDTO.getUserCode())
+                .reservationCode(reviewDTO.getReservationCode())
+                .restaurantCode(restaurant)  // 연관관계 설정
+                .businessCode(restaurant.getBusinessCode())
+                .build();
+
+
+
+        reviewRepository.save(review);
     }
 
 //    public List<ReservationDTO> findReservationByUserCode(int userCode) {

@@ -76,7 +76,7 @@ public class ReviewController {
 
     @PostMapping("/save")
     public String saveReview(@ModelAttribute ReviewDTO reviewDTO) {
-        reviewService.modifyReview(reviewDTO);
+        reviewService.writeReview(reviewDTO);
         return "redirect:/review/" + reviewDTO.getUserCode();
     }
 

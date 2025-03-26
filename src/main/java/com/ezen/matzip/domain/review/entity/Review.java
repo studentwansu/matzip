@@ -20,6 +20,7 @@ public class Review {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int reviewCode;
     private String reviewContent;
+    @Temporal(TemporalType.TIMESTAMP)
     private Date reviewDate;
     private int reviewReportCount;
     private int hiddenFlag;
@@ -31,6 +32,13 @@ public class Review {
     @JoinColumn(name = "restaurant_code")
     private Restaurant restaurantCode;
     private int reservationCode;
+
+    @PrePersist
+    protected void onCreate() {
+        if (this.reviewDate == null) {
+            this.reviewDate = new Date();
+        }
+    }
 
     @Builder
     public Review(String reviewContent, Date reviewDate, int reviewReportCount, int hiddenFlag,
@@ -51,6 +59,10 @@ public class Review {
     public void modifyReview(String reviewContent) {
         this.reviewContent = reviewContent;
 //        this.rating = rating;
+        this.reviewDate = new Date();
+    }
+
+    public void writeReview(){
         this.reviewDate = new Date();
     }
 
