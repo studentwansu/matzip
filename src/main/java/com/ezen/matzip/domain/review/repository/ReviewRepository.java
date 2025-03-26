@@ -2,11 +2,14 @@ package com.ezen.matzip.domain.review.repository;
 
 import com.ezen.matzip.domain.review.entity.Review;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ReviewRepository extends JpaRepository<Review, Integer> {
@@ -15,9 +18,13 @@ public interface ReviewRepository extends JpaRepository<Review, Integer> {
     @Query("SELECT r, r.restaurantCode FROM Review r where r.userCode = :userCode")
     List<Object[]> findByUserCode(int userCode);
 
-//    @Query("SELECT r.restaurantCode, AVG(r.rating) FROM Review r WHERE r.restaurantCode IN :restaurantCodes GROUP BY r.restaurantCode")
-//    List<Object[]> findAvgRatingByRestaurantCodes(@Param("restaurantCodes") List<Integer> restaurantCodes);
+//    Review findByReviewCode(int reviewCode);
+    Review findByReviewCode(int reviewCode);
 
-//    @Query("SELECT r.reviewCode, r.reviewDate, r.restaurantCode ,r.reviewContent FROM Review r WHERE")
+//    @Modifying
+//    @Query("UPDATE Review r SET r.reviewContent = :newReveiwContents, r.reviewDate = :newReviewDate, r.rating = :newRating WHERE r.reviewCode = :reviewCode")
+//    void updateReviewByReviewCode(@Param("reviewContents") String newReveiwContents
+//    , @Param("newReviewDate") Date newReviewDate, @Param("newRating") Integer newRating);
+
 
 }

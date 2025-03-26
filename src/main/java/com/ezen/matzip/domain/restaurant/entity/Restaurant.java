@@ -3,6 +3,7 @@ package com.ezen.matzip.domain.restaurant.entity;
 import com.ezen.matzip.domain.review.entity.Review;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -52,5 +53,10 @@ public class Restaurant {
     private List<Keyword> keywords;
 
 
-
+    @Builder
+    public Restaurant(int restaurantCode, String restaurantName, int businessCode) {
+        this.restaurantCode = restaurantCode;
+        this.restaurantName = restaurantName;
+        this.businessCode = businessCode;
+    }
 }

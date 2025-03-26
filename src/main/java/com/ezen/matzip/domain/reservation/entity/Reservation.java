@@ -1,17 +1,21 @@
-package com.ezen.matzip.domain.reservation.dto;
+package com.ezen.matzip.domain.reservation.entity;
 
+import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.NoArgsConstructor;
 
 import java.sql.Time;
 import java.util.Date;
 
-@Setter
+@Entity
+@Table(name = "reservation")
 @Getter
-@ToString
-public class ReservationDTO {
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class Reservation {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int reservationCode;
     private Date reservationDate;
     private Time reservationTime;
@@ -22,4 +26,5 @@ public class ReservationDTO {
         방문예정, 방문완료
     }
     private String recipe;
+
 }
