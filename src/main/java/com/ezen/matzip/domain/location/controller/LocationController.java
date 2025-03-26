@@ -1,6 +1,12 @@
 package com.ezen.matzip.domain.location.controller;
 
+import org.springframework.stereotype.Controller;
+
+@Controller
 public class LocationController {
+
+
+
 }
 
 //location/ → 위치 기반 기능 (근처 맛집 div, 가까운 곳 찾기)
