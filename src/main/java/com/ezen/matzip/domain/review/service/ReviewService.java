@@ -1,5 +1,8 @@
 package com.ezen.matzip.domain.review.service;
 
+import com.ezen.matzip.domain.reservation.dto.ReservationDTO;
+import com.ezen.matzip.domain.reservation.entity.Reservation;
+import com.ezen.matzip.domain.reservation.repository.ReservationRepository;
 import com.ezen.matzip.domain.restaurant.entity.Restaurant;
 import com.ezen.matzip.domain.restaurant.repository.RestaurantRepository;
 import com.ezen.matzip.domain.review.dto.ReviewDTO;
@@ -21,6 +24,7 @@ public class ReviewService {
 
     private final ReviewRepository reviewRepository;
     private final ReviewImageRepository reviewImageRepository;
+    private final ReservationRepository reservationRepository;
     private final ModelMapper modelMapper;
 
     public List<ReviewDTO> findReviewByUserCode(int userCode) {
@@ -73,4 +77,16 @@ public class ReviewService {
         }
         return reviews;
     }
+
+
+    public List<ReservationDTO> findReservationByUserCode(int userCode){
+        List<Reservation> reservations = reservationRepository.findReservationByUserCode(userCode);
+
+        return reservations.stream()
+                .map(reservation -> modelMapper.map(reservation, ReservationDTO.class)).toList();
+    }
+
+//    public List<ReservationDTO> findReservationByUserCode(int userCode) {
+//        List<ReservationDTO> reservations = findReservationByUserCode(userCode);
+//    }
 }

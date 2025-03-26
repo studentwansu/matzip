@@ -1,5 +1,7 @@
 package com.ezen.matzip.domain.review.controller;
 
+import com.ezen.matzip.domain.reservation.dto.ReservationDTO;
+import com.ezen.matzip.domain.reservation.entity.Reservation;
 import com.ezen.matzip.domain.review.dto.ReviewDTO;
 import com.ezen.matzip.domain.review.entity.ReviewImage;
 import com.ezen.matzip.domain.review.service.ReviewService;
@@ -18,7 +20,7 @@ import java.util.List;
 
 @Slf4j
 @Controller
-@RequestMapping("review")
+@RequestMapping("/review")
 @RequiredArgsConstructor
 public class ReviewController {
 
@@ -64,7 +66,19 @@ public class ReviewController {
         return "redirect:/review/" + reviewDTO.getUserCode();
     }
 
+    @GetMapping("/write/{userCode}")
+    public String findReservation(@PathVariable int userCode, Model model) {
+        List<ReservationDTO> resultReservation = reviewService.findReservationByUserCode(userCode);
+        model.addAttribute("reservation", resultReservation);
 
+        return "review/review_write";  // 앞에 슬래시 제거
+    }
+
+    @PostMapping("/save")
+    public String saveReview(@ModelAttribute ReviewDTO reviewDTO) {
+        reviewService.modifyReview(reviewDTO);
+        return "redirect:/review/" + reviewDTO.getUserCode();
+    }
 
 }
 

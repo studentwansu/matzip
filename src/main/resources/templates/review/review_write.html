@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <table>
+        <tr th:each="reservation : ${reservation}">
+            <td th:text="${reservation.reservationCode}"></td>
+            <td th:text="${reservation.restaurantCode}"></td>
+            <td th:text="${reservation.userCode}"></td>
+    <!--        <td th:text="${reservation.userCode}"></td>-->
+    <!--        <td th:text="${review.reviewContent}"></td>-->
+            <td>
+                <form action="/review/save" method="post">
+                    <input type="hidden" name="reservationCode" th:value="${reservation.reservationCode}" />
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                    <input type="text" name="reviewContent">
+                    <input type="submit" class="edit-btn" th:onclick="openModal(${reservation.reservationCode})">
+                </form>
+            </td>
+        </tr>
+    </table>
+
+
+
+
+</body>
+</html>
