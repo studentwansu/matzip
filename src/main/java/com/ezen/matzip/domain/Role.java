@@ -7,4 +7,4 @@ public enum Role {
     ADMIN       //관리자
 }
 
-//권한
+
