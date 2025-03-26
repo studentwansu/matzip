@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>review_list</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poor+Story&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/style_user.css">
+</head>
+
+<body>
+
+<header>
+    <div class="user-header">
+        <a href="">
+            <img class="logo" src="/static/img/logo.png">
+        </a>
+
+        <div class="search-container">
+            <div class="search-word">
+                <input type="text" placeholder="검색어를 입력하세요...">
+            </div>
+
+            <div class="popular-searches">
+                <span>인기검색어1</span>
+                <span>인기검색어2</span>
+                <span>인기검색어3</span>
+                <span>인기검색어4</span>
+                <span>인기검색어5</span>
+                <a href="" class="nearby">가까운 곳 찾기</a>
+                <a href="" class="game">
+                    <img id="game" src="/static/img/gamepad-icon.png" alt="게임패드"></a>
+            </div>
+
+        </div>
+
+        <!-- menu -->
+        <div class="menu">
+            <a href="" class="login">로그인</a>
+            <a href="" class="signup">회원가입</a>
+            <button class="menu-btn">
+                <img src="/static/img/menu-icon.png" alt="마이페이지">
+            </button>
+        </div>
+    </div>
+</header>
+
+    <!-- main -->
+    <div class="body-section">
+        <!-- 사이드바 -->
+        <aside class="sidebar">
+            <h3>마이페이지</h3>
+            <ul>
+                <li><a href="#">내 정보</a></li>
+                <li><a href="#">예약 목록</a></li>
+                <li><a href="#">이용 목록</a></li>
+                <li><a href="#">북마크 목록</a></li>
+                <li><a href="#">작성 리뷰 목록</a></li>
+            </ul>
+        </aside>
+        <!-- 북마크 리스트 -->
+        <section class="container-bookmarklist">
+            <h2 class="container-title">북마크 목록</h2>
+            <div class="line-yellow"></div>
+            <table class="table-class3">
+                <thead>
+                    <tr>
+                        <th>번호</th>
+                        <th>식당</th>
+                        <th>대표메뉴</th>
+                        <th>위치</th>
+                        <th>관리</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>온량</td>
+                        <td>파스타, 스테이크</td>
+                        <td>서울 성동구</td>
+                        <td><button class="delete-btn">삭제</button></td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>르프리크</td>
+                        <td>햄버거, 맥앤치즈</td>
+                        <td>서울 성동구</td>
+                        <td><button class="delete-btn">삭제</button></td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>르프리크</td>
+                        <td>햄버거, 맥앤치즈</td>
+                        <td>서울 성동구</td>
+                        <td><button class="delete-btn">삭제</button></td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>르프리크</td>
+                        <td>햄버거, 맥앤치즈</td>
+                        <td>서울 성동구</td>
+                        <td><button class="delete-btn">삭제</button></td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>르프리크</td>
+                        <td>햄버거, 맥앤치즈</td>
+                        <td>서울 성동구</td>
+                        <td><button class="delete-btn">삭제</button></td>
+                    </tr>
+<!--                    <tr>-->
+<!--                        <td>6</td>-->
+<!--                        <td>르프리크</td>-->
+<!--                        <td>햄버거, 맥앤치즈</td>-->
+<!--                        <td>서울 성동구</td>-->
+<!--                        <td><button class="delete-btn">삭제</button></td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <td>7</td>-->
+<!--                        <td>르프리크</td>-->
+<!--                        <td>햄버거, 맥앤치즈</td>-->
+<!--                        <td>서울 성동구</td>-->
+<!--                        <td><button class="delete-btn">삭제</button></td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <td>8</td>-->
+<!--                        <td>르프리크</td>-->
+<!--                        <td>햄버거, 맥앤치즈</td>-->
+<!--                        <td>서울 성동구</td>-->
+<!--                        <td><button class="delete-btn">삭제</button></td>-->
+<!--                    </tr>-->
+                </tbody>
+            </table>
+
+            <!-- 페이지네이션 -->
+            <div class="pagination">
+                <a href="#">1</a>
+                <a href="#">2</a>
+                <a href="#">3</a>
+            </div>
+        </section>
+    </div>
+    <!-- footer -->
+    <footer>
+        <div class="footer-container">
+            <p>Copyright 2025 맛zip All Right Reserved</p>
+            <ul class="footer-menu">
+                <li><a href="#">공지사항</a></li>
+                <li><a href="#">FAQ</a></li>
+                <li><a href="#">Q&A</a></li>
+            </ul>
+        </div>
+    </footer>
+
+</body>
+
+</html>

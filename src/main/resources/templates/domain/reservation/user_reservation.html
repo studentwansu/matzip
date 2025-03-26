@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>reservation</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poor+Story&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poor Story", system-ui;
+            font-weight: 400;
+            font-style: normal;
+
+
+        }
+
+
+        /* header */
+        header {
+            width: 100%;
+            height: 180px;
+            background-color: #fff3e0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+        }
+
+        .header-container {
+            width: 100%;
+            max-width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            
+
+        }
+
+        /* logo */
+        .logo img {}
+
+        /* search */
+        .search-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+            position: relative;
+
+        }
+
+        .search-container input {
+            width: 500px;
+            height: 40px;
+            padding: 25px;
+            border: 1px solid #ccc;
+            border-radius: 20px;
+            outline: none;
+
+        }
+
+        .search-container .search-btn {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .search-container .search-btn img {
+            width: 25px;
+        }
+
+        /* popular-searches */
+        .popular-searches {
+            display: flex;
+            gap: 10px;
+            margin-top: 5px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .popular-searches .nearby {
+            color: #fa4032;
+            font-weight: bold;
+        }
+
+        /* menu */
+        .menu {
+            display: flex;
+            align-items: flex-end;
+            padding: 25px;
+            margin-bottom: 120px;
+            gap: 10px;
+        }
+
+        .menu a {
+            text-decoration: none;
+            color: #000;
+            font-size: 13px;
+        }
+
+        .menu .login {
+            padding: 7px 20px;
+            border: 1px solid #f58031;
+            border-radius: 10px;
+
+        }
+
+        .menu .signup {
+            background-color: #fa4032;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 10px;
+            margin-left: 5px;
+        }
+
+        .menu .menu-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        .menu .menu-btn img {
+            width: 30px;
+
+        }
+
+        #game {
+            width: 25px;
+        }
+
+        /* main */
+        .reservation-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+            margin-top: 10px;
+            background-color: #fff3e0 ;
+        }
+
+        /* calendar */
+        .calendar-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #fa4032;
+            width: 350px;
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            align-items: center;
+            font-size: 18px;
+            font-weight: bold;
+            color: #fa4032;
+        }
+
+        .calendar-header button {
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+
+        .calendar {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        .calendar th,
+        .calendar td {
+            width: 40px;
+            height: 40px;
+            text-align: center;
+            font-size: 16px;
+            cursor: pointer;
+            border: 1px solid #ccc;
+        }
+
+
+        .calendar td:not(.empty):hover {
+            background: #f58031;
+            color: white;
+        }
+
+
+        .selected-date {
+            background: #fa4032 !important;
+            color: white !important;
+        }
+
+
+        .reservation-options {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #f58031;
+            width: 300px;
+        }
+
+
+        .option {
+            width: 100%;
+            margin-bottom: 15px;
+        }
+
+        .option label {
+            display: flex;
+            align-items: center;
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .icon {
+            margin-right: 8px;
+        }
+
+
+        select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            margin-top: 15px;
+        }
+
+        .reserve-btn {
+            background: #fa4032;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 48%;
+        }
+
+        .cancel-btn {
+            background: #ddd;
+            color: black;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 48%;
+        }
+
+
+        .reserve-btn:hover {
+            background: #e03022;
+        }
+
+        .cancel-btn:hover {
+            background: #bbb;
+        }
+
+
+        /* foorer */
+        /* foorer */
+        footer {
+            width: 100%;
+            background: #f58031;
+            color: white;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            position: absolute;
+            bottom: 0;
+        }
+
+        /* Footer container */
+        .footer-container {
+            width: 90%;
+            max-width: 1440px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-menu {
+            list-style: none;
+            display: flex;
+            gap: 100px;
+        }
+
+        .footer-menu li a {
+            text-decoration: none;
+            color: white;
+            font-size: 16px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- header -->
+        <div class="header-container">
+            <!-- logo -->
+            <div class="logo">
+                <img src="logo.png" alt="맛.zip 로고">
+            </div>
+
+            <!-- search -->
+            <div class="search-container">
+                <div class="search-word">
+                    <input type="text" placeholder="검색어를 입력하세요...">
+                </div>
+
+                <div class="popular-searches">
+                    <span>인기검색어1</span>
+                    <span>인기검색어2</span>
+                    <span>인기검색어3</span>
+                    <span>인기검색어4</span>
+                    <span>인기검색어5</span>
+                    <a href="" class="nearby">가까운 곳 찾기</a>
+                    <a href="" class="game">
+                        <img id="game" src="gamepad-icon.png" alt="게임패드"></a>
+                </div>
+
+            </div>
+
+            <!-- menu -->
+            <div class="menu">
+                <a href="" class="login">로그인</a>
+                <a href="" class="signup">회원가입</a>
+                <button class="menu-btn">
+                    <img src="menu-icon.png" alt="마이페이지">
+                </button>
+            </div>
+        </div>
+
+
+    <!-- main -->
+    <main class="main-container">
+        <div class="reservation-container">
+            <!-- 달력 영역 -->
+            <div class="calendar-container">
+                <div class="calendar-header">
+                    <button id="prevMonth">◀</button>
+                    <h2 id="currentMonth"></h2>
+                    <button id="nextMonth">▶</button>
+                </div>
+                <table class="calendar">
+                    <thead>
+                        <tr>
+                            <th>Mon</th>
+                            <th>Tue</th>
+                            <th>Wed</th>
+                            <th>Thu</th>
+                            <th>Fri</th>
+                            <th>Sat</th>
+                            <th>Sun</th>
+                        </tr>
+                    </thead>
+                    <tbody id="calendar-body">
+                        <!-- JavaScript로 날짜 생성 -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- 예약 선택 영역 -->
+            <div class="reservation-options">
+                <div class="option">
+                    <label for="people"><i class="icon">👤</i> 인원 수 선택</label>
+                    <select id="people">
+                        <option value="">인원 수 선택</option>
+                        <option value="1">1명</option>
+                        <option value="2">2명</option>
+                        <option value="3">3명</option>
+                        <option value="4">4명</option>
+                        <option value="5">5명 이상</option>
+                    </select>
+                </div>
+
+                <div class="option">
+                    <label for="time"><i class="icon">⏰</i> 시간 선택</label>
+                    <select id="time">
+                        <option value="">시간 선택</option>
+                        <!-- 11:00 AM ~ 11:00 PM -->
+                        <script>
+                            for (let hour = 11; hour <= 23; hour++) {
+                                document.write(`<option value="${hour}:00">${hour}:00</option>`);
+                            }
+                        </script>
+                    </select>
+                </div>
+
+                <!-- 선택한 날짜 표시 -->
+                <p id="selected-date">선택한 날짜: 없음</p>
+
+                <!-- 버튼 영역 -->
+                <div class="button-container">
+                    <button class="reserve-btn">예약하기</button>
+                    <button class="cancel-btn">뒤로가기</button>
+                </div>
+            </div>
+        </div>
+    </main>
+    <!-- footer -->
+    <footer>
+        <div class="footer-container">
+            <p>Copyright 2025 맛zip All Right Reserved</p>
+            <ul class="footer-menu">
+                <li><a href="#">공지사항</a></li>
+                <li><a href="#">FAQ</a></li>
+                <li><a href="#">Q&A</a></li>
+            </ul>
+        </div>
+    </footer>
+    <script>
+        let today = new Date();
+        let currentMonth = today.getMonth();
+        let currentYear = today.getFullYear();
+
+        const monthNames = ["January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December"];
+
+        const daysInMonth = (year, month) => new Date(year, month + 1, 0).getDate();
+
+        const renderCalendar = () => {
+            document.getElementById("currentMonth").textContent = `${currentYear} ${monthNames[currentMonth]}`;
+
+            let firstDay = new Date(currentYear, currentMonth, 1).getDay();
+            firstDay = firstDay === 0 ? 6 : firstDay - 1; // 월요일부터 시작하도록 조정
+
+            let totalDays = daysInMonth(currentYear, currentMonth);
+            let calendarBody = document.getElementById("calendar-body");
+
+            calendarBody.innerHTML = "";
+
+            let date = 1;
+            for (let i = 0; i < 6; i++) {
+                let row = document.createElement("tr");
+
+                for (let j = 0; j < 7; j++) {
+                    let cell = document.createElement("td");
+                    // console.log(cell);
+                    if (i === 0 && j < firstDay) {
+                        cell.classList.add("empty");
+                    } else if (date > totalDays) {
+                        break;
+                    } else {
+                        cell.textContent = date;
+                        cell.addEventListener("click", function () {
+                            document.querySelectorAll("td").forEach(td => td.classList.remove("selected-date"));
+                            cell.classList.add("selected-date");
+                            let selectedDate = cell.textContent;
+                            console.log(selectedDate)
+                            document.getElementById("selected-date").textContent = `선택한 날짜: ${currentYear}-${currentMonth + 1}-${selectedDate}`;
+                        });
+                        date++;
+                    }
+
+                    row.appendChild(cell);
+                }
+
+                calendarBody.appendChild(row);
+            }
+        };
+
+        // 이전, 다음 달 이동
+        document.getElementById("prevMonth").addEventListener("click", () => {
+            currentMonth--;
+            if (currentMonth < 0) {
+                currentMonth = 11;
+                currentYear--;
+            }
+            renderCalendar();
+        });
+
+        document.getElementById("nextMonth").addEventListener("click", () => {
+            currentMonth++;
+            if (currentMonth > 11) {
+                currentMonth = 0;
+                currentYear++;
+            }
+            renderCalendar();
+        });
+
+        // 초기 달력 렌더링
+        renderCalendar();
+    </script>
+</body>
+
+</html>

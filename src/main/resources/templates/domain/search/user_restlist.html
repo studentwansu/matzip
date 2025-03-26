@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>restaurant_list</title>
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Poor+Story&display=swap" rel="stylesheet">
+    <link href="/css/style_user.css" rel="stylesheet">
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=fd7786d297e2d4aaab4aa8b6bbb06b88&libraries=services"></script>
+
+</head>
+
+<body>
+
+<header>
+    <div class="user-header">
+        <a href="">
+            <img class="logo" src="/img/logo.png">
+        </a>
+
+        <div class="search-container">
+            <div class="search-word">
+                <input placeholder="검색어를 입력하세요..." type="text">
+            </div>
+
+            <div class="popular-searches">
+                <span>인기검색어1</span>
+                <span>인기검색어2</span>
+                <span>인기검색어3</span>
+                <span>인기검색어4</span>
+                <span>인기검색어5</span>
+                <a class="nearby" href="">가까운 곳 찾기</a>
+                <a class="game" href="">
+                    <img alt="게임패드" id="game" src="/img/gamepad-icon.png"></a>
+            </div>
+
+        </div>
+
+        <!-- menu -->
+        <div class="menu">
+            <a class="login" href="">로그인</a>
+            <a class="signup" href="">회원가입</a>
+            <button class="menu-btn">
+                <img alt="마이페이지" src="/img/menu-icon.png">
+            </button>
+        </div>
+    </div>
+</header>
+
+<main>
+    <div class="body-section">
+        <!--            <aside class="filter-sidebar">-->
+        <!--                <h3>검색</h3>-->
+        <!--                <ul class="category-list">-->
+        <!--                    <li><input type="checkbox"> 한식</li>-->
+        <!--                    <li><input type="checkbox"> 중식</li>-->
+        <!--                    <li><input type="checkbox"> 일식</li>-->
+        <!--                    <li><input type="checkbox"> 분식</li>-->
+        <!--                    <li><input type="checkbox"> 치킨</li>-->
+        <!--                    <li><input type="checkbox"> 내 나라</li>-->
+        <!--                    <li><input type="checkbox"> 디저트</li>-->
+        <!--                    <li><input type="checkbox"> 양식</li>-->
+        <!--                    <li><input type="checkbox"> 샐러드</li>-->
+        <!--                    <li><input type="checkbox"> 비건</li>-->
+        <!--                    <li><input type="checkbox"> 인도음식</li>-->
+        <!--                    <li><input type="checkbox"> 태국음식</li>-->
+        <!--                    <li><input type="checkbox"> 멕시코음식</li>-->
+        <!--                    <li><input type="checkbox"> 패스트푸드</li>-->
+        <!--                </ul>-->
+        <!--            </aside>-->
+        <div class="restaurant-list" th:each="restaurant: ${restaurantList}">
+            <div class="restaurant-card">
+                <div class="restaurant-info">
+                    <a style="text-decoration: none; color: inherit; display: block; cursor: pointer;" th:href="@{/store/storeinfo(restaurantCode=${restaurant.restaurantCode})}">
+                    <h3 th:text="${restaurant.restaurantName}"></h3>
+                    <p>⭐⭐⭐⭐⭐</p>
+                    <p th:text="|${restaurant.restaurantMenus.get(0).getMenuName()}, ${restaurant.restaurantMenus.get(1).getMenuName()}|"></p>
+                    <p>
+                        <span th:each="keyword, iterStat : ${restaurant.restaurantKeywords}"
+                              th:text="'#' + ${keyword} + ${!iterStat.last ? ', ' : ''}">
+                        </span>
+                    </p>
+                    </a>
+                </div>
+                <div class="restaurant-images">
+                    <img alt="음식 사진" src="/img/example.png">
+                    <img alt="음식 사진" src="/img/example.png">
+                </div>
+                <div class="restaurant-icons">
+                    <a href="/bookmark/bookmark.html">
+                        <img alt="북마크" class="icon" src="/img/bookmark.png">
+                    </a>
+                    <a href="restaurant-detail.html">
+                        <img alt="이동" class="icon" src="/img/share.png">
+                    </a>
+                </div>
+            </div>
+<!--        </a>-->
+            </div>
+        </div>
+
+    <!-- 페이지네이션 -->
+    <div class="pagination">
+        <a href="#">1</a>
+        <a href="#">2</a>
+        <a href="#">3</a>
+    </div>
+</main>
+
+<!-- footer -->
+<footer>
+    <div class="footer-container">
+        <p>Copyright 2025 맛zip All Right Reserved</p>
+        <ul class="footer-menu">
+            <li><a href="#">공지사항</a></li>
+            <li><a href="#">FAQ</a></li>
+            <li><a href="#">Q&A</a></li>
+        </ul>
+    </div>
+</footer>
+<script src="/js/myLocation.js"></script>
+
+</body>
+
+</html>
