@@ -7,7 +7,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class RestaurantStarKeywordDTO {
+public class KeywordDTO {
     private int restaurantKeywordCode;
     private int restaurantCode;
     private String restaurantKeyword;

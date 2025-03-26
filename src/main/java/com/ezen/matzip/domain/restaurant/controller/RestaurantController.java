@@ -38,12 +38,12 @@ public class RestaurantController {
         return "test/result";
     }
 
-    @GetMapping("/test/result2")
+    @GetMapping("/store/search")
     public String findByMyLocation(@RequestParam String keyword, Model model)
     {
         List<RestaurantDTO> restaurants = restaurantService.findByKeywordOrderByScore(keyword);
         model.addAttribute("restaurantList", restaurants);
-        return "test/result";
+        return "domain/search/user_restlist";
     }
 
     @GetMapping("/store/storeinfo")
@@ -51,7 +51,7 @@ public class RestaurantController {
     {
         String location = restaurantService.findLocationByRestaurantCode(restaurantCode);
         model.addAttribute("restaurantLocation", location);
-        return "/store/storeinfo";
+        return "/domain/restaurant/store_restinfo";
     }
 
 }
