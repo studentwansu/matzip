@@ -158,6 +158,46 @@ main {
     background-color: #fff3e0;
 
 }
+/* 사이드바 스타일 */
+.sidebar {
+    width:19vh;
+    height:27vh;
+    background-color: white;
+    border: 1px solid #747474;
+    border-radius: 2vh;
+    position:absolute;
+    left:10%;
+    justify-items: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px;
+}
+
+.sidebar h3 {
+    background: #fa4032;
+    color: white;
+    padding: 10px;
+    border-radius: 1vh;
+    text-align: center;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 10px;
+}
+
+.sidebar ul li {
+    margin: 10px 0;
+}
+
+.sidebar ul li a {
+    text-decoration: none;
+    color: black;
+    font-size: 14px;
+}
+
 
 /* restaurant-list */
 .restaurant-list {
@@ -278,7 +318,8 @@ main {
 
 .container-title {
     align-content: center;
-    align-items:center;
+    align-items: center;
+    justify-content: center;
     margin:1vh;
     display:flex;
     gap:2vh;
@@ -289,6 +330,13 @@ main {
     margin:1vh;
 }
 
+.line-yellow {
+    width:80vh;
+    height:1px;
+    background-color: #FAB12F;
+    margin:0.5vh;
+    /* margin-bottom:1vh; */
+}
 
 .line-yellow-100 {
     width:100vh;
@@ -339,6 +387,25 @@ main {
     border-bottom: none;
     padding:0.5vh;
 }
+
+.table-class3 {
+    width: 80vh;
+    border-collapse: collapse;
+    text-align: center;
+    font-size: 1.6vh;
+    color: black;
+}
+
+.table-class3 th, .table-class3 td {
+    border-bottom: 1px solid rgba(128, 128, 128, 0.5);
+    padding:1vh;
+}
+
+.table-class3 tr:last-child td {
+    border-bottom: none;
+    padding:1vh;
+}
+
 
 .container-section {
     width: 110vh;
@@ -435,12 +502,32 @@ main {
     margin-bottom: 5%;
     padding-left: 2.5vh;
 }
+
+.container-bookmarklist {
+    width: 88vh;
+    height: 52vh;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+    border: 1px solid #747474;
+    border-radius: 2vh;
+    margin-bottom: 5%;
+}
 .container-textarea {
     margin-top:1vh;
     display: inline-block;
     font-size:1.6vh;
 
 }
+
+.pagination {
+    position:relative;
+    top:17vh;
+    text-align: center;
+    /*margin-bottom: 4vh;*/
+}
+
 
 .user-input {
     background-color: #d9d9d9;
