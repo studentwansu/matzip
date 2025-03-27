@@ -7,4 +7,10 @@ import java.util.Optional;
 
 public interface BusinessRepository extends JpaRepository<Business, Integer> {
     Optional<Business> findByUserId(String userId);
+
+    boolean existsByUserId(String userId);
+    boolean existsByEmail(String email);
+    boolean existsByBusinessNumber(String businessNumber);
+    boolean existsByRestaurantName(String restaurantName);
+    boolean existsByPhoneNumber(String phoneNumber);
 }

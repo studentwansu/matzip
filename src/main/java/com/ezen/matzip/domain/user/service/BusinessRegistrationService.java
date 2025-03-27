@@ -24,6 +24,18 @@ public class BusinessRegistrationService {
         if (businessRepository.findByUserId(dto.getUserId()).isPresent()) {
             throw new RuntimeException("이미 존재하는 아이디입니다.");
         }
+        if (businessRepository.existsByEmail(dto.getEmail())) {
+            throw new RuntimeException("이미 존재하는 이메일입니다.");
+        }
+        if (businessRepository.existsByBusinessNumber(dto.getBusinessNumber())) {
+            throw new RuntimeException("이미 등록된 사업자 번호입니다.");
+        }
+        if (businessRepository.existsByRestaurantName(dto.getRestaurantName())) {
+            throw new RuntimeException("이미 존재하는 상호명입니다.");
+        }
+        if (businessRepository.existsByPhoneNumber(dto.getPhoneNumber())) {
+            throw new RuntimeException("이미 존재하는 전화번호입니다.");
+        }
 
         Business business = Business.builder()
                 .userId(dto.getUserId())

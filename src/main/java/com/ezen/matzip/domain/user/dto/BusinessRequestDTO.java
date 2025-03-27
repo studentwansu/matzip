@@ -3,11 +3,14 @@ package com.ezen.matzip.domain.user.dto;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
 public class BusinessRequestDTO {
 
     @NotBlank(message = "아이디는 필수 입력 항목입니다.")

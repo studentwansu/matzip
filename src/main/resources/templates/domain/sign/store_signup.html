@@ -10,6 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poor+Story&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="CSS/header_footer.css">
     <link rel="stylesheet" href="CSS/main.css">
+</head>
 
 <body>
     <!-- header -->
@@ -57,7 +58,7 @@
             <h2>사업자 회원가입</h2>
 
             <!-- 폼 시작: action URL은 컨트롤러의 POST 매핑 경로로 지정 -->
-            <form action="/signup/business" method="post">
+            <form th:action="@{/signup/business}" method="post">
                 <div class="signup_full">
                     <!-- signup_left -->
                     <div class="signup_left">

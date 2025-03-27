@@ -74,8 +74,11 @@ public class SingupController {
     }
 
     @PostMapping("/signup/business")
-    public String registerBusiness(@Valid @ModelAttribute("businessRequestDTO") BusinessRequestDTO businessRequestDTO, BindingResult bindingResult, Model model) {
+    public String registerBusiness(@Valid @ModelAttribute("businessRequestDTO") BusinessRequestDTO businessRequestDTO,
+                                   BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
+            // 유효성 검사 오류 메시지를 콘솔에 출력
+            bindingResult.getAllErrors().forEach(error -> System.out.println(error.getDefaultMessage()));
             return "domain/sign/store_signup";
         }
         try {
@@ -84,6 +87,7 @@ public class SingupController {
             model.addAttribute("errorMessage", e.getMessage());
             return "domain/sign/store_signup";
         }
-        return "redirect:/main";
+        // 회원가입 성공 후 로그인 페이지로 리다이렉트
+        return "redirect:/login";
     }
 }
