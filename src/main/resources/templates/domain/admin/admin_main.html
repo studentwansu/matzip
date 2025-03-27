@@ -25,11 +25,12 @@
                 <p class="navi-font" th:text="${#authentication.principal.username} + ' 관리자님, 환영합니다. 😊'">
                     관리자님, 환영합니다. 😊
                 </p>
-                <a href="">
-                    <button class="redbutton3 redbutton-font">
+                <form th:action="@{/logout}" method="post">
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                    <button type="submit" class="redbutton3 redbutton-font">
                         로그아웃
                     </button>
-                </a>
+                </form>
             </div>
 
         </section>
