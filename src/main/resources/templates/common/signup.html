@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>signup</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poor+Story&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="CSS/header_footer.css">
+    <link rel="stylesheet" href="CSS/signup.css">
+</head>
+
+<body>
+
+    <!-- header -->
+    <header>
+        <div class="header-container">
+            <!-- logo -->
+            <div class="logo">
+                <a href="메인.html"><img src="images/맛zip.png" alt="맛.zip 로고"></a>
+            </div>
+
+            <!-- search -->
+            <div class="search-container">
+                <div class="search-word">
+                    <input type="text" placeholder="검색어를 입력하세요...">
+                </div>
+
+                <div class="popular-searches">
+                    <span>인기검색어1</span>
+                    <span>인기검색어2</span>
+                    <span>인기검색어3</span>
+                    <span>인기검색어4</span>
+                    <span>인기검색어5</span>
+                    <a href="" class="nearby">가까운 곳 찾기</a>
+                    <a href="" class="game">
+                        <img id="game" src="images/gamepad-icon.png" alt="게임패드"></a>
+                </div>
+
+            </div>
+
+            <!-- menu -->
+            <div class="menu">
+                <a href="로그인.html" class="login">로그인</a>
+                <a href="회원가입.html" class="signup">회원가입</a>
+                <button class="menu-btn">
+                    <img src="images/menu-icon.png" alt="마이페이지">
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- main -->
+    <div class="main-container">
+        <section class="signup_container">
+            <h2>회원가입</h2>
+            <div class="signup_id_pwd">
+                <!-- 일반회원 회원가입 버튼 -->
+                <button class="signup_btn">
+                    <a th:href="@{/signup/user}">일반회원 회원가입</a>
+                </button>
+
+                <!-- 사업자 회원가입 버튼 -->
+                <button class="signup_btn">
+                    <a th:href="@{/signup/business}">사업자 회원가입</a>
+                </button>
+            </div>
+        </section>
+    </div>
+
+    <!-- footer -->
+    <footer>
+        <div class="footer-container">
+            <p>Copyright 2025 맛zip All Right Reserved</p>
+            <ul class="footer-menu">
+                <li><a href="#">공지사항</a></li>
+                <li><a href="#">FAQ</a></li>
+                <li><a href="#">Q&A</a></li>
+            </ul>
+        </div>
+    </footer>
+
+</body>
+</html>

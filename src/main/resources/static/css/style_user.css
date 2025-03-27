@@ -1,0 +1,422 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poor Story", system-ui;
+    font-weight: 400;
+    font-style: normal;
+
+}
+/* 링크 스타일 */
+a {
+    text-decoration: none; /* 밑줄 제거 */
+    color: black; /* 글자색 변경 */
+    font-size: 1.6vh;
+}
+
+button {
+    box-shadow: none;
+    border: none;
+    outline: none;
+    background: #ddd;
+}
+
+pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+
+/* header */
+.user-header {
+    width: 100%;
+    height: 26vh;
+    background-color: #fff3e0;
+    display: flex;
+    max-width: 100%;
+    align-items: center;
+    justify-content: space-between;
+
+}
+
+/* logo */
+.logo {
+    position: relative;
+    left: 8vh;
+}
+
+/* search */
+.search-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    position: relative;
+
+}
+
+.search-container input {
+    width: 500px;
+    height: 40px;
+    padding: 25px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    outline: none;
+
+}
+
+.search-container .search-btn {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.search-container .search-btn img {
+    width: 25px;
+}
+
+/* popular-searches */
+.popular-searches {
+    display: flex;
+    gap: 10px;
+    margin-top: 5px;
+    font-size: 14px;
+    color: #666;
+}
+
+.popular-searches .nearby {
+    color: #fa4032;
+    font-weight: bold;
+}
+
+/* menu */
+.menu {
+    display: flex;
+    align-items: flex-end;
+    padding: 25px;
+    margin-bottom: 120px;
+    gap: 10px;
+}
+
+.menu a {
+    text-decoration: none;
+    color: #000;
+    font-size: 13px;
+}
+
+.menu .login {
+    padding: 7px 20px;
+    border: 1px solid #f58031;
+    border-radius: 10px;
+
+}
+
+.menu .signup {
+    background-color: #fa4032;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 10px;
+    margin-left: 5px;
+}
+
+.menu .menu-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.menu .menu-btn img {
+    width: 30px;
+
+}
+
+#game {
+    width: 25px;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    background-color: #fff3e0;
+
+}
+
+/* main */
+
+.body-section {
+    width: 100%;
+    min-height: 67.5vh;
+    position: relative;
+    background-color: #fff3e0;
+    display: flex;
+    /*justify-content: center;*/
+    align-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.container-main {
+    padding: 2vh;
+    width: 110vh;
+    height: 30vh;
+    background: white;
+    border-radius: 2vh;
+    border: 1px solid #d4d4d4;
+    margin-bottom:5vh;
+
+}
+
+.food-list {
+    display: flex;
+    justify-content: space-around;
+    margin:2vh;
+}
+
+.food-item {
+    position: relative;
+    display: inline-block;
+    text-align: center;
+}
+
+.food-item img {
+    width: 150px;
+    height: 150px;
+    border-radius: 10px;
+}
+
+
+.container {
+    /*margin: 50px auto;*/
+    padding: 20px;
+    width: 70%;
+    min-height: 27vh;
+    background: white;
+    border-radius: 10px;
+    border: 0.5px solid black;
+}
+
+.container-title {
+    align-content: center;
+    align-items:center;
+    margin:1vh;
+    display:flex;
+    gap:2vh;
+}
+
+.container-content {
+    font-size:2vh;
+    margin:1vh;
+}
+
+
+.line-yellow-100 {
+    width:100vh;
+    height:1px;
+    background-color: #FAB12F;
+    margin:0.5vh;
+    /* margin-bottom:1vh; */
+}
+
+.line-grey-100 {
+    width:100vh;
+    height:1px;
+    background-color: #747474;
+    opacity: 30%;
+    margin-top:1vh;
+    transform: translate(3.5%, 3.5%);
+}
+
+.line-grey2-100 {
+    width:100vh;
+    height:1px;
+    background-color: #747474;
+    opacity: 30%;
+    margin:1vh;
+}
+
+.user-table-class {
+    width: 100vh;
+    border-collapse: collapse;
+    font-size: 2vh;
+    color: black;
+}
+
+.table-class2 {
+    width: 100vh;
+    border-collapse: collapse;
+    /*font-family: "Poor Story";*/
+    font-size: 1.6vh;
+    color: black;
+}
+
+.table-class2 th, .table-class2 td {
+    border-bottom: 1px solid rgba(128, 128, 128, 0.5);
+    padding:0.5vh;
+}
+
+.table-class2 tr:last-child td {
+    border-bottom: none;
+    padding:0.5vh;
+}
+
+.container-section {
+    width: 110vh;
+    min-height: 27vh;
+    align-items: center;
+    background-color: white;
+    border: 1px solid #747474;
+    border-radius: 2vh;
+    margin-bottom: 5%;
+    padding-left: 3.5vh;
+}
+
+.container-font1 {
+    font-size: 3vh;
+    color: black;
+    align-content: center;
+}
+
+.container-content {
+    font-size:1.6vh;
+}
+
+
+.redbutton-font {
+    font-size: 2vh;
+    color: white;
+}
+
+
+
+.buttonbox3 {
+    position: absolute;
+    top: 53vh;
+    left: 150vh;
+    align-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+}
+
+.buttonbox4 {
+    position: absolute;
+    right: 3vh;
+    bottom: 10%;
+    align-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+}
+
+.buttonbox5 {
+    position: absolute;
+    top: 50vh;
+    left: 130vh;
+    align-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+}
+.redbutton3 {
+    width: 8vh;
+    height: 4vh;
+    background-color: #FA4032;
+    border-radius: 1vh;
+    margin: 1vh;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+
+.redbutton4 {
+    width: 6vh;
+    height: 2vh;
+    background-color: #FA4032;
+    border-radius: 1vh;
+    margin:1vh;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    font-size: 1vh;
+    color:white;
+}
+
+
+.container-boardlist {
+    width: 88vh;
+    height: 52vh;
+    align-items: center;
+    background-color: white;
+    border: 1px solid #747474;
+    border-radius: 2vh;
+    margin-bottom: 5%;
+    padding-left: 2.5vh;
+}
+.container-textarea {
+    margin-top:1vh;
+    display: inline-block;
+    font-size:1.6vh;
+
+}
+
+.user-input {
+    background-color: #d9d9d9;
+    border: none;
+    border-radius: 1vh;
+    padding: 0.5vh;
+    /*margin-bottom: 0.5vh;*/
+    resize: none;
+}
+
+
+/* foorer */
+footer {
+    width: 100%;
+    background: #f58031;
+    color: #690305;;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.footer-container {
+    width: 90%;
+    max-width: 1440px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.footer-menu {
+    list-style: none;
+    display: flex;
+    gap: 100px;
+}
+
+.footer-menu li a {
+    text-decoration: none;
+    color: #690305;
+    font-size: 16px;
+}
+
+.footer-font {
+    padding-left: 6.5vh;
+    font-family: "Poor Story";
+    font-size: 2.4vh;
+    color: #690305;
+}
+
+footer ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    margin-left: 50%;
+}

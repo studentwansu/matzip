@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>review_list</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poor+Story&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="CSS/header_footer.css">
+    <link rel="stylesheet" href="CSS/main.css">
+    <link rel="stylesheet" href="CSS/review.css">
+    
+</head>
+
+<body>
+
+<!-- header -->
+<header>
+    <div class="header-container">
+        <!-- logo -->
+        <div class="logo">
+            <img src="/맛zip.png" alt="맛.zip 로고">
+        </div>
+
+        <!-- search -->
+        <div class="search-container">
+            <div class="search-word">
+                <input type="text" placeholder="검색어를 입력하세요...">
+            </div>
+
+            <div class="popular-searches">
+                <span>인기검색어1</span>
+                <span>인기검색어2</span>
+                <span>인기검색어3</span>
+                <span>인기검색어4</span>
+                <span>인기검색어5</span>
+                <a href="" class="nearby">가까운 곳 찾기</a>
+                <a href="" class="game">
+                    <img id="game" src="/gamepad-icon.png" alt="게임패드"></a>
+            </div>
+
+        </div>
+
+        <!-- menu -->
+        <div class="menu">
+            <a href="" class="login">로그인</a>
+            <a href="" class="signup">회원가입</a>
+            <button class="menu-btn">
+                <img src="/menu-icon.png" alt="마이페이지">
+            </button>
+        </div>
+    </div>
+</header>
+<!-- main -->
+<div class="main-container">
+    <!-- 사이드바 -->
+    <aside class="sidebar">
+        <h3>마이페이지</h3>
+        <ul>
+            <li><a href="#">내 정보</a></li>
+            <li><a href="#">예약 목록</a></li>
+            <li><a href="#">이용 목록</a></li>
+            <li><a href="#">북마크 목록</a></li>
+            <li><a href="#">작성 리뷰 목록</a></li>
+        </ul>
+    </aside>
+
+    <!-- 작성 리뷰 목록 -->
+    <section class="content">
+        <h2>작성 리뷰 목록</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>번호</th>
+                <th>작성 날짜</th>
+                <th>식당</th>
+                <th>내용</th>
+                <th>관리</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="review : ${review}">
+                <td th:text="${review.reviewCode}"></td>
+                <td th:text="${#dates.format(review.reviewDate, 'yyyy-MM-dd HH:mm')}"></td>
+                <td th:text="${review.restaurantName}"></td>
+                <td th:text="${review.reviewContent}"></td>
+                <td>
+                    <button class="edit-btn" onclick="openModal()">수정</button>
+                    <form th:id="'deleteForm-' + ${review.reviewCode}" th:action="@{/review/delete/{reviewCode}/{userCode}(reviewCode=${review.reviewCode}, userCode=${review.userCode})}" method="post" style="display:inline;">
+                        <button class="delete-btn" th:onclick="confirmDelete(${review.reviewCode})">삭제</button>
+                    </form>
+                </td>
+            <tr>
+
+            </tr>
+            </tbody>
+        </table>
+
+
+        <!-- 모달 -->
+    <div id="reviewModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <form class="mb-3" name="myform" id="myform" method="post">
+                <fieldset>
+                    <span class="text-bold">별점을 선택해주세요</span>
+                    <input type="radio" name="reviewStar" value="5" id="rate1"><label for="rate1">★</label>
+                    <input type="radio" name="reviewStar" value="4" id="rate2"><label for="rate2">★</label>
+                    <input type="radio" name="reviewStar" value="3" id="rate3"><label for="rate3">★</label>
+                    <input type="radio" name="reviewStar" value="2" id="rate4"><label for="rate4">★</label>
+                    <input type="radio" name="reviewStar" value="1" id="rate5"><label for="rate5">★</label>
+                </fieldset>
+                <div>
+                    <textarea class="col-auto form-control" type="text" id="reviewContents"></textarea>
+                    <input type="file" id="imageUpload" style="display:none;">
+                    <button type="button" onclick="document.getElementById('imageUpload').click();">이미지 업로드</button>
+                    <button type="submit">저장</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="JS/review.js"></script>
+    
+        <!-- 페이지네이션 -->
+        <div class="pagination">
+            <a href="#">1</a> | <a href="#">2</a> | <a href="#">3</a>
+        </div>
+    </section>
+</div>
+
+
+<!-- footer -->
+<footer>
+    <div class="footer-container">
+        <p>Copyright 2025 맛zip All Right Reserved</p>
+        <ul class="footer-menu">
+            <li><a href="#">공지사항</a></li>
+            <li><a href="#">FAQ</a></li>
+            <li><a href="#">Q&A</a></li>
+        </ul>
+    </div>
+</footer>
+
+</body>
+
+</html>

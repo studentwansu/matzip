@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>restaurant_list</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poor+Story&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poor Story", system-ui;
+            font-weight: 400;
+            font-style: normal;
+
+        }
+
+
+        /* header */
+        header {
+            width: 100%;
+            height: 180px;
+            background-color: #fff3e0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+        }
+
+        .header-container {
+            width: 100%;
+            max-width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+        }
+
+        /* logo */
+        .logo img {
+            height: 300px;
+            width: 300px;
+        }
+
+        /* search */
+        .search-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+            position: relative;
+
+        }
+
+        .search-word {}
+
+        .search-container input {
+            width: 500px;
+            height: 40px;
+            padding: 25px;
+            border: 1px solid #ccc;
+            border-radius: 20px;
+            outline: none;
+
+        }
+
+        .search-container .search-btn {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .search-container .search-btn img {
+            width: 25px;
+        }
+
+        /* popular-searches */
+        .popular-searches {
+            display: flex;
+            gap: 10px;
+            margin-top: 5px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .popular-searches .nearby {
+            color: #fa4032;
+            font-weight: bold;
+        }
+
+        /* menu */
+        .menu {
+            display: flex;
+            align-items: flex-end;
+            padding: 25px;
+            margin-bottom: 120px;
+            gap: 10px;
+
+
+        }
+
+        .menu a {
+            text-decoration: none;
+            color: #000;
+            font-size: 13px;
+        }
+
+        .menu .login {
+            padding: 7px 20px;
+            border: 1px solid #f58031;
+            border-radius: 10px;
+
+        }
+
+        .menu .signup {
+            background-color: #fa4032;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 10px;
+            margin-left: 5px;
+        }
+
+        .menu .menu-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        .menu .menu-btn img {
+            width: 30px;
+
+        }
+
+        #game {
+            width: 25px;
+        }
+
+        .main-container {
+            display: flex;
+            width: 80%;
+            margin: 20px auto;
+            gap: 20px;
+        }
+        /* category*/
+        .filter-sidebar {
+            width: 20%;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #f58031;
+        }
+
+        .filter-sidebar h3 {
+            background-color: #fa4032;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            border-radius: 10px;
+        }
+
+        .category-list {
+            list-style: none;
+            padding: 10px;
+        }
+
+        .category-list li {
+            margin-bottom: 8px;
+        }
+
+        /* restaurant-list */
+        .restaurant-list {
+            width: 75%;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .restaurant-card {
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #f58031;
+        }
+
+        .restaurant-info {
+            width: 50%;
+            text-align: left;
+        }
+
+        .restaurant-info h3 {
+            font-size: 20px;
+            color: #fa4032;
+        }
+
+        .restaurant-info p {
+            margin: 5px 0;
+        }
+
+        .restaurant-images {
+            display: flex;
+            gap: 10px;
+        }
+
+        .restaurant-images img {
+            width: 80px;
+            height: 80px;
+            border-radius: 10px;
+        }
+
+        .restaurant-icons {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .restaurant-icons a {
+            text-decoration: none;
+        }
+
+        .restaurant-icons img {
+            width: 20px;
+            cursor: pointer;
+            transition: transform 0.2s ease-in-out;
+        }
+
+
+        .restaurant-icons img:hover {
+            transform: scale(1.1);
+        }
+
+        
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        .pagination a {
+            text-decoration: none;
+            color: black;
+            font-size: 18px;
+            margin: 0 10px;
+        }
+
+         /* foorer */
+         footer {
+            width: 100%;
+            background: #f58031;
+            color: white;
+            height: 60px;
+            display: flex;
+            padding: 0 20px;
+            position: absolute;
+            bottom: 0;
+        }
+
+        /* Footer container */
+        .footer-container {
+            width: 90%;
+            display: flex;
+            align-items: center;
+        }
+
+        .footer-menu {
+            list-style: none;
+            display: flex;
+            margin-left: auto;
+            padding-right: 50px;
+            gap: 100px;
+        }
+
+        .footer-menu li a {
+            text-decoration: none;
+            color: white;
+            font-size: 16px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- header -->
+    <header>
+        <div class="header-container">
+            <!-- logo -->
+            <div class="logo">
+                <img src="logo.png" alt="맛.zip 로고">
+            </div>
+
+            <!-- search -->
+            <div class="search-container">
+                <div class="search-word">
+                    <input type="text" placeholder="검색어를 입력하세요...">
+                </div>
+
+                <div class="popular-searches">
+                    <span>인기검색어1</span>
+                    <span>인기검색어2</span>
+                    <span>인기검색어3</span>
+                    <span>인기검색어4</span>
+                    <span>인기검색어5</span>
+                    <a href="" class="nearby">가까운 곳 찾기</a>
+                    <a href="" class="game">
+                        <img id="game" src="gamepad-icon.png" alt="게임패드"></a>
+                </div>
+
+            </div>
+
+            <!-- menu -->
+            <div class="menu">
+                <a href="" class="login">로그인</a>
+                <a href="" class="signup">회원가입</a>
+                <button class="menu-btn">
+                    <img src="menu-icon.png" alt="마이페이지">
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- main -->
+    <main>
+        <div class="main-container">
+
+            <aside class="filter-sidebar">
+                <h3>검색</h3>
+                <ul class="category-list">
+                    <li><input type="checkbox"> 한식</li>
+                    <li><input type="checkbox"> 중식</li>
+                    <li><input type="checkbox"> 일식</li>
+                    <li><input type="checkbox"> 분식</li>
+                    <li><input type="checkbox"> 치킨</li>
+                    <li><input type="checkbox"> 내 나라</li>
+                    <li><input type="checkbox"> 디저트</li>
+                    <li><input type="checkbox"> 양식</li>
+                    <li><input type="checkbox"> 샐러드</li>
+                    <li><input type="checkbox"> 비건</li>
+                    <li><input type="checkbox"> 인도음식</li>
+                    <li><input type="checkbox"> 태국음식</li>
+                    <li><input type="checkbox"> 멕시코음식</li>
+                    <li><input type="checkbox"> 패스트푸드</li>
+                </ul>
+            </aside>
+
+
+            <section class="restaurant-list">
+                <div class="restaurant-card">
+                    <div class="restaurant-info">
+                        <h3>#온량</h3>
+                        <p>⭐⭐⭐⭐⭐</p>
+                        <p>파스타, 토마호크, 리스토 소개글</p>
+                        <p>#데이트 #숨은맛집 #예쁜</p>
+                    </div>
+                    <div class="restaurant-images">
+                        <img src="food1.jpg" alt="음식 사진">
+                        <img src="food2.jpg" alt="음식 사진">
+                    </div>
+                    <div class="restaurant-icons">
+                        <a href="bookmark.html">
+                            <img src="bookmark-icon.png" alt="북마크" class="icon">
+                        </a>
+                        <a href="restaurant-detail.html">
+                            <img src="arrow-icon.png" alt="이동" class="icon">
+                        </a>
+                    </div>
+                </div>
+
+                <div class="restaurant-card">
+                    <div class="restaurant-info">
+                        <h3>#르프리크 성수</h3>
+                        <p>⭐⭐⭐⭐⭐</p>
+                        <p>치킨 버거, 체리토마토, 맥앤치즈 소개글</p>
+                        <p>#데이트 #숨은맛집</p>
+                    </div>
+                    <div class="restaurant-images">
+                        <img src="food3.jpg" alt="음식 사진">
+                        <img src="food4.jpg" alt="음식 사진">
+                    </div>
+                    <div class="restaurant-icons">
+                        <a href="bookmark.html">
+                            <img src="bookmark-icon.png" alt="북마크" class="icon">
+                        </a>
+                        <a href="restaurant-detail.html">
+                            <img src="arrow-icon.png" alt="이동" class="icon">
+                        </a>
+                    </div>
+                </div>
+
+                <div class="restaurant-card">
+                    <div class="restaurant-info">
+                        <h3>#맛있는 서울</h3>
+                        <p>⭐⭐⭐⭐⭐</p>
+                        <p>삼겹살, 된장찌개, 불고기 소개글</p>
+                        <p>#한식 #한국음식 #전통맛집</p>
+                    </div>
+                    <div class="restaurant-images">
+                        <img src="food5.jpg" alt="음식 사진">
+                        <img src="food6.jpg" alt="음식 사진">
+                    </div>
+                    <div class="restaurant-icons">
+                        <a href="bookmark.html">
+                            <img src="bookmark-icon.png" alt="북마크" class="icon">
+                        </a>
+                        <a href="restaurant-detail.html">
+                            <img src="arrow-icon.png" alt="이동" class="icon">
+                        </a>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- 페이지네이션 -->
+        <div class="pagination">
+            <a href="#">1</a>
+            <a href="#">2</a>
+            <a href="#">3</a>
+        </div>
+    </main>
+
+    <!-- footer -->
+    <footer>
+        <div class="footer-container">
+            <p>Copyright 2025 맛zip All Right Reserved</p>
+            <ul class="footer-menu">
+                <li><a href="#">공지사항</a></li>
+                <li><a href="#">FAQ</a></li>
+                <li><a href="#">Q&A</a></li>
+            </ul>
+        </div>
+    </footer>
+
+</body>
+
+</html>
