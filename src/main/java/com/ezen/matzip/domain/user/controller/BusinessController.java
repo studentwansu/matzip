@@ -8,6 +8,6 @@ public class BusinessController {
 
     @GetMapping("/business/main")
     public String businessMain() {
-        return "business/main";
+        return "domain/store/store_main";
     }
 }

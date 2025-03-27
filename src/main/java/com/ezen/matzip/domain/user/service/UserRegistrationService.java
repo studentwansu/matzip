@@ -44,7 +44,7 @@ public class UserRegistrationService {
                     .email(dto.getEmail())
                     .role(Role.USER)
                     .userReportCount(0)
-                    .accountStatus(1)  // 활성 상태
+                    .accountStatus(0)
                     .build();
 
             // DB 저장
