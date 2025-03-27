@@ -13,7 +13,6 @@ import java.util.List;
 @Controller
 @RequestMapping("/board/qna")
 public class qnaController {
-    /* commit test */
 
     private final qnaService qnaService;
 
