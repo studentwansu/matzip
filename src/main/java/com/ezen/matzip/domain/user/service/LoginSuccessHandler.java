@@ -17,45 +17,28 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
 
-        // 권한 문자열을 안전하게 처리
-        String role = authentication.getAuthorities().stream()
-                .map(GrantedAuthority::getAuthority)
-                .collect(Collectors.joining());
+        // 단일 권한만 사용한다고 가정하고 첫 번째 권한을 가져옵니다.
+        String role = authentication.getAuthorities().iterator().next().getAuthority();
+// "ROLE_" 접두사가 있다면 제거합니다.
         String pureRole = role.replace("ROLE_", "");
 
-        // 역할에 따라 리다이렉트 처리 (예시)
-        if("USER".equals(pureRole)) {
-            response.sendRedirect("/user/main");
-        } else if("BUSINESS".equals(pureRole)) {
-            response.sendRedirect("/business/main");
-        } else if("ADMIN".equals(pureRole)) {
-            response.sendRedirect("/admin/main");
-        } else {
-            response.sendRedirect("/");
-        }
+        System.out.println("로그인 성공 후 역할: " + role); // 예: "ROLE_ADMIN"
+        System.out.println("로그인 성공 후 pureRole: " + pureRole); // 예: "ADMIN"
 
-//        String role = authentication.getAuthorities().iterator().next().getAuthority();
-//        String redirectURL;
-//
-//        if (role.startsWith("ROLE_")) {
-//            role = role.substring(5);
-//        }
-//
-//        switch (role) {
-//            case "USER":
-//                redirectURL = "/main/main";
-//                break;
-//            case "BUSINESS":
-//                redirectURL = "/business/main";
-//                break;
-//            case "ADMIN":
-//                redirectURL = "/admin/main";
-//                break;
-//            default:
-//                redirectURL = "/";
-//                break;
-//        }
-//
-//        response.sendRedirect(redirectURL);
+        switch (pureRole) {
+            case "USER":
+                response.sendRedirect("/user/main");
+                break;
+            case "BUSINESS":
+                response.sendRedirect("/business/main");
+                break;
+            case "ADMIN":
+                response.sendRedirect("/admin/main");
+                break;
+            default:
+                response.sendRedirect("/");
+                break;
+        }
     }
 }
+

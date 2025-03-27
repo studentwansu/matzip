@@ -6,7 +6,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poor+Story&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/static/css/style_admin.css">
+    <link rel="stylesheet" href="/css/style_admin.css">
 </head>
 <body>
     <header>
@@ -22,7 +22,9 @@
                 </div>
             </div>
             <div class="logout">
-                <p class="navi-font">관리자님, 환영합니다. 😊</p>
+                <p class="navi-font" th:text="${#authentication.principal.username} + ' 관리자님, 환영합니다. 😊'">
+                    관리자님, 환영합니다. 😊
+                </p>
                 <a href="">
                     <button class="redbutton3 redbutton-font">
                         로그아웃
