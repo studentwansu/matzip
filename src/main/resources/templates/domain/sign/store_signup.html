@@ -118,15 +118,16 @@
     </div>
 
     <!-- footer -->
-    <footer>
-        <div class="footer-container">
-            <p>Copyright 2025 맛zip All Right Reserved</p>
-            <ul class="footer-menu">
-                <li><a href="#">공지사항</a></li>
-                <li><a href="#">FAQ</a></li>
-                <li><a href="#">Q&A</a></li>
-            </ul>
-        </div>
-    </footer>
+    <div id="footer-user"></div>
+
+    <script>
+        fetch('/html/user_footer.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('footer-user').innerHTML = data;
+            })
+            .catch(error => console.error('Footer 로드 중 오류 발생:', error));
+    </script>
+
 </body>
 </html>

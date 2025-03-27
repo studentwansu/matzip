@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="CSS/header_footer.css">
     <link rel="stylesheet" href="CSS/main.css">
     <link rel="stylesheet" href="CSS/review.css">
-    
+
 </head>
 
 <body>
@@ -123,7 +123,7 @@
     </div>
 
     <script src="/js/review.js"></script>
-    
+
         <!-- 페이지네이션 -->
         <div class="pagination">
             <a href="#">1</a> | <a href="#">2</a> | <a href="#">3</a>
@@ -133,16 +133,17 @@
 
 
 <!-- footer -->
-<footer>
-    <div class="footer-container">
-        <p>Copyright 2025 맛zip All Right Reserved</p>
-        <ul class="footer-menu">
-            <li><a href="#">공지사항</a></li>
-            <li><a href="#">FAQ</a></li>
-            <li><a href="#">Q&A</a></li>
-        </ul>
-    </div>
-</footer>
+<div id="footer-user"></div>
+
+<script>
+    fetch('/html/user_footer.html')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('footer-user').innerHTML = data;
+        })
+        .catch(error => console.error('Footer 로드 중 오류 발생:', error));
+</script>
+
 
 </body>
 

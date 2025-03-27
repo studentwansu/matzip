@@ -22,21 +22,21 @@ public class RestaurantController {
     private final RestaurantService restaurantService;
 
 
-    @GetMapping("/{restaurantCode}")
-    public String getRestaurantDetail(@PathVariable int restaurantCode, Model model) {
-        RestaurantDTO restaurant = restaurantService.getRestaurantDetail(restaurantCode);
-        model.addAttribute("restaurant", restaurant);
-        return "restaurant/restaurant";
-    }
+//    @GetMapping("/{restaurantCode}")
+//    public String getRestaurantDetail(@PathVariable int restaurantCode, Model model) {
+//        RestaurantDTO restaurant = restaurantService.getRestaurantDetail(restaurantCode);
+//        model.addAttribute("restaurant", restaurant);
+//        return "restaurant/restaurant";
+//    }
 
 
-    @GetMapping("/result")
-    public String findByKeyword(@RequestParam String keyword, Model model)
-    {
-        List<RestaurantDTO> restaurants = restaurantService.findByKeywordOrderByScore(keyword);
-        model.addAttribute("restaurantList", restaurants);
-        return "test/result";
-    }
+//    @GetMapping("/result")
+//    public String findByKeyword(@RequestParam String keyword, Model model)
+//    {
+//        List<RestaurantDTO> restaurants = restaurantService.findByKeywordOrderByScore(keyword);
+//        model.addAttribute("restaurantList", restaurants);
+//        return "test/result";
+//    }
 
     @GetMapping("/store/search")
     public String findByMyLocation(@RequestParam String keyword, Model model)

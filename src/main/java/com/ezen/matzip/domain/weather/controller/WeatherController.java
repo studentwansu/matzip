@@ -1,6 +1,33 @@
 package com.ezen.matzip.domain.weather.controller;
 
+import com.ezen.matzip.domain.weather.dto.KeywordDTO;
+import com.ezen.matzip.domain.weather.service.WeatherService;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
+
+@Slf4j
+@Controller
+@RequestMapping
+@RequiredArgsConstructor
 public class WeatherController {
+    private final WeatherService weatherService;
+
+    @GetMapping("/weather/test")
+    public String test(@RequestParam String weatherCondition, Model model)
+    {
+        List<KeywordDTO> keywords = weatherService.findKeywordsByWeatherCondition(weatherCondition);
+        model.addAttribute("keywords", keywords);
+
+        return "test/main";
+    }
+
 }
 
 //weather/ → 날씨 기반 추천 기능

@@ -1,12 +1,11 @@
-function openModal() {
+function openModal(reviewCode) {
      document.getElementById("reviewModal").style.display = "block";
-    const formContainer  = document.getElementById("test");
-    // container.innerHTML = ''; // 기존 내용 초기화 (필요 시)
+    const formContainer  = document.getElementById("modifyForm");
 
     const targetReview = reviews.find(r => r.reviewCode === reviewCode);
 
     // 별점 체크
-    document.querySelectorAll('input[name="reviewStar"]').forEach(input => {
+    document.querySelectorAll('input[name="rating"]').forEach(input => {
         input.checked = Number(input.value) === targetReview.rating;
     });
 

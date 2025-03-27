@@ -50,12 +50,14 @@ pre {
     background: none;
     border: none;
     cursor: pointer;
+    right:5vh;
 }
 
 
 .search-word {
     display:flex;
     align-content: center;
+    justify-items: center;
     /*flex-direction: row;*/
 }
 /* search */
@@ -76,20 +78,6 @@ pre {
     border-radius: 20px;
     outline: none;
 
-}
-
-.search-container .search-btn {
-    position: absolute;
-    right: 1.5vh;
-    top: 50%;
-    transform: translateY(-50%);
-    background: none;
-    border: none;
-    cursor: pointer;
-}
-
-.search-container .search-btn img {
-    width: 25px;
 }
 
 /* popular-searches */

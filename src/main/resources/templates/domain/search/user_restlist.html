@@ -9,46 +9,23 @@
     <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
     <link href="https://fonts.googleapis.com/css2?family=Poor+Story&display=swap" rel="stylesheet">
     <link href="/css/style_user.css" rel="stylesheet">
-    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=fd7786d297e2d4aaab4aa8b6bbb06b88&libraries=services"></script>
+    <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=fd7786d297e2d4aaab4aa8b6bbb06b88&libraries=services" type="text/javascript"></script>
 
 </head>
 
 <body>
 
-<header>
-    <div class="user-header">
-        <a href="">
-            <img class="logo" src="/img/logo.png">
-        </a>
+<!-- header -->
+<div id="header-user"></div>
 
-        <div class="search-container">
-            <div class="search-word">
-                <input placeholder="검색어를 입력하세요..." type="text">
-            </div>
-
-            <div class="popular-searches">
-                <span>인기검색어1</span>
-                <span>인기검색어2</span>
-                <span>인기검색어3</span>
-                <span>인기검색어4</span>
-                <span>인기검색어5</span>
-                <a class="nearby" href="">가까운 곳 찾기</a>
-                <a class="game" href="">
-                    <img alt="게임패드" id="game" src="/img/gamepad-icon.png"></a>
-            </div>
-
-        </div>
-
-        <!-- menu -->
-        <div class="menu">
-            <a class="login" href="">로그인</a>
-            <a class="signup" href="">회원가입</a>
-            <button class="menu-btn">
-                <img alt="마이페이지" src="/img/menu-icon.png">
-            </button>
-        </div>
-    </div>
-</header>
+<script>
+    fetch('/html/user_header.html')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('header-user').innerHTML = data;
+        })
+        .catch(error => console.error('Header 로드 중 오류 발생:', error));
+</script>
 
 <main>
     <div class="body-section">
@@ -74,15 +51,21 @@
         <div class="restaurant-list" th:each="restaurant: ${restaurantList}">
             <div class="restaurant-card">
                 <div class="restaurant-info">
-                    <a style="text-decoration: none; color: inherit; display: block; cursor: pointer;" th:href="@{/store/storeinfo(restaurantCode=${restaurant.restaurantCode})}">
-                    <h3 th:text="${restaurant.restaurantName}"></h3>
-                    <p>⭐⭐⭐⭐⭐</p>
-                    <p th:text="|${restaurant.restaurantMenus.get(0).getMenuName()}, ${restaurant.restaurantMenus.get(1).getMenuName()}|"></p>
-                    <p>
+                    <a style="text-decoration: none; color: inherit; display: block; cursor: pointer;"
+                       th:href="@{/store/storeinfo(restaurantCode=${restaurant.restaurantCode})}">
+                        <h3 th:text="${restaurant.restaurantName}"></h3>
+                        <p>⭐⭐⭐⭐⭐</p>
+                        <p>
+                            <span th:if="${!restaurant.restaurantMenus.isEmpty()}"
+                                  th:text="${restaurant.restaurantMenus[0].menuName}"></span>
+                            <span th:if="${restaurant.restaurantMenus.size() > 1}"
+                                  th:text="', ' + ${restaurant.restaurantMenus[1].menuName}"></span>
+                        </p>
+                        <p>
                         <span th:each="keyword, iterStat : ${restaurant.restaurantKeywords}"
                               th:text="'#' + ${keyword} + ${!iterStat.last ? ', ' : ''}">
                         </span>
-                    </p>
+                        </p>
                     </a>
                 </div>
                 <div class="restaurant-images">
@@ -98,9 +81,8 @@
                     </a>
                 </div>
             </div>
-<!--        </a>-->
-            </div>
         </div>
+    </div>
 
     <!-- 페이지네이션 -->
     <div class="pagination">
@@ -111,17 +93,16 @@
 </main>
 
 <!-- footer -->
-<footer>
-    <div class="footer-container">
-        <p>Copyright 2025 맛zip All Right Reserved</p>
-        <ul class="footer-menu">
-            <li><a href="#">공지사항</a></li>
-            <li><a href="#">FAQ</a></li>
-            <li><a href="#">Q&A</a></li>
-        </ul>
-    </div>
-</footer>
-<script src="/js/myLocation.js"></script>
+<div id="footer-user"></div>
+
+<script>
+    fetch('/html/user_footer.html')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('footer-user').innerHTML = data;
+        })
+        .catch(error => console.error('Footer 로드 중 오류 발생:', error));
+</script>
 
 </body>
 
