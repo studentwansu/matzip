@@ -1,6 +1,5 @@
 package com.ezen.matzip.domain.restaurant.entity;
 
-import com.ezen.matzip.domain.review.entity.Review;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -39,18 +38,17 @@ public class Restaurant {
     @JoinColumn(name = "category_code")
     private Category category;
 
-
     @OneToMany
     @JoinColumn(name="restaurant_code")
     private List<Menu> menus;
 
-    @OneToMany
-    @JoinColumn(name="restaurant_code")
-    private List<Review> reviews;
+//    @OneToMany
+//    @JoinColumn(name="restaurant_code")
+//    private List<Review> reviews;
 
     @OneToMany
     @JoinColumn(name="restaurant_code")
-    private List<Keyword> keywords;
+    private List<RestaurantKeyword> restaurantKeywords;
 
 
     @Builder

@@ -41,7 +41,7 @@ public class ReviewService {
             dto.setReviewCode(e.getReviewCode());
             dto.setReviewDate(e.getReviewDate());
             dto.setReviewContent(e.getReviewContent());
-
+            dto.setRating(e.getRating());
             result.add(dto);
         }
             return result;
@@ -55,12 +55,9 @@ public class ReviewService {
 
     @Transactional
     public void modifyReview(ReviewDTO reviewDTO) {
-        System.out.println("test231231:" + reviewDTO.getReviewCode());
+//        System.out.println("test231231:" + reviewDTO.getReviewCode());
         Review foundReview = reviewRepository.findByReviewCode(reviewDTO.getReviewCode());
-//        Review foundReview = reviewRepository.findByReviewCode(reviewDTO.getReviewCode());
-
-//        reviewRepository.updateReviewByReviewCode(dto.getReviewCode(), );
-        foundReview.modifyReview(reviewDTO.getReviewContent());
+        foundReview.modifyReview(reviewDTO.getReviewContent(), reviewDTO.getUserCode(), reviewDTO.getRating());
     }
 
 

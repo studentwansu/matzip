@@ -11,7 +11,7 @@ import lombok.ToString;
 @Getter
 @ToString
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Keyword {
+public class RestaurantKeyword {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

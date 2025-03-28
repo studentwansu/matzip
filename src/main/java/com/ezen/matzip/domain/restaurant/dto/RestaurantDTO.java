@@ -2,7 +2,7 @@ package com.ezen.matzip.domain.restaurant.dto;
 
 import com.ezen.matzip.domain.restaurant.entity.Menu;
 import com.ezen.matzip.domain.restaurant.entity.Restaurant;
-import com.ezen.matzip.domain.restaurant.entity.Keyword;
+import com.ezen.matzip.domain.restaurant.entity.RestaurantKeyword;
 //import com.ezen.matzip.domain.restaurant.entity.Review;
 
 import lombok.*;
@@ -35,13 +35,13 @@ public class RestaurantDTO {
     private int restaurantStatus;
     private String restaurantService;
 
-    public RestaurantDTO (Restaurant restaurant, List<Menu> menus, List<Keyword> keywords)
+    public RestaurantDTO (Restaurant restaurant, List<Menu> menus, List<RestaurantKeyword> keywords)
     {
         this.restaurantName = restaurant.getRestaurantName();
         this.restaurantMenus = menus.stream().map
                 (menu -> new MenuDTO(menu.getMenuCode(), menu.getMenuName(), menu.getMenuPrice(), restaurant))
                 .collect(Collectors.toList());
-        this.restaurantKeywords = keywords.stream().map(Keyword::getRestaurantKeyword).collect(Collectors.toList());
+        this.restaurantKeywords = keywords.stream().map(RestaurantKeyword::getRestaurantKeyword).collect(Collectors.toList());
         this.restaurantCode = restaurant.getRestaurantCode();
         this.restaurantLocation = restaurant.getRestaurantLocation();
         this.restaurantContactNumber = restaurant.getRestaurantContactNumber();
