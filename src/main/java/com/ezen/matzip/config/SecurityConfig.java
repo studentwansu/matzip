@@ -3,6 +3,7 @@ package com.ezen.matzip.config;
 import com.ezen.matzip.domain.user.service.LoginSuccessHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -28,11 +29,46 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/main/**", "/login", "/signup", "/signup/**", "/css/**", "/js/**", "/img/**", "/html/**").permitAll()
+
+                        // [1] 공지사항(Notice) 세부 권한 설정 (구체적인 경로부터)
+                        // 1-1) 공지사항 목록, 상세보기(주로 GET)는 모두에게 허용
+                        .requestMatchers(HttpMethod.GET,
+                                "/board/notice",          // 목록
+                                "/board/notice/",         // 목록 (슬래시 포함)
+                                "/board/notice/{id}",     // 상세
+                                "/board/notice/detail/**" // 상세(또는 기타 GET)
+                        ).permitAll()
+
+                        // 1-2) 공지사항 작성/수정/삭제(주로 POST)는 관리자만 접근
+                        .requestMatchers(HttpMethod.POST,
+                                "/board/notice/create",
+                                "/board/notice/edit/**",
+                                "/board/notice/delete/**",
+                                "/board/notice/write"
+                        ).hasRole("ADMIN")
+
+                        // 만약 작성 폼, 수정 폼( GET ) 자체도 관리자만 열람하게 하려면:
+                        .requestMatchers(HttpMethod.GET,
+                                "/board/notice/create",
+                                "/board/notice/edit/**",
+                                "/board/notice/write"
+                        ).hasRole("ADMIN")
+
+                        // [2] 그 외 나머지 경로들
+                        .requestMatchers("/", "/main/**", "/login", "/signup", "/signup/**",
+                                "/css/**", "/js/**", "/img/**", "/html/**", "/board/notice/**")
+                        .permitAll()
+
                         .requestMatchers("/user/**").hasRole("USER")
                         .requestMatchers("/business/**").hasRole("BUSINESS")
                         .requestMatchers("/admin/**").hasRole("ADMIN")
-                        // 일단 테스트를 위해 모든 요청 허용 (추후 수정)
+
+                        // 기존에 있던 /board/**, /notice/** 전부 허용은
+                        // 공지사항에 대한 세부 설정과 충돌될 수 있으므로 제거하거나
+                        // 더 아래에 배치해서 "notice" 경로가 먼저 매칭되도록 조정합니다.
+                        // .requestMatchers("/board/**", "/notice/**").permitAll()
+
+                        // [3] 테스트용 anyRequest().permitAll() → 실제 운영 시 수정 필요
                         .anyRequest().permitAll()
                 )
                 .formLogin(login -> login
@@ -59,6 +95,7 @@ public class SecurityConfig {
 
         return http.build();
     }
+
 
     @Bean
     public PasswordEncoder passwordEncoder() {

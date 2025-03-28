@@ -7,34 +7,16 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poor+Story&display=swap" rel="stylesheet">
-  <link href="/css/style_notice_write_form.css" rel="stylesheet">
+  <link rel="stylesheet" th:href="@{/css/header_footer.css}">
+
 </head>
 <body>
 
 <!-- header -->
 <header>
-  <section class="admin-header">
-    <a href="">
-      <img class="logo" src="/img/logo.png">
-    </a>
-    <div class="admin-header-container">
-      <div class="admin-header-textdiv">
-        <p class="admin-header-font1"> 어쩌구저쩌구 </p>
-        <div class="line-yellow"></div>
-        <p class="admin-header-font2"> 어쩌구저쩌구</p>
-      </div>
-    </div>
-    <div class="logout">
-      <p class="navi-font">관리자님, 환영합니다. 😊</p>
-      <a href="">
-        <button class="logout-button">
-          로그아웃
-        </button>
-      </a>
-    </div>
-
-  </section>
+  <div th:insert="~{header_footer/admin_header :: header}"></div>
 </header>
+
 
 <!-- main -->
 <main>
@@ -73,12 +55,7 @@
 
 <!-- footer -->
 <footer>
-  <p>Copyright 2025 맛zip All Right Reserved</p>
-  <ul>
-    <li><a href="">공지사항</a></li>
-    <li><a href="">FAQ</a></li>
-    <li><a href="">Q&A</a></li>
-  </ul>
+  <div th:insert="~{header_footer/admin_footer :: footer}"></div>
 </footer>
 </body>
 </html>
