@@ -41,6 +41,7 @@ public class ReviewService {
             dto.setReviewCode(e.getReviewCode());
             dto.setReviewDate(e.getReviewDate());
             dto.setReviewContent(e.getReviewContent());
+            dto.setRating(e.getRating());
 
             result.add(dto);
         }
@@ -60,7 +61,7 @@ public class ReviewService {
 //        Review foundReview = reviewRepository.findByReviewCode(reviewDTO.getReviewCode());
 
 //        reviewRepository.updateReviewByReviewCode(dto.getReviewCode(), );
-        foundReview.modifyReview(reviewDTO.getReviewContent());
+        foundReview.modifyReview(reviewDTO.getReviewContent(), reviewDTO.getRating());
     }
 
 

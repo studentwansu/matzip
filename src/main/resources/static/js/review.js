@@ -1,18 +1,31 @@
-function openModal() {
-     document.getElementById("reviewModal").style.display = "block";
-    const formContainer  = document.getElementById("test");
-    // container.innerHTML = ''; // 기존 내용 초기화 (필요 시)
+function openModal(reviewCode) {
+    document.getElementById("reviewModal").style.display = "block";
+    const formContainer = document.getElementById("test");
 
-    const targetReview = reviews.find(r => r.reviewCode === reviewCode);
+    console.log("수정할 리뷰 코드:", reviewCode);
+
+    // 리뷰 목록에서 해당 리뷰 코드를 가진 객체를 찾음
+    const targetReview = testReview.find(r => r.reviewCode === reviewCode);
+
+    if (!targetReview) {
+        console.error("리뷰를 찾을 수 없습니다.");
+        return;
+    }
+
+    console.log("수정할 리뷰:", targetReview);
 
     // 별점 체크
     document.querySelectorAll('input[name="reviewStar"]').forEach(input => {
         input.checked = Number(input.value) === targetReview.rating;
     });
 
+    // 리뷰 내용을 폼에 넣기
+    const reviewContent = document.getElementById("reviewContent");
+    reviewContent.value = targetReview.reviewContent;
 
-    console.log(targetReview);
-    if (targetReview && targetReview.reviewImages) {
+    // 이미지 표시
+    if (targetReview.reviewImages && targetReview.reviewImages.length > 0) {
+        formContainer.innerHTML = ''; // 기존 내용 초기화
         targetReview.reviewImages.forEach(image => {
             const div = document.createElement('div');
             const img = document.createElement('img');
@@ -24,8 +37,6 @@ function openModal() {
     } else {
         formContainer.innerHTML = '이미지가 없습니다.';
     }
-
-
 }
 
 function closeModal() {
