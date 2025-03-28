@@ -49,7 +49,20 @@ public class RestaurantController {
         System.out.println(registDTO.toString());
      restaurantService.registRestaurant(registDTO);
 
-        return "redirect:/restaurant";
+        return "redirect:/restaurant/" + registDTO.getRestaurantCode();
+    }
+
+    @GetMapping("/modify")
+    public String modifyPage() {
+        return "restaurant/restaurant-modify";
+    }
+
+    @PostMapping("/modify")
+    public String modify(@ModelAttribute RegistDTO registDTO) {
+        System.out.println("modify: " + registDTO.toString());
+        restaurantService.modifyRestaurant(registDTO);
+
+        return "redirect:/restaurant/" + registDTO.getRestaurantCode();
     }
 //    @GetMapping(value = {"/{restaurantCode}"})
 //    public String findReviewByRestaurantCode(@PathVariable int restaurantCode, Model model) {
@@ -86,6 +99,8 @@ public class RestaurantController {
         model.addAttribute("restaurantLocation", location);
         return "/store/storeinfo";
     }
+
+
 
 }
 

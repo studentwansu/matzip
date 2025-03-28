@@ -165,9 +165,6 @@ public class RestaurantService {
         Time startTime = Time.valueOf(startTimeString + ":00");
         Time endTime = Time.valueOf(endTimeString + ":00");
 
-//        String categoryString = registDTO.getRestaurantCategory();
-//        Category category = Category.(categoryString);
-
         Category category = convertToCategory(registDTO.getRestaurantCategory());
 
         Restaurant regist =
@@ -209,4 +206,51 @@ public class RestaurantService {
 
     }
 
+    @Transactional
+    public void modifyRestaurant(RegistDTO registDTO) {
+        Restaurant foundModify = restaurantRepository.findByRestaurantCode(registDTO.getRestaurantCode());
+
+        String startTimeString = registDTO.getRestaurantStartTime();
+        String endTimeString = registDTO.getRestaurantEndTime();
+
+        Time startTime = Time.valueOf(startTimeString + ":00");
+        Time endTime = Time.valueOf(endTimeString + ":00");
+
+        Category category = convertToCategory(registDTO.getRestaurantCategory());
+
+        foundModify.Modify(
+                registDTO.getRestaurantCode(),
+                registDTO.getRestaurantName(),
+                registDTO.getRestaurantLocation(),
+                registDTO.getRestaurantContactNumber(),
+                registDTO.getRestaurantDescription(),
+                registDTO.getMainMenu(),
+                startTime,
+                endTime,
+                registDTO.getRestaurantService(),
+                category);
+
+
+        // 1. 기존 메뉴 목록의 칼럼값만 삭제 (연관 관계 유지)
+        foundModify.getMenus().forEach(menu -> {
+            menu.ModifyMenu(null,0);
+        });
+
+        // 2. 새로운 메뉴 목록 추가
+        List<Menu> menuList = IntStream.range(0, registDTO.getMenuName().size())
+                .mapToObj(i -> new Menu(registDTO.getMenuName().get(i), registDTO.getMenuPrice().get(i), foundModify))
+                .collect(Collectors.toList());
+        foundModify.setMenus(menuList);
+
+        // 3. 기존 키워드 목록의 칼럼값만 삭제 (연관 관계 유지)
+        foundModify.getKeywords().forEach(keyword -> {
+            keyword.ModifyKeyword(null);
+        });
+
+        // 4. 새로운 키워드 목록 추가
+        List<Keyword> keywordList = registDTO.getRestaurantKeyword().stream()
+                .map(keyword -> new Keyword(keyword, foundModify))
+                .collect(Collectors.toList());
+        foundModify.setKeywords(keywordList);
+    }
 }

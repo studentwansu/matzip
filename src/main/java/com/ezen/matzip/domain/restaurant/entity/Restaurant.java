@@ -50,6 +50,21 @@ public class Restaurant {
         this.category = restaurantCategory;
     }
 
+    public void Modify(int restaurantCode, String restaurantName, String restaurantLocation, String restaurantContactNumber,
+                       String restaurantDescription, String mainMenu, Time restaurantStartTime, Time restaurantEndTime,
+                       String restaurantService, Category restaurantCategory) {
+        this.restaurantCode = restaurantCode;
+        this.restaurantName = restaurantName;
+        this.restaurantLocation = restaurantLocation;
+        this.restaurantContactNumber = restaurantContactNumber;
+        this.restaurantDescription = restaurantDescription;
+        this.mainMenu = mainMenu;
+        this.restaurantStartTime = restaurantStartTime;
+        this.restaurantEndTime = restaurantEndTime;
+        this.restaurantService = restaurantService;
+        this.category = restaurantCategory;
+    }
+
 
 
     @ManyToOne

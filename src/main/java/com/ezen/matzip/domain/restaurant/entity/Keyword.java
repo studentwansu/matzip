@@ -26,6 +26,10 @@ public class Keyword {
         this.restaurantCode = restaurant;
     }
 
+    public void ModifyKeyword(String restaurantKeyword) {
+        this.restaurantKeyword = restaurantKeyword;
+    }
+
 }
 
 

@@ -27,5 +27,9 @@ public class Menu {
         this.menuPrice = menuPrice;
     }
 
+    public void ModifyMenu(String menuName, int menuPrice) {
+        this.menuName = menuName;
+        this.menuPrice = menuPrice;
+    }
 
 }
