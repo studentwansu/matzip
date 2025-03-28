@@ -6,9 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -19,15 +17,14 @@ import java.util.List;
 public class WeatherController {
     private final WeatherService weatherService;
 
-    @GetMapping("/weather/test")
-    public String test(@RequestParam String weatherCondition, Model model)
+    @GetMapping("/weather")
+    public String getWeatherKeyword(@RequestParam String weatherKeyword, Model model)
     {
-        List<KeywordDTO> keywords = weatherService.findKeywordsByWeatherCondition(weatherCondition);
-        model.addAttribute("keywords", keywords);
-
-        return "test/main";
+        List<KeywordDTO> keywords = weatherService.findKeywordsByWeatherCondition("Clear");
+        model.addAttribute("recommendKeywords", keywords);
+        model.addAttribute("weatherCondition", weatherKeyword);
+        return "main/main";
     }
-
 }
 
 //weather/ → 날씨 기반 추천 기능
