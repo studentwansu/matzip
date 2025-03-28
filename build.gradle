@@ -30,6 +30,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
     compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     runtimeOnly 'com.mysql:mysql-connector-j'
     annotationProcessor 'org.projectlombok:lombok'
@@ -42,6 +43,7 @@ dependencies {
 
     // Hibernate Validator (Jakarta)
     implementation 'org.hibernate.validator:hibernate-validator:8.0.0.Final'
+    implementation 'org.modelmapper:modelmapper:3.1.1'
 }
 
 tasks.named('test') {

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>FAQ등록</title>
+</head>
+<body>
+<div class="form-container">
+  <h2>FAQ 등록</h2>
+  <form th:action="@{/board/faq/write}" method="post">
+    <label for="title">질문 제목</label>
+    <input type="text" id="title" name="title" placeholder="제목을 입력하세요" required>
+
+    <label for="content">답변 내용</label>
+    <textarea id="content" name="content" rows="6" placeholder="답변을 입력하세요" required></textarea>
+
+    <button type="submit">등록하기</button>
+  </form>
+</div>
+</body>
+</html>

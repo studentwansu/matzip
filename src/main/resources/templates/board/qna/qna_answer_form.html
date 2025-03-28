@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Q&A admin</title>
+</head>
+<body>
+<h2>Q&A 답변 작성</h2>
+
+<p><strong>제목:</strong> <span th:text="${qna.title}"></span></p>
+<p><strong>내용:</strong> <span th:text="${qna.content}"></span></p>
+
+<form th:action="@{/board/qna/answer/{id}(id=${qna.id})}" method="post">
+  <label>답변 입력</label><br>
+  <textarea name="answer" rows="6" cols="60" required></textarea><br><br>
+
+  <button type="submit">답변 등록</button>
+</form>
+</body>
+</html>

@@ -131,9 +131,15 @@
     </section>
     </main>
 
-    <footer>
-        <p class="footer-font">Copyright 2025 맛zip All Right Reserved</p>
-    </footer>
+<div id="footer-admin"></div>
 
+<script>
+    fetch('/html/admin_footer.html')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('footer-admin').innerHTML = data;
+        })
+        .catch(error => console.error('Footer 로드 중 오류 발생:', error));
+</script>
 </body>
 </html>

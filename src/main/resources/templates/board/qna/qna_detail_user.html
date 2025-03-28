@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Q&A user</title>
+</head>
+<body>
+<h2>질문 상세 보기</h2>
+
+<p><strong>제목:</strong> <span th:text="${qna.title}"></span></p>
+<p><strong>작성자:</strong> <span th:text="${qna.writer}"></span></p>
+<p><strong>내용:</strong> <span th:text="${qna.content}"></span></p>
+
+<hr>
+<h3>📌 관리자 답변</h3>
+
+<div th:if="${qna.answer != null}">
+  <p th:text="${qna.answer}"></p>
+</div>
+<div th:if="${qna.answer == null}">
+  <p>아직 답변이 등록되지 않았습니다.</p>
+</div>
+
+<a href="/board/qna">목록으로</a>
+</body>
+</html>

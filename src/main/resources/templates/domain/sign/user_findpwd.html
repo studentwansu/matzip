@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>password</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poor+Story&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="CSS/header_footer.css">
+    <link rel="stylesheet" href="CSS/password.css">
+    
+</head>
+
+<body>
+
+<!-- header -->
+<div id="header-user"></div>
+
+<script>
+    fetch('/html/user_header.html')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('header-user').innerHTML = data;
+        })
+        .catch(error => console.error('Header 로드 중 오류 발생:', error));
+</script>
+
+    <!-- main -->
+     <!-- password -->
+    <div class="main-container">
+
+        <!-- password_search -->
+        <section class="password_search">
+            <h2>비밀번호 찾기</h2>
+
+            <!-- password_id_pwd -->
+            <div class="password_id_pwd">
+                <input id="name" placeholder="이름">
+                <input id="id" placeholder="아이디">
+                <label>회원가입 시 선택한 질문: </label>
+                <select>
+                    <option value="question1">내가 살던 동네 이름은?</option>
+                    <option value="question2">내가 좋아하는 음식 이름은?</option>
+                    <option value="question3">내가 다니던 학교 이름은?</option>
+                    <option value="question4">내가 가본 나라 이름은?</option>
+                    <option value="question5">내가 좋아하는 동물의 종류는?</option>
+                    <option value="question6">내가 아끼는 보물 1호는?</option>
+                    <option value="question7">나의 취미는?</option>
+                    <option value="question8">내가 좋아하는 음악은?</option>
+                    <option value="question9">내가 좋아하는 영화는?</option>
+                    <option value="question10">내가 좋아하는 가수는?</option>
+                </select>
+                <input id="pwd_answer" placeholder="비밀번호찾기답">
+            </div>
+            
+            <!-- password_button -->
+            <button class="password_button"><a href="메인.html">확인</a></button>
+        </section>
+    </div>
+
+<!-- footer -->
+<div id="footer-user"></div>
+
+<script>
+    fetch('/html/user_footer.html')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('footer-user').innerHTML = data;
+        })
+        .catch(error => console.error('Footer 로드 중 오류 발생:', error));
+</script>
+
+
+</body>
+</html>

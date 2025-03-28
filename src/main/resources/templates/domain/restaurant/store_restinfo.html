@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poor+Story&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/static/css/style_store.css">
+    <link rel="stylesheet" href="/css/style_store.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=fd7786d297e2d4aaab4aa8b6bbb06b88&libraries=services"></script>
 
@@ -154,9 +154,9 @@
                         <br>
                         <span style="font-size:1.5vh;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione itaque expedita quasi nisi iste harum reprehenderit, recusandae rem temporibus consequuntur officia voluptatibus provident neque, necessitatibus mollitia. Possimus temporibus iste veniam! Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus at quidem tempore beatae libero veritatis sunt autem accusantium, perspiciatis corrupti alias eius numquam nobis</span>
                         <div class="reviewimgbox">
-                            <img class="reviewimg" src="/img/example.png">
-                            <img class="reviewimg" src="/img/example.png">
-                            <img class="reviewimg" src="/img/example.png">
+                            <img class="reviewimg" src="/review/img/example.png">
+                            <img class="reviewimg" src="/review/img/example.png">
+                            <img class="reviewimg" src="/review/img/example.png">
                         </div>
                         <div class="reviewreply">
                             <span style="font-size:1.5vh;">온량의 답글 2025.03.08</span>
@@ -175,9 +175,9 @@
                         <br>
                         <span style="font-size:1.5vh;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione itaque expedita quasi nisi iste harum reprehenderit, recusandae rem temporibus consequuntur officia voluptatibus provident neque, necessitatibus mollitia. Possimus temporibus iste veniam! Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus at quidem tempore beatae libero veritatis sunt autem accusantium, perspiciatis corrupti alias eius numquam nobis</span>
                         <div class="reviewimgbox">
-                            <img class="reviewimg" src="/img/example.png">
-                            <img class="reviewimg" src="/img/example.png">
-                            <img class="reviewimg" src="/img/example.png">
+                            <img class="reviewimg" src="/review/img/example.png">
+                            <img class="reviewimg" src="/review/img/example.png">
+                            <img class="reviewimg" src="/review/img/example.png">
                         </div>
                         <div class="reviewreply">
                             <span style="font-size:1.5vh;">온량의 답글 2025.03.08</span>
@@ -197,9 +197,9 @@
                         <br>
                         <span style="font-size:1.5vh;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione itaque expedita quasi nisi iste harum reprehenderit, recusandae rem temporibus consequuntur officia voluptatibus provident neque, necessitatibus mollitia. Possimus temporibus iste veniam! Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus at quidem tempore beatae libero veritatis sunt autem accusantium, perspiciatis corrupti alias eius numquam nobis</span>
                         <div class="reviewimgbox">
-                            <img class="reviewimg" src="/img/example.png">
-                            <img class="reviewimg" src="/img/example.png">
-                            <img class="reviewimg" src="/img/example.png">
+                            <img class="reviewimg" src="/review/img/example.png">
+                            <img class="reviewimg" src="/review/img/example.png">
+                            <img class="reviewimg" src="/review/img/example.png">
                         </div>
                         <div class="reviewreply">
                             <span style="font-size:1.5vh;">온량의 답글 2025.03.08</span>
@@ -215,16 +215,17 @@
 </main>
 
 <!-- footer -->
-<footer>
-    <div class="footer-container">
-        <p>Copyright 2025 맛zip All Right Reserved</p>
-        <ul class="footer-menu">
-            <li><a href="#">공지사항</a></li>
-            <li><a href="#">FAQ</a></li>
-            <li><a href="#">Q&A</a></li>
-        </ul>
-    </div>
-</footer>
+<div id="footer-user"></div>
+
+<script>
+    fetch('/html/user_footer.html')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('footer-user').innerHTML = data;
+        })
+        .catch(error => console.error('Footer 로드 중 오류 발생:', error));
+</script>
+
 <script th:inline="javascript">
     let restLoc = /*[[${restaurantLocation}]]*/ "";
     let myLoc = "";

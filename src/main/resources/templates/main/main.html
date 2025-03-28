@@ -11,62 +11,27 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poor+Story&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/style_user.css">
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=fd7786d297e2d4aaab4aa8b6bbb06b88&libraries=services"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+
 </head>
 
 <body>
 
 <!-- header -->
-<header>
-    <div class="user-header">
-        <a href="">
-            <img class="logo" src="/img/logo.png">
-        </a>
-
-        <div class="search-container">
-            <div class="search-word">
-                <input type="text" placeholder="검색어를 입력하세요...">
-            </div>
-
-            <div class="popular-searches">
-                <span>인기검색어1</span>
-                <span>인기검색어2</span>
-                <span>인기검색어3</span>
-                <span>인기검색어4</span>
-                <span>인기검색어5</span>
-                <a href="" class="nearby">가까운 곳 찾기</a>
-                <a href="" class="game">
-                    <img id="game" src="/img/gamepad-icon.png" alt="게임패드"></a>
-            </div>
-
-        </div>
-
-        <!-- menu -->
-        <div class="menu">
-            <!-- 비로그인(게스트) 상태일 때만 표시 -->
-            <div sec:authorize="isAnonymous()">
-                <a th:href="@{/login}" class="login">로그인</a>
-                <a th:href="@{/signup}" class="signup">회원가입</a>
-            </div>
-
-            <!-- 로그인(인증) 상태일 때만 표시 -->
-            <div sec:authorize="isAuthenticated()">
-                <!-- 현재 로그인한 사용자의 아이디(혹은 이름) 표시 -->
-                <span th:text="${#authentication.name}"></span>님 환영합니다!
-                <!-- 로그아웃 -->
-                <form th:action="@{/logout}" method="post" style="display:inline;">
-                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-                    <button type="submit" class="logout">로그아웃</button>
-                </form>
-            </div>
-
-            <!-- 항상 보이는 메뉴 버튼이라면 그대로 둠 -->
-            <button class="menu-btn">
-                <img src="/img/menu-icon.png" alt="마이페이지">
-            </button>
-        </div>
-    </div>
-
 </header>
+    <!-- header -->
+    <div id="header-user"></div>
+
+    <script>
+        fetch('/html/user_header.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('header-user').innerHTML = data;
+            })
+            .catch(error => console.error('Header 로드 중 오류 발생:', error));
+    </script>
 
 <!-- main -->
 <div class="body-section">
@@ -115,17 +80,21 @@
     </section>
 </div>
 
-<!-- footer -->
-<footer>
-    <div class="footer-container">
-        <p>Copyright 2025 맛zip All Right Reserved</p>
-        <ul class="footer-menu">
-            <li><a href="#">공지사항</a></li>
-            <li><a href="#">FAQ</a></li>
-            <li><a href="#">Q&A</a></li>
-        </ul>
-    </div>
-</footer>
+
+    <!-- footer -->
+    <div id="footer-user"></div>
+
+    <script>
+        fetch('/html/user_footer.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('footer-user').innerHTML = data;
+            })
+            .catch(error => console.error('Footer 로드 중 오류 발생:', error));
+    </script>
+
+    <script src="/js/myLocation.js"></script>
+    <script src="/js/weather.js"></script>
 
 </body>
 
