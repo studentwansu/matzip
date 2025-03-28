@@ -25,11 +25,17 @@ public class WeatherService {
         List<Keyword> keywords = keywordRepository.findByWeatherCode(weather.getWeatherCode());
 
         List<KeywordDTO> result = new ArrayList<>();
+        List<Integer> rand = new ArrayList<>();
 
-        for (int i = 0; i < 5; i++) {
+        while(rand.size() < 5)
+        {
             int num = (int) (Math.random() * keywords.size());
-            Keyword keyword = keywords.get(num);
-            result.add(modelMapper.map(keyword, KeywordDTO.class));
+            if(!rand.contains(num))
+            {
+                rand.add(num);
+                Keyword keyword = keywords.get(num);
+                result.add(modelMapper.map(keyword, KeywordDTO.class));
+            }
         }
 
         return result;
