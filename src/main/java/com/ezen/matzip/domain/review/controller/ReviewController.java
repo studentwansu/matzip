@@ -63,6 +63,7 @@ public class ReviewController {
     @PostMapping("/modify")
     public String modifyReview(@ModelAttribute ReviewDTO reviewDTO) {
         reviewService.modifyReview(reviewDTO);
+        System.out.println(reviewDTO.getUserCode());
         return "redirect:/review/" + reviewDTO.getUserCode();
     }
 
