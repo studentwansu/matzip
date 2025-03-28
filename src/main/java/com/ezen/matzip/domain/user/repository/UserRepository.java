@@ -10,7 +10,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     boolean existsByUserId(String userId);
 
     // ★ 추가: 이름, 질문, 답변까지 함께 조회
-    Optional<User> findByUserIdAndNameAndQuestionAndAnswer(
+    Optional<User> findByUserIdAndNameAndPasswordQuestionAndPasswordAnswer(
             String userId,
             String name,
             String passwordQuestion,

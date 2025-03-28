@@ -18,20 +18,56 @@
 </head>
 
 <body>
+<header>
+    <div class="user-header">
+        <a href="/static">
+            <img class="logo" src="/img/logo.png">
+        </a>
 
-<!-- header -->
+        <div class="search-container">
+            <form action="/store/search">
+                <div class="search-word">
+                    <input type="text" placeholder="검색어를 입력하세요..." name="keyword">
+                    <button onclick="location.href='/test/result2'" class="search-btn" type="submit"><img src="/img/search-icon.png" style="width:3vh; height: 3vh;"></button>
+                </div>
+            </form>
+            <div class="popular-searches">
+                <span>인기검색어1</span>
+                <span>인기검색어2</span>
+                <span>인기검색어3</span>
+                <span>인기검색어4</span>
+                <span>인기검색어5</span>
+                <form action="/store/search" name="keyword" id="findByLoc">
+                    <a href="#" onclick="myLocation()" class="nearby">가까운 곳 찾기</a>
+                    <input type="hidden" name="keyword" value="">
+                </form>
+                <a href="" class="game">
+                    <img id="game" src="/img/gamepad-icon.png" alt="게임패드"></a>
+            </div>
+        </div>
+
+        <!-- menu -->
+        <div class="menu">
+            <a href="/login" class="login">로그인</a>
+            <a href="/signup" class="signup">회원가입</a>
+            <button class="menu-btn" onclick="testFunc()">
+                <img src="/img/menu-icon.png" alt="마이페이지">
+            </button>
+        </div>
+    </div>
 </header>
+<!-- header -->
     <!-- header -->
-    <div id="header-user"></div>
+<!--    <div id="header-user"></div>-->
 
-    <script>
-        fetch('/html/user_header.html')
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById('header-user').innerHTML = data;
-            })
-            .catch(error => console.error('Header 로드 중 오류 발생:', error));
-    </script>
+<!--    <script>-->
+<!--        fetch('/html/user_header.html')-->
+<!--            .then(response => response.text())-->
+<!--            .then(data => {-->
+<!--                document.getElementById('header-user').innerHTML = data;-->
+<!--            })-->
+<!--            .catch(error => console.error('Header 로드 중 오류 발생:', error));-->
+<!--    </script>-->
 
 <!-- main -->
 <div class="body-section">

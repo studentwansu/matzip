@@ -15,7 +15,7 @@ public interface BusinessRepository extends JpaRepository<Business, Integer> {
     boolean existsByPhoneNumber(String phoneNumber);
 
     // ★ 추가: 이름, 질문, 답변까지 함께 조회
-    Optional<Business> findByUserIdAndNameAndQuestionAndAnswer(
+    Optional<Business> findByUserIdAndRestaurantNameAndPasswordQuestionAndPasswordAnswer(
             String userId,
             String restaurantName,
             String passwordQuestion,

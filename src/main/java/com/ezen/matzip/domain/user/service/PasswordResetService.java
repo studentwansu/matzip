@@ -29,7 +29,7 @@ public class PasswordResetService {
     public Map<String, Object> verifyUserInfo(String userId, String name, String passwordQuestion, String passwordAnswer) {
         Map<String, Object> response = new HashMap<>();
 
-        Optional<User> userOpt = userRepository.findByUserIdAndNameAndQuestionAndAnswer(userId, name, passwordQuestion, passwordAnswer);
+        Optional<User> userOpt = userRepository.findByUserIdAndNameAndPasswordQuestionAndPasswordAnswer(userId, name, passwordQuestion, passwordAnswer);
         if (userOpt.isPresent()) {
             response.put("Success", true);
             response.put("type", "USER");
@@ -37,7 +37,7 @@ public class PasswordResetService {
             return response;
         }
 
-        Optional<Business> BusinessOpt = businessRepository.findByUserIdAndNameAndQuestionAndAnswer(userId, name, passwordQuestion, passwordAnswer);
+        Optional<Business> BusinessOpt = businessRepository.findByUserIdAndRestaurantNameAndPasswordQuestionAndPasswordAnswer(userId, name, passwordQuestion, passwordAnswer);
         if (BusinessOpt.isPresent()) {
             response.put("Success", true);
             response.put("type", "BUSINESS");
