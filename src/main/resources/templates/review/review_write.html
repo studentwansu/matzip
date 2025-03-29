@@ -15,7 +15,7 @@
                 <input type="hidden" name="userCode" th:value="${reservation.userCode}">
                 <input type="hidden" name="restaurantCode" th:value="${reservation.restaurantCode}">
                 <input type="hidden" name="reservationCode" th:value="${reservation.reservationCode}">
-                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+<!--                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">-->
 
                 <label>리뷰 내용:</label>
                 <input type="text" name="reviewContent" placeholder="리뷰를 입력하세요" required>

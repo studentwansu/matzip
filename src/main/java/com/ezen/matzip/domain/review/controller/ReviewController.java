@@ -62,6 +62,9 @@ public class ReviewController {
 
     @PostMapping("/modify")
     public String modifyReview(@ModelAttribute ReviewDTO reviewDTO) {
+        System.out.println("수정 요청 받은 리뷰 코드: " + reviewDTO.getReviewCode());
+        System.out.println("수정 요청 받은 평점: " + reviewDTO.getRating());
+        System.out.println("수정 요청 받은 유저 코드: " + reviewDTO.getUserCode());
         reviewService.modifyReview(reviewDTO);
         return "redirect:/review/" + reviewDTO.getUserCode();
     }

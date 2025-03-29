@@ -1,8 +1,15 @@
-function openModal(reviewCode) {
+function openModal(reviewCode, userCode) {
     document.getElementById("reviewModal").style.display = "block";
     const formContainer = document.getElementById("test");
 
+    // reviewCode 값을 hidden 필드에 설정
+    const hiddenReviewCode = document.getElementById("hiddenReviewCode");
+    const hiddenUserCode = document.getElementById("hiddenUserCode");
+    hiddenReviewCode.value = reviewCode;
+    hiddenUserCode.value = userCode;
+
     console.log("수정할 리뷰 코드:", reviewCode);
+    console.log("수정할 유저 코드:", userCode);
 
     // 리뷰 목록에서 해당 리뷰 코드를 가진 객체를 찾음
     const targetReview = testReview.find(r => r.reviewCode === reviewCode);
@@ -15,7 +22,7 @@ function openModal(reviewCode) {
     console.log("수정할 리뷰:", targetReview);
 
     // 별점 체크
-    document.querySelectorAll('input[name="reviewStar"]').forEach(input => {
+    document.querySelectorAll('input[name="rating"]').forEach(input => {
         input.checked = Number(input.value) === targetReview.rating;
     });
 
@@ -48,3 +55,4 @@ window.onclick = function(event) {
         closeModal();
     }
 }
+

@@ -19,7 +19,7 @@ public interface ReviewRepository extends JpaRepository<Review, Integer> {
     List<Object[]> findByUserCode(int userCode);
 
 //    Review findByReviewCode(int reviewCode);
-    Review findByReviewCode(int reviewCode);
+    Optional<Review> findByReviewCode(int reviewCode);
 
 //    @Modifying
 //    @Query("UPDATE Review r SET r.reviewContent = :newReveiwContents, r.reviewDate = :newReviewDate, r.rating = :newRating WHERE r.reviewCode = :reviewCode")
