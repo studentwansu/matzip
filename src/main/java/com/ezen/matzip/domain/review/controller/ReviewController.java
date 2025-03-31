@@ -30,17 +30,6 @@ public class ReviewController {
     @GetMapping(value = {"/{userCode}"})
     public String findReviewByUserCode(@PathVariable int userCode, Model model) {
 
-
-//        // 세션에서 로그인된 유저의 userCode 가져오기
-//        Integer loggedInUserCode = (Integer) session.getAttribute("userCode");
-//
-//        // 로그인된 유저가 없거나, userCode가 맞지 않으면 접근을 막는다.
-//        if (loggedInUserCode == null || loggedInUserCode != userCode) {
-//            // 해당 유저의 리뷰 목록이 아닌 경우 접근 제한 처리
-//            return "redirect:/login";  // 로그인 페이지로 리디렉션
-//        }
-
-
 //        List<ReviewDTO> resultReview = reviewService.findReviewByUserCode(userCode);
         List<ReviewDTO> resultReview = reviewService.findReviewByReviewCode(userCode);
         model.addAttribute("testReview", resultReview);
@@ -75,7 +64,7 @@ public class ReviewController {
         List<ReservationDTO> resultReservation = reviewService.findReservationByUserCode(userCode);
         model.addAttribute("reservation", resultReservation);
 
-        return "review/review_write";  // 앞에 슬래시 제거
+        return "review/review_write";
     }
 
     @PostMapping("/save")

@@ -56,26 +56,6 @@ public class ReviewService {
         reviewRepository.deleteById(reviewCode);
     }
 
-    public List<ReviewDTO> findReviewByRestaurantCode(Restaurant restaurantCode) {
-
-        List<Review> reviewList2 = reviewRepository.findByRestaurantCode(restaurantCode);
-        List<ReviewDTO> result = new ArrayList<>();
-        for (Review review : reviewList2) {
-            Review r = review;
-            Restaurant restaurant = (Restaurant) review.getRestaurantCode();
-            ReviewDTO dto = new ReviewDTO();
-            dto.setUserCode(r.getUserCode());
-            dto.setRestaurantName(restaurant);
-            dto.setReviewCode(r.getReviewCode());
-            dto.setReviewDate(r.getReviewDate());
-            dto.setReviewContent(r.getReviewContent());
-
-            System.out.println(dto);
-            result.add(dto);
-        }
-        return result;
-    }
-
     @Transactional
     public void modifyReview(ReviewDTO reviewDTO) {
         System.out.println("수정 요청 받은 리뷰 코드: " + reviewDTO.getReviewCode());

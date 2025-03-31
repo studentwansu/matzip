@@ -95,7 +95,7 @@
                 <td th:text="${review.reviewContent}"></td>
                 <td>
                     <button type="button" class="edit-btn" th:onclick="'openModal(' + ${review.reviewCode} + ', ' + ${review.userCode} + ')'">수정</button>
-                    <form th:id="'deleteForm-' + ${review.reviewCode}" th:action="@{/review/delete/{reviewCode}/{userCode}(reviewCode=${review.reviewCode}, userCode=${review.userCode})}" method="post" style="display:inline;">
+                    <form th:id="'deleteForm-' + ${review.reviewCode}" th:action="@{/review/delete/{reviewCode}/{userCode}(reviewCode=${review.reviewCode}, userCode=${review.userCode})}" method="post" style="display:inline">
                         <button class="delete-btn">삭제</button>
                     </form>
                 </td>
@@ -108,9 +108,9 @@
             <div class="modal-content">
                 <span class="close" onclick="closeModal()">&times;</span>
                 <div id="test"></div>
-                <form action="/review/modify" class="reviewForm" id="myform" method="post">
+                <form action="/review/modify" class="reviewForm" id="myform" method="post" enctype="multipart/form-data">
                     <fieldset id="star-rating">
-                        <span class="text-bold">별점을 선택해주세요</span>
+<!--                        <span class="text-bold">별점을 선택해주세요</span>-->
                         <input type="radio" name="rating" value="5" id="rate1">
                         <label for="rate1">★</label>
                         <input type="radio" name="rating" value="4" id="rate2">
@@ -126,6 +126,12 @@
                     <input type="hidden" id="hiddenReviewCode" name="reviewCode" value="0">
                     <input type="hidden" id="hiddenUserCode" name="userCode" value="0">
                     <textarea id="reviewContent" name="reviewContent"></textarea>
+
+                    <div>
+                        <input type="file" name="images" multiple accept="image/*">
+                    </div>
+
+                    <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
                     <input type="submit" value="저장">
                 </form>
             </div>

@@ -52,7 +52,16 @@
 <!--        </div>-->
 <!--    </div>-->
 
-        <div class="container-main">
+<!--    <p>userCode: [[${userCode}]]</p>-->
+    <a th:href="@{/review/{userCode}(userCode=${userCode})}">
+        <button type="button">내 리뷰 보기</button>
+    </a>
+
+    <a th:href="@{/review/write/{userCode}(userCode=${userCode})}">
+        <button type="button">내 리뷰 작성</button>
+    </a>
+
+    <div class="container-main">
         <p>#더운날 #여름 #시원한🍧</p>
         <div class="line-yellow-100"></div>
         <div class="food-list">

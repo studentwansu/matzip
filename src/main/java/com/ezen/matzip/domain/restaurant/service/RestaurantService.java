@@ -27,7 +27,7 @@ public class RestaurantService {
 
     private final RestaurantRepository restaurantRepository;
     private final MenuRepository menuRepository;
-    private final KeywordRepository keywordRepository;
+    private final RestaurantKeywordRepository restaurantKeywordRepository;
     private final ReviewRepository reviewRepository;
     private final ModelMapper modelMapper;
     private final RegistRepository registRepository;
@@ -63,7 +63,7 @@ public class RestaurantService {
         return new RestaurantDTO(
                 restaurant,
                 menuRepository.findByRestaurantCode(restaurant),
-                keywordRepository.findByRestaurantCode(restaurant)
+                restaurantKeywordRepository.findByRestaurantCode(restaurant)
         );
     }
 
@@ -194,11 +194,11 @@ public class RestaurantService {
 
         regist.setMenus(menuList);
 
-        List<Keyword> keywordList = registDTO.getRestaurantKeyword().stream()
-                .map(keyword -> new Keyword(keyword, regist))
+        List<RestaurantKeyword> keywordList = registDTO.getRestaurantKeyword().stream()
+                .map(keyword -> new RestaurantKeyword(keyword, regist))
                 .collect(Collectors.toList());
 
-        regist.setKeywords(keywordList);
+        regist.setRestaurantKeywords(keywordList);
 
 
         System.out.println(regist);
@@ -243,14 +243,14 @@ public class RestaurantService {
         foundModify.setMenus(menuList);
 
         // 3. 기존 키워드 목록의 칼럼값만 삭제 (연관 관계 유지)
-        foundModify.getKeywords().forEach(keyword -> {
+        foundModify.getRestaurantKeywords().forEach(keyword -> {
             keyword.ModifyKeyword(null);
         });
 
         // 4. 새로운 키워드 목록 추가
-        List<Keyword> keywordList = registDTO.getRestaurantKeyword().stream()
-                .map(keyword -> new Keyword(keyword, foundModify))
+        List<RestaurantKeyword> keywordList = registDTO.getRestaurantKeyword().stream()
+                .map(keyword -> new RestaurantKeyword(keyword, foundModify))
                 .collect(Collectors.toList());
-        foundModify.setKeywords(keywordList);
+        foundModify.setRestaurantKeywords(keywordList);
     }
 }
