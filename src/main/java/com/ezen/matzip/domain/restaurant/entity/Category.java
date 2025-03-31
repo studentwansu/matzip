@@ -20,4 +20,9 @@ public class Category {
     @OneToMany(mappedBy = "category", cascade = CascadeType.PERSIST)
     private List<Restaurant> restaurants = new ArrayList<>();
 
+    public Category(int categoryCode, String categoryName) {
+        this.categoryCode = categoryCode;
+        this.category = categoryName;
+    }
+
 }

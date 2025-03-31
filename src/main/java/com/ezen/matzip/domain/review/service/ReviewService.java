@@ -8,6 +8,7 @@ import com.ezen.matzip.domain.restaurant.repository.RestaurantRepository;
 import com.ezen.matzip.domain.review.dto.ReviewDTO;
 import com.ezen.matzip.domain.review.dto.ReviewImageDTO;
 import com.ezen.matzip.domain.review.entity.Review;
+import com.ezen.matzip.domain.review.repository.RestaurantReviewRepository;
 import com.ezen.matzip.domain.review.entity.ReviewImage;
 import com.ezen.matzip.domain.review.repository.ReviewImageRepository;
 import com.ezen.matzip.domain.review.repository.ReviewRepository;
@@ -23,6 +24,7 @@ import java.util.*;
 public class ReviewService {
 
     private final ReviewRepository reviewRepository;
+    private final RestaurantReviewRepository restaurantReviewRepository;
     private final ReviewImageRepository reviewImageRepository;
     private final ReservationRepository reservationRepository;
     private final RestaurantRepository restaurantRepository;
@@ -52,6 +54,26 @@ public class ReviewService {
     @Transactional
     public void deleteReview(int reviewCode) {
         reviewRepository.deleteById(reviewCode);
+    }
+
+    public List<ReviewDTO> findReviewByRestaurantCode(Restaurant restaurantCode) {
+
+        List<Review> reviewList2 = reviewRepository.findByRestaurantCode(restaurantCode);
+        List<ReviewDTO> result = new ArrayList<>();
+        for (Review review : reviewList2) {
+            Review r = review;
+            Restaurant restaurant = (Restaurant) review.getRestaurantCode();
+            ReviewDTO dto = new ReviewDTO();
+            dto.setUserCode(r.getUserCode());
+            dto.setRestaurantName(restaurant);
+            dto.setReviewCode(r.getReviewCode());
+            dto.setReviewDate(r.getReviewDate());
+            dto.setReviewContent(r.getReviewContent());
+
+            System.out.println(dto);
+            result.add(dto);
+        }
+        return result;
     }
 
     @Transactional
