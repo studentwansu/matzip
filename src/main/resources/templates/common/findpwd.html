@@ -4,12 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>login</title>
+    <title>password</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poor+Story&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/css/header_footer.css">
-    <link rel="stylesheet" href="/css/login.css">
+    <link rel="stylesheet" href="CSS/header_footer.css">
+    <link rel="stylesheet" href="CSS/password.css">
+    
 </head>
 
 <body>
@@ -19,7 +20,7 @@
         <div class="header-container">
             <!-- logo -->
             <div class="logo">
-                <a href="메인.html"><img src="/images/맛zip.png" alt="맛.zip 로고"></a>
+                <a href="메인.html"><img src="images/맛zip.png" alt="맛.zip 로고"></a>
             </div>
 
             <!-- search -->
@@ -53,34 +54,35 @@
     </header>
 
     <!-- main -->
-     <!-- login -->
+     <!-- password -->
     <div class="main-container">
 
-        <!-- login_contents -->
-        <section class="signup_container">
-            <h2>로그인</h2>
-            <!-- login_id_pwd -->
-<!--            <div class="login_id_pwd">-->
-<!--                <input id="id" name="id" placeholder="아이디">-->
-<!--                <input id="pwd" name="pwd" placeholder="비밀번호">-->
-<!--            </div>-->
+        <!-- password_search -->
+        <section class="password_search">
+            <h2>비밀번호 찾기</h2>
 
-<!--            &lt;!&ndash; login_button &ndash;&gt;-->
-<!--            <button class="login_button" type="submit">로그인</button>-->
-            <div th:if="${param.error}">
-                <p>로그인 실패: 아이디 또는 비밀번호를 확인하세요.</p>
+            <!-- password_id_pwd -->
+            <div class="password_id_pwd">
+                <input id="name" placeholder="이름">
+                <input id="id" placeholder="아이디">
+                <label>회원가입 시 선택한 질문: </label>
+                <select>
+                    <option value="question1">내가 살던 동네 이름은?</option>
+                    <option value="question2">내가 좋아하는 음식 이름은?</option>
+                    <option value="question3">내가 다니던 학교 이름은?</option>
+                    <option value="question4">내가 가본 나라 이름은?</option>
+                    <option value="question5">내가 좋아하는 동물의 종류는?</option>
+                    <option value="question6">내가 아끼는 보물 1호는?</option>
+                    <option value="question7">나의 취미는?</option>
+                    <option value="question8">내가 좋아하는 음악은?</option>
+                    <option value="question9">내가 좋아하는 영화는?</option>
+                    <option value="question10">내가 좋아하는 가수는?</option>
+                </select>
+                <input id="pwd_answer" placeholder="비밀번호찾기답">
             </div>
-            <form action="/login" method="post">
-                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-                <input id="id" type="text" name="userId" placeholder="아이디">
-                <input id="pwd" type="password" name="password" placeholder="비밀번호">
-                <button class="login_button" type="submit">로그인</button>
-            </form>
-
-            <div class="find">
-                <a href="회원가입.html">회원가입</a>
-                <a href="비밀번호찾기.html">비밀번호찾기</a>
-            </div>
+            
+            <!-- password_button -->
+            <button class="password_button"><a href="메인.html">확인</a></button>
         </section>
     </div> 
 

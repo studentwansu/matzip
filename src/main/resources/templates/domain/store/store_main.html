@@ -22,12 +22,18 @@
                 </div>
             </div>
             <div class="logout">
-                <p class="navi-font">점주님, 환영합니다. 😊</p>
-                <a href="">
-                    <button class="redbutton3 redbutton-font">
+                <!-- 로그인한 사업자의 상호명을 표시 -->
+                <p class="navi-font" th:text="${#authentication.principal.restaurantName} + ' 점주님, 환영합니다. 😊'">
+                    점주님, 환영합니다. 😊
+                </p>
+                <!-- POST 방식 로그아웃 폼 -->
+                <form th:action="@{/logout}" method="post">
+                    <!-- CSRF 토큰 추가 -->
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                    <button type="submit" class="redbutton3 redbutton-font">
                         로그아웃
                     </button>
-                </a>
+                </form>
             </div>
 
         </section>
