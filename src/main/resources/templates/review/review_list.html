@@ -111,7 +111,10 @@
                 <span class="close" onclick="closeModal()">&times;</span>
                 <div id="test"></div>
                 <form action="/review/modify" class="reviewForm" id="myform" method="post" enctype="multipart/form-data">
-                    <img th:src="${selectedReviewImgs.get(0)}"/>
+                    <div th:if="${selectedReviewImgs != null}">
+                        <img th:each="img : ${selectedReviewImgs}" th:src="@{${img.imagePath}}" />
+                    </div>
+
                     <fieldset id="star-rating">
 <!--                        <span class="text-bold">별점을 선택해주세요</span>-->
                         <input type="radio" name="rating" value="5" id="rate1">

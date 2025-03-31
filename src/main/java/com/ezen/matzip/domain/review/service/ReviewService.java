@@ -56,6 +56,7 @@ public class ReviewService {
         reviewRepository.deleteById(reviewCode);
     }
 
+
     @Transactional
     public void modifyReview(ReviewDTO reviewDTO) {
         System.out.println("수정 요청 받은 리뷰 코드: " + reviewDTO.getReviewCode());
@@ -65,12 +66,20 @@ public class ReviewService {
         Review foundReview = (Review) reviews.get(0);
         List<ReviewImage> reviewImages = new ArrayList<>();
         for (int i = 1; i < reviews.size(); i++) {
-            ReviewImageDTO reviewImageDTO = (ReviewImageDTO) reviews.get(i);
-            ReviewImage reviewImage = new ReviewImage(foundReview, reviewImageDTO.getReviewImagePath(), reviewImageDTO.getReviewOriginalName(), reviewImageDTO.getReviewSaveName());
+            ReviewImage reviewImage = (ReviewImage) reviews.get(i); // 실제 객체
+            ReviewImageDTO reviewImageDTO = modelMapper.map(reviewImage, ReviewImageDTO.class); // DTO로 변환
             reviewImageRepository.save(reviewImage);
             reviewImages.add(reviewImage);
-
         }
+
+
+//        for (int i = 1; i < reviews.size(); i++) {
+//            ReviewImageDTO reviewImageDTO = (ReviewImageDTO) reviews.get(i);
+//            ReviewImage reviewImage = new ReviewImage(foundReview, reviewImageDTO.getReviewImagePath(), reviewImageDTO.getReviewOriginalName(), reviewImageDTO.getReviewSaveName());
+//            reviewImageRepository.save(reviewImage);
+//            reviewImages.add(reviewImage);
+//
+//        }
         // 예외를 명시적으로 처리
 //        Review foundReview = review.get(0).orElseThrow(() ->
 //                new IllegalArgumentException("해당 리뷰를 찾을 수 없습니다. 리뷰 코드: " + reviewDTO.getReviewCode())
@@ -100,17 +109,32 @@ public class ReviewService {
 //        return reviews;
 //    }
 
+//    public List<Object> findReviewAndReviewImagesByReviewCode(int reviewCode) {
+//        List<Object> result = new ArrayList<>();
+//        Optional<Review> review = reviewRepository.findByReviewCode(reviewCode);
+//        List<ReviewImage> reviewImages = reviewImageRepository.findReviewImagesByReviewCode(reviewCode);
+//        result.add(review);
+//        for (ReviewImage reviewImage : reviewImages) {
+//            result.add(reviewImage);
+//        }
+//
+//        return result;
+//    }
+
     public List<Object> findReviewAndReviewImagesByReviewCode(int reviewCode) {
         List<Object> result = new ArrayList<>();
-        Optional<Review> review = reviewRepository.findByReviewCode(reviewCode);
-        List<ReviewImage> reviewImages = reviewImageRepository.findReviewImagesByReviewCode(reviewCode);
+
+        // Optional 처리
+        Review review = reviewRepository.findByReviewCode(reviewCode)
+                .orElseThrow(() -> new IllegalArgumentException("해당 리뷰를 찾을 수 없습니다. 리뷰 코드: " + reviewCode));
         result.add(review);
-        for (ReviewImage reviewImage : reviewImages) {
-            result.add(reviewImage);
-        }
+
+        List<ReviewImage> reviewImages = reviewImageRepository.findReviewImagesByReviewCode(reviewCode);
+        result.addAll(reviewImages);
 
         return result;
     }
+
 
     public List<ReservationDTO> findReservationByUserCode(int userCode){
         List<Reservation> reservations = reservationRepository.findReservationByUserCode(userCode);

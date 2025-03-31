@@ -35,8 +35,9 @@ public class Review {
     private Restaurant restaurantCode;
     private int reservationCode;
 
-    @OneToMany
-    @JoinColumn(name = "review_code")
+//    @OneToMany
+//    @JoinColumn(name = "review_code")
+    @OneToMany(mappedBy = "reviewCode", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ReviewImage> reviewImageList = new ArrayList<>();
 
     @PrePersist
