@@ -4,6 +4,8 @@ import com.ezen.matzip.domain.Role;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -45,6 +47,19 @@ public class User {
     @Enumerated(EnumType.STRING)
     @Column(name = "role",nullable = false)
     private Role role;                  //역할
+
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
+
+    @PrePersist
+    public void prePersist() {
+        this.updatedAt = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        this.updatedAt = LocalDateTime.now();
+    }
 
     public void updatePassword(String newPassword) {
         this.password = newPassword;

@@ -80,7 +80,9 @@
                     </select>
                     <!-- 비건 여부 -->
                     <div class="vegan">
-                        <input type="checkbox" name="isVegan" id="vegan" value="true" th:checked="${user.isVegan == 1}" />
+                        <!-- 먼저 unchecked 상태일 때 0을 보내도록 -->
+                        <input type="hidden" name="isVegan" value="0" />
+                        <input type="checkbox" name="isVegan" id="vegan" value="1" th:checked="${user.isVegan == 1}" />
                         <label for="vegan">비건</label>
                     </div>
                 </div>
