@@ -56,7 +56,10 @@ public class UpdateController {
             return "domain/sign/user_myinfo";
         }
 
-        int veganValue = "true".equalsIgnoreCase(isVegan) ? 1 : 0;
+//        int veganValue = "true".equalsIgnoreCase(isVegan) ? 1 : 0;
+//        int veganValue = "1".equals(isVegan) ? 1 : 0;
+
+        int veganValue = ("1".equals(isVegan)) ? 1 : 0;
 
         existingUser.updateUserInfo(
                 formUser.getName(),
