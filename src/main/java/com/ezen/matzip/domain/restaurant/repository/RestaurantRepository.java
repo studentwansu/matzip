@@ -15,7 +15,7 @@ import java.util.Optional;
 @Repository
 public interface RestaurantRepository extends JpaRepository<Restaurant, Integer> {
 
-    Optional<Restaurant> findByRestaurantCode(int restaurantCode);
+//    Optional<Restaurant> findByRestaurantCode(int restaurantCode);
     Restaurant findByRestaurantCode(Integer restaurantCode);
 
     @Query("SELECT r FROM Restaurant r WHERE r.restaurantUniqueKeywords LIKE %:keyword% " +
