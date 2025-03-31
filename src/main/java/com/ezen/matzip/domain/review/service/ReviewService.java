@@ -60,36 +60,57 @@ public class ReviewService {
     public void modifyReview(ReviewDTO reviewDTO) {
         System.out.println("수정 요청 받은 리뷰 코드: " + reviewDTO.getReviewCode());
         System.out.println("수정 요청 받은 평점: " + reviewDTO.getRating());
-        Optional<Review> optionalReview = reviewRepository.findByReviewCode(reviewDTO.getReviewCode());
-//        Review foundReview = reviewRepository.findByReviewCode(reviewDTO.getReviewCode());
+//        Optional<Review> optionalReview = reviewRepository.findByReviewCode(reviewDTO.getReviewCode());
+        List<Object> reviews = findReviewAndReviewImagesByReviewCode(reviewDTO.getReviewCode());
+        Review foundReview = (Review) reviews.get(0);
+        List<ReviewImage> reviewImages = new ArrayList<>();
+        for (int i = 1; i < reviews.size(); i++) {
+            ReviewImageDTO reviewImageDTO = (ReviewImageDTO) reviews.get(i);
+            ReviewImage reviewImage = new ReviewImage(foundReview, reviewImageDTO.getReviewImagePath(), reviewImageDTO.getReviewOriginalName(), reviewImageDTO.getReviewSaveName());
+            reviewImageRepository.save(reviewImage);
+            reviewImages.add(reviewImage);
 
+        }
         // 예외를 명시적으로 처리
-        Review foundReview = optionalReview.orElseThrow(() ->
-                new IllegalArgumentException("해당 리뷰를 찾을 수 없습니다. 리뷰 코드: " + reviewDTO.getReviewCode())
-        );
+//        Review foundReview = review.get(0).orElseThrow(() ->
+//                new IllegalArgumentException("해당 리뷰를 찾을 수 없습니다. 리뷰 코드: " + reviewDTO.getReviewCode())
+//        );
 
         // 리뷰 수정
+
         foundReview.modifyReview(reviewDTO.getReviewContent(), reviewDTO.getRating());
         reviewRepository.save(foundReview);
 
     }
 
 
-    public List<ReviewDTO> findReviewByReviewCode(int userCode) {
+//    public List<ReviewDTO> findReviewByReviewCode(int userCode) {
 
-        List<ReviewDTO> reviews = findReviewByUserCode(userCode);
-        for (ReviewDTO dto : reviews) {
-            List<ReviewImage> imgs = reviewImageRepository.findByReviewCode(dto.getReviewCode());
-            List<ReviewImageDTO> imgDto = new ArrayList<>();
-            for (ReviewImage img : imgs) {
-                ReviewImageDTO imgDTO = modelMapper.map(img, ReviewImageDTO.class);
-                imgDto.add(imgDTO);
-            }
-            dto.setReviewImages(imgDto);
+//        List<ReviewDTO> reviews = findReviewByUserCode(userCode);
+//        for (ReviewDTO dto : reviews) {
+//            List<ReviewImage> imgs = reviewImageRepository.findReviewImagesByReviewCode(dto.getReviewCode());
+//            List<ReviewImageDTO> imgDto = new ArrayList<>();
+//            for (ReviewImage img : imgs) {
+//                ReviewImageDTO imgDTO = modelMapper.map(img, ReviewImageDTO.class);
+//                ReviewImageDTO imgDTO = new ReviewImageDTO()
+//                imgDto.add(imgDTO);
+//            }
+//            dto.setReviewImages(imgDto);
+//        }
+//        return reviews;
+//    }
+
+    public List<Object> findReviewAndReviewImagesByReviewCode(int reviewCode) {
+        List<Object> result = new ArrayList<>();
+        Optional<Review> review = reviewRepository.findByReviewCode(reviewCode);
+        List<ReviewImage> reviewImages = reviewImageRepository.findReviewImagesByReviewCode(reviewCode);
+        result.add(review);
+        for (ReviewImage reviewImage : reviewImages) {
+            result.add(reviewImage);
         }
-        return reviews;
-    }
 
+        return result;
+    }
 
     public List<ReservationDTO> findReservationByUserCode(int userCode){
         List<Reservation> reservations = reservationRepository.findReservationByUserCode(userCode);
@@ -99,7 +120,7 @@ public class ReviewService {
     }
 
     @Transactional
-    public void writeReview(ReviewDTO reviewDTO) {
+    public void writeReview(ReviewDTO reviewDTO, List<ReviewImageDTO> reviewImageDTO) {
         // 레스토랑 조회
         Restaurant restaurant = restaurantRepository.findById(reviewDTO.getRestaurantCode())
                 .orElseThrow(() -> new IllegalArgumentException("해당 레스토랑을 찾을 수 없습니다."));
@@ -113,10 +134,15 @@ public class ReviewService {
                 .restaurantCode(restaurant)  // 연관관계 설정
                 .businessCode(restaurant.getBusinessCode())
                 .build();
-
-
-
+        review.writeReview();
         reviewRepository.save(review);
+//        List<ReviewImage> reviewImages = new ArrayList<>();
+        for (ReviewImageDTO dto : reviewImageDTO) {
+            ReviewImage reviewImage = new ReviewImage(
+                    review, dto.getReviewImagePath(), dto.getReviewOriginalName(), dto.getReviewSaveName());
+            reviewImageRepository.save(reviewImage);
+        }
+
     }
 
 //    public List<ReservationDTO> findReservationByUserCode(int userCode) {

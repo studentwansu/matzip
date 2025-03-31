@@ -94,7 +94,9 @@
                 <td th:text="${review.restaurantName}"></td>
                 <td th:text="${review.reviewContent}"></td>
                 <td>
+<!--                    <form th:action="@{/review/myReview/{reviewCode}(reviewCode=${selectedReview.reviewCode})}">-->
                     <button type="button" class="edit-btn" th:onclick="'openModal(' + ${review.reviewCode} + ', ' + ${review.userCode} + ')'">수정</button>
+<!--                    </form>-->
                     <form th:id="'deleteForm-' + ${review.reviewCode}" th:action="@{/review/delete/{reviewCode}/{userCode}(reviewCode=${review.reviewCode}, userCode=${review.userCode})}" method="post" style="display:inline">
                         <button class="delete-btn">삭제</button>
                     </form>
@@ -109,6 +111,7 @@
                 <span class="close" onclick="closeModal()">&times;</span>
                 <div id="test"></div>
                 <form action="/review/modify" class="reviewForm" id="myform" method="post" enctype="multipart/form-data">
+                    <img th:src="${selectedReviewImgs.get(0)}"/>
                     <fieldset id="star-rating">
 <!--                        <span class="text-bold">별점을 선택해주세요</span>-->
                         <input type="radio" name="rating" value="5" id="rate1">

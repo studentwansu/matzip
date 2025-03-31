@@ -13,7 +13,7 @@ function openModal(reviewCode, userCode) {
 
     // 리뷰 목록에서 해당 리뷰 코드를 가진 객체를 찾음
     const targetReview = testReview.find(r => r.reviewCode === reviewCode);
-
+    console.log("test");
     if (!targetReview) {
         console.error("리뷰를 찾을 수 없습니다.");
         return;

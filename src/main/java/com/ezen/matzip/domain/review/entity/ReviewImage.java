@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 public class ReviewImage {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int reviewImageCode;
     @ManyToOne
     @JoinColumn(name = "review_code")
@@ -22,7 +23,7 @@ public class ReviewImage {
     private String reviewSaveName;
 
     @Builder
-    public ReviewImage(int reviewImageCode, Review reviewCode, String reviewImagePath, String reviewOriginalName, String reviewSaveName) {
+    public ReviewImage(Review reviewCode, String reviewImagePath, String reviewOriginalName, String reviewSaveName) {
         this.reviewCode = reviewCode;
         this.reviewImagePath = reviewImagePath;
         this.reviewOriginalName = reviewOriginalName;

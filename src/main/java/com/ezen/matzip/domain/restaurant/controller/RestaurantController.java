@@ -21,7 +21,7 @@ import java.util.List;
 public class RestaurantController {
 
     private final RestaurantService restaurantService;
-    private final ReviewService reviewService;
+//    private final ReviewService reviewService;
 
 
     @GetMapping("/{restaurantCode}")

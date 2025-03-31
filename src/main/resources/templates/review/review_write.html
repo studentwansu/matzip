@@ -23,11 +23,13 @@
                 <input type="number" name="rating" min="1" max="5" required>
 
                 <div>
-                    <input type="file" name="images" multiple accept="image/*">
+                    <input type="file" name="multiFiles" multiple accept="image/*">
+<!--                    <input type="hidden" name="reviewCode" th:value="">-->
+<!--                    <input type="hidden" name="imagePath" th:value="" multiple accept="image/*">-->
                 </div>
 
                  <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
-                <button type="submit">리뷰 작성</button>
+                <input type="submit">리뷰 작성
             </form>
         </td>
     </tr>
