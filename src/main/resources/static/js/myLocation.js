@@ -10,11 +10,11 @@ function myLocation() {
             if (status === kakao.maps.services.Status.OK) {
 
                 const form = document.querySelector('form[id="findByLoc"]');
-                console.log(form);
+                // console.log(form);
                 const locationInput = form.querySelector('input[name="keyword"]');
-                console.log(locationInput);
+                // console.log(locationInput);
                 locationInput.value = result[0].road_address.road_name;
-                console.log(result[0].road_address.road_name);
+                // console.log(result[0].road_address.road_name);
                 form.submit();
             }
         });
@@ -41,7 +41,7 @@ function myLocation2() {
         const locationReadyEvent = new CustomEvent('locationReady', {
             detail: MyApp.currentCoords
         });
-        console.log(locationReadyEvent);
+        // console.log(locationReadyEvent);
         document.dispatchEvent(locationReadyEvent);
     });
 }

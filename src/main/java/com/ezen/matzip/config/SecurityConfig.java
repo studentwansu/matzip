@@ -56,7 +56,9 @@ public class SecurityConfig {
                         .maximumSessions(1)
                         .maxSessionsPreventsLogin(false)
                 )
-                .csrf(withDefaults());
+                .csrf(withDefaults())
+                .csrf(csrf -> csrf
+                        .ignoringRequestMatchers("/api/**", "/dapi/**", "/weather"));
 
         return http.build();
     }

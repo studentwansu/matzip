@@ -1,11 +1,11 @@
 package com.ezen.matzip.domain.weather.controller;
 
 import com.ezen.matzip.domain.weather.dto.KeywordDTO;
+import com.ezen.matzip.domain.weather.entity.Weather;
 import com.ezen.matzip.domain.weather.service.WeatherService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,14 +18,43 @@ public class WeatherController {
     private final WeatherService weatherService;
 
     @PostMapping("/weather")
-    public String getWeatherKeyword(@RequestParam String weatherKeyword, Model model)
-    {
-        System.out.println("실행되는지 테스트하기");
-
-        List<KeywordDTO> keywords = weatherService.findKeywordsByWeatherCondition(weatherKeyword);
-        model.addAttribute("recommendKeywords", keywords);
-        return "main/main";
+    @ResponseBody
+    public List<KeywordDTO> getWeatherKeywords(@RequestBody WeatherRequest request) {
+        List<KeywordDTO> weatherKeywords = weatherService.findKeywordsByWeatherCondition(request.getWeatherKeyword());
+        return weatherKeywords;
     }
+
+    @PostMapping("/weather/hashtags")
+    @ResponseBody
+    public String getWeatherCondition(@RequestBody WeatherRequest request)
+    {
+        String weatherConditionHashtags = weatherService.weatherKeyword(request.getWeatherKeyword());
+        System.out.println("잘 되고 있나?: " + weatherConditionHashtags);
+        return weatherConditionHashtags;
+    }
+
+    static class WeatherRequest {
+        private String weatherKeyword;
+
+        // getter, setter
+        public String getWeatherKeyword() {
+            return weatherKeyword;
+        }
+
+        public void setWeatherKeyword(String weatherKeyword) {
+            this.weatherKeyword = weatherKeyword;
+        }
+    }
+
+//    @PostMapping("/weather")
+//    public String getWeatherKeyword(@RequestParam String weatherKeyword, Model model)
+//    {
+//        System.out.println("실행되는지 테스트하기");
+//
+//        List<KeywordDTO> keywords = weatherService.findKeywordsByWeatherCondition(weatherKeyword);
+//        model.addAttribute("recommendKeywords", keywords);
+//        return "main/main";
+//    }
 }
 
 //weather/ → 날씨 기반 추천 기능

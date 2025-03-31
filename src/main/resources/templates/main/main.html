@@ -5,8 +5,8 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-<!--    <meta name="_csrf" content="${_csrf.token}" />-->
-<!--    <meta name="_csrf_header" content="${_csrf.headerName}" />-->
+    <meta name="_csrf" th:content="${_csrf.token}" />
+    <meta name="_csrf_header" th:content="${_csrf.headerName}" />
 
     <title>main</title>
     <link href="https://fonts.googleapis.com" rel="preconnect">
@@ -15,17 +15,15 @@
     <link href="/css/style_user.css" rel="stylesheet">
     <script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=fd7786d297e2d4aaab4aa8b6bbb06b88&libraries=services"
             type="text/javascript"></script>
-    <script async defer src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script async defer src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script th:src="@{/js/myLocation.js}"></script>
     <script th:src="@{/js/weather.js}"></script>
-<!--    <script src="/js/myLocation.js"></script>-->
-<!--    <script src="/js/weather.js"></script>-->
 </head>
 
-<!--<body id="weatherBody" onload="currentWeather();">-->
+<body id="weatherBody" onload="currentWeather();">
 
-<body>
+<!--<body>-->
 
 <header>
     <div class="user-header">
@@ -85,33 +83,32 @@
 </header>
 
 <!-- main -->
+<section class="body-section">
+    <div class="container-main">
+        <form action="/weather/hashtags">
+            <input name="weatherCondition" type="hidden" value=""/>
+            <p id="weatherHashtags"></p>
+        </form>
+        <div class="line-yellow-100"></div>
+        <div class="food-list" id="food-list">
+            <form action="/weather" id="weatherTest">
+                <input name="recommendKeywords" type="hidden" value=""/>
+            </form>
+        </div>
+    </div>
 <!--<section class="body-section">-->
 <!--    <div class="container-main">-->
 <!--        <p>#더운날 #여름 #시원한🍧</p>-->
 <!--        <div class="line-yellow-100"></div>-->
 <!--        <div class="food-list" id="food-list">-->
-<!--            <form action="/weather" id="weatherTest">-->
-<!--                <input name="recommendKeywords" type="hidden" value="Clear"/>-->
-<!--                <div class="food-item" th:each="recommend: ${recommendKeywords}">-->
-<!--                    <img th:src="${recommend.getKeywordImgPath()}">-->
-<!--                    <p th:text="${recommend.keyword}"></p>-->
-<!--                </div>-->
-<!--            </form>-->
+<!--            &lt;!&ndash; 음식 리스트가 동적으로 추가될 곳 &ndash;&gt;-->
 <!--        </div>-->
 <!--    </div>-->
-<section class="body-section">
-    <div class="container-main">
-        <p>#더운날 #여름 #시원한🍧</p>
-        <div class="line-yellow-100"></div>
-        <div class="food-list" id="food-list">
-            <!-- 음식 리스트가 동적으로 추가될 곳 -->
-        </div>
-    </div>
 
     <div class="container-main">
         <p>#중국인에게추천 #보리밥 #해물탕 #감자탕</p>
         <div class="line-yellow-100"></div>
-        <div class="food-list">
+<!--        <div class="food-list">-->
             <!--                <div class="food-item"><img src="/img/삼계탕.jpg" alt="삼계탕">-->
             <!--                    <p>보리밥</p>-->
             <!--                </div>-->

@@ -12,12 +12,16 @@ async function currentWeather() {
             const response = await axios.get(apiURL);
             const weatherKeyword = response.data.weather[0].main;  // 현재 날씨 정보
 
-            console.log("현재 날씨:", weatherKeyword);
+            const weatherInputValue = document.querySelector('input[name="recommendKeywords"]');
+            const weatherInputValue2 = document.querySelector('input[name="weatherCondition"]');
+            weatherInputValue.value = weatherKeyword;
+            weatherInputValue2.value = weatherKeyword;
 
             $.ajax({
                 type: "POST",
-                url: "/weather",
+                url: "/weather/hashtags",
                 contentType: "application/json",
+                dataType: "text",
                 data: JSON.stringify({ weatherKeyword: weatherKeyword }),
                 beforeSend: function(xhr) {
                     const csrfToken = $("meta[name='_csrf']").attr("content");
@@ -25,24 +29,55 @@ async function currentWeather() {
                     xhr.setRequestHeader(csrfHeader, csrfToken);
                 },
                 success: function (data) {
-                    console.log("서버 응답:", data);
+                    console.log(data);
+                    console.log("이것은 해시태그 데이터: " + data);
+                    let hashtags = "";
+                    hashtags += data;
+                    $('p[id="weatherHashtags"]').text(hashtags);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.error("음식 추천을 불러오지 못했습니다.");
+                    console.error("상태:", textStatus);
+                    console.error("오류:", errorThrown);
+                    console.error("응답:", jqXHR.responseText);
+                }
+            });
 
-                    // 음식 리스트를 동적으로 추가
+            $.ajax({
+                type: "POST",
+                url: "/weather",
+                contentType: "application/json",
+                dataType: "json",
+                data: JSON.stringify({ weatherKeyword: weatherKeyword }),
+                beforeSend: function(xhr) {
+                    const csrfToken = $("meta[name='_csrf']").attr("content");
+                    const csrfHeader = $("meta[name='_csrf_header']").attr("content");
+                    xhr.setRequestHeader(csrfHeader, csrfToken);
+                },
+                success: function (data) {
                     let foodListHtml = "";
-                    data.recommendKeywords.forEach(food => {
+                    data.forEach(food => {
                         foodListHtml += `
+                <form action="/store/search">
+                
                 <div class="food-item">
-                    <img src="${food.keywordImgPath}" alt="${food.keyword}" width="100">
-                    <p>${food.keyword}</p>
+                    <a style="text-decoration: none; color: inherit; display: block; cursor: pointer;"
+                     th:href="@{/store/storeinfo(restaurantCode=${restaurant.restaurantCode})}"
+                        <img src="${food.keywordImgPath}" alt="${food.keyword}" width="100">
+                        <p>${food.keyword}</p>
+                    </a>
                 </div>
+                <input type="hidden" id=""
+                </form>
             `;
                     });
-
-                    // .food-list에 동적으로 생성된 HTML 삽입
                     $(".food-list").html(foodListHtml);
                 },
-                error: function (error) {
-                    console.error("음식 추천을 불러오지 못했습니다.", error);
+                error: function (jqXHR, textStatus, errorThrown) {
+                    // console.error("음식 추천을 불러오지 못했습니다.");
+                    // console.error("상태:", textStatus);
+                    // console.error("오류:", errorThrown);
+                    // console.error("응답:", jqXHR.responseText);
                 }
             });
 
