@@ -19,6 +19,8 @@ public interface ReviewRepository extends JpaRepository<Review, Integer> {
     @Query("SELECT r, r.restaurantCode FROM Review r where r.userCode = :userCode")
     List<Object[]> findByUserCode(int userCode);
 
+    Optional<Review> findByReviewCode(int reviewCode);
+  
     List<Review> findByRestaurantCode(@Param("restaurantCode") Restaurant restaurantCode);
 
 //    @Query("SELECT r.restaurantCode, AVG(r.rating) FROM Review r WHERE r.restaurantCode IN :restaurantCodes GROUP BY r.restaurantCode")

@@ -44,6 +44,7 @@ public class ReviewService {
             dto.setReviewDate(e.getReviewDate());
             dto.setReviewContent(e.getReviewContent());
             dto.setRating(e.getRating());
+
             result.add(dto);
         }
             return result;
@@ -77,9 +78,20 @@ public class ReviewService {
 
     @Transactional
     public void modifyReview(ReviewDTO reviewDTO) {
-//        System.out.println("test231231:" + reviewDTO.getReviewCode());
-        Review foundReview = reviewRepository.findByReviewCode(reviewDTO.getReviewCode());
-        foundReview.modifyReview(reviewDTO.getReviewContent(), reviewDTO.getUserCode(), reviewDTO.getRating());
+        System.out.println("수정 요청 받은 리뷰 코드: " + reviewDTO.getReviewCode());
+        System.out.println("수정 요청 받은 평점: " + reviewDTO.getRating());
+        Optional<Review> optionalReview = reviewRepository.findByReviewCode(reviewDTO.getReviewCode());
+//        Review foundReview = reviewRepository.findByReviewCode(reviewDTO.getReviewCode());
+
+        // 예외를 명시적으로 처리
+        Review foundReview = optionalReview.orElseThrow(() ->
+                new IllegalArgumentException("해당 리뷰를 찾을 수 없습니다. 리뷰 코드: " + reviewDTO.getReviewCode())
+        );
+
+        // 리뷰 수정
+        foundReview.modifyReview(reviewDTO.getReviewContent(), reviewDTO.getRating());
+        reviewRepository.save(foundReview);
+
     }
 
 
