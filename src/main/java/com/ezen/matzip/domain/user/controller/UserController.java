@@ -21,8 +21,8 @@ public class UserController {
         return "common/login";
     }
 
-    @GetMapping("/user/myinfo")
-    public String userMyinfo() {
-        return "domain/sign/user_myinfo";
-    }
+//    @GetMapping("/user/myinfo")
+//    public String userMyinfo() {
+//        return "domain/sign/user_myinfo";
+//    }
 }
