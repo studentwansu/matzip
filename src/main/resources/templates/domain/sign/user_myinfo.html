@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>mypage</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poor+Story&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="CSS/header_footer.css">
+    <link rel="stylesheet" href="CSS/main.css">
+
+</head>
+<body>
+
+<!-- header -->
+<div id="header-user"></div>
+
+<script>
+    fetch('/html/user_header.html')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('header-user').innerHTML = data;
+        })
+        .catch(error => console.error('Header 로드 중 오류 발생:', error));
+</script>
+
+
+    <!-- mypage -->
+    <div class="main-container">
+        <!-- mapage_top -->
+        <section class="signup_contents">
+            <h2>일반회원 회원가입</h2>
+
+            <!-- signup full -->
+            <div class="signup_full">
+        
+                <!-- mapage_left -->
+                <div class="signup_left">
+                    <input id="name" placeholder="이름">
+                    <input id="id" placeholder="아이디" disabled><button>중복확인</button>
+                    <input id="pwd" placeholder="비밀번호">
+                    <input id="pwd_check" placeholder="비밀번호확인">
+                    <select>
+                        <option value="question1">당신의 초등학교는?</option>
+                        <option value="question2">당신의 중학교는?</option>
+                        <option value="question3">당신의 고등학교는?</option>
+                    </select>
+                    <input id="pwd_answer" placeholder="비밀번호찾기답">
+                </div>
+
+                <!-- mypage_right -->
+                <div class="signup_right">
+                    <input id="email" placeholder="이메일">
+                    <input id="phone" placeholder="전화번호">
+
+
+                    <div class="label">
+                        <label>국적: </label>
+                        <select disabled>
+                            <option value="korea">한국</option>
+                            <option value="japan">일본</option>
+                        </select>
+                    </div>
+
+                    <label>좋아하는 음식 카테고리: </label>
+                    <select>
+                        <option value="korea">한식</option>
+                        <option value="japan">일식</option>
+                    </select>
+                    <div class="vegan">
+                        <input type="checkbox" name="vegan" value="비건" id="vegan" >
+                        <label for="vegan">비건</label>
+                    </div>
+                </div>
+            </div>
+            <!-- mypage_button -->
+            <div class="mypage_button">
+                <div class="button">
+                    <button>수정하기</button>
+                </div>
+            </div>
+            
+        </section>
+
+    </div>
+    <div class="list_container">
+        <div class="sidebar">
+            <h3>마이페이지</h3>
+            <ul>
+                <li>내 정보</li>
+                <li>예약 내역</li>
+                <li>이용 내역</li>
+                <li>북마크</li>
+                <li>작성 리뷰 내역</li>
+            </ul>
+        </div>
+    </div>
+
+<!-- footer -->
+<div id="footer-user"></div>
+
+<script>
+    fetch('/html/user_footer.html')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('footer-user').innerHTML = data;
+        })
+        .catch(error => console.error('Footer 로드 중 오류 발생:', error));
+</script>
+
+
+</body>
+</html>

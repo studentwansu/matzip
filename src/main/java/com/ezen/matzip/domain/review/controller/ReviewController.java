@@ -1,18 +1,26 @@
 package com.ezen.matzip.domain.review.controller;
 
+import com.ezen.matzip.domain.reservation.dto.ReservationDTO;
+import com.ezen.matzip.domain.reservation.entity.Reservation;
 import com.ezen.matzip.domain.review.dto.ReviewDTO;
+import com.ezen.matzip.domain.review.entity.ReviewImage;
 import com.ezen.matzip.domain.review.service.ReviewService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 @Slf4j
 @Controller
-@RequestMapping("review")
+@RequestMapping("/review")
 @RequiredArgsConstructor
 public class ReviewController {
 
@@ -33,20 +41,45 @@ public class ReviewController {
 //        }
 
 
-        List<ReviewDTO> resultReview = reviewService.findReviewByUserCode(userCode);
-
-        model.addAttribute("review", resultReview);
+//        List<ReviewDTO> resultReview = reviewService.findReviewByUserCode(userCode);
+        List<ReviewDTO> resultReview = reviewService.findReviewByReviewCode(userCode);
+        model.addAttribute("testReview", resultReview);
 
         return "review/review_list";
     }
 
+
     @PostMapping("/delete/{reviewCode}/{userCode}")
     public String deleteReview(@PathVariable int reviewCode, @PathVariable int userCode) {
         reviewService.deleteReview(reviewCode);  // 리뷰 삭제 처리
+
         // 삭제 후 해당 userCode의 리뷰 목록으로 리디렉션
         return "redirect:/review/" + userCode;  // 삭제 후 해당 사용자의 리뷰 목록으로 리디렉션
     }
 
+    @GetMapping("/modify")
+    public void modifyPage(){}
+
+    @PostMapping("/modify")
+    public String modifyReview(@ModelAttribute ReviewDTO reviewDTO) {
+        reviewService.modifyReview(reviewDTO);
+        System.out.println(reviewDTO.getUserCode());
+        return "redirect:/review/" + reviewDTO.getUserCode();
+    }
+
+    @GetMapping("/write/{userCode}")
+    public String findReservation(@PathVariable int userCode, Model model) {
+        List<ReservationDTO> resultReservation = reviewService.findReservationByUserCode(userCode);
+        model.addAttribute("reservation", resultReservation);
+
+        return "review/review_write";  // 앞에 슬래시 제거
+    }
+
+    @PostMapping("/save")
+    public String saveReview(@ModelAttribute ReviewDTO reviewDTO) {
+        reviewService.writeReview(reviewDTO);
+        return "redirect:/review/" + reviewDTO.getUserCode();
+    }
 
 
 }

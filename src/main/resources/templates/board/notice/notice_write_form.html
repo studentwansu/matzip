@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>공지사항 등록</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poor+Story&display=swap" rel="stylesheet">
+  <!-- 스타일시트 <link href="" rel=""> -->
+</head>
+<body>
+
+<!-- header -->
+<header>
+  <div class="header-container">
+    <!-- logo -->
+    <div class="logo">
+      <img src="logo.png" alt="맛.zip 로고">
+    </div>
+
+    <!-- search -->
+    <div class="search-container">
+      <div class="search-word">
+        <input type="text" placeholder="검색어를 입력하세요...">
+      </div>
+
+      <div class="popular-searches">
+        <span>인기검색어1</span>
+        <span>인기검색어2</span>
+        <span>인기검색어3</span>
+        <span>인기검색어4</span>
+        <span>인기검색어5</span>
+        <a href="" class="nearby">가까운 곳 찾기</a>
+        <a href="" class="game">
+          <img id="game" src="gamepad-icon.png" alt="게임패드"></a>
+      </div>
+
+    </div>
+
+    <!-- menu -->
+    <div class="menu">
+      <a href="" class="login">로그인</a>
+      <a href="" class="signup">회원가입</a>
+      <button class="menu-btn">
+        <img src="menu-icon.png" alt="마이페이지">
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- main -->
+<main>
+    <div class="board-list">
+      <div class="content-box">
+        <h2>공지사항 등록</h2>
+        <form action="/board/notice/write" method="post">
+          <label for="title">제목:</label><br>
+          <input type="text" id="title" name="title" required><br><br>
+
+          <label for="content">내용:</label><br>
+          <textarea id="content" name="content" rows="5" cols="40" required></textarea><br><br>
+
+          <button type="submit">등록</button>
+        </form>
+      </div>
+    </div>
+</main>
+
+<!-- footer -->
+<footer>
+  <p>Copyright 2025 맛zip All Right Reserved</p>
+  <ul>
+    <li><a href="">공지사항</a></li>
+    <li><a href="">FAQ</a></li>
+    <li><a href="">Q&A</a></li>
+  </ul>
+</footer>
+</body>
+</html>

@@ -6,7 +6,7 @@ import com.ezen.matzip.domain.restaurant.entity.*;
 import com.ezen.matzip.domain.restaurant.repository.MenuRepository;
 import com.ezen.matzip.domain.restaurant.repository.RegistRepository;
 import com.ezen.matzip.domain.restaurant.repository.RestaurantRepository;
-import com.ezen.matzip.domain.restaurant.repository.KeywordRepository;
+import com.ezen.matzip.domain.restaurant.repository.RestaurantKeywordRepository;
 import com.ezen.matzip.domain.review.dto.ReviewDTO;
 import com.ezen.matzip.domain.review.entity.Review;
 import com.ezen.matzip.domain.review.repository.ReviewRepository;
@@ -77,7 +77,7 @@ public class RestaurantService {
     {
         List<Object[]> foundByMenu = menuRepository.findRestaurantAndScoreByMenuName(keyword);
         List<Object[]> foundByRestInfo = restaurantRepository.findRestaurantsByKeywordWithScore(keyword);
-        List<Object[]> foundByKeyword = keywordRepository.findRestaurantAndScoreByRestaurantKeyword(keyword);
+        List<Object[]> foundByKeyword = restaurantKeywordRepository.findRestaurantAndScoreByRestaurantKeyword(keyword);
 
         Map<RestaurantDTO, Integer> resultSet = new HashMap<>();
 
@@ -90,7 +90,7 @@ public class RestaurantService {
                     new RestaurantDTO(
                             menu,
                             menuRepository.findByRestaurantCode(menu),
-                            keywordRepository.findByRestaurantCode(menu)
+                            restaurantKeywordRepository.findByRestaurantCode(menu)
                     ), score
             );
         }
@@ -101,7 +101,7 @@ public class RestaurantService {
             Integer score = ((Number) frest[1]).intValue();
             RestaurantDTO dto = new RestaurantDTO(rest,
                     menuRepository.findByRestaurantCode(rest),
-                    keywordRepository.findByRestaurantCode(rest));
+                    restaurantKeywordRepository.findByRestaurantCode(rest));
 
             if(resultSet.containsKey(dto))
             {
@@ -118,7 +118,7 @@ public class RestaurantService {
             Integer score = ((Number) fkeyw[1]).intValue();
             RestaurantDTO dto = new RestaurantDTO(rest,
                     menuRepository.findByRestaurantCode(rest),
-                    keywordRepository.findByRestaurantCode(rest));
+                    restaurantKeywordRepository.findByRestaurantCode(rest));
 
             if(resultSet.containsKey(dto))
             {
@@ -147,9 +147,9 @@ public class RestaurantService {
 
     public String findLocationByRestaurantCode(Integer restaurantCode)
     {
-        Restaurant restarant = restaurantRepository.findByRestaurantCode(restaurantCode);
-        System.out.println("location: " + restarant.getRestaurantLocation());
-        return restarant.getRestaurantLocation();
+        Restaurant restaurant = restaurantRepository.findByRestaurantCode(restaurantCode);
+        System.out.println("location: " + restaurant.getRestaurantLocation());
+        return restaurant.getRestaurantLocation();
     }
 
     private Category convertToCategory(String categoryString) {

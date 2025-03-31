@@ -76,14 +76,19 @@ public class Restaurant {
     @JoinColumn(name="restaurant_code")
     private List<Menu> menus;
 
-    @OneToMany
-    @JoinColumn(name="restaurant_code")
-    private List<Review> reviews;
+//    @OneToMany
+//    @JoinColumn(name="restaurant_code")
+//    private List<Review> reviews;
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name="restaurant_code")
-    private List<Keyword> keywords;
+    private List<RestaurantKeyword> restaurantKeywords;
 
 
-
+    @Builder
+    public Restaurant(int restaurantCode, String restaurantName, int businessCode) {
+        this.restaurantCode = restaurantCode;
+        this.restaurantName = restaurantName;
+        this.businessCode = businessCode;
+    }
 }

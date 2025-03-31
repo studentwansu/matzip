@@ -5,7 +5,7 @@
 //
 //@Controller
 //public class MainController {
-//    @GetMapping(value={"/", "/main"})
+//    @GetMapping(value={"/", "/test"})
 //    public String main()
 //    {
 //        return "main/main";

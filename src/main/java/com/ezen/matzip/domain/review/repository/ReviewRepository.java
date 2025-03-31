@@ -3,11 +3,14 @@ package com.ezen.matzip.domain.review.repository;
 import com.ezen.matzip.domain.restaurant.entity.Restaurant;
 import com.ezen.matzip.domain.review.entity.Review;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ReviewRepository extends JpaRepository<Review, Integer> {
@@ -21,6 +24,5 @@ public interface ReviewRepository extends JpaRepository<Review, Integer> {
 //    @Query("SELECT r.restaurantCode, AVG(r.rating) FROM Review r WHERE r.restaurantCode IN :restaurantCodes GROUP BY r.restaurantCode")
 //    List<Object[]> findAvgRatingByRestaurantCodes(@Param("restaurantCodes") List<Integer> restaurantCodes);
 
-//    @Query("SELECT r.reviewCode, r.reviewDate, r.restaurantCode ,r.reviewContent FROM Review r WHERE")
 
 }

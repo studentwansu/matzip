@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ 리스트</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poor+Story&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/style_user.css">
+</head>
+
+<body>
+
+<!-- header -->
+<div id="header-user"></div>
+
+<script>
+    fetch('/html/user_header.html')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('header-user').innerHTML = data;
+        })
+        .catch(error => console.error('Header 로드 중 오류 발생:', error));
+</script>
+
+
+    <main>
+        <section class="body-section">
+            <div class="container-section">
+                <div class="container-title" style="justify-content:center;">
+                    <span class="container-font1">FAQ(자주 묻는 질문)</span>
+                </div>
+                <div class="line-yellow-100"></div>
+                <table class="table-class2">
+                    <tr>
+                        <th scope="col">번호</th>
+                        <th scope="col">제목</th>
+                        <th scope="col">날짜</th>
+                    </tr>
+                    <tr>
+                        <td style="width:3vh; text-align: center;">1</td>
+                        <td style="width:20vh; text-align: center;"><a href="">회원가입 시 유의사항</a></td>
+                        <td style="width:1vh; text-align: center;">2025. 03. 08</td>
+                    </tr>
+                    <tr>
+                        <td style="width:3vh; text-align: center;">1</td>
+                        <td style="width:20vh; text-align: center;"><a href="">회원가입 시 유의사항</a></td>
+                        <td style="width:1vh; text-align: center;">2025. 03. 08</td>
+                    </tr>
+                    <tr>
+                        <td style="width:3vh; text-align: center;">1</td>
+                        <td style="width:20vh; text-align: center;"><a href="">회원가입 시 유의사항</a></td>
+                        <td style="width:1vh; text-align: center;">2025. 03. 08</td>
+                    </tr>
+                    <tr>
+                        <td style="width:3vh; text-align: center;">1</td>
+                        <td style="width:20vh; text-align: center;"><a href="">회원가입 시 유의사항</a></td>
+                        <td style="width:1vh; text-align: center;">2025. 03. 08</td>
+                    </tr>
+                    <tr>
+                        <td style="width:3vh; text-align: center;">1</td>
+                        <td style="width:20vh; text-align: center;"><a href="">회원가입 시 유의사항</a></td>
+                        <td style="width:1vh; text-align: center;">2025. 03. 08</td>
+                    </tr>
+                    <tr>
+                        <td style="width:3vh; text-align: center;">1</td>
+                        <td style="width:20vh; text-align: center;"><a href="">회원가입 시 유의사항</a></td>
+                        <td style="width:1vh; text-align: center;">2025. 03. 08</td>
+                    </tr>
+                    <tr>
+                        <td style="width:3vh; text-align: center;">1</td>
+                        <td style="width:20vh; text-align: center;"><a href="">회원가입 시 유의사항</a></td>
+                        <td style="width:1vh; text-align: center;">2025. 03. 08</td>
+                    </tr>
+                    <tr>
+                        <td style="width:3vh; text-align: center;">1</td>
+                        <td style="width:20vh; text-align: center;"><a href="">회원가입 시 유의사항</a></td>
+                        <td style="width:1vh; text-align: center;">2025. 03. 08</td>
+                    </tr>
+                    <tr>
+                        <td style="width:3vh; text-align: center;">1</td>
+                        <td style="width:20vh; text-align: center;"><a href="">회원가입 시 유의사항</a></td>
+                        <td style="width:1vh; text-align: center;">2025. 03. 08</td>
+                    </tr>
+                </table>
+            </div>
+        </section>
+    </main>
+
+<!-- footer -->
+<div id="footer-user"></div>
+
+<script>
+    fetch('/html/user_footer.html')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('footer-user').innerHTML = data;
+        })
+        .catch(error => console.error('Footer 로드 중 오류 발생:', error));
+</script>
+
+
+</body>
+
+</html>

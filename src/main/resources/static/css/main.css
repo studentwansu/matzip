@@ -1,0 +1,220 @@
+.signup_contents{
+    /* display: flex; */
+    width: 85vh;
+    /* height: 55vh; */
+    background-color: white;
+    border: 1px solid #D9D9D9;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column; /* 기본적으로 세로로 배치 */
+    padding: 20px;
+    }
+
+.signup_left{
+    display: inline;
+    width: 40vh;
+    justify-items: center;
+    /* height: 50px; */
+}
+
+.signup_left input{
+    display: block;
+    position:relative;
+    width: 25vh;
+    height: 4vh;
+    border-radius: 1vh;
+    border: 1px solid #747474;
+    margin: 1vh;
+}
+
+.signup_right{
+    display: inline;
+    width: 40vh;
+    justify-items: center;
+
+    /* height: 50px; */
+}
+
+.signup_right input{
+    display: block;
+    position:relative;
+    width: 25vh;
+    height: 4vh;
+    border-radius: 1vh;
+    border: 1px solid #747474;
+    margin: 1vh;
+}
+
+.vegan {
+    display: flex; /* 체크박스와 라벨을 가로로 배치 */
+    align-items: center; /* 수직 정렬 */
+    margin-bottom: 10px; /* 아래 여백 */
+    justify-content: left;
+}
+
+.signup_full{
+    display:flex;
+    justify-content: center;
+    margin: 3vh auto;
+    
+}
+
+select {
+    height:4vh;
+}
+
+
+pre {
+    white-space: pre-wrap;
+    text-align: left;
+    overflow: auto;
+}
+
+.inside_signup_btn{
+    background-color: #FA4032;
+    color: white;
+    padding: 10px 20px;
+    width: 15vh;
+    height: 6vh;
+    border: none;
+    border-radius: 10px;
+    margin: 1vh;
+    cursor: pointer;
+    text-align: center;
+    
+    float: right;
+    margin-left: auto;
+}
+
+.inside_signup_btn a{
+    text-decoration: none;
+    font-size: 3vh;
+    color: white;
+}
+
+.inside_signup_btn:hover {
+    background-color: #cd3429; /* 버튼 호버 시 배경색 */
+}
+
+.label{
+    display: block;
+}
+
+/* 메인 컨테이너 */
+.main-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+/* 사이드바 스타일 */
+.sidebar {
+    width: 200px;
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid #f58031;
+}
+
+.sidebar h3 {
+    background: #fa4032;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 10px;
+}
+
+.sidebar ul li {
+    margin: 10px 0;
+}
+
+.sidebar ul li a {
+    text-decoration: none;
+    color: black;
+    font-size: 14px;
+}
+
+/* 콘텐츠 영역 */
+.content {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid #f58031;
+    width: 850px;
+}
+
+.content h2 {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+/* 테이블 스타일 */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+}
+
+th,
+td {
+    padding: 10px;
+    font-size: 14px;
+}
+
+th {
+    color: black;
+    border-bottom: 1px solid #ddd;
+}
+
+td {
+    border-bottom: 1px solid #ddd;
+}
+
+/* 버튼 스타일 */
+.delete-btn,
+.edit-btn {
+    background: #fa4032;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.edit-btn {
+    background: #f58031;
+}
+
+.edit-btn a {
+    color: white;
+    text-decoration: none;
+}
+
+.delete-btn:hover {
+    background: #e03022;
+}
+
+.edit-btn:hover {
+    background: #d4691e;
+}
+
+/* 페이지네이션 */
+.pagination {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.pagination a {
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+    margin: 0 5px;
+}

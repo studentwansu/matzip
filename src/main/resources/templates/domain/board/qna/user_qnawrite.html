@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Q&A 작성</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poor+Story&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/style_user.css">
+
+</head>
+
+<body>
+
+<!-- header -->
+<div id="header-user"></div>
+
+<script>
+    fetch('/html/user_header.html')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('header-user').innerHTML = data;
+        })
+        .catch(error => console.error('Header 로드 중 오류 발생:', error));
+</script>
+
+<main>
+    <section class="body-section">
+        <div class="container-section">
+            <div class="container-title" style="justify-content:center;">
+                <span class="container-font1">Q&A</span>
+            </div>
+            <div class="line-yellow-100"></div>
+            <div class="container-textarea">
+                <textarea class="user-input" id="responseText" placeholder="글 제목을 입력하세요." rows="1" cols="168"></textarea><br><br>
+                <textarea class="user-input" id="responseText2" placeholder="글 내용 작성" rows="18" cols="168"></textarea><br><br>
+            </div>
+            <div class="buttonbox5">
+                <button class="redbutton3 redbutton-font" style="font-size:1.5vh;">이미지등록</button>
+                <button class="redbutton3 redbutton-font">등록</button>
+                <a href="">뒤로가기</a>
+            </div>
+        </div>
+    </section>
+</main>
+
+<!-- footer -->
+<div id="footer-user"></div>
+
+<script>
+    fetch('/html/user_footer.html')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('footer-user').innerHTML = data;
+        })
+        .catch(error => console.error('Footer 로드 중 오류 발생:', error));
+</script>
+
+
+
+</body>
+
+</html>

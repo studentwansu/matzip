@@ -1,0 +1,53 @@
+.signup_container {
+    text-align: center; /* 텍스트를 가운데 정렬 */
+    width: 85vh;
+    height: 55vh;
+    background-color: white;
+    border: 1px solid #D9D9D9;
+    border-radius: 10px;
+    padding-top: 3vh;
+}
+
+.login_id_pwd {
+    justify-content: center;
+    padding-top: 70px;
+    padding-left: 155px;
+}
+
+.login_id_pwd input{
+    display: block;
+    width: 40vh;
+    height: 4vh;
+    border-radius: 1vh;
+    border: 1px solid #747474;
+    margin: 1vh;
+}
+
+.login_button{
+    background-color: #FA4032;
+    color: white;
+    padding: 10px 20px;
+    width: 40vh;
+    height: 5vh;
+    border: none;
+    border-radius: 10px;
+    margin: 1vh;
+    cursor: pointer;
+}
+
+.login_button a {
+    color: white; /* 링크 텍스트 색상 */
+    text-decoration: none; /* 링크 밑줄 제거 */
+    display: block;
+    font-size: 2vh;
+}
+
+.login_button:hover {
+    background-color: #cd3429; /* 버튼 호버 시 배경색 */
+}
+
+.find a {
+    font-size: 1.5vh;
+    color: black; /* 링크 텍스트 색상 */
+    text-decoration: none; /* 링크 밑줄 제거 */
+}

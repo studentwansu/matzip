@@ -3,10 +3,12 @@ package com.ezen.matzip.domain.review.entity;
 import com.ezen.matzip.domain.restaurant.entity.Restaurant;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+
 
 @Entity
 @Table(name = "review")
@@ -18,6 +20,7 @@ public class Review {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int reviewCode;
     private String reviewContent;
+    @Temporal(TemporalType.TIMESTAMP)
     private Date reviewDate;
     private int reviewReportCount;
     private int hiddenFlag;
@@ -29,6 +32,40 @@ public class Review {
     @JoinColumn(name = "restaurant_code")
     private Restaurant restaurantCode;
     private int reservationCode;
+
+    @PrePersist
+    protected void onCreate() {
+        if (this.reviewDate == null) {
+            this.reviewDate = new Date();
+        }
+    }
+
+    @Builder
+    public Review(String reviewContent, Date reviewDate, int reviewReportCount, int hiddenFlag,
+                  String reviewReply, int rating, int userCode, int businessCode, int reservationCode,
+                  Restaurant restaurantCode) {
+        this.reviewContent = reviewContent;
+        this.reviewDate = reviewDate;
+        this.reviewReportCount = reviewReportCount;
+        this.hiddenFlag = hiddenFlag;
+        this.reviewReply = reviewReply;
+        this.rating = rating;
+        this.userCode = userCode;
+        this.businessCode = businessCode;
+        this.reservationCode = reservationCode;
+        this.restaurantCode = restaurantCode;
+    }
+
+    public void modifyReview(String reviewContent, int userCode, int rating) {
+        this.userCode = userCode;
+        this.reviewContent = reviewContent;
+        this.rating = rating;
+        this.reviewDate = new Date();
+    }
+
+    public void writeReview(){
+        this.reviewDate = new Date();
+    }
 
 //    setter 필요한 필드만 setter 만들어서 사용
 }
