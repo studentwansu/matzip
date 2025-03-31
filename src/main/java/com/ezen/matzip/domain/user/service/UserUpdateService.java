@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @Transactional
-public class UserUpdateservice {
+public class UserUpdateService {
     @Autowired
     UserRepository userRepository;
 

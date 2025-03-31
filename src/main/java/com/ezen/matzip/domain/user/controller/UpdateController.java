@@ -1,7 +1,7 @@
 package com.ezen.matzip.domain.user.controller;
 
 import com.ezen.matzip.domain.user.entity.User;
-import com.ezen.matzip.domain.user.service.UserUpdateservice;
+import com.ezen.matzip.domain.user.service.UserUpdateService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,7 +18,7 @@ import java.security.Principal;
 public class UpdateController {
 
     @Autowired
-    private UserUpdateservice userUpdateservice;
+    private UserUpdateService userUpdateservice;
 
     @GetMapping("/user/myinfo")
     public String editUserInfo(Model model, Principal principal) {
