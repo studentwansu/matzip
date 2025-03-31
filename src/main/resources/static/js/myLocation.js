@@ -1,7 +1,7 @@
 let geocoder = new kakao.maps.services.Geocoder();
-
 function myLocation() {
     navigator.geolocation.getCurrentPosition(function (position) {
+
         // position은 현재 사용자의 위치 정보를 가지고 있음
         // 이 정보를 kakao.maps.LatLng 객체로 변환해야 함
         let coords = new kakao.maps.LatLng(position.coords.latitude, position.coords.longitude);
@@ -14,10 +14,13 @@ function myLocation() {
                 const locationInput = form.querySelector('input[name="keyword"]');
                 console.log(locationInput);
                 locationInput.value = result[0].road_address.road_name;
+                console.log(result[0].road_address.road_name);
                 form.submit();
             }
         });
     });
+    return false;
+
 }
 
 function searchDetailAddrFromCoords(coords, callback) {

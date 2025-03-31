@@ -5,20 +5,22 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta name="_csrf" content="${_csrf.token}" />
-    <meta name="_csrf_header" content="${_csrf.headerName}" />
+<!--    <meta name="_csrf" content="${_csrf.token}" />-->
+<!--    <meta name="_csrf_header" content="${_csrf.headerName}" />-->
 
     <title>main</title>
     <link href="https://fonts.googleapis.com" rel="preconnect">
     <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
     <link href="https://fonts.googleapis.com/css2?family=Poor+Story&display=swap" rel="stylesheet">
     <link href="/css/style_user.css" rel="stylesheet">
-    <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=fd7786d297e2d4aaab4aa8b6bbb06b88&libraries=services"
+    <script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=fd7786d297e2d4aaab4aa8b6bbb06b88&libraries=services"
             type="text/javascript"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="/js/myLocation.js"></script>
-    <script src="/js/weather.js"></script>
+    <script async defer src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script async defer src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script th:src="@{/js/myLocation.js}"></script>
+    <script th:src="@{/js/weather.js}"></script>
+<!--    <script src="/js/myLocation.js"></script>-->
+<!--    <script src="/js/weather.js"></script>-->
 </head>
 
 <!--<body id="weatherBody" onload="currentWeather();">-->
@@ -48,7 +50,7 @@
                 <form action="/store/search" id="findByLoc">
                     <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
                     <input name="keyword" type="hidden" value="">
-                    <a class="nearby" href="" onclick="myLocation()">가까운 곳 찾기</a>
+                    <a class="nearby" href="#" onclick="myLocation()">가까운 곳 찾기</a>
                 </form>
                 <a class="game" href="">
                     <img alt="게임패드" id="game" src="/img/gamepad-icon.png"></a>
