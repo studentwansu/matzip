@@ -17,12 +17,13 @@ import java.util.List;
 public class WeatherController {
     private final WeatherService weatherService;
 
-    @GetMapping("/weather")
+    @PostMapping("/weather")
     public String getWeatherKeyword(@RequestParam String weatherKeyword, Model model)
     {
-        List<KeywordDTO> keywords = weatherService.findKeywordsByWeatherCondition("Clear");
+        System.out.println("실행되는지 테스트하기");
+
+        List<KeywordDTO> keywords = weatherService.findKeywordsByWeatherCondition(weatherKeyword);
         model.addAttribute("recommendKeywords", keywords);
-        model.addAttribute("weatherCondition", weatherKeyword);
         return "main/main";
     }
 }

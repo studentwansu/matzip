@@ -43,6 +43,8 @@ public class RestaurantController {
     {
         List<RestaurantDTO> restaurants = restaurantService.findByKeywordOrderByScore(keyword);
         model.addAttribute("restaurantList", restaurants);
+        model.addAttribute("myLoc", keyword);
+        System.out.println("test: " + restaurants);
         return "domain/search/user_restlist";
     }
 

@@ -14,12 +14,12 @@ import org.springframework.security.web.SecurityFilterChain;
 import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
-@EnableWebSecurity
+//@EnableWebSecurity
 public class SecurityConfig {
 
     private final LoginSuccessHandler loginSuccessHandler;
-
-    // 생성자 주입으로 LoginSuccessHandler 받기
+//
+//    // 생성자 주입으로 LoginSuccessHandler 받기
     public SecurityConfig(LoginSuccessHandler loginSuccessHandler) {
         this.loginSuccessHandler = loginSuccessHandler;
     }
@@ -28,7 +28,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/main/**", "/login", "/signup", "/signup/**", "/css/**", "/js/**", "/img/**", "/html/**").permitAll()
+                        .requestMatchers("/", "/main/**", "/login", "/signup", "/signup/**", "/css/**", "/js/**", "/img/**", "/html/**", "/store", "/store/**", "/weather", "/weather/**").permitAll()
                         .requestMatchers("/user/**").hasRole("USER")
                         .requestMatchers("/business/**").hasRole("BUSINESS")
                         .requestMatchers("/admin/**").hasRole("ADMIN")
