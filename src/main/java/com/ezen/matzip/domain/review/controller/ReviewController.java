@@ -66,6 +66,7 @@ public class ReviewController {
         System.out.println("수정 요청 받은 평점: " + reviewDTO.getRating());
         System.out.println("수정 요청 받은 유저 코드: " + reviewDTO.getUserCode());
         reviewService.modifyReview(reviewDTO);
+        System.out.println(reviewDTO.getUserCode());
         return "redirect:/review/" + reviewDTO.getUserCode();
     }
 

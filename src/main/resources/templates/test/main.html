@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>test</title>
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=fd7786d297e2d4aaab4aa8b6bbb06b88&libraries=services"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
 </head>
 <body>
 
@@ -18,11 +21,16 @@
 </form>
 <a href="/test/result2">근처 식당 보기</a>
 
-<button onclick="testFunc()">test</button>
+<button onclick="currentWeather()">test</button>
 
+<form action="/weather/test">
+    <p th:each="recommendKeywords : ${keywords}">
+        <span th:text="${recommendKeywords.keyword}"></span>
+    </p>
+</form>
 
 </body>
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-<script src="/static/js/weather.js" defer></script>
+<script src="/static/js/myLocation.js"></script>
+<script src="/static/js/weather.js"></script>
 
 </html>
