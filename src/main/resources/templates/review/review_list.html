@@ -112,9 +112,19 @@
                 <div id="test"></div>
                 <form action="/review/modify" class="reviewForm" id="myform" method="post" enctype="multipart/form-data">
 
-                    <div class="image-preview">
-                        <div th:each="img : ${selectedReviewImgs}">
+<!--                    <div class="image-preview">-->
+<!--                        <div th:each="img : ${selectedReviewImgs}">-->
+<!--                            <img th:src="@{${img.reviewImagePath}}" class="preview-img" />-->
+<!--                        </div>-->
+<!--                    </div>-->
+
+
+
+                    <div id="imageContainer">
+                        <!-- 이미지 미리보기와 삭제 버튼 -->
+                        <div class="image-preview" th:each="img : ${selectedReviewImgs}">
                             <img th:src="@{${img.reviewImagePath}}" class="preview-img" />
+                            <button type="button" class="delete-btn" th:onclick="'deleteImageFromReview(' + ${img.reviewImageCode} + ')'">X</button>
                         </div>
                     </div>
 
@@ -139,7 +149,7 @@
                     <textarea id="reviewContent" name="reviewContent"></textarea>
 
                     <div>
-                        <input type="file" name="images" multiple accept="image/*">
+                        <input type="file" name="multiFiles" class="fileInput" multiple accept="image/*">
                     </div>
 
                     <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>

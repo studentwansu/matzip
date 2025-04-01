@@ -8,7 +8,7 @@
 <table>
     <tr th:each="reservation : ${reservation}">
         <td th:text="${reservation.reservationCode}"></td>
-        <td th:text="${reservation.restaurantCode}"></td>
+        <td th:text="${reservation.restaurantName}"></td>
         <td th:text="${reservation.userCode}"></td>
         <td>
             <form action="/review/save" method="post" enctype="multipart/form-data">
@@ -23,9 +23,7 @@
                 <input type="number" name="rating" min="1" max="5" required>
 
                 <div>
-                    <input type="file" name="multiFiles" multiple accept="image/*">
-<!--                    <input type="hidden" name="reviewCode" th:value="">-->
-<!--                    <input type="hidden" name="imagePath" th:value="" multiple accept="image/*">-->
+                    <input type="file" name="multiFiles" class="fileInput" multiple accept="image/*">
                 </div>
 
                  <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>

@@ -72,7 +72,6 @@ function openModal(reviewCode, userCode) {
                 });
             }
         });
-
 }
 
 function closeModal() {
@@ -84,4 +83,17 @@ window.onclick = function(event) {
         closeModal();
     }
 }
+
+
+window.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll(".fileInput").forEach(input => {
+        input.addEventListener("change", function () {
+            const maxFiles = 3;
+            if (this.files.length > maxFiles) {
+                alert("이미지는 최대 3장까지 업로드할 수 있습니다.");
+                this.value = ""; // 초기화
+            }
+        });
+    });
+});
 

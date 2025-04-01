@@ -72,54 +72,15 @@ public class ReviewService {
             reviewImages.add(reviewImage);
         }
 
-
-//        for (int i = 1; i < reviews.size(); i++) {
-//            ReviewImageDTO reviewImageDTO = (ReviewImageDTO) reviews.get(i);
-//            ReviewImage reviewImage = new ReviewImage(foundReview, reviewImageDTO.getReviewImagePath(), reviewImageDTO.getReviewOriginalName(), reviewImageDTO.getReviewSaveName());
-//            reviewImageRepository.save(reviewImage);
-//            reviewImages.add(reviewImage);
-//
-//        }
-        // 예외를 명시적으로 처리
-//        Review foundReview = review.get(0).orElseThrow(() ->
-//                new IllegalArgumentException("해당 리뷰를 찾을 수 없습니다. 리뷰 코드: " + reviewDTO.getReviewCode())
-//        );
-
         // 리뷰 수정
-
         foundReview.modifyReview(reviewDTO.getReviewContent(), reviewDTO.getRating());
         reviewRepository.save(foundReview);
 
+        for( ReviewImage reviewImage : reviewImages ) {
+            reviewImageRepository.delete(reviewImage);
+        }
+
     }
-
-
-//    public List<ReviewDTO> findReviewByReviewCode(int userCode) {
-
-//        List<ReviewDTO> reviews = findReviewByUserCode(userCode);
-//        for (ReviewDTO dto : reviews) {
-//            List<ReviewImage> imgs = reviewImageRepository.findReviewImagesByReviewCode(dto.getReviewCode());
-//            List<ReviewImageDTO> imgDto = new ArrayList<>();
-//            for (ReviewImage img : imgs) {
-//                ReviewImageDTO imgDTO = modelMapper.map(img, ReviewImageDTO.class);
-//                ReviewImageDTO imgDTO = new ReviewImageDTO()
-//                imgDto.add(imgDTO);
-//            }
-//            dto.setReviewImages(imgDto);
-//        }
-//        return reviews;
-//    }
-
-//    public List<Object> findReviewAndReviewImagesByReviewCode(int reviewCode) {
-//        List<Object> result = new ArrayList<>();
-//        Optional<Review> review = reviewRepository.findByReviewCode(reviewCode);
-//        List<ReviewImage> reviewImages = reviewImageRepository.findReviewImagesByReviewCode(reviewCode);
-//        result.add(review);
-//        for (ReviewImage reviewImage : reviewImages) {
-//            result.add(reviewImage);
-//        }
-//
-//        return result;
-//    }
 
     public List<Object> findReviewAndReviewImagesByReviewCode(int reviewCode) {
         List<Object> result = new ArrayList<>();
@@ -135,12 +96,26 @@ public class ReviewService {
         return result;
     }
 
+    public List<ReservationDTO> findReservationByUserCode(int userCode) {
+        List<Object[]> reservations = reservationRepository.findReservationByUserCode(userCode);
 
-    public List<ReservationDTO> findReservationByUserCode(int userCode){
-        List<Reservation> reservations = reservationRepository.findReservationByUserCode(userCode);
+        List<ReservationDTO> result = new ArrayList<>();
+        for (Object[] reservation : reservations) {
+            Reservation e = (Reservation) reservation[0];
+            Restaurant restaurant = (Restaurant) reservation[1];
+            ReservationDTO dto = new ReservationDTO();
+            dto.setReservationCode(e.getReservationCode());
+            dto.setUserCode(e.getUserCode());
+            dto.setReservationDate(e.getReservationDate());
+            dto.setReservationTime(e.getReservationTime());
+            dto.setReservationPeople(e.getReservationPeople());
+            dto.setRestaurantCode(restaurant);
+            dto.setRestaurantName(restaurant);
+            dto.setRecipe(e.getRecipe());
 
-        return reservations.stream()
-                .map(reservation -> modelMapper.map(reservation, ReservationDTO.class)).toList();
+            result.add(dto);
+        }
+        return result;
     }
 
     @Transactional
@@ -168,8 +143,4 @@ public class ReviewService {
         }
 
     }
-
-//    public List<ReservationDTO> findReservationByUserCode(int userCode) {
-//        List<ReservationDTO> reservations = findReservationByUserCode(userCode);
-//    }
 }

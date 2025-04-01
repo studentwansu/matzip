@@ -14,20 +14,7 @@ import java.util.List;
 @EnableJpaRepositories
 public interface ReviewImageRepository extends JpaRepository<ReviewImage, Integer> {
 
-//    List<ReviewImage> findReviewImagesByReviewCode(Review reviewCode);
-
-//    @Query("SELECT i FROM ReviewImage i JOIN i.review.reviewCode ON Review.reviewCode WHERE i.review.reviewCode = :reviewCode")
-//    List<ReviewImage> findReviewImagesByReviewCode(@Param("reviewCode") int reviewCode);
-    @Query("SELECT i FROM ReviewImage i WHERE i.reviewCode.reviewCode = :reviewCode")
+   @Query("SELECT i FROM ReviewImage i WHERE i.reviewCode.reviewCode = :reviewCode")
     List<ReviewImage> findReviewImagesByReviewCode(@Param("reviewCode") int reviewCode);
-
-//    ReviewImage findReviewImageByReviewCode(Review reviewCode);
-
-//    @Query("SELECT ReviewImage FROM ReviewImage i JOIN i.review.reviewCode ON Review.reviewCode WHERE i.review.reviewCode = :reviewCode")
-//    ReviewImage findReviewImageByReviewImageCode(int reviewCode);
-
-//    @Query("SELECT Review, i.reviewImagePath FROM Review r JOIN ReviewImage i ON r.reviewCode = i.review.reviewCode")
-//    List<Object[]> findReviewImagesByReviewCodes(List<Review> reviewCode);
-
 
 }

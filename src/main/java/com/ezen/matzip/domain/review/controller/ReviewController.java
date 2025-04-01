@@ -53,7 +53,7 @@ public class ReviewController {
         return "review/review_list";
     }
 
-    @GetMapping("/myReview/{reviewCode}")
+    @GetMapping(value = "/myReview/{reviewCode}")
     public String findReviewByReviewCode(@PathVariable int reviewCode, Model model) {
         Review review = reviewRepository.findByReviewCode(reviewCode)
                 .orElseThrow(() -> new IllegalArgumentException("해당 리뷰 없음"));
@@ -136,18 +136,22 @@ public class ReviewController {
         List<String> savedFiles = new ArrayList<>();
 
         try {
+            int count = 0;
             for (MultipartFile file : multiFiles) {
+                if (count >= 3) break;
                 /** 파일명 변경 처리 */
                 String originFileName = file.getOriginalFilename();
                 String ext = originFileName.substring(originFileName.lastIndexOf("."));
                 String savedFileName = UUID.randomUUID().toString().replace("-", "") + ext;
 
                 /** 파일정보 등록 */
-                files.add(new ReviewImageDTO("img/review/" + savedFileName, originFileName, savedFileName));
+                files.add(new ReviewImageDTO("/img/review/" + savedFileName, originFileName, savedFileName));
 
                 /** 파일 저장 */
                 file.transferTo(new File(filePath + "/" + savedFileName));
                 savedFiles.add("static/img/review/" + savedFileName);
+
+                count++;
             }
 
 //            model.addAttribute("message", "파일 업로드 성공!");
@@ -163,6 +167,18 @@ public class ReviewController {
         reviewService.writeReview(reviewDTO, files);
         return "redirect:/review/" + reviewDTO.getUserCode();
     }
+
+    @PostMapping("/image/delete/{reviewImageCode}")
+    @ResponseBody
+    public ResponseEntity<?> deleteReviewImage(@PathVariable int reviewImageCode) {
+        reviewImageRepository.findById(reviewImageCode).ifPresent(image -> {
+            File file = new File("src/main/resources/static" + image.getReviewImagePath());
+            if (file.exists()) file.delete(); // 실제 파일 삭제
+            reviewImageRepository.deleteById(reviewImageCode); // DB 삭제
+        });
+        return ResponseEntity.ok().build();
+    }
+
 
 
 }
