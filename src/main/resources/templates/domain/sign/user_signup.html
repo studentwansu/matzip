@@ -8,8 +8,34 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poor+Story&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="CSS/header_footer.css">
-    <link rel="stylesheet" href="CSS/main.css">
+    <link rel="stylesheet" href="/CSS/header_footer.css">
+    <link rel="stylesheet" href="/CSS/main.css">
+
+
+    <script>
+        function checkUserId() {
+            var userId = document.getElementById("userId").value.trim();
+            if (userId === "") {
+                alert("아이디를 입력해주세요.");
+                return;
+            }
+            fetch('/checkUserId', {
+                method: "POST",
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: new URLSearchParams({ userId: userId })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.available) {
+                        alert("사용 가능한 아이디입니다.");
+                    } else {
+                        alert("이미 사용 중인 아이디입니다.");
+                    }
+                })
+                .catch(error => console.error("중복검사 오류:", error));
+        }
+    </script>
+</head>
 <body>
 
 <!-- header -->
@@ -36,7 +62,7 @@
 
                         <!-- 아이디 (userId) -->
                         <input id="userId" name="userId" placeholder="아이디">
-                        <button type="button">중복확인</button>
+                        <button type="button" id="checkIdButton" onclick="checkUserId()">중복확인</button>
 
                         <!-- 비밀번호 -->
                         <input id="password" name="password" type="password" placeholder="비밀번호">
