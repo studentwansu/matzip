@@ -120,17 +120,8 @@
         </section>
     </div>
 
-    <!-- footer -->
-    <div id="footer-user"></div>
-
-    <script>
-        fetch('/html/user_footer.html')
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById('footer-user').innerHTML = data;
-            })
-            .catch(error => console.error('Footer 로드 중 오류 발생:', error));
-    </script>
+    <!-- user footer 아래 복사 -->
+    <div th:replace="~{html/user_footer :: userFooter}"></div>
 
 </body>
 </html>

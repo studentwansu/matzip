@@ -15,16 +15,8 @@
 <body>
 
 <!-- header -->
-<div id="header-user"></div>
-
-<script>
-    fetch('/html/user_header.html')
-        .then(response => response.text())
-        .then(data => {
-            document.getElementById('header-user').innerHTML = data;
-        })
-        .catch(error => console.error('Header 로드 중 오류 발생:', error));
-</script>
+<!-- user header 아래 복사 -->
+<div th:replace="~{html/user_header :: userHeader}"></div>
 
 
 <!-- 회원정보 수정 페이지 -->
@@ -112,17 +104,8 @@
         </div>
     </div>
 
-<!-- footer -->
-<div id="footer-user"></div>
-
-<script>
-    fetch('/html/user_footer.html')
-        .then(response => response.text())
-        .then(data => {
-            document.getElementById('footer-user').innerHTML = data;
-        })
-        .catch(error => console.error('Footer 로드 중 오류 발생:', error));
-</script>
+<!-- user footer 아래 복사 -->
+<div th:replace="~{html/user_footer :: userFooter}"></div>
 
 
 </body>
