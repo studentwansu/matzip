@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.core.GrantedAuthorityDefaults;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,8 +19,8 @@ import static org.springframework.security.config.Customizer.withDefaults;
 public class SecurityConfig {
 
     private final LoginSuccessHandler loginSuccessHandler;
-
-    // 생성자 주입으로 LoginSuccessHandler 받기
+//
+//    // 생성자 주입으로 LoginSuccessHandler 받기
     public SecurityConfig(LoginSuccessHandler loginSuccessHandler) {
         this.loginSuccessHandler = loginSuccessHandler;
     }
@@ -57,7 +58,9 @@ public class SecurityConfig {
                         .maximumSessions(1)
                         .maxSessionsPreventsLogin(false)
                 )
-                .csrf(withDefaults());
+                .csrf(withDefaults())
+                .csrf(csrf -> csrf
+                        .ignoringRequestMatchers("/api/**", "/dapi/**", "/weather"));
 
         return http.build();
     }

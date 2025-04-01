@@ -10,6 +10,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Poor+Story&display=swap" rel="stylesheet">
     <link href="/css/style_user.css" rel="stylesheet">
     <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=fd7786d297e2d4aaab4aa8b6bbb06b88&libraries=services" type="text/javascript"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/js/myLocation.js"></script>
+    <script src="/js/weather.js"></script>
 
 </head>
 
@@ -93,16 +97,16 @@
 </main>
 
 <!-- footer -->
-<div id="footer-user"></div>
-
-<script>
-    fetch('/html/user_footer.html')
-        .then(response => response.text())
-        .then(data => {
-            document.getElementById('footer-user').innerHTML = data;
-        })
-        .catch(error => console.error('Footer 로드 중 오류 발생:', error));
-</script>
+<footer>
+    <div class="footer-container">
+        <p>Copyright 2025 맛zip All Right Reserved</p>
+        <ul class="footer-menu">
+            <li><a href="#">공지사항</a></li>
+            <li><a href="#">FAQ</a></li>
+            <li><a href="#">Q&A</a></li>
+        </ul>
+    </div>
+</footer>
 
 </body>
 

@@ -1,38 +1,42 @@
 <!DOCTYPE html>
 <html lang="ko"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
-
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta name="_csrf" th:content="${_csrf.token}" />
+    <meta name="_csrf_header" th:content="${_csrf.headerName}" />
+
     <title>main</title>
     <link href="https://fonts.googleapis.com" rel="preconnect">
     <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
     <link href="https://fonts.googleapis.com/css2?family=Poor+Story&display=swap" rel="stylesheet">
     <link href="/css/style_user.css" rel="stylesheet">
-    <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=fd7786d297e2d4aaab4aa8b6bbb06b88&libraries=services" type="text/javascript"></script>
+    <script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=fd7786d297e2d4aaab4aa8b6bbb06b88&libraries=services"
+            type="text/javascript"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="/js/myLocation.js"></script>
-    <script src="/js/weather.js"></script>
-
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script th:src="@{/js/myLocation.js}"></script>
+    <script th:src="@{/js/weather.js}"></script>
 </head>
-<!--<body id="weatherBody" onload="currentWeather();">-->
-<body id="weatherBody">
 
-<body>
+<body id="weatherBody" onload="currentWeather();">
+
+<!--<body>-->
+
 <header>
     <div class="user-header">
-        <a href="/static">
+        <a href="/">
             <img class="logo" src="/img/logo.png">
         </a>
 
         <div class="search-container">
             <form action="/store/search">
                 <div class="search-word">
-                    <input type="text" placeholder="검색어를 입력하세요..." name="keyword">
-                    <button onclick="location.href='/test/result2'" class="search-btn" type="submit"><img src="/img/search-icon.png" style="width:3vh; height: 3vh;"></button>
+                    <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
+                    <input name="keyword" placeholder="검색어를 입력하세요..." type="text">
+                    <button class="search-btn" type="submit"><img src="/img/search-icon.png" style="width:3vh; height: 3vh;"></button>
                 </div>
             </form>
             <div class="popular-searches">
@@ -41,12 +45,13 @@
                 <span>인기검색어3</span>
                 <span>인기검색어4</span>
                 <span>인기검색어5</span>
-                <form action="/store/search" name="keyword" id="findByLoc">
-                    <a href="#" onclick="myLocation()" class="nearby">가까운 곳 찾기</a>
-                    <input type="hidden" name="keyword" value="">
+                <form action="/store/search" id="findByLoc">
+                    <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
+                    <input name="keyword" type="hidden" value="">
+                    <a class="nearby" href="#" onclick="myLocation()">가까운 곳 찾기</a>
                 </form>
-                <a href="" class="game">
-                    <img id="game" src="/img/gamepad-icon.png" alt="게임패드"></a>
+                <a class="game" href="">
+                    <img alt="게임패드" id="game" src="/img/gamepad-icon.png"></a>
             </div>
         </div>
 
@@ -104,41 +109,23 @@
 
 <!-- main -->
 <section class="body-section">
-<!--    <div class="container-main">-->
-<!--        <input type="hidden" name="weatherKeyword" value="">-->
-<!--        <p th:text="${'#' + weatherCondition + ' 날씨에 어울리는 음식'}"></p>-->
-<!--        <div class="line-yellow-100"></div>-->
-<!--        <div class="food-list">-->
-<!--            &lt;!&ndash; 폼의 액션 수정 &ndash;&gt;-->
-<!--            &lt;!&ndash; 폼 밖으로 음식 아이템들 이동 &ndash;&gt;-->
-<!--            <div class="food-item" th:each="recommend: ${recommendKeywords}">-->
-<!--                &lt;!&ndash; 이미지 경로 디버깅 &ndash;&gt;-->
-<!--                <img th:src="${recommend.getKeywordImgPath()}" th:alt="${recommend.keyword}">-->
-<!--                <p th:text="${recommend.keyword}"></p>-->
-<!--                &lt;!&ndash; 디버그용 이미지 경로 출력 &ndash;&gt;-->
-<!--                <small th:text="${recommend.getKeywordImgPath()}" style="display:none;"></small>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-
-        <div class="container-main">
-        <p>#더운날 #여름 #시원한🍧</p>
+    <div class="container-main">
+        <form action="/weather/hashtags">
+            <input name="weatherCondition" type="hidden" value=""/>
+            <p id="weatherHashtags"></p>
+        </form>
         <div class="line-yellow-100"></div>
-        <div class="food-list">
-            <form action="/weather/Clear">
-                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-                <div class="food-item" th:each="recommend: ${recommendKeywords}">
-                        <img th:src="${recommend.getKeywordImgPath()}">
-                        <p th:text="${recommend.keyword}"></p>
-                </div>
+        <div class="food-list" id="food-list">
+            <form action="/weather" id="weatherTest">
+                <input name="recommendKeywords" type="hidden" value=""/>
             </form>
         </div>
     </div>
 
-    <section class="container-main">
+    <div class="container-main">
         <p>#중국인에게추천 #보리밥 #해물탕 #감자탕</p>
         <div class="line-yellow-100"></div>
-        <div class="food-list">
+<!--        <div class="food-list">-->
             <!--                <div class="food-item"><img src="/img/삼계탕.jpg" alt="삼계탕">-->
             <!--                    <p>보리밥</p>-->
             <!--                </div>-->
@@ -155,7 +142,7 @@
             <!--                    <p>감자탕</p>-->
             <!--                </div>-->
         </div>
-    </section>
+    </div>
 </section>
 
 <!-- footer -->
