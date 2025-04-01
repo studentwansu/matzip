@@ -62,6 +62,9 @@ public class ReviewController {
 
     @PostMapping("/modify")
     public String modifyReview(@ModelAttribute ReviewDTO reviewDTO) {
+        System.out.println("수정 요청 받은 리뷰 코드: " + reviewDTO.getReviewCode());
+        System.out.println("수정 요청 받은 평점: " + reviewDTO.getRating());
+        System.out.println("수정 요청 받은 유저 코드: " + reviewDTO.getUserCode());
         reviewService.modifyReview(reviewDTO);
         System.out.println(reviewDTO.getUserCode());
         return "redirect:/review/" + reviewDTO.getUserCode();
@@ -81,6 +84,7 @@ public class ReviewController {
         return "redirect:/review/" + reviewDTO.getUserCode();
     }
 
+
 }
 
 //review/ → 리뷰 시스템 (리뷰 작성, 수정, 삭제, 조회)
@@ -90,3 +94,7 @@ public class ReviewController {
 //Repository → 데이터베이스 CRUD 처리
 //DTO → 클라이언트와 데이터를 주고받을 때 사용하는 객체
 //Entity → 실제 데이터베이스 테이블과 매칭되는 객체
+
+
+
+

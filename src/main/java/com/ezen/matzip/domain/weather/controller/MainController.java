@@ -5,9 +5,9 @@
 //
 //@Controller
 //public class MainController {
-//    @GetMapping(value={"/", "/test"})
+//    @GetMapping(value={"/"})
 //    public String main()
 //    {
-//        return "main/main";
+//        return "/test";
 //    }
 //}

@@ -21,11 +21,11 @@
 </form>
 <a href="/test/result2">근처 식당 보기</a>
 
-<button onclick="testFunc()">test</button>
+<button onclick="currentWeather()">test</button>
 
 <form action="/weather/test">
-    <p th:each="testKeyword : ${keywords}">
-        <span th:text="${testKeyword.keyword}"></span>
+    <p th:each="recommendKeywords : ${keywords}">
+        <span th:text="${recommendKeywords.keyword}"></span>
     </p>
 </form>
 
