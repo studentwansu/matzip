@@ -37,9 +37,4 @@ public class ReviewDTO {
         this.restaurantName = restaurant.getRestaurantName();
     }
 
-public void setRestaurantName(Restaurant restaurant)
-{
-    this.restaurantName = restaurant.getRestaurantName();
-}
-
 }
