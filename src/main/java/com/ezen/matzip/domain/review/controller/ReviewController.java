@@ -4,10 +4,14 @@ import com.ezen.matzip.domain.reservation.dto.ReservationDTO;
 import com.ezen.matzip.domain.reservation.entity.Reservation;
 import com.ezen.matzip.domain.review.dto.ReviewDTO;
 import com.ezen.matzip.domain.review.dto.ReviewImageDTO;
+import com.ezen.matzip.domain.review.entity.Review;
 import com.ezen.matzip.domain.review.entity.ReviewImage;
+import com.ezen.matzip.domain.review.repository.ReviewImageRepository;
+import com.ezen.matzip.domain.review.repository.ReviewRepository;
 import com.ezen.matzip.domain.review.service.ReviewService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
@@ -32,6 +36,12 @@ public class ReviewController {
     private final ReviewService reviewService;
     @Autowired
     private ResourceLoader resourceLoader;
+    @Autowired
+    private ReviewRepository reviewRepository;
+    @Autowired
+    private ReviewImageRepository reviewImageRepository;
+    @Autowired
+    private ModelMapper modelMapper;
 
 
     @GetMapping(value = {"/{userCode}"})
@@ -43,20 +53,32 @@ public class ReviewController {
         return "review/review_list";
     }
 
-    @GetMapping(value="/myReview/{reviewCode}")
+    @GetMapping("/myReview/{reviewCode}")
     public String findReviewByReviewCode(@PathVariable int reviewCode, Model model) {
-        List<Object> reviewAndImgs = reviewService.findReviewAndReviewImagesByReviewCode(reviewCode);
-        ReviewDTO review = (ReviewDTO) reviewAndImgs.get(0);
-        model.addAttribute("selectedReview", review);
-        List<ReviewImageDTO> imgs = new ArrayList<>();
-        for (int i = 1; i < reviewAndImgs.size(); i++) {
-            imgs.add((ReviewImageDTO) reviewAndImgs.get(1));
-        }
-        model.addAttribute("selectedReviewImgs", imgs);
-        System.out.println("selected: " + review);
-        System.out.println("selectedimg: " + imgs);
+        Review review = reviewRepository.findByReviewCode(reviewCode)
+                .orElseThrow(() -> new IllegalArgumentException("해당 리뷰 없음"));
+
+        List<ReviewImage> imgs = reviewImageRepository.findReviewImagesByReviewCode(reviewCode);
+        List<ReviewImageDTO> imgDTOs = imgs.stream()
+                .map(img -> modelMapper.map(img, ReviewImageDTO.class))
+                .toList();
+
+        model.addAttribute("selectedReview", modelMapper.map(review, ReviewDTO.class));
+        model.addAttribute("selectedReviewImgs", imgDTOs);
+
         return "review/review_list";
     }
+
+    @GetMapping("/imageList/{reviewCode}")
+    @ResponseBody
+    public List<ReviewImageDTO> getReviewImages(@PathVariable int reviewCode) {
+        List<ReviewImage> images = reviewImageRepository.findReviewImagesByReviewCode(reviewCode);
+        return images.stream()
+                .map(img -> modelMapper.map(img, ReviewImageDTO.class))
+                .toList();
+    }
+
+
 
     @PostMapping("/delete/{reviewCode}/{userCode}")
     public String deleteReview(@PathVariable int reviewCode, @PathVariable int userCode) {
@@ -100,7 +122,7 @@ public class ReviewController {
 
         if(!resource.exists())
         {
-            String root = "src/resources/static/img/review";
+            String root = "src/main/resources/static/img/review";
             File file = new File(root);
             file.mkdirs(); // 경로가 없다면 위의 root 경로를 생성하는 메소드
 
@@ -121,7 +143,7 @@ public class ReviewController {
                 String savedFileName = UUID.randomUUID().toString().replace("-", "") + ext;
 
                 /** 파일정보 등록 */
-                files.add(new ReviewImageDTO(filePath, originFileName, savedFileName));
+                files.add(new ReviewImageDTO("img/review/" + savedFileName, originFileName, savedFileName));
 
                 /** 파일 저장 */
                 file.transferTo(new File(filePath + "/" + savedFileName));

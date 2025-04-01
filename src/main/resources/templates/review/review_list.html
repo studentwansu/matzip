@@ -111,9 +111,14 @@
                 <span class="close" onclick="closeModal()">&times;</span>
                 <div id="test"></div>
                 <form action="/review/modify" class="reviewForm" id="myform" method="post" enctype="multipart/form-data">
-                    <div th:if="${selectedReviewImgs != null}">
-                        <img th:each="img : ${selectedReviewImgs}" th:src="@{${img.imagePath}}" />
+
+                    <div class="image-preview">
+                        <div th:each="img : ${selectedReviewImgs}">
+                            <img th:src="@{${img.reviewImagePath}}" class="preview-img" />
+                        </div>
                     </div>
+
+
 
                     <fieldset id="star-rating">
 <!--                        <span class="text-bold">별점을 선택해주세요</span>-->

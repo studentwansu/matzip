@@ -30,20 +30,49 @@ function openModal(reviewCode, userCode) {
     const reviewContent = document.getElementById("reviewContent");
     reviewContent.value = targetReview.reviewContent;
 
-    // 이미지 표시
-    if (targetReview.reviewImages && targetReview.reviewImages.length > 0) {
-        formContainer.innerHTML = ''; // 기존 내용 초기화
-        targetReview.reviewImages.forEach(image => {
-            const div = document.createElement('div');
-            const img = document.createElement('img');
-            img.setAttribute('src', image.reviewImagePath);
-            img.setAttribute('alt', '리뷰 이미지');
-            div.appendChild(img);
-            formContainer.appendChild(div);
+    // // 이미지 표시
+    // if (targetReview.reviewImages && targetReview.reviewImages.length > 0) {
+    //     formContainer.innerHTML = ''; // 기존 내용 초기화
+    //     targetReview.reviewImages.forEach(image => {
+    //         const div = document.createElement('div');
+    //         const img = document.createElement('img');
+    //         img.setAttribute('src', image.reviewImagePath);
+    //         img.setAttribute('alt', '리뷰 이미지');
+    //         div.appendChild(img);
+    //         formContainer.appendChild(div);
+    //     });
+    // } else {
+    //     formContainer.innerHTML = '이미지가 없습니다.';
+    // }
+
+    // 이미지 먼저 지움
+    formContainer.innerHTML = '';
+
+// 이미지 가져오기 (서버에서)
+    fetch(`/review/imageList/${reviewCode}`)
+        .then(res => res.json())
+        .then(data => {
+            if (data.length === 0) {
+                formContainer.innerHTML = '이미지가 없습니다.';
+            } else {
+                data.forEach(image => {
+                    const div = document.createElement('div');
+                    const img = document.createElement('img');
+                    // img.src = image.reviewImagePath;
+
+                    img.src = '/' + image.reviewImagePath.replace(/^\/+/, '');
+
+                    // img.src = img.src.substring(7);
+                    console.log(img.src);
+                    img.alt = '리뷰 이미지';
+                    img.style.width = "150px";
+                    img.style.margin = "5px";
+                    div.appendChild(img);
+                    formContainer.appendChild(div);
+                });
+            }
         });
-    } else {
-        formContainer.innerHTML = '이미지가 없습니다.';
-    }
+
 }
 
 function closeModal() {
