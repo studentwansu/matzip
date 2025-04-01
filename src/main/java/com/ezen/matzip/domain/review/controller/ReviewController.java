@@ -91,18 +91,26 @@ public class ReviewController {
     @GetMapping("/modify")
     public void modifyPage(){}
 
+//    @PostMapping("/modify")
+//    public String modifyReview(@ModelAttribute ReviewDTO reviewDTO, Model model) {
+//        System.out.println("수정 요청 받은 리뷰 코드: " + reviewDTO.getReviewCode());
+//        System.out.println("수정 요청 받은 평점: " + reviewDTO.getRating());
+//        System.out.println("수정 요청 받은 유저 코드: " + reviewDTO.getUserCode());
+//        List<Object> reviewAndImgs = reviewService.findReviewAndReviewImagesByReviewCode(reviewDTO.getReviewCode());
+//        reviewAndImgs.remove(reviewAndImgs.get(0));
+//        reviewService.modifyReview(reviewDTO);
+//        model.addAttribute("reviewAndImgs", reviewAndImgs);
+//        System.out.println(reviewDTO.getUserCode());
+//        return "redirect:/review/" + reviewDTO.getUserCode();
+//    }
+
     @PostMapping("/modify")
-    public String modifyReview(@ModelAttribute ReviewDTO reviewDTO, Model model) {
-        System.out.println("수정 요청 받은 리뷰 코드: " + reviewDTO.getReviewCode());
-        System.out.println("수정 요청 받은 평점: " + reviewDTO.getRating());
-        System.out.println("수정 요청 받은 유저 코드: " + reviewDTO.getUserCode());
-        List<Object> reviewAndImgs = reviewService.findReviewAndReviewImagesByReviewCode(reviewDTO.getReviewCode());
-        reviewAndImgs.remove(reviewAndImgs.get(0));
-        reviewService.modifyReview(reviewDTO);
-        model.addAttribute("reviewAndImgs", reviewAndImgs);
-        System.out.println(reviewDTO.getUserCode());
+    public String modifyReview(@ModelAttribute ReviewDTO reviewDTO,
+                               @RequestParam("multiFiles") List<MultipartFile> multiFiles) {
+        reviewService.modifyReview(reviewDTO, multiFiles);
         return "redirect:/review/" + reviewDTO.getUserCode();
     }
+
 
     @GetMapping("/write/{userCode}")
     public String findReservation(@PathVariable int userCode, Model model) {
@@ -167,6 +175,51 @@ public class ReviewController {
         reviewService.writeReview(reviewDTO, files);
         return "redirect:/review/" + reviewDTO.getUserCode();
     }
+
+//    @PostMapping("/save")
+//    public String saveReview(@ModelAttribute ReviewDTO reviewDTO,
+//                             @RequestParam List<MultipartFile> multiFiles) throws IOException {
+//        Resource resource = resourceLoader.getResource("classpath:static/img/review");
+//        // 이미지 저장 준비
+//        List<ReviewImageDTO> files = new ArrayList<>();
+//        String filePath;
+//
+//        try {
+//            File fileDir = new File("src/main/resources/static/img/review");
+//            if (!fileDir.exists()) fileDir.mkdirs();
+//            filePath = fileDir.getAbsolutePath();
+//
+//            int count = 0;
+//            for (MultipartFile file : multiFiles) {
+//                if (file.isEmpty()) continue;
+//                if (count >= 3) break;
+//
+//                String originFileName = file.getOriginalFilename();
+//                String ext = originFileName.substring(originFileName.lastIndexOf("."));
+//                String savedFileName = UUID.randomUUID().toString().replace("-", "") + ext;
+//
+//                // 실제 저장
+//                file.transferTo(new File(filePath + "/" + savedFileName));
+//
+//                // 파일 정보 저장
+//                files.add(new ReviewImageDTO("/img/review/" + savedFileName, originFileName, savedFileName));
+//                count++;
+//            }
+//
+//            // DB 저장
+//            for (ReviewImageDTO dto : files) {
+//                ReviewImage newImage = new ReviewImage(dto.getReviewImageCode(), dto.getReviewImagePath(), dto.getReviewOriginalName(), dto.getReviewSaveName());
+//                reviewImageRepository.save(newImage);
+//            }
+//
+//        } catch (IOException e) {
+//            System.out.println("파일 저장 실패");
+//            e.printStackTrace();
+//        }
+//
+//        reviewService.writeReview(reviewDTO, files);
+//        return "redirect:/review/" + reviewDTO.getUserCode();
+//    }
 
     @PostMapping("/image/delete/{reviewImageCode}")
     @ResponseBody
