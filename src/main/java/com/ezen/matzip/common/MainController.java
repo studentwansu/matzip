@@ -17,8 +17,19 @@ public class MainController {
 //        return "main/main";
 //    }
 //
-//    @GetMapping("/login")
-//    public String login() {
-//        return "common/login";
-//    }
+    @GetMapping("/login")
+    public String login() {
+        return "common/login";
+    }
+
+    @GetMapping("/fragments/userheader")
+    public String getUserHeader() {
+        return "html/user_header";
+    }
+
+    @GetMapping("/fragments/userfooter")
+    public String getUserFooter() {
+        return "html/user_footer";
+    }
+
 }

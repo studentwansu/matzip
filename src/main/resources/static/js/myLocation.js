@@ -10,17 +10,12 @@ function myLocation() {
             if (status === kakao.maps.services.Status.OK) {
 
                 const form = document.querySelector('form[id="findByLoc"]');
-                // console.log(form);
                 const locationInput = form.querySelector('input[name="keyword"]');
-                // console.log(locationInput);
                 locationInput.value = result[0].road_address.road_name;
-                // console.log(result[0].road_address.road_name);
                 form.submit();
             }
         });
     });
-    return false;
-
 }
 
 function searchDetailAddrFromCoords(coords, callback) {
