@@ -75,7 +75,7 @@ public class RestaurantController {
         return "domain/search/user_restlist";
     }
 
-    @GetMapping("/store/storeinfo")
+    @GetMapping("/storeinfo")
     public String markingLocation(@RequestParam Integer restaurantCode, Model model)
     {
         String location = restaurantService.findLocationByRestaurantCode(restaurantCode);
