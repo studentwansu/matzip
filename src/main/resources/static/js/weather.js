@@ -29,8 +29,8 @@ async function currentWeather() {
                     xhr.setRequestHeader(csrfHeader, csrfToken);
                 },
                 success: function (data) {
-                    console.log(data);
-                    console.log("이것은 해시태그 데이터: " + data);
+                    // console.log(data);
+                    // console.log("이것은 해시태그 데이터: " + data);
                     let hashtags = "";
                     hashtags += data;
                     $('p[id="weatherHashtags"]').text(hashtags);
@@ -59,25 +59,22 @@ async function currentWeather() {
                     data.forEach(food => {
                         foodListHtml += `
                 <form action="/store/search">
-                
                 <div class="food-item">
-                    <a style="text-decoration: none; color: inherit; display: block; cursor: pointer;"
-                     th:href="@{/store/storeinfo(restaurantCode=${restaurant.restaurantCode})}"
+                    <button style="text-decoration: none; color: inherit; display: block; cursor: pointer; background: none;" name="keyword" type="submit">
                         <img src="${food.keywordImgPath}" alt="${food.keyword}" width="100">
                         <p>${food.keyword}</p>
-                    </a>
+                        <input type="hidden" name="keyword" value="${food.keyword}">
+                    </button>
                 </div>
-                <input type="hidden" id=""
-                </form>
-            `;
+                </form>`;
                     });
                     $(".food-list").html(foodListHtml);
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
-                    // console.error("음식 추천을 불러오지 못했습니다.");
-                    // console.error("상태:", textStatus);
-                    // console.error("오류:", errorThrown);
-                    // console.error("응답:", jqXHR.responseText);
+                    console.error("음식 추천을 불러오지 못했습니다.");
+                    console.error("상태:", textStatus);
+                    console.error("오류:", errorThrown);
+                    console.error("응답:", jqXHR.responseText);
                 }
             });
 

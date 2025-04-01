@@ -22,9 +22,13 @@ public class WeatherService {
 
     public List<KeywordDTO> findKeywordsByWeatherCondition(String weatherCondition) {
         Weather weather = weatherRepository.findByWeatherCondition(weatherCondition);
+        if(weather == null) {
+            weather = weatherRepository.findByWeatherCondition("Atmosphere");
+        }
         List<Keyword> keywords = keywordRepository.findByWeatherCode(weather.getWeatherCode());
 
         List<KeywordDTO> result = new ArrayList<>();
+
         List<Integer> rand = new ArrayList<>();
 
         while(rand.size() < 5)
@@ -60,6 +64,6 @@ public class WeatherService {
             case "Atmosphere":
                 return "#안개🌫️ #몽환적인🌁 #신비로움✨ #Foggy🌫️";
         }
-        return "";
+        return "#안개🌫️ #몽환적인🌁 #신비로움✨ #Foggy🌫️";
     }
 }
