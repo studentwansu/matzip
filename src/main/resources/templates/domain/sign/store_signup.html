@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="ko">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,6 +11,96 @@
     <link rel="stylesheet" href="/CSS/main.css">
 
     <script>
+        // 사업자 회원가입 폼 유효성 검사 함수
+        function validateBusinessSignupForm() {
+            // 왼쪽(공통) 필드 검증
+            var userId = document.getElementById("userId").value.trim();
+            var password = document.getElementById("pwd").value;
+            var passwordCheck = document.getElementById("pwd_check").value;
+            var passwordQuestion = document.querySelector("select[name='passwordQuestion']").value;
+            var passwordAnswer = document.getElementById("pwd_answer").value.trim();
+
+            // 오른쪽(사업자 전용) 필드 검증
+            var email = document.getElementById("email").value.trim();
+            var phone = document.getElementById("phone").value.trim();
+            var restaurantName = document.getElementById("store").value.trim();
+            var businessNumber = document.getElementById("store_number").value.trim();
+
+            // 아이디: 5~20자 영문자, 숫자
+            var userIdRegex = /^[a-zA-Z0-9]{5,20}$/;
+            if (!userIdRegex.test(userId)) {
+                alert("아이디는 5자 이상 20자 이하의 영문자와 숫자로만 구성되어야 합니다.");
+                return false;
+            }
+
+            // 비밀번호: 8~20자, 문자와 숫자 포함
+            var passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,20}$/;
+            if (!passwordRegex.test(password)) {
+                alert("비밀번호는 8자 이상 20자 이하이며, 숫자와 문자를 포함해야 합니다.");
+                return false;
+            }
+
+            // 비밀번호 확인
+            if (password !== passwordCheck) {
+                alert("비밀번호와 비밀번호 확인이 일치하지 않습니다.");
+                return false;
+            }
+
+            // 비밀번호 찾기 질문과 답변 필수 체크
+            if (passwordQuestion === "") {
+                alert("비밀번호 찾기 질문을 선택해주세요.");
+                return false;
+            }
+            if (passwordAnswer === "") {
+                alert("비밀번호 찾기 답을 입력해주세요.");
+                return false;
+            }
+
+            // 이메일 검증
+            var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                alert("유효한 이메일 주소를 입력해주세요.");
+                return false;
+            }
+
+            // 전화번호 검증 (예: 010-1234-5678)
+            var phoneRegex = /^01[016789]-\d{3,4}-\d{4}$/;
+            if (!phoneRegex.test(phone)) {
+                alert("전화번호 형식이 올바르지 않습니다. (예: 010-1234-5678)");
+                return false;
+            }
+
+            // 상호명 필수
+            if (restaurantName === "") {
+                alert("상호명을 입력해주세요.");
+                return false;
+            }
+
+            // 사업자등록번호 검증 (예: 123-45-67890)
+            var businessNumberRegex = /^\d{3}-\d{2}-\d{5}$/;
+            if (!businessNumberRegex.test(businessNumber)) {
+                alert("사업자등록번호 형식이 올바르지 않습니다. (예: 123-45-67890)");
+                return false;
+            }
+
+            // 추가적으로 약관 동의 체크 등 필요한 조건이 있으면 추가 가능
+
+            return true;
+        }
+
+        // 폼 제출 이벤트에 유효성 검사 연결
+        document.addEventListener("DOMContentLoaded", function() {
+            var businessForm = document.getElementById("businessSignupForm");
+            if (businessForm) {
+                businessForm.addEventListener("submit", function(e) {
+                    if (!validateBusinessSignupForm()) {
+                        e.preventDefault();
+                    }
+                });
+            }
+        });
+
+        // 기존의 아이디 중복 검사 함수도 그대로 사용
         function checkUserId() {
             var userId = document.getElementById("userId").value.trim();
             if (userId === "") {
@@ -35,50 +124,42 @@
         }
     </script>
 </head>
-
 <body>
-    <!-- header -->
-    <header>
-        <!-- user header 아래 복사 -->
-        <div th:replace="~{html/user_header :: userHeader}"></div>
-    </header>
+<!-- header -->
+<header>
+    <div th:replace="~{html/user_header :: userHeader}"></div>
+</header>
 
-    <!-- main -->
-      <!-- main-container -->
-    <div class="main-container">
-        <section class="signup_contents">
-            <h2>사업자 회원가입</h2>
-
-            <!-- 폼 시작: action URL은 컨트롤러의 POST 매핑 경로로 지정 -->
-            <form th:action="@{/signup/business}" method="post">
-                <div class="signup_full">
-                    <!-- signup_left -->
-                    <div class="signup_left">
-                        <input id="userId" name="userId" placeholder="아이디">
-                        <button type="button" id="checkIdButton" onclick="checkUserId()">중복확인</button>
-                        <input id="pwd" name="password" type="password" placeholder="비밀번호">
-                        <input id="pwd_check" name="passwordCheck" type="password" placeholder="비밀번호확인">
-                        <select name="passwordQuestion">
-                            <option value="당신의 초등학교는?">당신의 초등학교는?</option>
-                            <option value="question2">당신의 중학교는?</option>
-                            <option value="question3">당신의 고등학교는?</option>
-                        </select>
-                        <input id="pwd_answer" name="passwordAnswer" placeholder="비밀번호찾기답">
-                    </div>
-                    <!-- signup_right -->
-                    <div class="signup_right">
-                        <input id="email" name="email" placeholder="이메일">
-                        <input id="phone" name="phoneNumber" placeholder="전화번호">
-                        <input id="store" name="restaurantName" placeholder="상호명">
-                        <input id="store_number" name="businessNumber" placeholder="사업자등록번호">
-                    </div>
+<!-- main -->
+<div class="main-container">
+    <section class="signup_contents">
+        <h2>사업자 회원가입</h2>
+        <form id="businessSignupForm" th:action="@{/signup/business}" method="post">
+            <div class="signup_full">
+                <!-- 왼쪽 영역: 공통 필드 (아이디, 비밀번호 등) -->
+                <div class="signup_left">
+                    <input id="userId" name="userId" placeholder="아이디">
+                    <button type="button" id="checkIdButton" onclick="checkUserId()">중복확인</button>
+                    <input id="pwd" name="password" type="password" placeholder="비밀번호">
+                    <input id="pwd_check" name="passwordCheck" type="password" placeholder="비밀번호확인">
+                    <select name="passwordQuestion">
+                        <option value="당신의 초등학교는?">당신의 초등학교는?</option>
+                        <option value="question2">당신의 중학교는?</option>
+                        <option value="question3">당신의 고등학교는?</option>
+                    </select>
+                    <input id="pwd_answer" name="passwordAnswer" placeholder="비밀번호찾기답">
                 </div>
-
-
-                <!-- signup_button -->
-                <div class="signup_button">
-                    <div class="agree">
-                        <pre>제1조 (목적)
+                <!-- 오른쪽 영역: 사업자 전용 필드 (이메일, 전화번호, 상호명, 사업자등록번호) -->
+                <div class="signup_right">
+                    <input id="email" name="email" placeholder="이메일">
+                    <input id="phone" name="phoneNumber" placeholder="전화번호">
+                    <input id="store" name="restaurantName" placeholder="상호명">
+                    <input id="store_number" name="businessNumber" placeholder="사업자등록번호">
+                </div>
+            </div>
+            <div class="signup_button">
+                <div class="agree">
+                    <pre>제1조 (목적)
                             본 약관은'AIG손해보험 주식회사'(이하 “회사”)에서 운영하는 AIG손해보험 홈페이지(이하 "홈페이지")의 서비스 이용 및 제공에 관한 제반 사항의 규정을 목적으로 한다.
                             제2조 (용어의 정의)
                             ① 홈페이지란 회사가 컴퓨터 등 정보통신설비를 이용하여 보험상품 또는 용역을 이용자에게 제공하고 거래할 수 있도록 설정한 가상의 영업장을 말하며, 아울러 홈페이지를 운영하는 사업자의 의미로도 사용한다.
@@ -100,20 +181,18 @@
                             2. 등록내용을 허위, 기재누락, 오기가 있는 경우
                             3. 기타 회원으로 등록하는 것이 "홈페이지"의 기술상 현저히 지장이 있다고 판단되는 경우
                             4. 만 14세 미만인 자
-                            ⑤ 회원은 가입 시 등록한 회원정보의 변경이 발생한 경우, 즉시 “홈페이지”에서 직접 수정 또는 전자우편, 기타 방법으로 “홈페이지”에 그 변경 사실을 알려야 한다.</pre>
-                        <input type="checkbox" name="agree" value="동의" id="agree">
-                        <label for="agree">[필수] 만 14세 이상이며 모두 동의합니다.</label>
-                    </div>
+                            ⑤ 회원은 가입 시 등록한 회원정보의 변경이 발생한 경우, 즉시 “홈페이지”에서 직접 수정 또는 전자우편, 기타 방법으로 “홈페이지”에 그 변경 사실을 알려야 한다.
+                    </pre>
+                    <input type="checkbox" name="agree" value="동의" id="agree" required>
+                    <label for="agree">[필수] 만 14세 이상이며 모두 동의합니다.</label>
                 </div>
+            </div>
+            <button type="submit" class="inside_signup_btn">가입</button>
+        </form>
+    </section>
+</div>
 
-                <!-- 제출 버튼: 링크 대신 submit 버튼 사용 -->
-                <button type="submit" class="inside_signup_btn">가입</button>
-            </form>
-        </section>
-    </div>
-
-    <!-- user footer 아래 복사 -->
-    <div th:replace="~{html/user_footer :: userFooter}"></div>
-
+<!-- footer -->
+<div th:replace="~{html/user_footer :: userFooter}"></div>
 </body>
 </html>
