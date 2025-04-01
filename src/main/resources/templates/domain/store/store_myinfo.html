@@ -12,12 +12,8 @@
 <body>
 <!-- header -->
 <header>
-  <div class="header-container">
-    <div class="logo">
-      <a href="메인.html"><img src="images/맛zip.png" alt="맛.zip 로고"></a>
-    </div>
-    <!-- 검색, 메뉴 등 다른 header 요소 -->
-  </div>
+  <!-- store header 아래 복사 -->
+  <div th:replace="~{html/store_header :: storeHeader}"></div>
 </header>
 
 <!-- 사업자 회원정보 수정 폼 -->
