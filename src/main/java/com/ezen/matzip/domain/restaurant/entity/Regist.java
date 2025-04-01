@@ -51,7 +51,7 @@ public class Regist {
 //    @ManyToOne
 //    @JoinColumn(name = "business_code")
     private int businessCode;
-    private int categoryCode;
+//    private int categoryCode;
     @OneToMany
     @JoinColumn(name = "restaurant_code")
     private List<Menu> menu;

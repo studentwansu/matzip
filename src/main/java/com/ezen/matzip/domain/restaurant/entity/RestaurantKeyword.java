@@ -30,6 +30,9 @@ public class RestaurantKeyword {
         this.restaurantKeyword = restaurantKeyword;
     }
 
+//    public void setRestaurantCode(Restaurant restaurantCode) {
+//        this.restaurantCode = restaurantCode;
+//    }
 }
 
 
