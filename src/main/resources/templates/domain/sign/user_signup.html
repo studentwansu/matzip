@@ -50,7 +50,7 @@
         <section class="signup_contents">
             <h2>일반회원 회원가입</h2>
             <!-- 폼 시작: action URL은 RegistUserController의 매핑 경로와 일치 -->
-            <form th:action="@{/signup/user}" th:method="post">
+            <form th:object="${userRequestDTO}"  th:action="@{/signup/user}" th:method="post">
                 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
 
                 <!-- signup full -->
@@ -104,12 +104,28 @@
                         </select>
 
                         <div class="vegan">
-                            <!-- 기본값으로 0 설정 -->
-                            <input type="hidden" id="isVegan" name="isVegan" value="0">
-                            <!-- 체크되면 1로 덮어쓰기 -->
-<!--                            <input type="checkbox" id="isVegan" name="isVegan" value="1" style="width:10vh;"-->
-<!--                                   th:checked="${userRequestDTO?.isVegan == 1}">-->
+
+                            <!-- th:field를 사용하면 Thymeleaf가 숨은 필드도 자동 생성 -->
+                            <input type="checkbox" th:field="*{isVegan}" id="isVegan" value="true">
                             <label for="isVegan">비건</label>
+<!--                            <input type="hidden" name="isVegan" value="0">-->
+<!--                            <input type="checkbox" id="isVegan" name="isVegan" value="1"-->
+<!--                                   th:checked="${userRequestDTO?.isVegan == 1}">-->
+<!--                            <label for="isVegan">비건</label>-->
+
+                            <!-- 기본값 0을 지정하는 숨은 필드 -->
+<!--                            <input type="hidden" name="isVegan" value="0">-->
+<!--                            &lt;!&ndash; 체크박스 (체크 시 1 전송) &ndash;&gt;-->
+<!--                            <input type="checkbox" id="isVeganCheckbox" name="isVegan" value="1"-->
+<!--                                   th:checked="${userRequestDTO?.isVegan == 1}">-->
+<!--                            <label for="isVeganCheckbox">비건</label>-->
+
+<!--                            &lt;!&ndash; 기본값으로 0 설정 &ndash;&gt;-->
+<!--                            <input type="hidden" id="isVegan" name="isVegan" value="0">-->
+<!--                            &lt;!&ndash; 체크되면 1로 덮어쓰기 &ndash;&gt;-->
+<!--&lt;!&ndash;                            <input type="checkbox" id="isVegan" name="isVegan" value="1" style="width:10vh;"&ndash;&gt;-->
+<!--&lt;!&ndash;                                   th:checked="${userRequestDTO?.isVegan == 1}">&ndash;&gt;-->
+<!--                            <label for="isVegan">비건</label>-->
                         </div>
                     </div>
                 </div>
