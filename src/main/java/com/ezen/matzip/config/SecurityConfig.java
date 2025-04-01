@@ -29,7 +29,9 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/main/**", "/login", "/signup", "/signup/**", "/css/**", "/js/**", "/img/**", "/html/**", "/store", "/store/**", "/weather", "/weather/**").permitAll()
+                        .requestMatchers("/", "/main/main", "/login", "/signup", "/signup/**", "/css/**", "/js/**", "/img/**", "/html/**"
+                                // 비밀번호 찾기 관련 경로 추가
+                                "/findpwd", "/checkUserInfo", "/resetPassword").permitAll()
                         .requestMatchers("/user/**").hasRole("USER")
                         .requestMatchers("/business/**").hasRole("BUSINESS")
                         .requestMatchers("/admin/**").hasRole("ADMIN")

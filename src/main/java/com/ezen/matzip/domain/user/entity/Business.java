@@ -8,7 +8,7 @@ import lombok.*;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-@Table(name = "business")
+@Table(name = "`business`")
 @Builder
 public class Business {
 
@@ -36,6 +36,10 @@ public class Business {
     @Enumerated(EnumType.STRING)
     @Column(name = "role",nullable = false)
     private Role role;                  //역할
+
+    public void updatePassword(String newPassword) {
+        this.password = newPassword;
+    }
 }
 
 //@ManyToOne
