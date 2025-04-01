@@ -64,27 +64,8 @@ public class RestaurantController {
 
         return "redirect:/restaurant/" + registDTO.getRestaurantCode();
     }
-//    @GetMapping(value = {"/{restaurantCode}"})
-//    public String findReviewByRestaurantCode(@PathVariable int restaurantCode, Model model) {
-//
-//        List<ReviewDTO> resultReview = restaurantService.getReviewsByRestaurant(restaurantCode);
-//        model.addAttribute("review2", resultReview);
-//        System.out.println("test: " + resultReview.get(0));
-//
-//        return "restaurant/restaurant";
-//    }
 
-
-
-//    @GetMapping("/result")
-//    public String findByKeyword(@RequestParam String keyword, Model model)
-//    {
-//        List<RestaurantDTO> restaurants = restaurantService.findByKeywordOrderByScore(keyword);
-//        model.addAttribute("restaurantList", restaurants);
-//        return "test/result";
-//    }
-
-    @GetMapping("/store/search")
+    @GetMapping("/search")
     public String findByMyLocation(@RequestParam String keyword, Model model)
     {
         List<RestaurantDTO> restaurants = restaurantService.findByKeywordOrderByScore(keyword);

@@ -58,7 +58,7 @@ async function currentWeather() {
                     let foodListHtml = "";
                     data.forEach(food => {
                         foodListHtml += `
-                <form action="/store/search">
+                <form action="/restaurant/search">
                 <div class="food-item">
                     <button style="text-decoration: none; color: inherit; display: block; cursor: pointer; background: none;" name="keyword" type="submit">
                         <img src="${food.keywordImgPath}" alt="${food.keyword}" width="100">
