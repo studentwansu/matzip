@@ -55,13 +55,12 @@
                 </form>
             </div>
 
-            <!-- 삼줄 버튼 -->
+            <!-- 삼줄버튼과 메뉴 리스트 -->
             <button class="menu-btn" sec:authorize="isAuthenticated()">
                 <img src="/img/menu-icon.png" alt="메뉴">
             </button>
 
-            <!-- 토글될 메뉴 (예: 사이드바) -->
-            <nav class="nav-menu">
+            <nav class="nav-menu" style="display: none;">
                 <ul>
                     <li><a th:href="@{/user/myinfo}">내 정보</a></li>
                     <li><a href="/page2">예약 목록</a></li>
@@ -70,6 +69,24 @@
                     <li><a href="/page3">작성 리뷰 목록</a></li>
                 </ul>
             </nav>
+
+            <script>
+                document.addEventListener("DOMContentLoaded", function() {
+                    const menuBtn = document.querySelector(".menu-btn");
+                    const navMenu = document.querySelector(".nav-menu");
+
+                    if(menuBtn && navMenu) {
+                        menuBtn.addEventListener("click", function() {
+                            // display가 'none'이면 'block'으로, 그렇지 않으면 'none'으로 토글합니다.
+                            if (navMenu.style.display === "none" || navMenu.style.display === "") {
+                                navMenu.style.display = "block";
+                            } else {
+                                navMenu.style.display = "none";
+                            }
+                        });
+                    }
+                });
+            </script>
         </div>
     </div>
 </header>
