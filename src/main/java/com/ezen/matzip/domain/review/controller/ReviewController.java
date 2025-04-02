@@ -29,7 +29,7 @@ import java.util.UUID;
 
 @Slf4j
 @Controller
-@RequestMapping("/review")
+@RequestMapping
 @RequiredArgsConstructor
 public class ReviewController {
 
@@ -44,7 +44,7 @@ public class ReviewController {
     private ModelMapper modelMapper;
 
 
-    @GetMapping(value = {"/{userCode}"})
+    @GetMapping(value = {"/user/review/{userCode}"})
     public String findReviewByUserCode(@PathVariable int userCode, Model model) {
 
         List<ReviewDTO> resultReview = reviewService.findReviewByUserCode(userCode);
@@ -53,7 +53,7 @@ public class ReviewController {
         return "review/review_list";
     }
 
-    @GetMapping(value = "/myReview/{reviewCode}")
+    @GetMapping(value = "/user/review/myReview/{reviewCode}")
     public String findReviewByReviewCode(@PathVariable int reviewCode, Model model) {
         Review review = reviewRepository.findByReviewCode(reviewCode)
                 .orElseThrow(() -> new IllegalArgumentException("해당 리뷰 없음"));
@@ -69,7 +69,7 @@ public class ReviewController {
         return "review/review_list";
     }
 
-    @GetMapping("/imageList/{reviewCode}")
+    @GetMapping("/user/review/imageList/{reviewCode}")
     @ResponseBody
     public List<ReviewImageDTO> getReviewImages(@PathVariable int reviewCode) {
         List<ReviewImage> images = reviewImageRepository.findReviewImagesByReviewCode(reviewCode);
@@ -80,15 +80,15 @@ public class ReviewController {
 
 
 
-    @PostMapping("/delete/{reviewCode}/{userCode}")
+    @PostMapping("/user/review/delete/{reviewCode}/{userCode}")
     public String deleteReview(@PathVariable int reviewCode, @PathVariable int userCode) {
         reviewService.deleteReview(reviewCode);  // 리뷰 삭제 처리
 
         // 삭제 후 해당 userCode의 리뷰 목록으로 리디렉션
-        return "redirect:/review/" + userCode;  // 삭제 후 해당 사용자의 리뷰 목록으로 리디렉션
+        return "redirect:/user/review/" + userCode;  // 삭제 후 해당 사용자의 리뷰 목록으로 리디렉션
     }
 
-    @GetMapping("/modify")
+    @GetMapping("/user/review/modify")
     public void modifyPage(){}
 
 //    @PostMapping("/modify")
@@ -104,15 +104,15 @@ public class ReviewController {
 //        return "redirect:/review/" + reviewDTO.getUserCode();
 //    }
 
-    @PostMapping("/modify")
+    @PostMapping("/user/review/modify")
     public String modifyReview(@ModelAttribute ReviewDTO reviewDTO,
                                @RequestParam("multiFiles") List<MultipartFile> multiFiles) {
         reviewService.modifyReview(reviewDTO, multiFiles);
-        return "redirect:/review/" + reviewDTO.getUserCode();
+        return "redirect:/user/review/" + reviewDTO.getUserCode();
     }
 
 
-    @GetMapping("/write/{userCode}")
+    @GetMapping("/user/review/write/{userCode}")
     public String findReservation(@PathVariable int userCode, Model model) {
         List<ReservationDTO> resultReservation = reviewService.findReservationByUserCode(userCode);
         model.addAttribute("reservation", resultReservation);
@@ -122,7 +122,7 @@ public class ReviewController {
 
 
 
-    @PostMapping("/save")
+    @PostMapping("/user/review/save")
     public String saveReview(@ModelAttribute ReviewDTO reviewDTO,
                              @RequestParam List<MultipartFile> multiFiles) throws IOException {
         Resource resource = resourceLoader.getResource("C:/matzip-storage/img/review");
@@ -173,7 +173,7 @@ public class ReviewController {
         }
 
         reviewService.writeReview(reviewDTO, files);
-        return "redirect:/review/" + reviewDTO.getUserCode();
+        return "redirect:/user/review/" + reviewDTO.getUserCode();
     }
 
 //    @PostMapping("/save")
@@ -221,7 +221,7 @@ public class ReviewController {
 //        return "redirect:/review/" + reviewDTO.getUserCode();
 //    }
 
-    @PostMapping("/image/delete/{reviewImageCode}")
+    @PostMapping("/user/review/image/delete/{reviewImageCode}")
     @ResponseBody
     public ResponseEntity<?> deleteReviewImage(@PathVariable int reviewImageCode) {
         reviewImageRepository.findById(reviewImageCode).ifPresent(image -> {

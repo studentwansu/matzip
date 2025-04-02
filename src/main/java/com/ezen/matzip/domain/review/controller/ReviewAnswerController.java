@@ -18,7 +18,7 @@ import java.util.List;
 
 @Slf4j
 @Controller
-@RequestMapping("/business")
+@RequestMapping
 @RequiredArgsConstructor
 public class ReviewAnswerController {
 
@@ -34,7 +34,7 @@ public class ReviewAnswerController {
 //        return "review/review_answer";
 //    }
 
-    @GetMapping(value = "/answer/{businessCode}")
+    @GetMapping(value = "/business/answer/{businessCode}")
     public String findReviewByBusinessCode(@PathVariable int businessCode,
                                            @RequestParam(required = false) Integer month,
                                            Model model) {
