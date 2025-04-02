@@ -10,7 +10,7 @@
 <p><strong>제목:</strong> <span th:text="${qna.title}"></span></p>
 <p><strong>내용:</strong> <span th:text="${qna.content}"></span></p>
 
-<form th:action="@{/board/qna/answer/{id}(id=${qna.id})}" method="post">
+<form th:action="@{/templates/domain/board/qna/answer/{id}(id=${qna.id})}" method="post">
   <label>답변 입력</label><br>
   <textarea name="answer" rows="6" cols="60" required></textarea><br><br>
 

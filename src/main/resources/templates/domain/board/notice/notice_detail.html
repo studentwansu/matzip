@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="_csrf" th:content="${_csrf.token}" />
+    <meta name="_csrf_header" th:content="${_csrf.headerName}" />
+    <title>공지사항 상세/수정/등록/삭제</title>
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Poor+Story&display=swap" rel="stylesheet">
+    <link href="/css/style_notice_detail.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <style>
+        /* contenteditable 요소들이 일반 텍스트처럼 보이도록 스타일 적용 */
+        .editable {
+            border: none;
+            outline: none;
+            background: transparent;
+            font-size: 1em;
+        }
+        .button-group button {
+            margin-right: 10px;
+        }
+    </style>
+    <script>
+        // 수정 버튼 클릭 시 호출되는 함수
+        function updateNotice(noticeId) {
+            const title = document.getElementById('noticeTitle').innerText.trim();
+            const content = document.getElementById('noticeContent').innerText.trim();
+            if (!title || !content) {
+                alert('제목과 내용을 모두 입력하세요.');
+                return;
+            }
+            let params = new URLSearchParams();
+            params.append('title', title);
+            params.append('content', content);
+            axios.post('/board/notice/edit/' + noticeId, params)
+                .then(response => {
+                    alert("공지사항이 수정되었습니다.");
+                    window.location.reload();
+                })
+                .catch(error => {
+                    console.error(error);
+                    alert("수정 중 오류가 발생했습니다.");
+                });
+        }
+
+        // 삭제 버튼 클릭 시 호출되는 함수
+        function deleteNotice(noticeId) {
+            if (!confirm('정말 삭제하시겠습니까?')) {
+                return;
+            }
+            axios.post('/board/notice/delete/' + noticeId)
+                .then(response => {
+                    alert("공지사항이 삭제되었습니다.");
+                    window.location.href = '/board/notice/list';
+                })
+                .catch(error => {
+                    console.error(error);
+                    alert("삭제 중 오류가 발생했습니다.");
+                });
+        }
+
+        // 등록 버튼 클릭 시 호출되는 함수
+        function createNotice() {
+            const title = document.getElementById('noticeTitle').innerText.trim();
+            const content = document.getElementById('noticeContent').innerText.trim();
+            if (!title || !content) {
+                alert('제목과 내용을 모두 입력하세요.');
+                return;
+            }
+            let params = new URLSearchParams();
+            params.append('title', title);
+            params.append('content', content);
+            axios.post('/board/notice/create', params)
+                .then(response => {
+                    alert("공지사항이 등록되었습니다.");
+                    window.location.reload();
+                })
+                .catch(error => {
+                    console.error(error);
+                    alert("등록 중 오류가 발생했습니다.");
+                });
+        }
+
+        // 새 공지사항 등록 모드로 전환: 텍스트를 초기화
+        function clearForm() {
+            document.getElementById('noticeTitle').innerText = '';
+            document.getElementById('noticeContent').innerText = '';
+        }
+
+        const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
+        const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
+        axios.defaults.headers.common[csrfHeader] = csrfToken;
+    </script>
+</head>
+<body>
+<!-- 헤더: 직접 작성한 헤더 -->
+<header>
+    <div class="header-container">
+        <!-- logo -->
+        <div class="logo">
+            <img src="/img/logo.png" alt="맛.zip 로고">
+        </div>
+        <!-- search -->
+        <div class="search-container">
+            <div class="search-word">
+                <input type="text" placeholder="검색어를 입력하세요...">
+            </div>
+            <div class="popular-searches">
+                <span>인기검색어1</span>
+                <span>인기검색어2</span>
+                <span>인기검색어3</span>
+                <span>인기검색어4</span>
+                <span>인기검색어5</span>
+                <a href="#" class="nearby">가까운 곳 찾기</a>
+                <a href="#" class="game">
+                    <img id="game" src="/js/gamepad-icon.png" alt="게임패드">
+                </a>
+            </div>
+        </div>
+        <!-- menu -->
+        <div class="menu">
+            <a href="#" class="login">로그인</a>
+            <a href="#" class="signup">회원가입</a>
+        </div>
+    </div>
+</header>
+
+<!-- 메인 콘텐츠: 상세보기와 동시에 편집 가능한 인라인 모드 -->
+<main>
+    <div class="content-container">
+        <h2 id="noticeTitle" contenteditable="true" class="editable"
+            th:text="${notice != null ? notice.title : ''}">공지 제목</h2>
+        <p th:if="${notice != null}" th:text="${#temporals.format(notice.createdAt, 'yyyy-MM-dd HH:mm')}">
+            작성일: 2025-04-02 10:00
+        </p>
+        <div id="noticeContent" contenteditable="true" class="editable"
+             th:text="${notice != null ? notice.content : ''}">
+            공지 내용
+        </div>
+
+        <!-- 버튼 그룹 -->
+        <div class="button-group">
+            <!-- 수정 버튼 (notice 객체가 있을 경우만) -->
+            <button type="button" th:attr="data-id=${notice.id}"
+                    onclick="updateNotice(this.getAttribute('data-id'))"
+                    th:if="${notice != null and notice.id != ''}">수정</button>
+            <!-- 삭제 버튼 (notice 객체가 있을 경우만) -->
+            <button type="button" data-id="${notice.id}"
+                    onclick="deleteNotice(this.getAttribute('data-id'))"
+                    th:if="${notice != null and notice.id != ''}">삭제</button>
+            <!-- 등록 버튼 (notice 객체가 없거나 id가 빈 경우) -->
+            <button type="button" onclick="createNotice()"
+                    th:if="${notice == null or notice.id == ''}">등록</button>
+            <!-- 새 공지사항 등록으로 전환 -->
+            <button type="button" onclick="window.location.href='/board/notice/write'">새 공지사항 등록</button>
+        </div>
+
+        <!-- 목록으로 돌아가기 -->
+        <div>
+            <a th:href="@{/board/notice/list}">
+                <button type="button">목록으로</button>
+            </a>
+        </div>
+    </div>
+</main>
+
+<!-- 푸터: 직접 작성한 푸터 -->
+<footer>
+    <div class="footer-container">
+        <p>Copyright 2025 맛zip All Right Reserved</p>
+        <ul class="footer-menu">
+            <li><a th:href="@{/board/notice/list}">공지사항</a></li>
+            <li><a th:href="@{/board/faq/list}">FAQ</a></li>
+            <li><a href="#">Q&A</a></li>
+        </ul>
+    </div>
+</footer>
+</body>
+</html>
+

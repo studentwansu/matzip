@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>공지사항 (관리자)</title>
+    <link rel="stylesheet" href="/css/style_notice_list.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poor+Story&display=swap" rel="stylesheet">
+</head>
+<body>
+<!-- header (관리자용 헤더) -->
+<header>
+    <section class="admin-header">
+        <a href="">
+            <img class="logo" src="/img/logo.png">
+        </a>
+        <div class="admin-header-container">
+            <div class="admin-header-textdiv">
+                <p class="admin-header-font1"> 어쩌구저쩌구 </p>
+                <div class="line-yellow"></div>
+                <p class="admin-header-font2"> 어쩌구저쩌구</p>
+            </div>
+        </div>
+        <div class="logout">
+            <p class="navi-font">관리자님, 환영합니다. 😊</p>
+            <a href="">
+                <button class="redbutton3 redbutton-font">
+                    로그아웃
+                </button>
+            </a>
+        </div>
+    </section>
+</header>
+
+<!-- main -->
+<main>
+    <section class="notice-container">
+        <h2>공지사항</h2>
+        <!-- 새 공지사항 등록 버튼 -->
+        <a th:href="@{/board/notice/create}"><button>새 공지사항 등록</button></a>
+        <table class="board-table">
+            <thead>
+            <tr>
+                <th>번호</th>
+                <th>제목</th>
+                <th>작성일</th>
+                <th>관리자 기능</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="notice, stat : ${notices}">
+                <td th:text="${stat.index + 1}">1</td>
+                <td>
+                    <a th:href="@{/board/notice/{id}(id=${notice.id})}" th:text="${notice.title}">제목</a>
+                </td>
+                <td th:text="${#temporals.format(notice.createdAt, 'yyyy.MM.dd')}">2025.07.13</td>
+                <td>
+                    <a th:href="@{/board/notice/edit/{id}(id=${notice.id})}"><button>수정</button></a>
+                    <form th:action="@{/board/notice/delete/{id}(id=${notice.id})}" method="post" style="display:inline;">
+                        <button type="submit">삭제</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+</main>
+
+<!-- footer (관리자용 푸터) -->
+<footer>
+    <p>Copyright 2025 맛zip All Right Reserved</p>
+    <ul>
+        <li><a href="">공지사항</a></li>
+        <li><a href="">FAQ</a></li>
+        <li><a href="">Q&A</a></li>
+    </ul>
+</footer>
+</body>
+</html>

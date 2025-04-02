@@ -19,7 +19,7 @@
     <tr th:each="qna, i : ${qnaList}">
         <td th:text="${i.index + 1}"></td>
         <td>
-            <a th:href="@{|/board/qna/${qna.id}|}" th:text="${qna.title}">제목</a>
+            <a th:href="@{|/templates/domain/board/qna/${qna.id}|}" th:text="${qna.title}">제목</a>
         </td>
         <td th:text="${#temporals.format(qna.createdAt, 'yyyy-MM-dd')}"></td>
     </tr>
