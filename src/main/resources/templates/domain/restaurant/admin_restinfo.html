@@ -6,7 +6,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poor+Story&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/static/css/style_admin.css">
+    <link rel="stylesheet" href="/css/style_admin.css">
+    <link rel="stylesheet" href="/css/style_store.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=fd7786d297e2d4aaab4aa8b6bbb06b88&libraries=services"></script>
+
 </head>
 <body>
     <header>
@@ -51,152 +55,98 @@
             </div>
             <div class="store-info">
                 <div class="store-imgs">
-                <!-- 여기에 이미지 넣기 -->
+                    <!-- 여기에 이미지 넣기 -->
                 </div>
                 <div class="store-container">
                     <div class="upper-container">
                         <div class="store-inner-container1">
-                        <p style="font-size:2.5vh;">온량</p>
-                        <span style="font-size:1.5vh; color:#747474;">서울숲 | 파스타, 돈마호크</span>
-                        <i class="fa fa-star" style="color:red;"></i> <!-- 꽉 찬 별 -->
-                        <i class="fa fa-star" style="color:red;"></i> <!-- 꽉 찬 별 -->
-                        <i class="fa fa-star" style="color:red;"></i> <!-- 꽉 찬 별 -->
-                        <i class="fa fa-star" style="color:red;"></i> <!-- 꽉 찬 별 -->
-                        <i class="fa fa-star-half-alt" style="color:red;"></i> <!-- 반쪽 별 -->
-                        <br>
-                        <table>
-                            <tr>
-                                <td style="font-size:2vh;">주소</td>
-                                <td style="font-size:1.5vh;">서울시 종로구 우정국로 2길 37 4층</td>
-                            </tr>
-                            <tr>
-                                <td style="font-size:2vh;">전화번호</td>
-                                <td style="font-size:1.5vh;">02-000-0000</td>
-                            </tr>
+                            <p style="font-size:2.5vh;" th:text="${restaurant.restaurantName}"></p>
+                            <span style="font-size:1.5vh; color:#747474;">서울숲 | 파스타, 돈마호크</span>
+                            <i class="fa fa-star" style="color:red;"></i> <!-- 꽉 찬 별 -->
+                            <i class="fa fa-star" style="color:red;"></i> <!-- 꽉 찬 별 -->
+                            <i class="fa fa-star" style="color:red;"></i> <!-- 꽉 찬 별 -->
+                            <i class="fa fa-star" style="color:red;"></i> <!-- 꽉 찬 별 -->
+                            <i class="fa fa-star-half-alt" style="color:red;"></i> <!-- 반쪽 별 -->
+                            <br>
+                            <table>
+                                <tr>
+                                    <td style="font-size:2vh;">주소</td>
+                                    <td style="font-size:1.5vh;" th:text="${restaurant.restaurantLocation}"></td>
+                                </tr>
+                                <tr>
+                                    <td style="font-size:2vh;">전화번호</td>
+                                    <td style="font-size:1.5vh;" th:text="${restaurant.restaurantContactNumber}"></td>
+                                </tr>
+                            </table>
                             <tr>
                                 <td style="font-size:2vh;">키워드</td>
-                                <td style="font-size:1.5vh;">#양식 #파스타 #서울숲맛집</td>
                             </tr>
-                            <tr>
-                                <td style="font-size:2vh;">영업시간</td>
-                                <td style="font-size:1.5vh;">11:00 - 21:00</td>
+                            <tr th:each="keyword : ${restaurant.restaurantKeywords}">
+                                <td style="font-size:2vh;" th:text=" '#' + ${keyword.getRestaurantKeyword()}"></td>
                             </tr>
-                        </table>
-                        <br>
-                        <p style="font-size:2.5vh;">메뉴</p>
-                        <table>
-                            <tr>
-                                <td>토마호크 포크 커틀렛</td>
-                                <td>---------- </td>
-                                <td>32,000원</td>
-                            </tr>
-                            <tr>
-                                <td>스파이시 로제 파스타</td>
-                                <td>---------- </td>
-                                <td>18,000원</td>
-                            </tr>
-                            <tr>
-                                <td>콰트로 크림 리소토</td>
-                                <td>---------- </td>
-                                <td> 19,000원</td>
-                            </tr>
-                            <tr>
-                                <td>만조 크림 파스타</td>
-                                <td>---------- </td>
-                                <td>19,000원</td>
-                            </tr>
-                        </table>
-                        <br>
-                        <a href=""><button class="redbutton1">메뉴판 이미지</button></a>
-                        <br>
-                        <br>
-                        <br>
-                        <p style="font-size:2.5vh;">편의시설 및 서비스</p> <br>
-                        <p style="font-size:1.5vh;">와이파이 있음, 주차 가능</p>
+                            <table>
+                                <tr>
+                                    <td style="font-size:2vh;">영업시간</td>
+                                    <td style="font-size:1.5vh;" th:text="${restaurant.restaurantStartTime}"> - <td th:text="${restaurant.restaurantEndTime}"></td>
+                                </tr>
+                            </table>
+                            <br>
+                            <p style="font-size:2.5vh;">메뉴</p>
+                            <table>
+                                <tr th:each="menu : ${restaurant.restaurantMenus}">
+                                    <td th:text="${menu.getMenuName()}"> --- <td th:text="${menu.getMenuPrice()}"></td>
+                                </tr>
+                            </table>
+                            <br>
+                            <a href=""><button class="redbutton1">메뉴판 이미지</button></a>
+                            <br>
+                            <br>
+                            <br>
+                            <p style="font-size:2.5vh;">편의시설 및 서비스</p> <br>
+                            <p style="font-size:1.5vh;" th:text="${restaurant.restaurantService}"></p>
                         </div>
                         <div class="store-inner-container2">
-                            <div>
-                                지도지도
+                            <div class="buttonbox">
+                                <a href=""><button class="redbutton1">예약하기</button></a>
+                                <a href=""><img src="../img/bookmark.png"></a>
+                                <a href=""><img src="../img/share.png"></a>
+                            </div>
+                        <div class="store-inner-container2">
+                            <div class="mapbox">
+                                <div id="map" style="width:100%;height:30vh;"></div>
                             </div>
                             <div class="introducebox">
                                 <p style="font-size:2.5vh;">소개</p>
-                                <pre style="font-size:2vh;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores alias ut minima repellat harum quasi, consequatur facere officiis aliquid ducimus inventore non voluptas placeat? Animi quod earum accusamus eveniet dolorum.</pre>
+                                <pre style="font-size:2vh;" th:text="${restaurant.restaurantDescription}"></pre>
                             </div>
                         </div>
-                    </div>
-                    <div class="store-inner-container3">
-                        <p style="font-size:2.5vh;">리뷰</p>
-                        <div class="reviewbox">
-                            <span style="font-size:1.5vh;">홍성경님의 리뷰 2025.03.08 12:10</span>
-                            <i class="fa fa-star" style="color:red;"></i> <!-- 꽉 찬 별 -->
-                            <i class="fa fa-star" style="color:red;"></i> <!-- 꽉 찬 별 -->
-                            <i class="fa fa-star" style="color:red;"></i> <!-- 꽉 찬 별 -->
-                            <i class="fa fa-star" style="color:red;"></i> <!-- 꽉 찬 별 -->
-                            <i class="fa fa-star" style="color:red;"></i> <!-- 꽉 찬 별 -->
-                            <br>
-                            <span style="font-size:1.5vh;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione itaque expedita quasi nisi iste harum reprehenderit, recusandae rem temporibus consequuntur officia voluptatibus provident neque, necessitatibus mollitia. Possimus temporibus iste veniam! Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus at quidem tempore beatae libero veritatis sunt autem accusantium, perspiciatis corrupti alias eius numquam nobis</span>
-                            <div class="reviewimgbox">
-                                <img class="reviewimg" src="/review/img/example.png">
-                                <img class="reviewimg" src="/review/img/example.png">
-                                <img class="reviewimg" src="/review/img/example.png">
-                            </div>
-                            <div class="reviewreply">
-                                <span style="font-size:1.5vh;">온량의 답글 2025.03.08</span>
-                                <br>
-                                <span style="font-size:1.5vh;">ipsum dolor sit amet consectetur adipisicing elit. Doloribus at quidem tempore beatae libero veritatis sunt autem accusantium, perspiciatis corrupti alias eius numquam nobis</span>
-
-                            </div>            
                         </div>
-                        <div class="reviewbox">
-                            <span style="font-size:1.5vh;">홍성경님의 리뷰 2025.03.08 12:10</span>
-                            <i class="fa fa-star" style="color:red;"></i> <!-- 꽉 찬 별 -->
-                            <i class="fa fa-star" style="color:red;"></i> <!-- 꽉 찬 별 -->
-                            <i class="fa fa-star" style="color:red;"></i> <!-- 꽉 찬 별 -->
-                            <i class="fa fa-star" style="color:red;"></i> <!-- 꽉 찬 별 -->
-                            <i class="fa fa-star" style="color:red;"></i> <!-- 꽉 찬 별 -->
-                            <br>
-                            <span style="font-size:1.5vh;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione itaque expedita quasi nisi iste harum reprehenderit, recusandae rem temporibus consequuntur officia voluptatibus provident neque, necessitatibus mollitia. Possimus temporibus iste veniam! Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus at quidem tempore beatae libero veritatis sunt autem accusantium, perspiciatis corrupti alias eius numquam nobis</span>
-                            <div class="reviewimgbox">
-                                <img class="reviewimg" src="/review/img/example.png">
-                                <img class="reviewimg" src="/review/img/example.png">
-                                <img class="reviewimg" src="/review/img/example.png">
-                            </div>
-                            <div class="reviewreply">
-                                <span style="font-size:1.5vh;">온량의 답글 2025.03.08</span>
-                                <br>
-                                <span style="font-size:1.5vh;">ipsum dolor sit amet consectetur adipisicing elit. Doloribus at quidem tempore beatae libero veritatis sunt autem accusantium, perspiciatis corrupti alias eius numquam nobis</span>
+                        <div class="store-inner-container3">
+                            <p style="font-size:2.5vh;">리뷰</p><br>
+                            <div class="reviewbox">
+                                <div th:each="review : ${reviews}">
+                                    <span style="font-size:1.5vh;" th:text="${review.reviewDate}"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="font-size:1.5vh;" th:text="${review.rating}"></span><br>
+                                    <span style="font-size:1.5vh;" th:text="${review.reviewContent}"></span><br>
+                                    <span style="font-size:1.5vh;" th:text="${review.reviewReply}"></span><br>
 
-                            </div>            
-                        </div>
-                        <div class="reviewbox">
-                            <span style="font-size:1.5vh;">홍성경님의 리뷰 2025.03.08 12:10</span>
-                            <i class="fa fa-star" style="color:red;"></i> <!-- 꽉 찬 별 -->
-                            <i class="fa fa-star" style="color:red;"></i> <!-- 꽉 찬 별 -->
-                            <i class="fa fa-star" style="color:red;"></i> <!-- 꽉 찬 별 -->
-                            <i class="fa fa-star" style="color:red;"></i> <!-- 꽉 찬 별 -->
-                            <i class="fa fa-star" style="color:red;"></i> <!-- 꽉 찬 별 -->
-                            <br>
-                            <span style="font-size:1.5vh;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione itaque expedita quasi nisi iste harum reprehenderit, recusandae rem temporibus consequuntur officia voluptatibus provident neque, necessitatibus mollitia. Possimus temporibus iste veniam! Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus at quidem tempore beatae libero veritatis sunt autem accusantium, perspiciatis corrupti alias eius numquam nobis</span>
-                            <div class="reviewimgbox">
-                                <img class="reviewimg" src="/review/img/example.png">
-                                <img class="reviewimg" src="/review/img/example.png">
-                                <img class="reviewimg" src="/review/img/example.png">
-                            </div>
-                            <div class="reviewreply">
-                                <span style="font-size:1.5vh;">온량의 답글 2025.03.08</span>
-                                <br>
-                                <span style="font-size:1.5vh;">ipsum dolor sit amet consectetur adipisicing elit. Doloribus at quidem tempore beatae libero veritatis sunt autem accusantium, perspiciatis corrupti alias eius numquam nobis</span>
-
-                            </div>            
+                                </div>
                         </div>
                     </div>
                 </div>
-        </section>    
+                </div>
+                </div>
+        </section>
     </main>
 
     <footer>
         <p class="footer-font">Copyright 2025 맛zip All Right Reserved</p>
     </footer>
+    <script th:inline="javascript">
+        let restLoc = /*[[${restaurantLocation}]]*/ "";
+        let myLoc = "";
+    </script>
+
+    <script src="/js/map.js"></script>
 
 </body>
 </html>
