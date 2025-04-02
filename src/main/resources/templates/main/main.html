@@ -27,6 +27,14 @@
 
 <!-- main -->
 <section class="body-section">
+    <a th:href="@{/review/{userCode}(userCode=${userCode})}">
+        <button type="button">내 리뷰 보기</button>
+    </a>
+
+    <a th:href="@{/review/write/{userCode}(userCode=${userCode})}">
+        <button type="button">내 리뷰 작성</button>
+    </a>
+
     <div class="container-main">
         <form action="/weather/hashtags">
             <input name="weatherCondition" type="hidden" value=""/>

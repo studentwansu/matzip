@@ -8,14 +8,13 @@
 <table>
     <tr th:each="reservation : ${reservation}">
         <td th:text="${reservation.reservationCode}"></td>
-        <td th:text="${reservation.restaurantCode}"></td>
+        <td th:text="${reservation.restaurantName}"></td>
         <td th:text="${reservation.userCode}"></td>
         <td>
-            <form action="/review/save" method="post">
+            <form action="/review/save" method="post" enctype="multipart/form-data">
                 <input type="hidden" name="userCode" th:value="${reservation.userCode}">
                 <input type="hidden" name="restaurantCode" th:value="${reservation.restaurantCode}">
                 <input type="hidden" name="reservationCode" th:value="${reservation.reservationCode}">
-<!--                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">-->
 
                 <label>리뷰 내용:</label>
                 <input type="text" name="reviewContent" placeholder="리뷰를 입력하세요" required>
@@ -23,7 +22,12 @@
                 <label>별점:</label>
                 <input type="number" name="rating" min="1" max="5" required>
 
-                <button type="submit">리뷰 작성</button>
+                <div>
+                    <input type="file" name="multiFiles" class="fileInput" multiple accept="image/*">
+                </div>
+
+                 <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
+                <input type="submit">리뷰 작성
             </form>
         </td>
     </tr>

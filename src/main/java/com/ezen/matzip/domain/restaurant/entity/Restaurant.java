@@ -9,6 +9,7 @@ import java.sql.Time;
 import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
+import java.util.ArrayList;
 
 @Entity
 @Table(name = "restaurant")
@@ -34,6 +35,9 @@ public class Restaurant {
     private String restaurantUniqueKeywords;
     private int businessCode;
     private int restaurantStatus;
+    @ManyToOne
+    @JoinColumn(name = "category_code")
+    private Category category;
 
     public Restaurant(int restaurantCode, String restaurantName, String restaurantLocation, String restaurantContactNumber,
                       String restaurantDescription, String mainMenu, Time restaurantStartTime, Time restaurantEndTime,
@@ -65,23 +69,16 @@ public class Restaurant {
         this.category = restaurantCategory;
     }
 
-
-
-    @ManyToOne
-    @JoinColumn(name = "category_code")
-    private Category category;
-
-
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name="restaurant_code")
+    @OneToMany
+    @JoinColumn(name = "restaurant_code")
     private List<Menu> menus;
 
-//    @OneToMany
-//    @JoinColumn(name="restaurant_code")
-//    private List<Review> reviews;
+    @OneToMany
+    @JoinColumn(name = "restaurant_code")
+    private List<Review> reviews;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name="restaurant_code")
+    @OneToMany
+    @JoinColumn(name = "restaurant_code")
     private List<RestaurantKeyword> restaurantKeywords;
 
 

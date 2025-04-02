@@ -56,7 +56,6 @@ public class UpdateBusinessController {
         if (businessRepository.existsByPhoneNumberAndUserIdNot(formBusiness.getPhoneNumber(), existingBusiness.getUserId())) {
             result.rejectValue("phoneNumber", "error.business", "중복된 전화번호 입니다.");
         }
-
         if (password != null && !password.trim().isEmpty()) {
             if (!password.equals(passwordCheck)) {
                 result.rejectValue("password", "error.user", "비밀번호와 비밀번호 확인이 일치하지 않습니다.");
