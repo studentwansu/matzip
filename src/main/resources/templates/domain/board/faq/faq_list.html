@@ -1,18 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>공지사항</title>
+    <title>FAQ</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="/css/style_notice_list.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poor+Story&display=swap" rel="stylesheet">
-
 </head>
 <body>
-
-<!-- header -->
 <header>
     <div class="header-container">
         <!-- logo -->
@@ -50,43 +48,30 @@
     </div>
 </header>
 
-<!-- main -->
-<main>
-    <section class="notice-container">
-        <h2>공지사항</h2>
-        <div class="board-list">
-            <div class="content-box">
-                <table class="board-table">
-                    <thead>
-                    <tr>
-                        <th scope="col" class="th-num">번호</th>
-                        <th scope="col" class="th-title">제목</th>
-                        <th scope="col" class="th-date">날짜</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="notice, stat : ${notices}">
-                        <td th:text="${stat.count}">1</td>
-                        <th>
-                            <a th:href="@{/board/notice/detail/{id}(id=${notice.id})}" th:text="${notice.title}"></a>
-                        </th>
-                        <td th:text="${#temporals.format(notice.createdAt, 'yyyy.MM.dd')}">2025.07.13</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
+<div class="notice-container">
+    <h2>FAQ</h2>
+    <div class="board-list">
+        <div class="content-box">
+            <table class="board-table">
+                <thead>
+                <tr>
+                    <th>번호</th>
+                    <th>제목</th>
+                    <th>작성날짜</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="faq, i : ${faqList}">
+                    <td th:text="${i.index + 1}">1</td>
+                    <td>
+                        <a th:href="@{/board/faq/{id}(id=${faq.id})}" th:text="${faq.title}">제목</a>
+                    </td>
+                    <td th:text="${#temporals.format(faq.createdAt, 'yyyy-MM-dd')}">2025-03-31</td>
+                </tr>
+                </tbody>
+            </table>
         </div>
-    </section>
-</main>
-
-<!-- footer -->
-<footer>
-    <p>Copyright 2025 맛zip All Right Reserved</p>
-    <ul>
-        <li><a href="">공지사항</a></li>
-        <li><a href="">FAQ</a></li>
-        <li><a href="">Q&A</a></li>
-    </ul>
-</footer>
+    </div>
+</div>
 </body>
 </html>

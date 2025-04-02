@@ -7,6 +7,9 @@ spring:
     url: jdbc:mysql://54.180.86.92:3306/matzipdb
     username: matzip
     password: matzip
+  thymeleaf:
+      prefix: classpath:/templates/
+      suffix: .html
 
   jpa:
     hibernate:

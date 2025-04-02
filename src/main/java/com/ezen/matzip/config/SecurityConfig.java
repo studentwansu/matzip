@@ -29,46 +29,26 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
-
-                        // [1] 공지사항(Notice) 세부 권한 설정 (구체적인 경로부터)
-                        // 1-1) 공지사항 목록, 상세보기(주로 GET)는 모두에게 허용
+                        // 공지사항 GET 요청은 모두 허용
                         .requestMatchers(HttpMethod.GET,
-                                "/board/notice",          // 목록
-                                "/board/notice/",         // 목록 (슬래시 포함)
-                                "/board/notice/{id}",     // 상세
-                                "/board/notice/detail/**" // 상세(또는 기타 GET)
-                        ).permitAll()
-
-                        // 1-2) 공지사항 작성/수정/삭제(주로 POST)는 관리자만 접근
+                                "/board/notice", "/board/notice/", "/board/notice/{id}",
+                                "/board/notice/list", "/board/notice/detail/**").permitAll()
+                        // 공지사항 POST 요청(등록, 수정, 삭제)도 임시로 모두 허용
                         .requestMatchers(HttpMethod.POST,
                                 "/board/notice/create",
                                 "/board/notice/edit/**",
                                 "/board/notice/delete/**",
                                 "/board/notice/write"
-                        ).hasRole("ADMIN")
-
-                        // 만약 작성 폼, 수정 폼( GET ) 자체도 관리자만 열람하게 하려면:
+                        ).permitAll()
+                        // 만약 GET 방식의 작성/수정 폼도 모두 허용하려면:
                         .requestMatchers(HttpMethod.GET,
                                 "/board/notice/create",
                                 "/board/notice/edit/**",
                                 "/board/notice/write"
-                        ).hasRole("ADMIN")
-
-                        // [2] 그 외 나머지 경로들
+                        ).permitAll()
+                        // 나머지 경로들
                         .requestMatchers("/", "/main/**", "/login", "/signup", "/signup/**",
-                                "/css/**", "/js/**", "/img/**", "/html/**", "/board/notice/**")
-                        .permitAll()
-
-                        .requestMatchers("/user/**").hasRole("USER")
-                        .requestMatchers("/business/**").hasRole("BUSINESS")
-                        .requestMatchers("/admin/**").hasRole("ADMIN")
-
-                        // 기존에 있던 /board/**, /notice/** 전부 허용은
-                        // 공지사항에 대한 세부 설정과 충돌될 수 있으므로 제거하거나
-                        // 더 아래에 배치해서 "notice" 경로가 먼저 매칭되도록 조정합니다.
-                        // .requestMatchers("/board/**", "/notice/**").permitAll()
-
-                        // [3] 테스트용 anyRequest().permitAll() → 실제 운영 시 수정 필요
+                                "/css/**", "/js/**", "/img/**", "/html/**").permitAll()
                         .anyRequest().permitAll()
                 )
                 .formLogin(login -> login
@@ -91,10 +71,12 @@ public class SecurityConfig {
                         .maximumSessions(1)
                         .maxSessionsPreventsLogin(false)
                 )
+                // CSRF 보호는 기본 설정 사용 (withDefaults())하여 _csrf 객체가 생성되도록 함
                 .csrf(withDefaults());
 
         return http.build();
     }
+
 
 
     @Bean
@@ -144,6 +126,6 @@ public class SecurityConfig {
 //    public PasswordEncoder passwordEncoder() {
 //        return new BCryptPasswordEncoder();
 //    }
-}
 
+}
 

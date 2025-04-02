@@ -17,10 +17,10 @@ public class faqController {
         this.faqService = faqService;
     }
 
-    @GetMapping
+    @GetMapping({"", "/", "/list"})
     public String list(Model model) {
         model.addAttribute("faqList", faqService.getAll());
-        return "board/faq/faq_list"; // html 파일 경로
+        return "domain/board/faq/faq_list"; // html 파일 경로
     }
 
     @PostMapping("/write")
