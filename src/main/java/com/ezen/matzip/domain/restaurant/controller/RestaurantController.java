@@ -19,7 +19,7 @@ import java.util.List;
 
 @Slf4j
 @Controller
-@RequestMapping("/restaurant")
+@RequestMapping
 @RequiredArgsConstructor
 public class RestaurantController {
 
