@@ -69,7 +69,7 @@
     <section class="signup_contents">
         <h2>회원정보 수정</h2>
         <!-- 폼: POST 방식으로 /user/myinfo로 전송 -->
-        <form id="myInfoForm" th:action="@{/user/myinfo}" method="post">
+        <form id="myInfoForm" th:object="${user}" th:action="@{/user/myinfo}" method="post">
             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
 
             <div class="signup_full">
@@ -95,10 +95,13 @@
 
                 <!-- 오른쪽 영역 -->
                 <div class="signup_right">
-                    <!-- 이메일 -->
-                    <input id="email" name="email" placeholder="이메일" th:value="${user.email}" />
-                    <!-- 전화번호 -->
-                    <input id="phone" name="phoneNumber" placeholder="전화번호" th:value="${user.phoneNumber}" />
+                    <!-- 이메일 입력 필드 -->
+                    <input id="email" th:field="*{email}" placeholder="이메일" />
+                    <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" style="color:red;"></div>
+
+                    <!-- 전화번호 입력 필드 -->
+                    <input id="phone" th:field="*{phoneNumber}" placeholder="전화번호" />
+                    <div th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}" style="color:red;"></div>
                     <!-- 국적: 수정 불가능 -->
                     <div class="label">
                         <label>국적: </label>
