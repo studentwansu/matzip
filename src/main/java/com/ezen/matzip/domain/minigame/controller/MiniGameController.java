@@ -1,9 +1,18 @@
 package com.ezen.matzip.domain.minigame.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class MiniGameController {
+
+    @GetMapping("/minigame")
+    public String minigame() {
+        return "/domain/minigame/user_minigame";
+    }
+
+
+
 }
 
 //minigame/ → 미니게임 기능 (추천 음식 선택)

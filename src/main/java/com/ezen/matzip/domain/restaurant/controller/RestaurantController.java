@@ -2,12 +2,15 @@ package com.ezen.matzip.domain.restaurant.controller;
 
 import com.ezen.matzip.domain.restaurant.dto.RegistDTO;
 import com.ezen.matzip.domain.restaurant.dto.RestaurantDTO;
+import com.ezen.matzip.domain.restaurant.entity.Category;
 import com.ezen.matzip.domain.restaurant.entity.Restaurant;
 import com.ezen.matzip.domain.restaurant.service.RestaurantService;
 import com.ezen.matzip.domain.review.dto.ReviewDTO;
 import com.ezen.matzip.domain.review.service.ReviewService;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +23,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class RestaurantController {
 
+    @Autowired
     private final RestaurantService restaurantService;
 //    private final ReviewService reviewService;
 
@@ -66,12 +70,12 @@ public class RestaurantController {
     }
 
     @GetMapping("/search")
-    public String findByMyLocation(@RequestParam String keyword, Model model)
+    public String findByMyLocation(@RequestParam String keyword, Model model, HttpSession session)
     {
+        session.setAttribute("lastKeyword", keyword);
         List<RestaurantDTO> restaurants = restaurantService.findByKeywordOrderByScore(keyword);
         model.addAttribute("restaurantList", restaurants);
         model.addAttribute("myLoc", keyword);
-        System.out.println("test: " + restaurants);
         return "domain/search/user_restlist";
     }
 
@@ -83,7 +87,14 @@ public class RestaurantController {
         return "/domain/restaurant/store_restinfo";
     }
 
-
+    @GetMapping(value = "/search", params = "categoryCode")
+    public String filteringRestaurants(@RequestParam int categoryCode, Model model, HttpSession session)
+    {
+        String keyword = (String) session.getAttribute("lastKeyword");
+        List<RestaurantDTO> restaurants = restaurantService.filteredRestaurantsByCategory(keyword, categoryCode);
+        model.addAttribute("restaurantList", restaurants);
+        return "domain/search/user_restlist";
+    }
 
 }
 
