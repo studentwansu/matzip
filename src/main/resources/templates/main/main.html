@@ -4,7 +4,7 @@
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
     <meta charset="UTF-8">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>main</title>
     <link href="https://fonts.googleapis.com" rel="preconnect">
     <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
@@ -16,43 +16,7 @@
     <script src="/js/weather.js"></script>
 </head>
 <body id="weatherBody">
-<!-- header는 body 내부에 위치해야 합니다. -->
-<header>
-    <div class="header-container">
-        <!-- logo -->
-        <div class="logo">
-            <img src="/img/logo.png" alt="맛.zip 로고">
-        </div>
-
-        <!-- search -->
-        <div class="search-container">
-            <div class="search-word">
-                <input type="text" placeholder="검색어를 입력하세요...">
-            </div>
-            <div class="popular-searches">
-                <span>인기검색어1</span>
-                <span>인기검색어2</span>
-                <span>인기검색어3</span>
-                <span>인기검색어4</span>
-                <span>인기검색어5</span>
-                <a href="" class="nearby">가까운 곳 찾기</a>
-                <a href="" class="game">
-                    <img id="game" src="/js/gamepad-icon.png" alt="게임패드"></a>
-            </div>
-        </div>
-
-        <!-- menu -->
-        <div class="menu">
-            <a href="" class="login">로그인</a>
-            <a href="" class="signup">회원가입</a>
-            <button class="menu-btn">
-                <img src="/js/menu-icon.png" alt="마이페이지">
-            </button>
-        </div>
-    </div>
-</header>
-
-<!-- 만약 /html/user_header.html을 로드하여 삽입하려면, id가 header-user인 요소가 필요합니다 -->
+<!-- 외부 헤더 로드 -->
 <div id="header-user"></div>
 <script>
     fetch('/html/user_header.html')
@@ -63,7 +27,7 @@
         .catch(error => console.error('Header 로드 중 오류 발생:', error));
 </script>
 
-<!-- main -->
+<!-- 메인 콘텐츠 -->
 <section class="body-section">
     <div class="container-main">
         <p>#더운날 #여름 #시원한🍧</p>
@@ -88,7 +52,7 @@
     </section>
 </section>
 
-<!-- footer -->
+<!-- 푸터 -->
 <footer>
     <div class="footer-container">
         <p>Copyright 2025 맛zip All Right Reserved</p>
@@ -101,3 +65,4 @@
 </footer>
 </body>
 </html>
+

@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="_csrf" th:content="${_csrf.token}" />
+    <meta name="_csrf_header" th:content="${_csrf.headerName}" />
     <title>공지사항 상세/수정/등록/삭제</title>
     <link href="https://fonts.googleapis.com" rel="preconnect">
     <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
@@ -87,6 +89,10 @@
             document.getElementById('noticeTitle').innerText = '';
             document.getElementById('noticeContent').innerText = '';
         }
+
+        const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
+        const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
+        axios.defaults.headers.common[csrfHeader] = csrfToken;
     </script>
 </head>
 <body>
@@ -138,7 +144,7 @@
         <!-- 버튼 그룹 -->
         <div class="button-group">
             <!-- 수정 버튼 (notice 객체가 있을 경우만) -->
-            <button type="button" data-id="${notice.id}"
+            <button type="button" th:attr="data-id=${notice.id}"
                     onclick="updateNotice(this.getAttribute('data-id'))"
                     th:if="${notice != null and notice.id != ''}">수정</button>
             <!-- 삭제 버튼 (notice 객체가 있을 경우만) -->

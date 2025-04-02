@@ -1,80 +1,80 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>공지사항 등록</title>
+  <link href="/css/style_notice_write_form.css" rel="stylesheet">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poor+Story&display=swap" rel="stylesheet">
-  <!-- 스타일시트 <link href="" rel=""> -->
+  <style>
+    /* contenteditable 요소가 일반 텍스트처럼 보이게 스타일링 */
+    .editable {
+      border: none;
+      outline: none;
+      background: transparent;
+      font-size: 1em;
+      /* 최소 높이를 지정하여 사용자가 클릭하여 커서를 올리기 쉬운 영역 확보 */
+      min-height: 30px;
+    }
+    /* 버튼에 대한 기본 스타일, pointer-events가 auto인지 확인 */
+    button {
+      pointer-events: auto;
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+    // 폼 제출 전에 contenteditable 요소의 텍스트를 숨은 input에 복사하는 함수
+    function copyEditableContent() {
+      // 제목과 내용의 텍스트를 각각 hidden input에 복사
+      document.getElementById('title').value = document.getElementById('titleDiv').innerText.trim();
+      document.getElementById('content').value = document.getElementById('contentDiv').innerText.trim();
+      return true; // 폼 제출 계속
+    }
+  </script>
 </head>
 <body>
-
-<!-- header -->
+<!-- 헤더 (필요한 경우 헤더 내용 추가) -->
 <header>
-  <div class="header-container">
-    <!-- logo -->
-    <div class="logo">
-      <img src="logo.png" alt="맛.zip 로고">
-    </div>
-
-    <!-- search -->
-    <div class="search-container">
-      <div class="search-word">
-        <input type="text" placeholder="검색어를 입력하세요...">
-      </div>
-
-      <div class="popular-searches">
-        <span>인기검색어1</span>
-        <span>인기검색어2</span>
-        <span>인기검색어3</span>
-        <span>인기검색어4</span>
-        <span>인기검색어5</span>
-        <a href="" class="nearby">가까운 곳 찾기</a>
-        <a href="" class="game">
-          <img id="game" src="gamepad-icon.png" alt="게임패드"></a>
-      </div>
-
-    </div>
-
-    <!-- menu -->
-    <div class="menu">
-      <a href="" class="login">로그인</a>
-      <a href="" class="signup">회원가입</a>
-      <button class="menu-btn">
-        <img src="menu-icon.png" alt="마이페이지">
-      </button>
-    </div>
-  </div>
+  <!-- 예: 외부 헤더를 사용하거나 직접 작성 -->
 </header>
 
-<!-- main -->
+<!-- 메인 콘텐츠: 등록 폼 -->
 <main>
-  <div class="board-list">
-    <div class="content-box">
+  <div class="notice-container">
+    <div class="board-table">
       <h2>공지사항 등록</h2>
-      <form action="/board/notice/write" method="post">
-        <label for="title">제목:</label><br>
-        <input type="text" id="title" name="title" required><br><br>
+      <form action="/board/notice/write" method="post" onsubmit="return copyEditableContent();">
+        <!-- CSRF 토큰 필드 (CSRF 사용 시) -->
+        <input type="hidden" th:if="${_csrf != null}" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
 
-        <label for="content">내용:</label><br>
-        <textarea id="content" name="content" rows="5" cols="40" required></textarea><br><br>
-
+        <!-- 제목 -->
+        <div>
+          <label for="titleDiv">제목:</label><br>
+          <div id="titleDiv" contenteditable="true" class="editable"></div>
+          <!-- 실제로 서버에 전달할 제목 값은 숨은 input에 저장 -->
+          <input type="hidden" id="title" name="title" />
+        </div>
+        <br>
+        <!-- 내용 -->
+        <div>
+          <label for="contentDiv">내용:</label><br>
+          <div id="contentDiv" contenteditable="true" class="editable" style="min-height:100px;"></div>
+          <!-- 실제로 서버에 전달할 내용 값은 숨은 input에 저장 -->
+          <input type="hidden" id="content" name="content" />
+        </div>
+        <br>
         <button type="submit">등록</button>
       </form>
     </div>
   </div>
 </main>
 
-<!-- footer -->
+<!-- 푸터 (필요한 경우 푸터 내용 추가) -->
 <footer>
-  <p>Copyright 2025 맛zip All Right Reserved</p>
-  <ul>
-    <li><a href="">공지사항</a></li>
-    <li><a href="">FAQ</a></li>
-    <li><a href="">Q&A</a></li>
-  </ul>
+  <!-- 푸터 내용 -->
 </footer>
 </body>
 </html>
+
