@@ -13,4 +13,6 @@ public interface KeywordRepository extends JpaRepository<Keyword, Integer> {
 
     @Query("SELECT k FROM Keyword k JOIN k.weatherKeywords wk WHERE wk.weather.weatherCode = :weatherCode")
     List<Keyword> findByWeatherCode(@Param("weatherCode") Integer weatherCode);
+
+    List<Keyword> findAllByKeywordDescriptionIsNotNull();
 }

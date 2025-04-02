@@ -173,16 +173,18 @@ pre {
     transform: scale(1.1);
 }
 
-
-
-
 .container {
-    padding: 20px;
+    padding: 2vh;
     width: 70%;
     min-height: 27vh;
     background: white;
-    border-radius: 10px;
+    border-radius: 2vh;
     border: 1px solid #ccc;
+    align-content: center;
+    align-items: center;
+    justify-items: center;
+    justify-content: center;
+    text-align: center;
 }
 
 .container-title {
