@@ -18,12 +18,6 @@ public class ReviewAnswerService {
     private final ReviewAnswerRepository reviewAnswerRepository;
     private final ModelMapper modelMapper;
 
-//    public List<ReviewDTO> findReviewByBusinessCode(int businessCode) {
-//        List<Review> reviews = reviewAnswerRepository.findByBusinessCode(businessCode);
-//
-//        return reviews.stream().map(review -> modelMapper.map(review, ReviewDTO.class)).toList();
-//    }
-
     public List<ReviewDTO> findReviewByBusinessCode(int businessCode) {
         List<Object[]> reviews = reviewAnswerRepository.findByBusinessCode(businessCode);
 

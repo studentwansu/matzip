@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,6 +14,7 @@
     <link rel="stylesheet" href="/css/style_user.css">
 
 </head>
+
 <body>
 <!-- user header 아래 복사 -->
 <div th:replace="~{html/user_header :: userHeader}"></div>
@@ -39,8 +41,7 @@
             let testReview = /*[[${testReview}]]*/ [];
             console.log("로드된 리뷰 데이터:", testReview); // 로그로 데이터 확인
         </script>
-        <script src="/js/review.js" defer></script> <!-- JavaScript 파일 로드 -->
-
+        <script src="/js/reviewWrite.js" defer></script> <!-- JavaScript 파일 로드 -->
 
         <table>
             <thead>
@@ -52,35 +53,19 @@
                 <th>레시피</th>
             </tr>
             </thead>
-
+            <tbody>
             <tr th:each="reservation : ${reservation}">
                 <td th:text="${reservation.reservationCode}"></td>
                 <td th:text="${reservation.reservationDate}"></td>
                 <td th:text="${reservation.restaurantName}"></td>
                 <td>
-                    <form action="/user/review/save" method="post" enctype="multipart/form-data">
-                        <input type="hidden" name="userCode" th:value="${reservation.userCode}">
-                        <input type="hidden" name="restaurantCode" th:value="${reservation.restaurantCode}">
-                        <input type="hidden" name="reservationCode" th:value="${reservation.reservationCode}">
-
-                        <label>리뷰 내용:</label>
-                        <input type="text" name="reviewContent" placeholder="리뷰를 입력하세요" required>
-
-                        <label>별점:</label>
-                        <input type="number" name="rating" min="1" max="5" required>
-
-                        <div>
-                            <input type="file" name="multiFiles" class="fileInput" multiple accept="image/*">
-                        </div>
-
-                        <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
-                        <input type="submit">리뷰 작성
-                    </form>
+                    <button type="button" class="edit-btn" th:onclick="'openWriteModal(' + ${reservation.userCode} + ',' + ${reservation.restaurantCode} + ',' + ${reservation.reservationCode} + ')'">리뷰 작성</button>
                 </td>
             </tr>
+            </tbody>
 
 
-<!--            <tr th:each="reservation : ${reservation}">-->
+            <!--            <tr th:each="reservation : ${reservation}">-->
 <!--                <td th:text="${reservation.reservationCode}"></td>-->
 <!--                <td th:text="${reservation.reservationDate}"></td>-->
 <!--                <td th:text="${reservation.restaurantName}"></td>-->
@@ -106,6 +91,53 @@
 <!--                </td>-->
 <!--            </tr>-->
         </table>
+
+        <!-- 모달 -->
+        <div id="reviewWriteModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeWriteModal()">&times;</span>
+                <h3>리뷰 작성</h3>
+                <div id="test"></div>
+                <form action="/user/review/save" class="reviewForm" method="post" enctype="multipart/form-data" id="myform">
+                    <input type="hidden" name="userCode" id="writeUserCode">
+                    <input type="hidden" name="restaurantCode" id="writeRestaurantCode">
+                    <input type="hidden" name="reservationCode" id="writeReservationCode">
+
+                    <div class="imageContainer" id="writeImagePreview">
+                            <div class="image-preview">
+                                <img class="preview-img" />
+                            </div>
+                    </div>
+
+
+                    <fieldset id="star-rating">
+                        <input type="radio" name="rating" value="5" id="rate1">
+                        <label for="rate1">★</label>
+                        <input type="radio" name="rating" value="4" id="rate2">
+                        <label for="rate2">★</label>
+                        <input type="radio" name="rating" value="3" id="rate3">
+                        <label for="rate3">★</label>
+                        <input type="radio" name="rating" value="2" id="rate4">
+                        <label for="rate4">★</label>
+                        <input type="radio" name="rating" value="1" id="rate5">
+                        <label for="rate5">★</label>
+                    </fieldset>
+
+<!--                    <input type="hidden" id="hiddenReviewCode" name="reviewCode" value="0">-->
+<!--                    <input type="hidden" id="hiddenUserCode" name="userCode" value="0">-->
+                    <textarea id="reviewContent" name="reviewContent"></textarea>
+
+                    <div>
+                        <input type="file" name="multiFiles" class="fileInput" multiple accept="image/*" onchange="previewWriteImages(this)">
+                    </div>
+
+                    <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
+                    <!--                    <input type="submit" value="저장" class="save-btn">-->
+                    <button type="submit" class="edit-btn">저장</button>
+                </form>
+            </div>
+        </div>
+
     </section>
 </div>
 <!-- user footer 아래 복사 -->

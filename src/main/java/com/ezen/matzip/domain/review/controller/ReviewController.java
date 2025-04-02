@@ -1,7 +1,6 @@
 package com.ezen.matzip.domain.review.controller;
 
 import com.ezen.matzip.domain.reservation.dto.ReservationDTO;
-import com.ezen.matzip.domain.reservation.entity.Reservation;
 import com.ezen.matzip.domain.review.dto.ReviewDTO;
 import com.ezen.matzip.domain.review.dto.ReviewImageDTO;
 import com.ezen.matzip.domain.review.entity.Review;
@@ -50,7 +49,7 @@ public class ReviewController {
         List<ReviewDTO> resultReview = reviewService.findReviewByUserCode(userCode);
         model.addAttribute("testReview", resultReview);
 
-        return "review/review_list";
+        return "domain/review/review_list";
     }
 
     @GetMapping(value = "/user/review/myReview/{reviewCode}")
@@ -66,7 +65,7 @@ public class ReviewController {
         model.addAttribute("selectedReview", modelMapper.map(review, ReviewDTO.class));
         model.addAttribute("selectedReviewImgs", imgDTOs);
 
-        return "review/review_list";
+        return "domain/review/review_list";
     }
 
     @GetMapping("/user/review/imageList/{reviewCode}")
@@ -117,7 +116,7 @@ public class ReviewController {
         List<ReservationDTO> resultReservation = reviewService.findReservationByUserCode(userCode);
         model.addAttribute("reservation", resultReservation);
 
-        return "review/review_write";
+        return "domain/review/review_write";
     }
 
 

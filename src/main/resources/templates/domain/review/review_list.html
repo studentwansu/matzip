@@ -79,12 +79,21 @@
                 <div id="test"></div>
                 <form action="/user/review/modify" class="reviewForm" id="myform" method="post" enctype="multipart/form-data">
 
-                    <div id="imageContainer">
-                        <!-- 이미지 미리보기 -->
-                        <div class="image-preview" th:each="img : ${selectedReviewImgs}">
-                            <img th:src="@{${img.reviewImagePath}}" class="preview-img" />
-                        </div>
+<!--                    <div class="imageContainer">-->
+<!--                        &lt;!&ndash; 이미지 미리보기 &ndash;&gt;-->
+<!--                        <div class="image-preview" th:each="img : ${selectedReviewImgs}">-->
+<!--                            <img th:src="@{${img.reviewImagePath}}" class="preview-img" />-->
+<!--                        </div>-->
+<!--                    </div>-->
+
+                    <div class="imageContainer">
+                        <th:block th:each="img : ${selectedReviewImgs}">
+                            <div class="image-preview">
+                                <img th:src="@{${img.reviewImagePath}}" class="preview-img" />
+                            </div>
+                        </th:block>
                     </div>
+
 
                     <fieldset id="star-rating">
                         <input type="radio" name="rating" value="5" id="rate1">

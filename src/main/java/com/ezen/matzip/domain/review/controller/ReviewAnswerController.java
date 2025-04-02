@@ -6,7 +6,6 @@ import com.ezen.matzip.domain.review.service.ReviewAnswerService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,14 +24,6 @@ public class ReviewAnswerController {
     private final ReviewAnswerService reviewAnswerService;
     private ReviewAnswerRepository reviewAnswerRepository;
     private ModelMapper modelMapper;
-
-//    @GetMapping(value = "/answer/{businessCode}")
-//    public String findReviewByBusinessCode(@PathVariable int businessCode, Model model) {
-//
-//        List<ReviewDTO> reviews = reviewAnswerService.findReviewByBusinessCode(businessCode);
-//        model.addAttribute("reviews", reviews);
-//        return "review/review_answer";
-//    }
 
     @GetMapping(value = "/business/answer/{businessCode}")
     public String findReviewByBusinessCode(@PathVariable int businessCode,
