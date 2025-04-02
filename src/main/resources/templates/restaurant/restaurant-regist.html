@@ -63,7 +63,7 @@
         <form action="/restaurant/regist" method="post">
         <div class="store-info">
             <div class="store-imgs">
-                <!-- 여기에 이미지 넣기 -->
+
             </div>
 
             <div class="store-container">
@@ -141,6 +141,7 @@
                             <pre style="font-size:2vh;"><input type="text" name="restaurantDescription" placeholder="가게소개"></pre>
 
                             <div class="buttonbox2">
+                                <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
                                 <input type="submit" value="수락"></a>
                                 <a href="">반려</a>
                             </div>

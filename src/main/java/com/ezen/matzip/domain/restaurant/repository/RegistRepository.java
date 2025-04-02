@@ -9,5 +9,7 @@ import java.util.Optional;
 
 public interface RegistRepository extends JpaRepository <Restaurant, Integer> {
 
+
+
 }
 

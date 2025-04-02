@@ -36,9 +36,9 @@ public class Menu {
         this.restaurantCode = restaurantCode;
     }
 
-    public void ModifyMenu(String menuName, int menuPrice) {
-        this.menuName = menuName;
-        this.menuPrice = menuPrice;
-    }
+//    public void ModifyMenu(String menuName, int menuPrice) {
+//        this.menuName = menuName;
+//        this.menuPrice = menuPrice;
+//    }
 
 }
