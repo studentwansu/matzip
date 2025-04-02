@@ -125,12 +125,12 @@ public class ReviewController {
     @PostMapping("/save")
     public String saveReview(@ModelAttribute ReviewDTO reviewDTO,
                              @RequestParam List<MultipartFile> multiFiles) throws IOException {
-        Resource resource = resourceLoader.getResource("classpath:static/img/review");
+        Resource resource = resourceLoader.getResource("C:/matzip-storage/img/review");
         String filePath = null;
 
         if(!resource.exists())
         {
-            String root = "src/main/resources/static/img/review";
+            String root = "C:/matzip-storage/img/review";
             File file = new File(root);
             file.mkdirs(); // 경로가 없다면 위의 root 경로를 생성하는 메소드
 
@@ -157,7 +157,7 @@ public class ReviewController {
 
                 /** 파일 저장 */
                 file.transferTo(new File(filePath + "/" + savedFileName));
-                savedFiles.add("static/img/review/" + savedFileName);
+                savedFiles.add("C:/matzip-storage/img/review" + savedFileName);
 
                 count++;
             }
@@ -225,7 +225,7 @@ public class ReviewController {
     @ResponseBody
     public ResponseEntity<?> deleteReviewImage(@PathVariable int reviewImageCode) {
         reviewImageRepository.findById(reviewImageCode).ifPresent(image -> {
-            File file = new File("src/main/resources/static" + image.getReviewImagePath());
+            File file = new File("C:/matzip-storage/img/review" + image.getReviewImagePath());
             if (file.exists()) file.delete(); // 실제 파일 삭제
             reviewImageRepository.deleteById(reviewImageCode); // DB 삭제
         });
