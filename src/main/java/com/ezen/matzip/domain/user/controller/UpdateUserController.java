@@ -1,6 +1,7 @@
 package com.ezen.matzip.domain.user.controller;
 
 import com.ezen.matzip.domain.user.entity.User;
+import com.ezen.matzip.domain.user.repository.UserRepository;
 import com.ezen.matzip.domain.user.service.UserUpdateService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,9 @@ public class UpdateUserController {
 
     @Autowired
     private UserUpdateService userUpdateservice;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @GetMapping("/user/myinfo")
     public String editUserInfo(Model model, Principal principal) {
@@ -58,6 +62,15 @@ public class UpdateUserController {
 
         int veganValue = ("1".equals(isVegan)) ? 1 : 0;
 
+        // 이메일 및 전화번호 중복 체크
+        // (userUpdateservice.findByUserId()로 조회한 기존 사용자의 userId를 제외하고 검사)
+        if (userRepository.existsByEmailAndUserIdNot(formUser.getEmail(), existingUser.getUserId())) {
+            result.rejectValue("email", "error.user", "중복된 이메일 입니다.");
+        }
+        if (userRepository.existsByPhoneNumberAndUserIdNot(formUser.getPhoneNumber(), existingUser.getUserId())) {
+            result.rejectValue("phoneNumber", "error.user", "중복된 전화번호 입니다.");
+        }
+
         existingUser.updateUserInfo(
                 formUser.getName(),
                 formUser.getEmail(),
@@ -78,7 +91,7 @@ public class UpdateUserController {
         }
 
         if (result.hasErrors()) {
-            model.addAttribute("user", existingUser);
+//            model.addAttribute("user", existingUser);
             return "domain/sign/user_myinfo";
         }
 

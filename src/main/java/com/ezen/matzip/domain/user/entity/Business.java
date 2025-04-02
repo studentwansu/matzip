@@ -31,7 +31,7 @@ public class Business {
     private String passwordAnswer;      //비밀번호찾기답변
     @Column(name = "business_number",nullable = false,unique = true)
     private String businessNumber;      //사업자번호
-    @Column(name = "restaurant_name",nullable = false)
+    @Column(name = "restaurant_name",nullable = false,unique = true)
     private String restaurantName;      //상호명
     @Column(name = "email",nullable = false,unique = true)
     private String email;               //이메일
