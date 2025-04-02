@@ -19,7 +19,7 @@ import java.util.List;
 
 @Slf4j
 @Controller
-@RequestMapping("/restaurant")
+@RequestMapping
 @RequiredArgsConstructor
 public class RestaurantController {
 
@@ -28,7 +28,7 @@ public class RestaurantController {
 //    private final ReviewService reviewService;
 
 
-    @GetMapping("/{restaurantCode}")
+    @GetMapping("/admin/restaurant/{restaurantCode}")
     public String getRestaurantDetail(@PathVariable int restaurantCode, Model model) {
         RestaurantDTO restaurant = restaurantService.getRestaurantDetail(restaurantCode);
         model.addAttribute("restaurant", restaurant);
@@ -37,16 +37,27 @@ public class RestaurantController {
         model.addAttribute("reviews", resultReview);
         System.out.println("test: " + resultReview);
 
-
-        return "restaurant/restaurant";
+        return "domain/restaurant/admin_restinfo";
     }
 
-    @GetMapping("/regist")
+    @GetMapping("/business/restaurant/{restaurantCode}")
+    public String getRestaurantDetail2(@PathVariable int restaurantCode, Model model) {
+        RestaurantDTO restaurant = restaurantService.getRestaurantDetail(restaurantCode);
+        model.addAttribute("restaurant", restaurant);
+
+        List<ReviewDTO> resultReview = restaurantService.getReviewsByRestaurant(restaurantCode);
+        model.addAttribute("reviews", resultReview);
+        System.out.println("test: " + resultReview);
+
+        return "domain/restaurant/store_restinfo";
+    }
+
+    @GetMapping("/business/regist")
     public String registPage() {
-        return "restaurant/restaurant-regist";
+        return "domain/store/store_apply";
     }
 
-    @PostMapping("/regist")
+    @PostMapping("/business/regist")
     public String regist(@ModelAttribute RegistDTO registDTO) {
 
         System.out.println("=== DTO 로그 ===");
@@ -56,12 +67,13 @@ public class RestaurantController {
         return "redirect:/restaurant/" + registDTO.getRestaurantCode();
     }
 
-    @GetMapping("/modify")
+
+    @GetMapping("/business/modify")
     public String modifyPage() {
         return "restaurant/restaurant-modify";
     }
 
-    @PostMapping("/modify")
+    @PostMapping("/business/modify")
     public String modify(@ModelAttribute RegistDTO registDTO) {
         System.out.println("modify: " + registDTO.toString());
         restaurantService.modifyRestaurant(registDTO);
