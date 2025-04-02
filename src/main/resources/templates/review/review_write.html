@@ -2,35 +2,68 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>리뷰 작성</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>review_list</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poor+Story&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/header_footer.css">
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/review.css">
+    <link rel="stylesheet" href="/css/style_user.css">
+
 </head>
 <body>
-<table>
-    <tr th:each="reservation : ${reservation}">
-        <td th:text="${reservation.reservationCode}"></td>
-        <td th:text="${reservation.restaurantName}"></td>
-        <td th:text="${reservation.userCode}"></td>
-        <td>
-            <form action="/review/save" method="post" enctype="multipart/form-data">
-                <input type="hidden" name="userCode" th:value="${reservation.userCode}">
-                <input type="hidden" name="restaurantCode" th:value="${reservation.restaurantCode}">
-                <input type="hidden" name="reservationCode" th:value="${reservation.reservationCode}">
+<!-- user header 아래 복사 -->
+<div th:replace="~{html/user_header :: userHeader}"></div>
 
-                <label>리뷰 내용:</label>
-                <input type="text" name="reviewContent" placeholder="리뷰를 입력하세요" required>
+<!-- main -->
+<div class="main-container">
+    <!-- 사이드바 -->
+    <aside class="sidebar">
+        <h3>마이페이지</h3>
+        <ul>
+            <li><a href="#">내 정보</a></li>
+            <li><a href="#">예약 목록</a></li>
+            <li><a th:href="@{/review/write/{userCode}(userCode=${userCode})}">이용 목록</a></li>
+            <li><a href="#">북마크 목록</a></li>
+            <li><a th:href="@{/review/{userCode}(userCode=${userCode})}">작성 리뷰 목록</a></li>
+        </ul>
+    </aside>
 
-                <label>별점:</label>
-                <input type="number" name="rating" min="1" max="5" required>
+    <!-- 작성 리뷰 목록 -->
+    <section class="content">
 
-                <div>
-                    <input type="file" name="multiFiles" class="fileInput" multiple accept="image/*">
-                </div>
+        <table>
+            <tr th:each="reservation : ${reservation}">
+                <td th:text="${reservation.reservationCode}"></td>
+                <td th:text="${reservation.restaurantName}"></td>
+                <td th:text="${reservation.userCode}"></td>
+                <td>
+                    <form action="/review/save" method="post" enctype="multipart/form-data">
+                        <input type="hidden" name="userCode" th:value="${reservation.userCode}">
+                        <input type="hidden" name="restaurantCode" th:value="${reservation.restaurantCode}">
+                        <input type="hidden" name="reservationCode" th:value="${reservation.reservationCode}">
 
-                 <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
-                <input type="submit">리뷰 작성
-            </form>
-        </td>
-    </tr>
-</table>
+                        <label>리뷰 내용:</label>
+                        <input type="text" name="reviewContent" placeholder="리뷰를 입력하세요" required>
+
+                        <label>별점:</label>
+                        <input type="number" name="rating" min="1" max="5" required>
+
+                        <div>
+                            <input type="file" name="multiFiles" class="fileInput" multiple accept="image/*">
+                        </div>
+
+                         <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
+                        <input type="submit">리뷰 작성
+                    </form>
+                </td>
+            </tr>
+        </table>
+    </section>
+</div>
+<!-- user footer 아래 복사 -->
+<div th:replace="~{html/user_footer :: userFooter}"></div>
 </body>
 </html>
