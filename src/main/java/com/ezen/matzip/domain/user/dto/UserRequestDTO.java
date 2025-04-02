@@ -31,9 +31,9 @@ public class UserRequestDTO {
     private String name;                //이름
     @NotBlank(message = "국가는 필수 선택 항목입니다.")
     private String nationality;         //국가
-    @NotNull(message = "비건여부는 필수 선택 항목입니다.")
+    @NotNull(message = "비건 여부는 필수 선택 항목입니다.")
     @Builder.Default
-    private Integer isVegan = 0;                //비건여부
+    private Boolean isVegan = false;  // Boolean 타입으로 변경, 기본값 false
     @NotNull(message = "선호음식취향은 필수 선택 항목입니다.")
     private Integer categoryCode;           //선호음식취향
     @NotBlank(message = "이메일은 필수 입력 항목입니다.")
