@@ -13,6 +13,7 @@
     <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
     <link href="https://fonts.googleapis.com/css2?family=Poor+Story&display=swap" rel="stylesheet">
     <link href="/css/style_user.css" rel="stylesheet">
+    <link href="/css/header_footer.css" rel="stylesheet">
     <script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=fd7786d297e2d4aaab4aa8b6bbb06b88&libraries=services"
             type="text/javascript"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
@@ -27,13 +28,13 @@
 
 <!-- main -->
 <section class="body-section">
-    <a th:href="@{/review/{userCode}(userCode=${userCode})}">
-        <button type="button">내 리뷰 보기</button>
-    </a>
+<!--    <a th:href="@{/review/{userCode}(userCode=${userCode})}">-->
+<!--        <button type="button">내 리뷰 보기</button>-->
+<!--    </a>-->
 
-    <a th:href="@{/review/write/{userCode}(userCode=${userCode})}">
-        <button type="button">내 리뷰 작성</button>
-    </a>
+<!--    <a th:href="@{/review/write/{userCode}(userCode=${userCode})}">-->
+<!--        <button type="button">내 리뷰 작성</button>-->
+<!--    </a>-->
 
     <div class="container-main">
         <form action="/weather/hashtags">

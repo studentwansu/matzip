@@ -34,3 +34,12 @@
 .signup_btn:hover {
     background-color: #cd3429; /* 버튼 호버 시 배경색 */
 }
+
+.main-container {
+    display: flex;
+    justify-content: center; /* 수평 가운데 정렬 */
+    align-items: center; /* 수직 가운데 정렬 */
+    text-align: center; /* 텍스트 가운데 정렬 */
+    background-color: #fff3e0;
+    padding-bottom: 10vh;
+}
