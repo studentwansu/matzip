@@ -40,8 +40,7 @@ public class ReviewAnswerController {
         }
         model.addAttribute("reviews", reviews);
 
-        return "review/review_answer";
+        return "domain/review/review_answer";
     }
-
 
 }

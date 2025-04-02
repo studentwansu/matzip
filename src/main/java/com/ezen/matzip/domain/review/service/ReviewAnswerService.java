@@ -60,6 +60,9 @@ public class ReviewAnswerService {
         return result;
     }
 
+    public List<Review> getRecentReview(int businessCode) {
+        return reviewAnswerRepository.findTop5ReviewByBusinessCodeOrderByReviewDateDesc(businessCode);
+    }
 
 
 
