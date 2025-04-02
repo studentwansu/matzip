@@ -157,7 +157,6 @@ public class RestaurantService {
 
     @Transactional
     public void registRestaurant(RegistDTO registDTO) {
-
         String startTimeString = registDTO.getRestaurantStartTime();
         String endTimeString = registDTO.getRestaurantEndTime();
 
@@ -166,57 +165,64 @@ public class RestaurantService {
 
         Category category = convertToCategory(registDTO.getRestaurantCategory());
 
-        Restaurant regist =
-                new Restaurant(
-                        registDTO.getRestaurantCode(),
-                        registDTO.getRestaurantName(),
-                        registDTO.getRestaurantLocation(),
-                        registDTO.getRestaurantContactNumber(),
-                        registDTO.getRestaurantDescription(),
-                        registDTO.getMainMenu(),
-                        startTime,
-                        endTime,
-                        registDTO.getRestaurantService(),
-                        category);
+        // 레스토랑 객체 생성
+        Restaurant regist = new Restaurant(
+                registDTO.getRestaurantCode(),
+                registDTO.getRestaurantName(),
+                registDTO.getRestaurantLocation(),
+                registDTO.getRestaurantContactNumber(),
+                registDTO.getRestaurantDescription(),
+                registDTO.getMainMenu(),
+                startTime,
+                endTime,
+                registDTO.getRestaurantService(),
+                category
+        );
 
-
-
+        // 추가적인 레스토랑 속성 설정
         regist.setRestaurantRegistrationDate(new Date());
         regist.setRestaurantActiveStatus(0);  // 활성 상태
         regist.setRestaurantUniqueKeywords(null);  // 예시 키워드
         regist.setRestaurantStatus(0);
         regist.setBusinessCode(11);
 
+        // 메뉴 추가
         List<Menu> menuList = IntStream.range(0, registDTO.getMenuName().size())
-                .mapToObj(i -> new Menu(registDTO.getMenuName().get(i), registDTO.getMenuPrice().get(i), regist))
+                .mapToObj(i -> {
+                    // 레스토랑 객체를 Menu 생성자에 전달
+                    Menu menu = new Menu(registDTO.getMenuName().get(i), registDTO.getMenuPrice().get(i), regist);
+                    return menu;
+                })
                 .collect(Collectors.toList());
 
         regist.setMenus(menuList);
 
+        // 키워드 추가
         List<RestaurantKeyword> keywordList = registDTO.getRestaurantKeyword().stream()
                 .map(keyword -> new RestaurantKeyword(keyword, regist))
                 .collect(Collectors.toList());
 
         regist.setRestaurantKeywords(keywordList);
 
-
         System.out.println(regist);
+        // 레스토랑 저장
         registRepository.save(regist);
-
     }
 
     @Transactional
     public void modifyRestaurant(RegistDTO registDTO) {
+        // 레스토랑 코드로 레스토랑 찾기
         Restaurant foundModify = restaurantRepository.findByRestaurantCode(registDTO.getRestaurantCode());
 
+        // 시간 변환
         String startTimeString = registDTO.getRestaurantStartTime();
         String endTimeString = registDTO.getRestaurantEndTime();
-
         Time startTime = Time.valueOf(startTimeString + ":00");
         Time endTime = Time.valueOf(endTimeString + ":00");
 
         Category category = convertToCategory(registDTO.getRestaurantCategory());
 
+        // 레스토랑 수정
         foundModify.Modify(
                 registDTO.getRestaurantCode(),
                 registDTO.getRestaurantName(),
@@ -230,26 +236,35 @@ public class RestaurantService {
                 category);
 
 
-        // 1. 기존 메뉴 목록의 칼럼값만 삭제 (연관 관계 유지)
-        foundModify.getMenus().forEach(menu -> {
-            menu.ModifyMenu(null,0);
-        });
-
-        // 2. 새로운 메뉴 목록 추가
-        List<Menu> menuList = IntStream.range(0, registDTO.getMenuName().size())
-                .mapToObj(i -> new Menu(registDTO.getMenuName().get(i), registDTO.getMenuPrice().get(i), foundModify))
+        List<Menu> foundMenus = menuRepository.findByRestaurantCode(foundModify);
+        for (Menu menu : foundMenus) {
+            menuRepository.delete(menu);
+        }
+        // 새로운 메뉴 객체 리스트 생성
+        List<Menu> newMenus = IntStream.range(0, registDTO.getMenuName().size())
+                .mapToObj(i -> {
+                    Menu menu = new Menu(registDTO.getMenuName().get(i), registDTO.getMenuPrice().get(i));
+                    menu.setRestaurantCode(foundModify);  // 새로운 메뉴에 레스토랑 코드 설정
+                    return menu;
+                })
                 .collect(Collectors.toList());
-        foundModify.setMenus(menuList);
 
-        // 3. 기존 키워드 목록의 칼럼값만 삭제 (연관 관계 유지)
-        foundModify.getRestaurantKeywords().forEach(keyword -> {
-            keyword.ModifyKeyword(null);
-        });
+        // 새로운 메뉴 리스트 추가
+        foundModify.getMenus().addAll(newMenus);
 
-        // 4. 새로운 키워드 목록 추가
+        // 기존 키워드 삭제 후 새로운 키워드 추가
+        List<RestaurantKeyword> foundKeywords = restaurantKeywordRepository.findByRestaurantCode(foundModify);
+        for (RestaurantKeyword restaurantKeyword : foundKeywords) {
+            restaurantKeywordRepository.delete(restaurantKeyword);
+        }
+        foundModify.getRestaurantKeywords().clear(); // 기존 키워드 삭제
+
         List<RestaurantKeyword> keywordList = registDTO.getRestaurantKeyword().stream()
-                .map(keyword -> new RestaurantKeyword(keyword, foundModify))
+                .map(keyword -> new RestaurantKeyword(keyword, foundModify)) // 새로운 키워드 추가
                 .collect(Collectors.toList());
-        foundModify.setRestaurantKeywords(keywordList);
+        foundModify.getRestaurantKeywords().addAll(keywordList); // 새로운 키워드 추가
+
+        // 레스토랑 정보 저장
+        restaurantRepository.save(foundModify);
     }
 }
