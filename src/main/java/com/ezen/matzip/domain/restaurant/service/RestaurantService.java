@@ -47,6 +47,7 @@ public class RestaurantService {
             dto.setReviewCode(review.getReviewCode());
             dto.setReviewDate(review.getReviewDate());
             dto.setReviewContent(review.getReviewContent());
+            dto.setReviewReply(review.getReviewReply());
             dto.setRating(review.getRating());
 
             result.add(dto);
