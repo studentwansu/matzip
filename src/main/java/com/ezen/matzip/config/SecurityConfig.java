@@ -7,6 +7,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.core.GrantedAuthorityDefaults;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -19,8 +20,8 @@ import static org.springframework.security.config.Customizer.withDefaults;
 public class SecurityConfig {
 
     private final LoginSuccessHandler loginSuccessHandler;
-
-    // 생성자 주입으로 LoginSuccessHandler 받기
+//
+//    // 생성자 주입으로 LoginSuccessHandler 받기
     public SecurityConfig(LoginSuccessHandler loginSuccessHandler) {
         this.loginSuccessHandler = loginSuccessHandler;
     }
@@ -29,26 +30,13 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
-                        // 공지사항 GET 요청은 모두 허용
-                        .requestMatchers(HttpMethod.GET,
-                                "/board/notice", "/board/notice/", "/board/notice/{id}",
-                                "/board/notice/list", "/board/notice/detail/**").permitAll()
-                        // 공지사항 POST 요청(등록, 수정, 삭제)도 임시로 모두 허용
-                        .requestMatchers(HttpMethod.POST,
-                                "/board/notice/create",
-                                "/board/notice/edit/**",
-                                "/board/notice/delete/**",
-                                "/board/notice/write"
-                        ).permitAll()
-                        // 만약 GET 방식의 작성/수정 폼도 모두 허용하려면:
-                        .requestMatchers(HttpMethod.GET,
-                                "/board/notice/create",
-                                "/board/notice/edit/**",
-                                "/board/notice/write"
-                        ).permitAll()
-                        // 나머지 경로들
-                        .requestMatchers("/", "/main/**", "/login", "/signup", "/signup/**",
-                                "/css/**", "/js/**", "/img/**", "/html/**").permitAll()
+                        .requestMatchers("/", "/main/main", "/login", "/signup", "/signup/**", "/css/**", "/js/**", "/img/**", "/html/**", "checkUserId",
+                                "/fragments/**",
+                                "/findpwd", "/checkUserInfo", "/resetPassword").permitAll()
+                        .requestMatchers("/user/**").hasRole("USER")
+                        .requestMatchers("/business/**").hasRole("BUSINESS")
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                        // 일단 테스트를 위해 모든 요청 허용 (추후 수정)
                         .anyRequest().permitAll()
                 )
                 .formLogin(login -> login
@@ -71,8 +59,9 @@ public class SecurityConfig {
                         .maximumSessions(1)
                         .maxSessionsPreventsLogin(false)
                 )
-                // CSRF 보호는 기본 설정 사용 (withDefaults())하여 _csrf 객체가 생성되도록 함
-                .csrf(withDefaults());
+                .csrf(withDefaults())
+                .csrf(csrf -> csrf
+                        .ignoringRequestMatchers("/api/**", "/dapi/**", "/html/**", "/checkUserId"));
 
         return http.build();
     }

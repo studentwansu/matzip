@@ -1,18 +1,20 @@
 package com.ezen.matzip.domain.restaurant.entity;
 
+import com.ezen.matzip.domain.restaurant.dto.MenuDTO;
+import com.ezen.matzip.domain.review.entity.Review;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.sql.Time;
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
+import java.util.ArrayList;
 
 @Entity
 @Table(name = "restaurant")
 @Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Restaurant {
 
@@ -33,21 +35,47 @@ public class Restaurant {
     private String restaurantUniqueKeywords;
     private int businessCode;
     private int restaurantStatus;
-
     @ManyToOne
     @JoinColumn(name = "category_code")
     private Category category;
 
-    @OneToMany
-    @JoinColumn(name="restaurant_code")
+    public Restaurant(int restaurantCode, String restaurantName, String restaurantLocation, String restaurantContactNumber,
+                      String restaurantDescription, String mainMenu, Time restaurantStartTime, Time restaurantEndTime,
+                      String restaurantService, Category restaurantCategory) {
+        this.restaurantCode = restaurantCode;
+        this.restaurantName = restaurantName;
+        this.restaurantLocation = restaurantLocation;
+        this.restaurantContactNumber = restaurantContactNumber;
+        this.restaurantDescription = restaurantDescription;
+        this.mainMenu = mainMenu;
+        this.restaurantStartTime = restaurantStartTime;
+        this.restaurantEndTime = restaurantEndTime;
+        this.restaurantService = restaurantService;
+        this.category = restaurantCategory;
+    }
+
+    public void Modify(int restaurantCode, String restaurantName, String restaurantLocation, String restaurantContactNumber,
+                       String restaurantDescription, String mainMenu, Time restaurantStartTime, Time restaurantEndTime,
+                       String restaurantService, Category restaurantCategory) {
+        this.restaurantCode = restaurantCode;
+        this.restaurantName = restaurantName;
+        this.restaurantLocation = restaurantLocation;
+        this.restaurantContactNumber = restaurantContactNumber;
+        this.restaurantDescription = restaurantDescription;
+        this.mainMenu = mainMenu;
+        this.restaurantStartTime = restaurantStartTime;
+        this.restaurantEndTime = restaurantEndTime;
+        this.restaurantService = restaurantService;
+        this.category = restaurantCategory;
+    }
+
+    @OneToMany(mappedBy = "restaurantCode", cascade = CascadeType.ALL)
     private List<Menu> menus;
 
-//    @OneToMany
-//    @JoinColumn(name="restaurant_code")
-//    private List<Review> reviews;
-
     @OneToMany
-    @JoinColumn(name="restaurant_code")
+    private List<Review> reviews;
+
+    @OneToMany(mappedBy = "restaurantCode", cascade = CascadeType.ALL)
     private List<RestaurantKeyword> restaurantKeywords;
 
 

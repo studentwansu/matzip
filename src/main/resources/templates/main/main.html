@@ -1,68 +1,71 @@
 <!DOCTYPE html>
 <html lang="ko"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta name="_csrf" th:content="${_csrf.token}" />
+    <meta name="_csrf_header" th:content="${_csrf.headerName}" />
+
     <title>main</title>
     <link href="https://fonts.googleapis.com" rel="preconnect">
     <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
     <link href="https://fonts.googleapis.com/css2?family=Poor+Story&display=swap" rel="stylesheet">
     <link href="/css/style_user.css" rel="stylesheet">
-    <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=fd7786d297e2d4aaab4aa8b6bbb06b88&libraries=services" type="text/javascript"></script>
+    <script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=fd7786d297e2d4aaab4aa8b6bbb06b88&libraries=services"
+            type="text/javascript"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="/js/myLocation.js"></script>
-    <script src="/js/weather.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script th:src="@{/js/myLocation.js}"></script>
+    <script th:src="@{/js/weather.js}"></script>
 </head>
-<body id="weatherBody">
-<!-- 외부 헤더 로드 -->
-<div id="header-user"></div>
-<script>
-    fetch('/html/user_header.html')
-        .then(response => response.text())
-        .then(data => {
-            document.getElementById('header-user').innerHTML = data;
-        })
-        .catch(error => console.error('Header 로드 중 오류 발생:', error));
-</script>
 
-<!-- 메인 콘텐츠 -->
+<body id="weatherBody" onload="currentWeather();">
+<!-- user header 아래 복사 -->
+    <div th:replace="~{html/user_header :: userHeader}"></div>
+
+<!-- main -->
 <section class="body-section">
+
     <div class="container-main">
-        <p>#더운날 #여름 #시원한🍧</p>
+        <form action="/weather/hashtags">
+            <input name="weatherCondition" type="hidden" value=""/>
+            <p id="weatherHashtags"></p>
+        </form>
         <div class="line-yellow-100"></div>
-        <div class="food-list">
-            <form action="/weather/Clear">
-                <input type="hidden" th:if="${_csrf != null}" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-                <div class="food-item" th:each="recommend: ${recommendKeywords}">
-                    <img th:src="${recommend.getKeywordImgPath()}">
-                    <p th:text="${recommend.keyword}"></p>
-                </div>
+        <div class="food-list" id="food-list">
+            <form action="/weather" id="weatherTest">
+                <input name="recommendKeywords" type="hidden" value=""/>
             </form>
         </div>
     </div>
 
-    <section class="container-main">
+    <div class="container-main">
         <p>#중국인에게추천 #보리밥 #해물탕 #감자탕</p>
         <div class="line-yellow-100"></div>
-        <div class="food-list">
-            <!-- 추가 내용 -->
+<!--        <div class="food-list">-->
+            <!--                <div class="food-item"><img src="/img/삼계탕.jpg" alt="삼계탕">-->
+            <!--                    <p>보리밥</p>-->
+            <!--                </div>-->
+            <!--                <div class="food-item"><img src="/img/삼계탕.jpg" alt="삼계탕">-->
+            <!--                    <p>해물탕</p>-->
+            <!--                </div>-->
+            <!--                <div class="food-item"><img src="/img/삼계탕.jpg" alt="삼계탕">-->
+            <!--                    <p>감자탕</p>-->
+            <!--                </div>-->
+            <!--                <div class="food-item"><img src="/img/삼계탕.jpg" alt="삼계탕">-->
+            <!--                    <p>감자탕</p>-->
+            <!--                </div>-->
+            <!--                <div class="food-item"><img src="/img/삼계탕.jpg" alt="삼계탕">-->
+            <!--                    <p>감자탕</p>-->
+            <!--                </div>-->
         </div>
-    </section>
+    </div>
 </section>
 
-<!-- 푸터 -->
-<footer>
-    <div class="footer-container">
-        <p>Copyright 2025 맛zip All Right Reserved</p>
-        <ul class="footer-menu">
-            <li><a th:href="@{/board/notice/list}">공지사항</a></li>
-            <li><a th:href="@{/board/faq/list}">FAQ</a></li>
-            <li><a href="#">Q&A</a></li>
-        </ul>
-    </div>
-</footer>
+<!-- user footer 아래 복사 -->
+<div th:replace="~{html/user_footer :: userFooter}"></div>
 </body>
 </html>
 

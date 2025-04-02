@@ -4,11 +4,13 @@ import com.ezen.matzip.domain.Role;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-@Table(name = "business")
+@Table(name = "`business`")
 @Builder
 public class Business {
 
@@ -29,13 +31,44 @@ public class Business {
     private String passwordAnswer;      //비밀번호찾기답변
     @Column(name = "business_number",nullable = false,unique = true)
     private String businessNumber;      //사업자번호
-    @Column(name = "restaurant_name",nullable = false)
+    @Column(name = "restaurant_name",nullable = false,unique = true)
     private String restaurantName;      //상호명
     @Column(name = "email",nullable = false,unique = true)
     private String email;               //이메일
     @Enumerated(EnumType.STRING)
     @Column(name = "role",nullable = false)
     private Role role;                  //역할
+
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
+
+    @PrePersist
+    public void prePersist() {
+        this.updatedAt = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        this.updatedAt = LocalDateTime.now();
+    }
+
+    public void updatePassword(String newPassword) {
+        this.password = newPassword;
+    }
+
+    public void updateBusinessInfo(String phoneNumber,
+                                   String passwordQuestion,
+                                   String passwordAnswer,
+                                   String email,
+                                   String restaurantName) {
+        this.phoneNumber = phoneNumber;
+        this.passwordQuestion = passwordQuestion;
+        this.passwordAnswer = passwordAnswer;
+        this.email = email;
+        if (restaurantName != null && !restaurantName.trim().isEmpty()) {
+            this.restaurantName = restaurantName;
+        }
+    }
 }
 
 //@ManyToOne

@@ -39,7 +39,7 @@ public class UserRegistrationService {
                     .passwordAnswer(dto.getPasswordAnswer())
                     .name(dto.getName())
                     .nationality(dto.getNationality())
-                    .isVegan(dto.getIsVegan())
+                    .isVegan(dto.getIsVegan() ? 1 : 0)
                     .categoryCode(dto.getCategoryCode())
                     .email(dto.getEmail())
                     .role(Role.USER)

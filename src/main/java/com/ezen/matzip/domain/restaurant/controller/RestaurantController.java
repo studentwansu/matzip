@@ -1,58 +1,89 @@
 package com.ezen.matzip.domain.restaurant.controller;
 
+import com.ezen.matzip.domain.restaurant.dto.RegistDTO;
 import com.ezen.matzip.domain.restaurant.dto.RestaurantDTO;
+import com.ezen.matzip.domain.restaurant.entity.Restaurant;
 import com.ezen.matzip.domain.restaurant.service.RestaurantService;
+import com.ezen.matzip.domain.review.dto.ReviewDTO;
+import com.ezen.matzip.domain.review.service.ReviewService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @Slf4j
 @Controller
-@RequestMapping
+@RequestMapping("/restaurant")
 @RequiredArgsConstructor
 public class RestaurantController {
 
     private final RestaurantService restaurantService;
+//    private final ReviewService reviewService;
 
 
-//    @GetMapping("/{restaurantCode}")
-//    public String getRestaurantDetail(@PathVariable int restaurantCode, Model model) {
-//        RestaurantDTO restaurant = restaurantService.getRestaurantDetail(restaurantCode);
-//        model.addAttribute("restaurant", restaurant);
-//        return "restaurant/restaurant";
-//    }
+    @GetMapping("/{restaurantCode}")
+    public String getRestaurantDetail(@PathVariable int restaurantCode, Model model) {
+        RestaurantDTO restaurant = restaurantService.getRestaurantDetail(restaurantCode);
+        model.addAttribute("restaurant", restaurant);
+
+        List<ReviewDTO> resultReview = restaurantService.getReviewsByRestaurant(restaurantCode);
+        model.addAttribute("reviews", resultReview);
+        System.out.println("test: " + resultReview);
 
 
-//    @GetMapping("/result")
-//    public String findByKeyword(@RequestParam String keyword, Model model)
-//    {
-//        List<RestaurantDTO> restaurants = restaurantService.findByKeywordOrderByScore(keyword);
-//        model.addAttribute("restaurantList", restaurants);
-//        return "test/result";
-//    }
+        return "restaurant/restaurant";
+    }
 
-    @GetMapping("/store/search")
+    @GetMapping("/regist")
+    public String registPage() {
+        return "restaurant/restaurant-regist";
+    }
+
+    @PostMapping("/regist")
+    public String regist(@ModelAttribute RegistDTO registDTO) {
+
+        System.out.println("=== DTO 로그 ===");
+        System.out.println(registDTO.toString());
+     restaurantService.registRestaurant(registDTO);
+
+        return "redirect:/restaurant/" + registDTO.getRestaurantCode();
+    }
+
+    @GetMapping("/modify")
+    public String modifyPage() {
+        return "restaurant/restaurant-modify";
+    }
+
+    @PostMapping("/modify")
+    public String modify(@ModelAttribute RegistDTO registDTO) {
+        System.out.println("modify: " + registDTO.toString());
+        restaurantService.modifyRestaurant(registDTO);
+
+        return "redirect:/restaurant/" + registDTO.getRestaurantCode();
+    }
+
+    @GetMapping("/search")
     public String findByMyLocation(@RequestParam String keyword, Model model)
     {
         List<RestaurantDTO> restaurants = restaurantService.findByKeywordOrderByScore(keyword);
         model.addAttribute("restaurantList", restaurants);
+        model.addAttribute("myLoc", keyword);
+        System.out.println("test: " + restaurants);
         return "domain/search/user_restlist";
     }
 
-    @GetMapping("/store/storeinfo")
+    @GetMapping("/storeinfo")
     public String markingLocation(@RequestParam Integer restaurantCode, Model model)
     {
         String location = restaurantService.findLocationByRestaurantCode(restaurantCode);
         model.addAttribute("restaurantLocation", location);
         return "/domain/restaurant/store_restinfo";
     }
+
+
 
 }
 

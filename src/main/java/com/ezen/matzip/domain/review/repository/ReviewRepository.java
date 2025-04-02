@@ -1,6 +1,8 @@
 package com.ezen.matzip.domain.review.repository;
 
+import com.ezen.matzip.domain.restaurant.entity.Restaurant;
 import com.ezen.matzip.domain.review.entity.Review;
+import com.ezen.matzip.domain.review.entity.ReviewImage;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -18,13 +20,8 @@ public interface ReviewRepository extends JpaRepository<Review, Integer> {
     @Query("SELECT r, r.restaurantCode FROM Review r where r.userCode = :userCode")
     List<Object[]> findByUserCode(int userCode);
 
-//    Review findByReviewCode(int reviewCode);
-    Review findByReviewCode(int reviewCode);
+    Optional<Review> findByReviewCode(int reviewCode);
 
-//    @Modifying
-//    @Query("UPDATE Review r SET r.reviewContent = :newReveiwContents, r.reviewDate = :newReviewDate, r.rating = :newRating WHERE r.reviewCode = :reviewCode")
-//    void updateReviewByReviewCode(@Param("reviewContents") String newReveiwContents
-//    , @Param("newReviewDate") Date newReviewDate, @Param("newRating") Integer newRating);
-
+    List<Review> findByRestaurantCode(@Param("restaurantCode") Restaurant restaurantCode);
 
 }

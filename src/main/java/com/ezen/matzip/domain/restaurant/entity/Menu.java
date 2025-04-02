@@ -18,8 +18,27 @@ public class Menu {
     private int menuPrice;
 
     @ManyToOne
-    @JoinColumn(name = "restaurant_code")
+    @JoinColumn(name = "restaurant_code",nullable = false)
     private Restaurant restaurantCode;
 
+    public Menu(String menuName, Integer menuPrice) {
+        this.menuName = menuName;
+        this.menuPrice = menuPrice;
+    }
+
+    public Menu(String menuName, Integer menuPrice, Restaurant restaurantCode) {
+        this.restaurantCode = restaurantCode;
+        this.menuName = menuName;
+        this.menuPrice = menuPrice;
+    }
+
+    public void setRestaurantCode(Restaurant restaurantCode) {
+        this.restaurantCode = restaurantCode;
+    }
+
+//    public void ModifyMenu(String menuName, int menuPrice) {
+//        this.menuName = menuName;
+//        this.menuPrice = menuPrice;
+//    }
 
 }
