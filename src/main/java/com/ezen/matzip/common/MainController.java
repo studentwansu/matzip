@@ -12,10 +12,10 @@ public class MainController {
         return "main/main";
     }
 //
-//    @GetMapping("/user/main")
-//    public String userMain() {
-//        return "main/main";
-//    }
+    @GetMapping("/user/main")
+    public String userMain() {
+        return "main/main";
+    }
 //
     @GetMapping("/login")
     public String login() {
