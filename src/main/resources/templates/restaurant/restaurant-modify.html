@@ -92,12 +92,12 @@
                         <p style="font-size:2vh;">
                             <label for="restaurantKeyword">키워드</label>
                             <input type="text" id="restaurantKeyword" name="restaurantKeyword" placeholder="키워드" style="font-size:1.5vh;" required>
-                        </p>
-                        <p style="font-size:2vh;">영업시간</p>
+                        </p><br>
+                        <p style="font-size:2vh;">영업시간</p><br>
                         <p style="font-size:1.5vh;">
                             시작 시간:
                             <input type="time" name="restaurantStartTime" value="09:00" required style="font-size:1.5vh;">
-                            -
+                            <br>
                             종료 시간:
                             <input type="time" name="restaurantEndTime" value="22:00" required style="font-size:1.5vh;">
                         </p>
@@ -145,6 +145,7 @@
                             <pre style="font-size:2vh;"><input type="text" name="restaurantDescription" placeholder="가게소개"></pre>
 
                             <div class="buttonbox2">
+                                <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
                                 <input type="submit" value="수락"></a>
                                 <a href="">반려</a>
                             </div>

@@ -69,16 +69,13 @@ public class Restaurant {
         this.category = restaurantCategory;
     }
 
-    @OneToMany
-    @JoinColumn(name = "restaurant_code")
+    @OneToMany(mappedBy = "restaurantCode", cascade = CascadeType.ALL)
     private List<Menu> menus;
 
     @OneToMany
-    @JoinColumn(name = "restaurant_code")
     private List<Review> reviews;
 
-    @OneToMany
-    @JoinColumn(name = "restaurant_code")
+    @OneToMany(mappedBy = "restaurantCode", cascade = CascadeType.ALL)
     private List<RestaurantKeyword> restaurantKeywords;
 
 
