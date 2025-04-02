@@ -75,29 +75,18 @@
         <div id="reviewModal" class="modal">
             <div class="modal-content">
                 <span class="close" onclick="closeModal()">&times;</span>
+                <h3>리뷰 수정</h3>
                 <div id="test"></div>
                 <form action="/review/modify" class="reviewForm" id="myform" method="post" enctype="multipart/form-data">
 
-<!--                    <div class="image-preview">-->
-<!--                        <div th:each="img : ${selectedReviewImgs}">-->
-<!--                            <img th:src="@{${img.reviewImagePath}}" class="preview-img" />-->
-<!--                        </div>-->
-<!--                    </div>-->
-
-
-
                     <div id="imageContainer">
-                        <!-- 이미지 미리보기와 삭제 버튼 -->
+                        <!-- 이미지 미리보기 -->
                         <div class="image-preview" th:each="img : ${selectedReviewImgs}">
                             <img th:src="@{${img.reviewImagePath}}" class="preview-img" />
-                            <button type="button" class="delete-btn" th:onclick="'deleteImageFromReview(' + ${img.reviewImageCode} + ')'">X</button>
                         </div>
                     </div>
 
-
-
                     <fieldset id="star-rating">
-<!--                        <span class="text-bold">별점을 선택해주세요</span>-->
                         <input type="radio" name="rating" value="5" id="rate1">
                         <label for="rate1">★</label>
                         <input type="radio" name="rating" value="4" id="rate2">
@@ -119,7 +108,8 @@
                     </div>
 
                     <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
-                    <input type="submit" value="저장">
+<!--                    <input type="submit" value="저장" class="save-btn">-->
+                    <button type="submit" class="edit-btn">저장</button>
                 </form>
             </div>
         </div>

@@ -33,12 +33,30 @@
 
     <!-- 작성 리뷰 목록 -->
     <section class="content">
+        <h2>이용 목록</h2>
+        <script th:inline="javascript">
+            // Thymeleaf로 데이터를 주입하여 JS에서 사용할 수 있도록 처리
+            let testReview = /*[[${testReview}]]*/ [];
+            console.log("로드된 리뷰 데이터:", testReview); // 로그로 데이터 확인
+        </script>
+        <script src="/js/review.js" defer></script> <!-- JavaScript 파일 로드 -->
+
 
         <table>
+            <thead>
+            <tr>
+                <th>번호</th>
+                <th>예약 날짜</th>
+                <th>식당</th>
+                <th>상태</th>
+                <th>레시피</th>
+            </tr>
+            </thead>
+
             <tr th:each="reservation : ${reservation}">
                 <td th:text="${reservation.reservationCode}"></td>
+                <td th:text="${reservation.reservationDate}"></td>
                 <td th:text="${reservation.restaurantName}"></td>
-                <td th:text="${reservation.userCode}"></td>
                 <td>
                     <form action="/review/save" method="post" enctype="multipart/form-data">
                         <input type="hidden" name="userCode" th:value="${reservation.userCode}">
@@ -55,11 +73,38 @@
                             <input type="file" name="multiFiles" class="fileInput" multiple accept="image/*">
                         </div>
 
-                         <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
+                        <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
                         <input type="submit">리뷰 작성
                     </form>
                 </td>
             </tr>
+
+
+<!--            <tr th:each="reservation : ${reservation}">-->
+<!--                <td th:text="${reservation.reservationCode}"></td>-->
+<!--                <td th:text="${reservation.reservationDate}"></td>-->
+<!--                <td th:text="${reservation.restaurantName}"></td>-->
+<!--                <td>-->
+<!--                    <form action="/review/save" method="post" enctype="multipart/form-data">-->
+<!--                        <input type="hidden" name="userCode" th:value="${reservation.userCode}">-->
+<!--                        <input type="hidden" name="restaurantCode" th:value="${reservation.restaurantCode}">-->
+<!--                        <input type="hidden" name="reservationCode" th:value="${reservation.reservationCode}">-->
+
+<!--                        <label>리뷰 내용:</label>-->
+<!--                        <input type="text" name="reviewContent" placeholder="리뷰를 입력하세요" required>-->
+
+<!--                        <label>별점:</label>-->
+<!--                        <input type="number" name="rating" min="1" max="5" required>-->
+
+<!--                        <div>-->
+<!--                            <input type="file" name="multiFiles" class="fileInput" multiple accept="image/*">-->
+<!--                        </div>-->
+
+<!--                         <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>-->
+<!--                        <input type="submit">리뷰 작성-->
+<!--                    </form>-->
+<!--                </td>-->
+<!--            </tr>-->
         </table>
     </section>
 </div>
