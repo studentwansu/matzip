@@ -1,6 +1,7 @@
 package com.ezen.matzip.domain.user.controller;
 
 import com.ezen.matzip.domain.user.entity.Business;
+import com.ezen.matzip.domain.user.repository.BusinessRepository;
 import com.ezen.matzip.domain.user.service.BusinessUpdateService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,9 @@ public class UpdateBusinessController {
 
     @Autowired
     private BusinessUpdateService businessUpdateService;
+
+    @Autowired
+    private BusinessRepository businessRepository;
 
     @GetMapping("/business/myinfo")
     public String editBusinessInfo(Model model, Principal principal) {
@@ -44,6 +48,15 @@ public class UpdateBusinessController {
             return "domain/store/store_myinfo";
         }
 
+        // 중복 체크: 이메일 (현재 사업자 제외)
+        if (businessRepository.existsByEmailAndUserIdNot(formBusiness.getEmail(), existingBusiness.getUserId())) {
+            result.rejectValue("email", "error.business", "중복된 이메일 입니다.");
+        }
+        // 중복 체크: 전화번호 (현재 사업자 제외)
+        if (businessRepository.existsByPhoneNumberAndUserIdNot(formBusiness.getPhoneNumber(), existingBusiness.getUserId())) {
+            result.rejectValue("phoneNumber", "error.business", "중복된 전화번호 입니다.");
+        }
+
         if (password != null && !password.trim().isEmpty()) {
             if (!password.equals(passwordCheck)) {
                 result.rejectValue("password", "error.user", "비밀번호와 비밀번호 확인이 일치하지 않습니다.");
@@ -62,7 +75,7 @@ public class UpdateBusinessController {
         );
 
         if (result.hasErrors()) {
-            model.addAttribute("user", existingBusiness);
+//            model.addAttribute("user", existingBusiness);
             return "domain/store/store_myinfo";
         }
 
