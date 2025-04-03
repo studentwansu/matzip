@@ -49,7 +49,7 @@ function openModal(reviewCode, userCode) {
     formContainer.innerHTML = '';
 
 // 이미지 가져오기 (서버에서)
-    fetch(`/review/imageList/${reviewCode}`)
+    fetch(`/user/review/imageList/${reviewCode}`)
         .then(res => res.json())
         .then(data => {
             if (data.length === 0) {

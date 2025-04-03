@@ -25,9 +25,9 @@
         <ul>
             <li><a href="#">내 정보</a></li>
             <li><a href="#">예약 목록</a></li>
-            <li><a th:href="@{/review/write/{userCode}(userCode=${userCode})}">이용 목록</a></li>
+            <li><a th:href="@{/user/review/write/{userCode}(userCode=${userCode})}">이용 목록</a></li>
             <li><a href="#">북마크 목록</a></li>
-            <li><a th:href="@{/review/{userCode}(userCode=${userCode})}">작성 리뷰 목록</a></li>
+            <li><a th:href="@{/user/review/{userCode}(userCode=${userCode})}">작성 리뷰 목록</a></li>
         </ul>
     </aside>
 
@@ -58,7 +58,7 @@
                 <td th:text="${reservation.reservationDate}"></td>
                 <td th:text="${reservation.restaurantName}"></td>
                 <td>
-                    <form action="/review/save" method="post" enctype="multipart/form-data">
+                    <form action="/user/review/save" method="post" enctype="multipart/form-data">
                         <input type="hidden" name="userCode" th:value="${reservation.userCode}">
                         <input type="hidden" name="restaurantCode" th:value="${reservation.restaurantCode}">
                         <input type="hidden" name="reservationCode" th:value="${reservation.reservationCode}">
