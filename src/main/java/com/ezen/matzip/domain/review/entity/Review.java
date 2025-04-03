@@ -2,10 +2,7 @@ package com.ezen.matzip.domain.review.entity;
 
 import com.ezen.matzip.domain.restaurant.entity.Restaurant;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -15,6 +12,7 @@ import java.util.List;
 @Entity
 @Table(name = "review")
 @Getter
+@ToString
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Review {
 

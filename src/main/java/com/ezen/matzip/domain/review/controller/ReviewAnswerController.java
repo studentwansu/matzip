@@ -53,7 +53,7 @@ public class ReviewAnswerController {
 
     @PostMapping("/business/answer/modify")
     public String modifyAnswer(@ModelAttribute ReviewDTO reviewDTO) {
-        reviewAnswerService.modifyAnswer(reviewDTO);
+        reviewDTO = reviewAnswerService.modifyAnswer(reviewDTO);
         return "redirect:/business/answer/" + reviewDTO.getBusinessCode();
     }
 

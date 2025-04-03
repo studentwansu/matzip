@@ -65,7 +65,7 @@ public class ReviewAnswerService {
             dto.setReviewContent(e.getReviewContent());
             dto.setReviewReply(e.getReviewReply());
             dto.setRating(e.getRating());
-
+            dto.setBusinessCode(e.getBusinessCode());
             result.add(dto);
         }
         return result;
@@ -77,13 +77,26 @@ public class ReviewAnswerService {
 
 
     @Transactional
-    public void modifyAnswer(ReviewDTO dto) {
-        Review review = reviewAnswerRepository.findByReviewCode(dto.getReviewCode())
+    public ReviewDTO modifyAnswer(ReviewDTO dto) {
+        Review review = reviewAnswerRepository.findReviewByReviewCode(dto.getReviewCode())
                 .orElseThrow(() -> new IllegalArgumentException("해당 리뷰 없음"));
-        System.out.println("수정 요청된 리뷰 코드: " + dto.getReviewCode());
+        System.out.println("리뷰리뷰리뷰" + review);
 
+        System.out.println("수정 요청된 리뷰 코드: " + dto.getReviewCode());
+        System.out.println("수정 요청된 비즈니스코드: " + dto.getBusinessCode());
         review.modifyAnswer(dto.getReviewReply());
         reviewAnswerRepository.save(review);
+
+        ReviewDTO result = new ReviewDTO();
+        result.setReviewCode(review.getReviewCode());
+        result.setReviewDate(review.getReviewDate());
+        result.setReviewContent(review.getReviewContent());
+        result.setReviewReply(review.getReviewReply());
+        result.setRating(review.getRating());
+        result.setBusinessCode(review.getBusinessCode());
+        result.setUserCode(review.getUserCode());
+
+        return result;
     }
 
 
