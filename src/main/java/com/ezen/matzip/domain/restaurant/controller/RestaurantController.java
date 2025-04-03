@@ -1,5 +1,6 @@
 package com.ezen.matzip.domain.restaurant.controller;
 
+import com.ezen.matzip.domain.bookmark.entity.Bookmark;
 import com.ezen.matzip.domain.bookmark.service.BookmarkService;
 import com.ezen.matzip.domain.restaurant.dto.RegistDTO;
 import com.ezen.matzip.domain.restaurant.dto.RestaurantDTO;
@@ -20,6 +21,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Controller
@@ -121,11 +124,23 @@ public class RestaurantController {
     //완수 북마크 기능에 필요
     // 식당 목록 페이지
     @GetMapping("/restaurants")
-    public String restaurantList(Model model) {
-        // 식당 목록 조회 후 model에 추가 (예: restaurantList)
-         model.addAttribute("restaurantList", restaurantService.findAll());
+    public String restaurantList(Model model, Principal principal) {
+        // 전체 식당 목록 조회 (findAll() 메서드가 구현되어 있다고 가정)
+        List<Restaurant> restaurantList = restaurantService.findAll();
+        model.addAttribute("restaurantList", restaurantList);
 
-        return "domain/restaurant/restaurant_list"; //수정필요
+        // 로그인한 사용자라면 북마크된 식당 ID 목록도 모델에 추가
+        if (principal != null) {
+            User user = userService.findByUserId(principal.getName());
+            List<Bookmark> bookmarks = bookmarkService.getBookmarksForUser(user);
+            // 예를 들어, 북마크된 식당 코드들을 Set으로 만듭니다.
+            Set<Integer> bookmarkedRestaurantCodes = bookmarks.stream()
+                    .map(b -> b.getRestaurant().getRestaurantCode())
+                    .collect(Collectors.toSet());
+            model.addAttribute("bookmarkedRestaurantCodes", bookmarkedRestaurantCodes);
+        }
+
+        return "domain/search/user_restlist";
     }
 
     // 식당 상세 페이지
@@ -161,7 +176,7 @@ public class RestaurantController {
         String location = restaurantService.findLocationByRestaurantCode(restaurantCode);
         model.addAttribute("restaurantLocation", location);
 
-        return "/domain/restaurant/store_restinfo";
+        return "domain/restaurant/store_restinfo";
     }
     // 완수 끝
 }

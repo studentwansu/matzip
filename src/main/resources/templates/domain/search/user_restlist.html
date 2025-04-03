@@ -45,9 +45,9 @@
                     <p>⭐⭐⭐⭐⭐</p>
                     <p>
                             <span th:if="${!restaurant.restaurantMenus.isEmpty()}"
-                                  th:text="${restaurant.restaurantMenus.get(0).getMenuName()}"></span>
+                                  th:text="${restaurant.restaurantMenus.get(0).menuName}"></span>
                         <span th:if="${restaurant.restaurantMenus.size() > 1}"
-                              th:text="', ' + ${restaurant.restaurantMenus.get(1).getMenuName()}"></span>
+                              th:text="', ' + ${restaurant.restaurantMenus.get(1).menuName}"></span>
                     </p>
                     <p>
                         <span th:each="keyword, iterStat : ${restaurant.restaurantKeywords}"
@@ -66,7 +66,11 @@
                     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
                     <input type="hidden" name="restaurantCode" th:value="${restaurant.restaurantCode}" />
                     <button type="submit" style="background:none; border:none; padding:0;">
-                        <img alt="북마크" class="icon" src="/img/bookmark.png">
+                        <!-- 만약 현재 식당 코드가 북마크된 목록에 있다면 bookmarked 아이콘을, 그렇지 않으면 기본 북마크 아이콘을 표시 -->
+                        <img th:if="${bookmarkedRestaurantCodes != null and bookmarkedRestaurantCodes.contains(restaurant.restaurantCode)}"
+                             alt="북마크됨" class="icon" src="/img/bookmarked.png">
+                        <img th:unless="${bookmarkedRestaurantCodes != null and bookmarkedRestaurantCodes.contains(restaurant.restaurantCode)}"
+                             alt="북마크 추가" class="icon" src="/img/bookmark.png">
                     </button>
                 </form>
                 <a th:href="@{/storeinfo(restaurantCode=${restaurant.restaurantCode})}">

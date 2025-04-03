@@ -43,8 +43,8 @@ public class BookmarkController {
             bookmark.setRestaurant(restaurant);
             bookmarkService.addBookmark(bookmark);
         }
-        // 북마크 추가 후, 식당 상세 페이지로 리다이렉트
-        return "redirect:/storeinfo?restaurantCode=" + restaurantCode;
+        // 북마크 추가 후 식당 목록 페이지로 리다이렉트
+        return "redirect:/restaurants";
     }
 
     // 북마크 삭제
