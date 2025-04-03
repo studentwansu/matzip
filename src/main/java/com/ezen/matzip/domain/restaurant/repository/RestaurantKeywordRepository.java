@@ -1,6 +1,7 @@
 package com.ezen.matzip.domain.restaurant.repository;
 
 import com.ezen.matzip.domain.restaurant.entity.Restaurant;
+import com.ezen.matzip.domain.restaurant.entity.RestaurantImage;
 import com.ezen.matzip.domain.restaurant.entity.RestaurantKeyword;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -21,6 +22,9 @@ public interface RestaurantKeywordRepository extends JpaRepository<RestaurantKey
             "from RestaurantKeyword k where k.restaurantKeyword Like CONCAT('%', :keyword, '%') " +
             "group by k.restaurantCode.restaurantCode")
     List<Object[]> findRestaurantAndScoreByRestaurantKeyword(@Param("keyword") String keyword);
+
+
+
 
 //    @Query(value = "SELECT k.restaurant_code, SUM(CASE " +
 //            "WHEN k.restaurant_keyword LIKE ANY (array[:keywords]) THEN 1 ELSE 0 END) AS score " +
