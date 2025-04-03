@@ -70,7 +70,7 @@ public class RestaurantController {
     }
 
     @GetMapping("/search")
-    public String findByMyLocation(@RequestParam String keyword, Model model, HttpSession session)
+    public String findByRestaurant(@RequestParam String keyword, Model model, HttpSession session)
     {
         session.setAttribute("lastKeyword", keyword);
         List<RestaurantDTO> restaurants = restaurantService.findByKeywordOrderByScore(keyword);

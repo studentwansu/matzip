@@ -1,9 +1,15 @@
-.minigame-imgs
-{
+.minigame-container {
+    padding: 1vh;
+    width: 70%;
+    min-height: 27vh;
+    background: white;
+    border-radius: 2vh;
+    border: 1px solid #ccc;
+    align-content: center;
     align-items: center;
-    display: flex;
-    flex-direction: row;
+    justify-items: center;
     justify-content: center;
+    text-align: center;
 }
 
 .minigame-imgbox
@@ -11,13 +17,47 @@
     width: 300px;
     height: 350px;
     margin: 50px;
-    /*gap: 10px;*/
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
     border-radius: 1vh;
     flex-direction: column;
+}
+
+.minigame-imgbox2
+{
+    /*width: 300px;*/
+    /*height: 350px;*/
+    margin: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border-radius: 1vh;
+    flex-direction: row;
+}
+
+.minigame-imgs
+{
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    overflow: hidden;
+
+}
+
+.minigame-imgs2
+{
+    width: 300px;
+    height: 350px;
+    margin: 50px;
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    overflow: hidden;
 }
 
 .minigame-img {

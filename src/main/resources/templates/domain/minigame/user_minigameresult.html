@@ -21,25 +21,26 @@
 <body>
     <div th:replace="~{html/user_header :: userHeader}"></div>
 
-    <!-- main -->
-    <main>
+    <div class="body-section">
         <div class="minigame-container">
-            <div class="minigame">
-                <h2>Choose</h2>
-                <div class="mini-list">
-                    <div>
-                        <button>
-                            <img src="fianlmenu.png" alt="연관된음식명">
+            <h2>🎮축하합니다!🎮</h2>
+            <div class="minigame-imgs">
+                <div class="minigame-imgbox2" th:if="${lastKeyword != null}">
+                    <form action="/search" class="minigame-imgs2">
+                        <button style="background: none; font-size:2vh; flex-direction: column" type="submit">
+                            <img class="minigame-img" th:alt="${lastKeyword.getKeyword()}" th:src="${lastKeyword.getKeywordImgPath()}">
+                            <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
+                            <input name="keyword" th:value="${lastKeyword.getKeyword()}" type="hidden">
                         </button>
-                    </div>
-                    <div>
-                        <h3>이미지와연관된음식명</h3>
-                        <p>이 음식은 요리에 대한 설명 간단하게</p>
+                    </form>
+                    <div class="minigame-imgbox">
+                        <span style="position:relative; font-size:3vh;" th:text="${lastKeyword.getKeyword()}"></span>
+                        <span style="position:relative; font-size:2vh;" th:text="${lastKeyword.getKeywordDescription()}"></span>
                     </div>
                 </div>
             </div>
         </div>
-    </main>
+    </div>
 
     <div th:replace="~{html/user_footer :: userFooter}"></div>
 
