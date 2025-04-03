@@ -50,7 +50,25 @@
             </tr>
             </tbody>
         </table>
-        <!-- 페이지네이션 등 추가 -->
+        <div class="pagination">
+            <!-- 이전 버튼 -->
+            <span th:if="${currentPage > 0}">
+        <a th:href="@{/user/bookmarks(page=${currentPage - 1}, size=${size})}">이전</a>
+    </span>
+
+            <!-- 페이지 번호 -->
+            <span th:each="i : ${#numbers.sequence(0, totalPages - 1)}">
+        <a th:if="${i != currentPage}"
+           th:href="@{/user/bookmarks(page=${i}, size=${size})}"
+           th:text="${i + 1}"></a>
+        <span th:if="${i == currentPage}" th:text="${i + 1}"></span>
+    </span>
+
+            <!-- 다음 버튼 -->
+            <span th:if="${currentPage < totalPages - 1}">
+        <a th:href="@{/user/bookmarks(page=${currentPage + 1}, size=${size})}">다음</a>
+    </span>
+        </div>
     </section>
 </div>
 

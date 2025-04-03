@@ -9,6 +9,9 @@ import com.ezen.matzip.domain.restaurant.entity.Restaurant;
 import com.ezen.matzip.domain.restaurant.repository.RestaurantRepository;
 import com.ezen.matzip.domain.user.entity.User;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -53,5 +56,10 @@ public class BookmarkService {
 
     public Optional<Bookmark> findByUserAndRestaurant(User user, Restaurant restaurant) {
         return bookmarkRepository.findByUserAndRestaurant(user, restaurant);
+    }
+
+    public Page<Bookmark> getBookmarksForUser(User user, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return bookmarkRepository.findByUser(user, pageable);
     }
 }
