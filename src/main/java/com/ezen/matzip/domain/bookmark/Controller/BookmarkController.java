@@ -66,6 +66,7 @@ public class BookmarkController {
 //        return "redirect:/restaurants";
 //    }
 //
+
     // 북마크 삭제
     @PostMapping("/{bookmarkCode}/delete")
     public String deleteBookmark(@PathVariable("bookmarkCode") Long bookmarkCode, Principal principal) {
