@@ -1,5 +1,6 @@
 package com.ezen.matzip.domain.restaurant.controller;
 
+import com.ezen.matzip.domain.bookmark.dto.RestaurantForBookmarkDTO;
 import com.ezen.matzip.domain.bookmark.entity.Bookmark;
 import com.ezen.matzip.domain.bookmark.service.BookmarkService;
 import com.ezen.matzip.domain.restaurant.dto.RegistDTO;
@@ -125,15 +126,20 @@ public class RestaurantController {
     // 식당 목록 페이지
     @GetMapping("/restaurants")
     public String restaurantList(Model model, Principal principal) {
-        // 전체 식당 목록 조회 (findAll() 메서드가 구현되어 있다고 가정)
-        List<Restaurant> restaurantList = restaurantService.findAll();
-        model.addAttribute("restaurantList", restaurantList);
+        // 전체 식당 목록 조회 (엔티티 목록)
+        List<Restaurant> restaurantEntities = restaurantService.findAll();
 
-        // 로그인한 사용자라면 북마크된 식당 ID 목록도 모델에 추가
+        // 각 엔티티를 RestaurantForBookmarkDTO로 변환
+        List<RestaurantForBookmarkDTO> restaurantDTOs = restaurantEntities.stream()
+                .map(restaurant -> restaurantService.convertToRestaurantForBookmarkDTO(restaurant))
+                .collect(Collectors.toList());
+
+        model.addAttribute("restaurantList", restaurantDTOs);
+
+        // 로그인한 사용자라면 북마크된 식당 ID 목록도 추가
         if (principal != null) {
             User user = userService.findByUserId(principal.getName());
             List<Bookmark> bookmarks = bookmarkService.getBookmarksForUser(user);
-            // 예를 들어, 북마크된 식당 코드들을 Set으로 만듭니다.
             Set<Integer> bookmarkedRestaurantCodes = bookmarks.stream()
                     .map(b -> b.getRestaurant().getRestaurantCode())
                     .collect(Collectors.toSet());

@@ -1,7 +1,10 @@
 package com.ezen.matzip.domain.restaurant.service;
 
+import com.ezen.matzip.domain.bookmark.dto.RestaurantForBookmarkDTO;
+import com.ezen.matzip.domain.restaurant.dto.MenuDTO;
 import com.ezen.matzip.domain.restaurant.dto.RegistDTO;
 import com.ezen.matzip.domain.restaurant.dto.RestaurantDTO;
+import com.ezen.matzip.domain.restaurant.dto.RestaurantKeywordDTO;
 import com.ezen.matzip.domain.restaurant.entity.Category;
 import com.ezen.matzip.domain.restaurant.entity.Menu;
 import com.ezen.matzip.domain.restaurant.entity.Restaurant;
@@ -287,6 +290,29 @@ public class RestaurantService {
 
     public List<Restaurant> findAll() {
         return restaurantRepository.findAll();
+    }
+
+    public RestaurantForBookmarkDTO convertToRestaurantForBookmarkDTO(Restaurant restaurant) {
+        RestaurantForBookmarkDTO dto = new RestaurantForBookmarkDTO();
+        dto.setRestaurantCode(restaurant.getRestaurantCode());
+        dto.setRestaurantName(restaurant.getRestaurantName());
+        dto.setMainMenu(restaurant.getMainMenu());
+        dto.setRestaurantLocation(restaurant.getRestaurantLocation());
+        dto.setRestaurantMenus(
+                restaurant.getMenus().stream()
+                        .map(menu -> new MenuDTO(menu.getMenuCode(), menu.getMenuName(), menu.getMenuPrice(), restaurant))
+                        .collect(Collectors.toList())
+        );
+        // 변환: restaurant 엔티티에 있는 키워드들을 RestaurantKeywordDTO 리스트로 매핑
+        dto.setRestaurantKeywords(
+                restaurant.getRestaurantKeywords().stream()
+                        .map(keyword -> new RestaurantKeywordDTO(
+                                keyword.getRestaurantKeywordCode(),
+                                keyword.getRestaurantCode().getRestaurantCode(),
+                                keyword.getRestaurantKeyword()))
+                        .collect(Collectors.toList())
+        );
+        return dto;
     }
     //완수 끝
 }

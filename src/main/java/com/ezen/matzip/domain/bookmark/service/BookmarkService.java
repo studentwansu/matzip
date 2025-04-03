@@ -1,7 +1,10 @@
 package com.ezen.matzip.domain.bookmark.service;
 
+import com.ezen.matzip.domain.bookmark.dto.BookmarkDTO;
+import com.ezen.matzip.domain.bookmark.dto.RestaurantForBookmarkDTO;
 import com.ezen.matzip.domain.bookmark.entity.Bookmark;
 import com.ezen.matzip.domain.bookmark.repository.BookmarkRepository;
+import com.ezen.matzip.domain.restaurant.dto.MenuDTO;
 import com.ezen.matzip.domain.restaurant.entity.Restaurant;
 import com.ezen.matzip.domain.restaurant.repository.RestaurantRepository;
 import com.ezen.matzip.domain.user.entity.User;
@@ -9,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -30,5 +34,19 @@ public class BookmarkService {
 
     public boolean isBookmarked(User user, Restaurant restaurant) {
         return bookmarkRepository.existsByUserAndRestaurant(user, restaurant);
+    }
+
+    public RestaurantForBookmarkDTO convertToRestaurantForBookmarkDTO(Restaurant restaurant) {
+        RestaurantForBookmarkDTO dto = new RestaurantForBookmarkDTO();
+        dto.setRestaurantCode(restaurant.getRestaurantCode());
+        dto.setRestaurantName(restaurant.getRestaurantName());
+        dto.setMainMenu(restaurant.getMainMenu());
+        dto.setRestaurantLocation(restaurant.getRestaurantLocation());
+        dto.setRestaurantMenus(
+                restaurant.getMenus().stream()
+                        .map(menu -> new MenuDTO(menu.getMenuCode(), menu.getMenuName(), menu.getMenuPrice(), restaurant))
+                        .collect(Collectors.toList())
+        );
+        return dto;
     }
 }
