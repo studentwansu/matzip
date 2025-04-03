@@ -27,12 +27,7 @@
     <section class="content">
         <h2>고객 리뷰 목록</h2>
 
-        <script th:inline="javascript">
-            // Thymeleaf로 데이터를 주입하여 JS에서 사용할 수 있도록 처리
-            let testReview = /*[[${testReview}]]*/ [];
-            console.log("로드된 리뷰 데이터:", testReview); // 로그로 데이터 확인
-        </script>
-        <script src="/js/reviewWrite.js" defer></script> <!-- JavaScript 파일 로드 -->
+        <script src="/js/reviewAnswer.js" defer></script> <!-- JavaScript 파일 로드 -->
 
         <form id="monthForm" th:action="@{/business/answer/{businessCode}(businessCode=${businessCode})}" method="get">
                 <select id="month" name="month" onchange="document.getElementById('monthForm').submit()">
@@ -51,41 +46,100 @@
                     <option value="12" th:selected="${selectedMonth == 12}">12월</option>
                 </select>
         </form>
-            <div class="mini-list">
-                <table class="board-table">
-                    <thead>
-                        <tr>
-                            <th scope="col" class="th-num">번호</th>
-                            <th scope="col" class="th-answer">답변상태</th>
-                            <th scope="col" class="th-title">리뷰작성날짜</th>
-                            <th scope="col" class="th-content">답변내용</th>
-                            <th scope="col" class="th-admin">관리</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr th:each="review, stat : ${reviews}">
-                            <td th:text="${stat.count}"></td>
-                            <td><button>답변버튼</button></td>
-                            <td th:text="${#dates.format(review.reviewDate, 'yyyy-MM-dd HH:mm')}"></td>
-                            <td th:text="${review.reviewReply}"></td>
-                            <td>
-                                <button>수정</button>
-                                <button>삭제</button>
-                                <button>신고</button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+        <table class="board-table">
+            <thead>
+                <tr>
+                    <th scope="col" class="th-num">번호</th>
+                    <th scope="col" class="th-answer">답변상태</th>
+                    <th scope="col" class="th-title">리뷰작성날짜</th>
+                    <th scope="col" class="th-content">답변내용</th>
+                    <th scope="col" class="th-admin">관리</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="review, stat : ${reviews}">
+                    <td th:text="${stat.count}"></td>
+                    <td>
+                        <button th:if="${review.reviewReply != null}" style="background-color: green; color: white;">답변완료</button>
+                        <button th:if="${review.reviewReply == null}" style="background-color: red; color: white;">답변전</button>
+                    </td>
+                    <td th:text="${#dates.format(review.reviewDate, 'yyyy-MM-dd HH:mm')}"></td>
+                    <td th:text="${review.reviewReply}"></td>
+                    <td>
+                        <span th:if="${review.reviewReply != null}">
+                            <input type="hidden" name="businessCode" th:value="${businessCode}" />
+                            <button class="edit-btn" th:onclick="'openModal(' + ${review.reviewCode} + ',' + ${review.businessCode} + ')'">수정</button>
+                            <form th:id="'deleteForm-' + ${review.reviewCode}" th:action="@{/business/answer/delete/{reviewCode}(reviewCode=${review.reviewCode})}" method="post" style="display:inline">
+                                <input type="hidden" name="businessCode" th:value="${businessCode}" />
+<!--                                <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>-->
+                                <button class="delete-btn">삭제</button>
+                            </form>
+                        </span>
+                        <span th:if="${review.reviewReply == null}">
+                            <button class="edit-btn" th:onclick="'openModal(' + ${review.reviewCode} + ',' + ${review.businessCode} + ')'">작성</button>
+                        </span>
+                        <button th:onclick="">신고</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+
+        <!-- 모달 -->
+        <div id="reviewModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal()">&times;</span>
+                <h3>답변 수정</h3>
+                <div id="test"></div>
+                <form action="/business/answer/modify" class="reviewForm" id="myform" method="post" enctype="multipart/form-data">
+
+                    <div class="imageContainer">
+                        <th:block th:each="img : ${selectedReviewImgs}">
+                            <div class="image-preview">
+                                <img th:src="@{${img.reviewImagePath}}" class="preview-img" />
+                            </div>
+                        </th:block>
+                    </div>
+
+
+                    <fieldset id="star-rating">
+                        <input type="radio" name="rating" value="5" id="rate1">
+                        <label for="rate1">★</label>
+                        <input type="radio" name="rating" value="4" id="rate2">
+                        <label for="rate2">★</label>
+                        <input type="radio" name="rating" value="3" id="rate3">
+                        <label for="rate3">★</label>
+                        <input type="radio" name="rating" value="2" id="rate4">
+                        <label for="rate4">★</label>
+                        <input type="radio" name="rating" value="1" id="rate5">
+                        <label for="rate5">★</label>
+                    </fieldset>
+
+                    <input type="hidden" id="hiddenReviewCode" name="reviewCode" value="">
+                    <input type="hidden" id="hiddenBusinessCode" name="businessCode" value="">
+                    <textarea id="reviewContent" name="reviewContent"></textarea>
+
+                    <div>
+                        <textarea id="reviewReply" name="reviewReply" required></textarea>
+                    </div>
+
+                            <input type="hidden" name="businessCode" th:value="${businessCode}" />
+                    <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
+                    <!--                    <input type="submit" value="저장" class="save-btn">-->
+                    <button type="submit" class="edit-btn">저장</button>
+                </form>
+
             </div>
         <!-- 페이지네이션 -->
-        <div class="pagination">
-            <a href="#">1</a>
-            <a href="#">2</a>
-            <a href="#">3</a>
+<!--        <div class="pagination">-->
+<!--            <a href="#">1</a>-->
+<!--            <a href="#">2</a>-->
+<!--            <a href="#">3</a>-->
+<!--        </div>-->
         </div>
-
     </section>
 </div>
+
 
 
 

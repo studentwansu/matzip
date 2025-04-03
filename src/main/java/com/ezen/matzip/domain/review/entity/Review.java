@@ -77,5 +77,13 @@ public class Review {
         this.reviewDate = new Date();
     }
 
+    public void writeReply(String replyContent) {
+        this.reviewReply = replyContent;
+    }
+
+    public void modifyAnswer(String reviewReply){
+        this.reviewReply = reviewReply;
+    }
+
 //    setter 필요한 필드만 setter 만들어서 사용
 }
