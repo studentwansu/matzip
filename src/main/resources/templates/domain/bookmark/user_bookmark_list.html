@@ -34,19 +34,17 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="bookmark, iterStat : ${bookmarks}">
+            <tr th:each="bookmark, iterStat : ${bookmarks}"
+                th:onclick="'location.href=\'/storeinfo?restaurantCode=' + ${bookmark.restaurant.restaurantCode} + '\';'"
+                style="cursor:pointer;">
                 <td th:text="${iterStat.index + 1}"></td>
-                <td>
-                    <a th:href="@{/storeinfo(restaurantCode=${bookmark.restaurant.restaurantCode})}">
-                        <span th:text="${bookmark.restaurant.restaurantName}"></span>
-                    </a>
-                </td>
+                <td th:text="${bookmark.restaurant.restaurantName}"></td>
                 <td th:text="${bookmark.restaurant.mainMenu}"></td>
                 <td th:text="${bookmark.restaurant.restaurantLocation}"></td>
                 <td>
                     <form th:action="@{/user/bookmarks/{bookmarkCode}/delete(bookmarkCode=${bookmark.bookmarkCode})}" method="post">
                         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-                        <button type="submit" class="delete-btn">삭제</button>
+                        <button type="submit" class="delete-btn" onclick="event.stopPropagation();">삭제</button>
                     </form>
                 </td>
             </tr>
