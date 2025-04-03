@@ -36,7 +36,11 @@
             <tbody>
             <tr th:each="bookmark, iterStat : ${bookmarks}">
                 <td th:text="${iterStat.index + 1}"></td>
-                <td th:text="${bookmark.restaurant.restaurantName}"></td>
+                <td>
+                    <a th:href="@{/storeinfo(restaurantCode=${bookmark.restaurant.restaurantCode})}">
+                        <span th:text="${bookmark.restaurant.restaurantName}"></span>
+                    </a>
+                </td>
                 <td th:text="${bookmark.restaurant.mainMenu}"></td>
                 <td th:text="${bookmark.restaurant.restaurantLocation}"></td>
                 <td>

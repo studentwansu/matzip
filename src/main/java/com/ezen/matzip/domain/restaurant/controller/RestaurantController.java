@@ -96,12 +96,23 @@ public class RestaurantController {
     }
 
     @GetMapping("/search")
-    public String findByMyLocation(@RequestParam String keyword, Model model, HttpSession session)
+    public String findByMyLocation(@RequestParam String keyword, Model model, HttpSession session, Principal principal)
     {
         session.setAttribute("lastKeyword", keyword);
         List<RestaurantDTO> restaurants = restaurantService.findByKeywordOrderByScore(keyword);
         model.addAttribute("restaurantList", restaurants);
         model.addAttribute("myLoc", keyword);
+
+        //완수- 북마크 기능에 필요
+        if (principal != null) {
+            User user = userService.findByUserId(principal.getName());
+            List<Bookmark> bookmarks = bookmarkService.getBookmarksForUser(user);
+            Set<Integer> bookmarkedRestaurantCodes = bookmarks.stream()
+                    .map(b -> b.getRestaurant().getRestaurantCode())
+                    .collect(Collectors.toSet());
+            model.addAttribute("bookmarkedRestaurantCodes", bookmarkedRestaurantCodes);
+        }
+
         return "domain/search/user_restlist";
     }
 
@@ -134,36 +145,29 @@ public class RestaurantController {
                 .map(restaurant -> restaurantService.convertToRestaurantForBookmarkDTO(restaurant))
                 .collect(Collectors.toList());
 
+        restaurantDTOs.forEach(dto -> log.info("Converted DTO: {}", dto));
+
         model.addAttribute("restaurantList", restaurantDTOs);
 
-        // 로그인한 사용자라면 북마크된 식당 ID 목록도 추가
+        // 로그인한 사용자의 북마크된 식당 코드 목록 추가 (생략 가능)
         if (principal != null) {
             User user = userService.findByUserId(principal.getName());
             List<Bookmark> bookmarks = bookmarkService.getBookmarksForUser(user);
             Set<Integer> bookmarkedRestaurantCodes = bookmarks.stream()
                     .map(b -> b.getRestaurant().getRestaurantCode())
                     .collect(Collectors.toSet());
+            log.info("북마크된 식당 코드: {}", bookmarkedRestaurantCodes);
             model.addAttribute("bookmarkedRestaurantCodes", bookmarkedRestaurantCodes);
+
+            // 3번: 변환된 DTO들을 로그로 확인 (디버깅용)
+            restaurantDTOs.forEach(dto -> log.info("Converted DTO restaurantCode: {}", dto.getRestaurantCode()));
+            log.info("북마크된 식당 코드: {}", bookmarkedRestaurantCodes);
         }
+
 
         return "domain/search/user_restlist";
     }
 
-    // 식당 상세 페이지
-//    @GetMapping("/storeinfo")
-//    public String restaurantDetail(@RequestParam("restaurantCode") int restaurantCode,
-//                                   Model model,
-//                                   Principal principal) {
-//        Restaurant restaurant = restaurantService.findByRestaurantCode(restaurantCode);
-//        model.addAttribute("restaurant", restaurant);
-//
-//        // 실제 사용자 정보를 가져와서 북마크 여부 체크
-//        User user = userService.findByUserId(principal.getName());
-//        boolean bookmarked = bookmarkService.isBookmarked(user, restaurant);
-//        model.addAttribute("bookmarked", bookmarked);
-//
-//        return "domain/restaurant/restaurant_detail"; //수정필요
-//    }
     @GetMapping("/storeinfo")
     public String restaurantDetail(@RequestParam("restaurantCode") int restaurantCode,
                                    Model model,

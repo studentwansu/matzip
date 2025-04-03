@@ -32,21 +32,40 @@ public class BookmarkController {
         return "domain/bookmark/user_bookmark_list";
     }
 
-    // 북마크 추가 (식당 목록, 상세 페이지 등에서)
-    @PostMapping("/add")
-    public String addBookmark(@RequestParam("restaurantCode") int restaurantCode, Principal principal) {
+    @PostMapping("/toggle")
+    public String toggleBookmark(@RequestParam("restaurantCode") int restaurantCode, Principal principal) {
         User user = userService.findByUserId(principal.getName());
         Restaurant restaurant = restaurantService.findByRestaurantCode(restaurantCode);
-        if (!bookmarkService.isBookmarked(user, restaurant)) {
+        // 이미 북마크되어 있으면 삭제, 그렇지 않으면 추가
+        if (bookmarkService.isBookmarked(user, restaurant)) {
+            Bookmark bookmark = bookmarkService.findByUserAndRestaurant(user, restaurant)
+                    .orElseThrow(() -> new RuntimeException("북마크 정보를 찾을 수 없습니다."));
+            bookmarkService.deleteBookmark(bookmark.getBookmarkCode());
+        } else {
             Bookmark bookmark = new Bookmark();
             bookmark.setUser(user);
             bookmark.setRestaurant(restaurant);
             bookmarkService.addBookmark(bookmark);
         }
-        // 북마크 추가 후 식당 목록 페이지로 리다이렉트
+        // 토글 후 식당 목록 페이지로 리다이렉트 (또는 원하는 페이지)
         return "redirect:/restaurants";
     }
 
+//    // 북마크 추가 (식당 목록, 상세 페이지 등에서)
+//    @PostMapping("/add")
+//    public String addBookmark(@RequestParam("restaurantCode") int restaurantCode, Principal principal) {
+//        User user = userService.findByUserId(principal.getName());
+//        Restaurant restaurant = restaurantService.findByRestaurantCode(restaurantCode);
+//        if (!bookmarkService.isBookmarked(user, restaurant)) {
+//            Bookmark bookmark = new Bookmark();
+//            bookmark.setUser(user);
+//            bookmark.setRestaurant(restaurant);
+//            bookmarkService.addBookmark(bookmark);
+//        }
+//        // 북마크 추가 후 식당 목록 페이지로 리다이렉트
+//        return "redirect:/restaurants";
+//    }
+//
     // 북마크 삭제
     @PostMapping("/{bookmarkCode}/delete")
     public String deleteBookmark(@PathVariable("bookmarkCode") Long bookmarkCode, Principal principal) {

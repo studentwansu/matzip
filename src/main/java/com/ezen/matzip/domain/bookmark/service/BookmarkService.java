@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -48,5 +49,9 @@ public class BookmarkService {
                         .collect(Collectors.toList())
         );
         return dto;
+    }
+
+    public Optional<Bookmark> findByUserAndRestaurant(User user, Restaurant restaurant) {
+        return bookmarkRepository.findByUserAndRestaurant(user, restaurant);
     }
 }
