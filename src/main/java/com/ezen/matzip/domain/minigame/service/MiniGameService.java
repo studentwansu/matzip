@@ -38,58 +38,52 @@ public class MiniGameService {
     // 2. 두 개의 키워드 내보내기
     public List<KeywordDTO>[] showKeywords(List<KeywordDTO>[] keywords)
     {
-        if (keywords[0].isEmpty())
+        if(keywords[0].size() + keywords[1].size() + keywords[2].size() > 1)
         {
-            keywords[0].addAll(keywords[2]);
-            keywords[2].clear();
-            Collections.shuffle(keywords[0]);
+            keywords[1].add(keywords[0].get(0));
+            keywords[0].remove(keywords[0].get(0));
+
+            keywords[1].add(keywords[0].get(0));
+            keywords[0].remove(keywords[0].get(0));
         }
-
-        keywords[1].add(keywords[0].get(0));
-        keywords[0].remove(keywords[0].get(0));
-
-        keywords[1].add(keywords[0].get(0));
-        keywords[0].remove(keywords[0].get(0));
 
         return keywords;
     }
 
     public String checkCurrentRound(List<KeywordDTO>[] keywords)
     {
-        if (keywords[0].isEmpty() && !keywords[2].isEmpty())
+        if (keywords[0].size() > 2 && keywords[2].isEmpty())
         {
-            if (keywords[2].size() == 1)
-            {
-                return "끝!";
-            }
-
-            return (keywords[2].size() + 1) + "강 시작!";
+            return (keywords[0].size()) + "강 시작!";
         }
+        else if (keywords[0].size() == 2 && keywords[2].isEmpty())
+        {
+            System.out.println("결승0: " + keywords[0]);
+            System.out.println("결승2" + keywords[2]);
+            return "결승!";
+        }
+        else if (keywords[0].isEmpty() && keywords[2].size() == 1)
+        {
+            System.out.println("끝0: " + keywords[0]);
+            System.out.println("끝2" + keywords[2]);
+            return "끝!";
+        }
+
             return null;
     }
 
     public List<KeywordDTO>[] sortKeyword(List<KeywordDTO>[] remainedKeywords, String selected) {
 
-        if (remainedKeywords.length < 3) {
-            // 길이가 3 미만인 경우 새 배열을 생성하고 기존 데이터 복사
-            List<KeywordDTO>[] newArray = new List[3];
-            for (int i = 0; i < remainedKeywords.length; i++) {
-                newArray[i] = remainedKeywords[i];
-            }
-            for (int i = remainedKeywords.length; i < 3; i++) {
-                newArray[i] = new ArrayList<>();
-            }
-            remainedKeywords = newArray;
-        }
-
         Keyword foundKeyword = keywordRepository.findByKeyword(selected);
         remainedKeywords[2].add(modelMapper.map(foundKeyword, KeywordDTO.class));
         remainedKeywords[1].clear();
 
-        System.out.println("현재 선택된 키워드: " + foundKeyword.getKeyword());
-        System.out.println("현재 나오지 않은 키워드: " + remainedKeywords[0]);
-        System.out.println("다음 라운드 진출 키워드: " + remainedKeywords[2]);
-
+        if (remainedKeywords[0].isEmpty() && remainedKeywords[2].size() > 1)
+        {
+            remainedKeywords[0].addAll(remainedKeywords[2]);
+            remainedKeywords[2].clear();
+            Collections.shuffle(remainedKeywords[0]);
+        }
         return remainedKeywords;
     }
 

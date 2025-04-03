@@ -36,8 +36,10 @@ public class MiniGameController {
 
     @PostMapping("/minigame/select")
     public String showKeyword(@RequestParam("selected") String selected, HttpSession session, Model model) {
-        // 세션에서 currentKeywords 가져오기
         List<KeywordDTO>[] currentKeywords = (List<KeywordDTO>[]) session.getAttribute("currentKeywords");
+
+        currentKeywords = miniGameService.sortKeyword(currentKeywords, selected);
+
         String announce = miniGameService.checkCurrentRound(currentKeywords);
         if (announce != null)
         {
@@ -45,6 +47,7 @@ public class MiniGameController {
             {
                 KeywordDTO lastKeyword = miniGameService.foundKeyword(selected);
                 model.addAttribute("lastKeyword", lastKeyword);
+                model.addAttribute("announce", announce);
                 return "domain/minigame/user_minigameresult";
             }
             else
@@ -53,7 +56,6 @@ public class MiniGameController {
             }
         }
 
-        currentKeywords = miniGameService.sortKeyword(currentKeywords, selected);
         currentKeywords = miniGameService.showKeywords(currentKeywords);
 
         model.addAttribute("currentKeywords", currentKeywords);
