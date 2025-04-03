@@ -54,8 +54,8 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="reservation : ${reservation}">
-                <td th:text="${reservation.reservationCode}"></td>
+            <tr th:each="reservation, stat : ${reservation}">
+                <td th:text="${stat.count}"></td>
                 <td th:text="${reservation.reservationDate}"></td>
                 <td th:text="${reservation.restaurantName}"></td>
                 <td>

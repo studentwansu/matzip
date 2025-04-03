@@ -54,8 +54,8 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="review : ${testReview}">
-                <td th:text="${review.reviewCode}"></td>
+            <tr th:each="review, stat : ${testReview}">
+                <td th:text="${stat.count}"></td>
                 <td th:text="${#dates.format(review.reviewDate, 'yyyy-MM-dd HH:mm')}"></td>
                 <td th:text="${review.restaurantName}"></td>
                 <td th:text="${review.reviewContent}"></td>

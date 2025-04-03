@@ -8,6 +8,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poor+Story&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/header_footer.css">
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/review.css">
     <link rel="stylesheet" href="/css/style_store.css">
 
 </head>
@@ -15,84 +18,76 @@
 <body>
 <div th:replace="~{html/store_header :: storeHeader}"></div>
 
-    <!-- main -->
-    <main>
-        <div class="review-container">
-            <div class="review-list">
-                <h2>고객 리뷰 목록</h2>
-                <form id="monthForm" th:action="@{/business/answer/{businessCode}(businessCode=${businessCode})}" method="get">
-                <select id="month" name="month" onchange="document.getElementById('monthForm').submit()">
-                        <option value="">월 별</option>
-                        <option value="1" th:selected="${selectedMonth == 1}">1월</option>
-                        <option value="2" th:selected="${selectedMonth == 2}">2월</option>
-                        <option value="3" th:selected="${selectedMonth == 3}">3월</option>
-                        <option value="4" th:selected="${selectedMonth == 4}">4월</option>
-                        <option value="5" th:selected="${selectedMonth == 5}">5월</option>
-                        <option value="6" th:selected="${selectedMonth == 6}">6월</option>
-                        <option value="7" th:selected="${selectedMonth == 7}">7월</option>
-                        <option value="8" th:selected="${selectedMonth == 8}">8월</option>
-                        <option value="9" th:selected="${selectedMonth == 9}">9월</option>
-                        <option value="10" th:selected="${selectedMonth == 10}">10월</option>
-                        <option value="11" th:selected="${selectedMonth == 11}">11월</option>
-                        <option value="12" th:selected="${selectedMonth == 12}">12월</option>
-                    </select>
-                </form>
-                <div class="mini-list">
-                    <table class="board-table">
-                        <thead>
-                            <tr>
-                                <th scope="col" class="th-num">번호</th>
-                                <th scope="col" class="th-answer">답변상태</th>
-                                <th scope="col" class="th-title">리뷰작성날짜</th>
-                                <th scope="col" class="th-content">답변내용</th>
-                                <th scope="col" class="th-admin">관리</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr th:each="review : ${reviews}">
-                                <td th:text="${review.reviewCode}"></td>
-                                <td><button>답변버튼</button></td>
-                                <td th:text="${#dates.format(review.reviewDate, 'yyyy-MM-dd HH:mm')}"></td>
-                                <td th:text="${review.reviewReply}"></td>
-                                <td>
-                                    <button>수정</button>
-                                    <button>삭제</button>
-                                    <button>신고</button>
-                                </td>
-                            </tr>
-<!--                            <tr>-->
-<!--                                <td>2</td>-->
-<!--                                <td>답변전</td>-->
-<!--                                <td>글제목</td>-->
-<!--                                <td></td>-->
-<!--                                <td>-->
-<!--                                    <button>작성</button>-->
-<!--                                    <button>신고</button>-->
-<!--                                </td>-->
-<!--                            </tr>-->
-<!--                            <tr>-->
-<!--                                <td>3</td>-->
-<!--                                <td>답변전</td>-->
-<!--                                <td>글제목</td>-->
-<!--                                <td></td>-->
-<!--                                <td>-->
-<!--                                    <button>작성</button>-->
-<!--                                    <button>신고</button>-->
-<!--                                </td>-->
-<!--                            </tr>-->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
+<!-- main -->
+<div class="main-container">
+    <!--  사이드바  -->
 
+
+    <!-- 작성 리뷰 목록 -->
+    <section class="content">
+        <h2>고객 리뷰 목록</h2>
+
+        <script th:inline="javascript">
+            // Thymeleaf로 데이터를 주입하여 JS에서 사용할 수 있도록 처리
+            let testReview = /*[[${testReview}]]*/ [];
+            console.log("로드된 리뷰 데이터:", testReview); // 로그로 데이터 확인
+        </script>
+        <script src="/js/reviewWrite.js" defer></script> <!-- JavaScript 파일 로드 -->
+
+        <form id="monthForm" th:action="@{/business/answer/{businessCode}(businessCode=${businessCode})}" method="get">
+                <select id="month" name="month" onchange="document.getElementById('monthForm').submit()">
+                    <option value="">월 별</option>
+                    <option value="1" th:selected="${selectedMonth == 1}">1월</option>
+                    <option value="2" th:selected="${selectedMonth == 2}">2월</option>
+                    <option value="3" th:selected="${selectedMonth == 3}">3월</option>
+                    <option value="4" th:selected="${selectedMonth == 4}">4월</option>
+                    <option value="5" th:selected="${selectedMonth == 5}">5월</option>
+                    <option value="6" th:selected="${selectedMonth == 6}">6월</option>
+                    <option value="7" th:selected="${selectedMonth == 7}">7월</option>
+                    <option value="8" th:selected="${selectedMonth == 8}">8월</option>
+                    <option value="9" th:selected="${selectedMonth == 9}">9월</option>
+                    <option value="10" th:selected="${selectedMonth == 10}">10월</option>
+                    <option value="11" th:selected="${selectedMonth == 11}">11월</option>
+                    <option value="12" th:selected="${selectedMonth == 12}">12월</option>
+                </select>
+        </form>
+            <div class="mini-list">
+                <table class="board-table">
+                    <thead>
+                        <tr>
+                            <th scope="col" class="th-num">번호</th>
+                            <th scope="col" class="th-answer">답변상태</th>
+                            <th scope="col" class="th-title">리뷰작성날짜</th>
+                            <th scope="col" class="th-content">답변내용</th>
+                            <th scope="col" class="th-admin">관리</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="review, stat : ${reviews}">
+                            <td th:text="${stat.count}"></td>
+                            <td><button>답변버튼</button></td>
+                            <td th:text="${#dates.format(review.reviewDate, 'yyyy-MM-dd HH:mm')}"></td>
+                            <td th:text="${review.reviewReply}"></td>
+                            <td>
+                                <button>수정</button>
+                                <button>삭제</button>
+                                <button>신고</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         <!-- 페이지네이션 -->
         <div class="pagination">
             <a href="#">1</a>
             <a href="#">2</a>
             <a href="#">3</a>
         </div>
-    </main>
+
+    </section>
+</div>
+
+
 
 <div th:replace="~{html/user_footer :: userFooter}"></div>
 </body>
