@@ -10,12 +10,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Poor+Story&display=swap" rel="stylesheet">
     <link href="/css/style_user.css" rel="stylesheet">
     <link href="/css/header_footer.css" rel="stylesheet">
+    <link href="/css/minigame.css" rel="stylesheet">
     <script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=fd7786d297e2d4aaab4aa8b6bbb06b88&libraries=services"
             type="text/javascript"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script th:src="@{/js/myLocation.js}"></script>
-<!--    <script th:src="@{/js/weather.js}"></script>-->
 </head>
 
 <body>
@@ -23,6 +23,18 @@
     <div class="body-section">
         <div class="container">
             <h2>🎮Choose your prefer food!🎮</h2>
+            <h3 th:if="${announce != null && !announce.isEmpty()}" th:text="${announce}"></h3>
+            <div class="minigame-img" th:each="shownKeywords: ${currentKeywords[1]}">
+                <form method="post" class="minigame-imgs" action="/minigame/select">
+                    <button type="submit">
+                        <img th:src="${shownKeywords.getKeywordImgPath()}" th:alt="${shownKeywords.getKeyword()}">
+                        <span th:text="${shownKeywords.getKeyword()}"></span>
+                        <input type="hidden" name="selected" th:value="${shownKeywords.getKeyword()}">
+                        <input type="hidden" name="currentKeywords" th:value="${currentKeywords}">
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                    </button>
+                </form>
+            </div>
         </div>
     </div>
 

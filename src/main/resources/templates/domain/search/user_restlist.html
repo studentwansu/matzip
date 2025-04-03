@@ -25,7 +25,7 @@
 <div th:replace="~{html/user_header :: userHeader}"></div>
 
 <main class="body-section2">
-    <form action="/restaurant/search">
+    <form action="/search">
         <ul class="navi" style="list-style: none;">
             <button class="redbutton3 redbutton-font" type="submit">검색</button>
             <li><input type="checkbox" name="categoryCode" value="1"> 한식</li>
@@ -40,7 +40,7 @@
         <div class="restaurant-card" th:each="restaurant: ${restaurantList}">
             <div class="restaurant-info">
                 <a style="text-decoration: none; color: inherit; display: block; cursor: pointer;"
-                   th:href="@{/restaurant/storeinfo(restaurantCode=${restaurant.restaurantCode})}">
+                   th:href="@{/storeinfo(restaurantCode=${restaurant.restaurantCode})}">
                     <h3 th:text="${restaurant.restaurantName}"></h3>
                     <p>⭐⭐⭐⭐⭐</p>
                     <p>
