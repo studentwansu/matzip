@@ -279,4 +279,14 @@ public class RestaurantService {
         // 레스토랑 정보 저장
         restaurantRepository.save(foundModify);
     }
+
+    //완수 북마크 기능에 필요
+    public Restaurant findByRestaurantCode(int restaurantCode) {
+        return restaurantRepository.findByRestaurantCode(restaurantCode);
+    }
+
+    public List<Restaurant> findAll() {
+        return restaurantRepository.findAll();
+    }
+    //완수 끝
 }

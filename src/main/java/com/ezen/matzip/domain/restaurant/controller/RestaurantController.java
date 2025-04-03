@@ -1,5 +1,6 @@
 package com.ezen.matzip.domain.restaurant.controller;
 
+import com.ezen.matzip.domain.bookmark.service.BookmarkService;
 import com.ezen.matzip.domain.restaurant.dto.RegistDTO;
 import com.ezen.matzip.domain.restaurant.dto.RestaurantDTO;
 import com.ezen.matzip.domain.restaurant.entity.Category;
@@ -7,6 +8,8 @@ import com.ezen.matzip.domain.restaurant.entity.Restaurant;
 import com.ezen.matzip.domain.restaurant.service.RestaurantService;
 import com.ezen.matzip.domain.review.dto.ReviewDTO;
 import com.ezen.matzip.domain.review.service.ReviewService;
+import com.ezen.matzip.domain.user.entity.User;
+import com.ezen.matzip.domain.user.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,6 +18,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @Slf4j
@@ -26,6 +30,12 @@ public class RestaurantController {
     @Autowired
     private final RestaurantService restaurantService;
 //    private final ReviewService reviewService;
+
+    //완수 북마크 기능에 필요
+    @Autowired
+    private final BookmarkService bookmarkService;
+    @Autowired
+    private final UserService userService;
 
 
     @GetMapping("/admin/restaurant/{restaurantCode}")
@@ -91,13 +101,13 @@ public class RestaurantController {
         return "domain/search/user_restlist";
     }
 
-    @GetMapping("/storeinfo")
-    public String markingLocation(@RequestParam Integer restaurantCode, Model model)
-    {
-        String location = restaurantService.findLocationByRestaurantCode(restaurantCode);
-        model.addAttribute("restaurantLocation", location);
-        return "/domain/restaurant/store_restinfo";
-    }
+//    @GetMapping("/storeinfo")
+//    public String markingLocation(@RequestParam Integer restaurantCode, Model model)
+//    {
+//        String location = restaurantService.findLocationByRestaurantCode(restaurantCode);
+//        model.addAttribute("restaurantLocation", location);
+//        return "/domain/restaurant/store_restinfo";
+//    }
 
     @GetMapping(value = "/search", params = "categoryCode")
     public String filteringRestaurants(@RequestParam int categoryCode, Model model, HttpSession session)
@@ -108,6 +118,52 @@ public class RestaurantController {
         return "domain/search/user_restlist";
     }
 
+    //완수 북마크 기능에 필요
+    // 식당 목록 페이지
+    @GetMapping("/restaurants")
+    public String restaurantList(Model model) {
+        // 식당 목록 조회 후 model에 추가 (예: restaurantList)
+         model.addAttribute("restaurantList", restaurantService.findAll());
+
+        return "domain/restaurant/restaurant_list"; //수정필요
+    }
+
+    // 식당 상세 페이지
+//    @GetMapping("/storeinfo")
+//    public String restaurantDetail(@RequestParam("restaurantCode") int restaurantCode,
+//                                   Model model,
+//                                   Principal principal) {
+//        Restaurant restaurant = restaurantService.findByRestaurantCode(restaurantCode);
+//        model.addAttribute("restaurant", restaurant);
+//
+//        // 실제 사용자 정보를 가져와서 북마크 여부 체크
+//        User user = userService.findByUserId(principal.getName());
+//        boolean bookmarked = bookmarkService.isBookmarked(user, restaurant);
+//        model.addAttribute("bookmarked", bookmarked);
+//
+//        return "domain/restaurant/restaurant_detail"; //수정필요
+//    }
+    @GetMapping("/storeinfo")
+    public String restaurantDetail(@RequestParam("restaurantCode") int restaurantCode,
+                                   Model model,
+                                   Principal principal) {
+        Restaurant restaurant = restaurantService.findByRestaurantCode(restaurantCode);
+        model.addAttribute("restaurant", restaurant);
+
+        // 북마크 여부 처리 (로그인한 사용자의 경우)
+        if (principal != null) {
+            User user = userService.findByUserId(principal.getName());
+            boolean bookmarked = bookmarkService.isBookmarked(user, restaurant);
+            model.addAttribute("bookmarked", bookmarked);
+        }
+
+        // 위치 정보 추가 (필요한 경우, restaurant 엔티티나 별도 조회 메서드를 통해 얻어올 수 있음)
+        String location = restaurantService.findLocationByRestaurantCode(restaurantCode);
+        model.addAttribute("restaurantLocation", location);
+
+        return "/domain/restaurant/store_restinfo";
+    }
+    // 완수 끝
 }
 
 //restaurant/ → 식당 관리 (등록, 수정, 조회)
