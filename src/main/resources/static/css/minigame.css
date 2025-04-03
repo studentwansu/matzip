@@ -3,25 +3,25 @@
     align-items: center;
     display: flex;
     flex-direction: row;
+    justify-content: center;
 }
 
-.minigame-img
+.minigame-imgbox
 {
     width: 300px;
     height: 300px;
     margin: 50px;
-}
-
-.imagebox
-{
-}
-
-.minigame-img img
-{
-    width: 100%;
-    height: 100%;
-    object-fit: fill; /* 또는 contain, fill, scale-down 등 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
     border-radius: 1vh;
-
+    background-color: #f0f0f0; /* 배경색 추가 (이미지 확인용) */
 }
 
+.minigame-img {
+    aspect-ratio: 1 / 1;  /* 1:1 비율 유지 (정사각형) */
+    width: min(100%, 800px);  /* 최대 240px, 하지만 너무 크면 100% 제한 */
+    height: min(100%, 800px); /* 최대 240px, 하지만 너무 크면 100% 제한 */
+    object-fit: cover; /* 비율 유지하며 안에 맞춤 */
+}
