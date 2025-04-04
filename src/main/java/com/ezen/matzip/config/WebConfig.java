@@ -10,7 +10,11 @@ public class WebConfig implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/img/review/**")
                 .addResourceLocations("file:///C:/matzip-storage/img/review/");
+
+        registry.addResourceHandler("/img/restaurant/**")
+                .addResourceLocations("file:C:/dev/img/restaurant");
     }
+
 }
 
 //CORS 정책 설정 (프론트엔드 접근 허용)

@@ -352,6 +352,7 @@ button {
 .store-info {
     margin-right: 15vh;
     position: relative;
+    display: inline-block;
 }
 
 .store-imgs {
@@ -578,4 +579,32 @@ footer ul {
     display: flex;
     justify-content: center;
     margin-left: 50%;
+}
+
+.store-info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: nowrap; /* 줄바꿈 방지! */
+    margin-bottom: 1rem;
+    overflow-x: auto; /* 혹시 넘치면 가로 스크롤 허용 */
+    margin-top: 2vh;
+}
+
+.store-imgs {
+    width: 40vh;            /* 원하는 크기로 조정 가능 */
+    height: 40vh;
+    overflow: hidden;
+    /*border-radius: 8px;*/
+    /*border: 1px solid #ccc;*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.preview-img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
 }

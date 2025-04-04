@@ -12,6 +12,7 @@ import com.ezen.matzip.domain.review.dto.ReviewDTO;
 import com.ezen.matzip.domain.review.dto.ReviewImageDTO;
 import com.ezen.matzip.domain.review.entity.ReviewImage;
 import com.ezen.matzip.domain.review.service.ReviewService;
+import com.ezen.matzip.domain.user.service.UserIdCheckService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,12 +21,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ExtendedModelMap;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -38,10 +41,14 @@ public class RestaurantController {
 
     @Autowired
     private final RestaurantService restaurantService;
+    @Autowired
     private RestaurantImageRepository restaurantImageRepository;
+    @Autowired
     private ModelMapper modelMapper;
     @Autowired
     private ResourceLoader resourceLoader;
+    @Autowired
+    private UserIdCheckService userIdCheckService;
 //    private final ReviewService reviewService;
 
 
@@ -86,14 +93,30 @@ public class RestaurantController {
     }
 
     @GetMapping("/business/regist")
-    public String registPage() {
+    public String registPage(Principal principal) {
+        String username = principal.getName();
+        int businessCode = userIdCheckService.getBusinessCodeByUserid(username);
+
+        Model model = new ExtendedModelMap();
+        model.addAttribute("businessCode", businessCode);
+
 //        return "restaurant/restaurant_regist";
         return "domain/store/store_apply";
     }
 
     @PostMapping("/business/regist")
     public String regist(@ModelAttribute RegistDTO registDTO,
-                         @RequestParam List<MultipartFile> multiFiles) throws IOException {
+                         @RequestParam List<MultipartFile> multiFiles, Principal principal) throws IOException {
+
+        // Principal에서 현재 로그인된 사용자 이름 가져오기
+        String username = principal.getName();
+        // userService에서 username을 사용하여 businessCode를 가져오기
+        Integer businessCode = userIdCheckService.getBusinessCodeByUserid(username);
+        // RegistDTO에 비즈니스 코드 설정
+        registDTO.setBusinessCode(businessCode); // 비즈니스 코드 설정
+
+
+
         Resource resource = resourceLoader.getResource("file:C:/dev/img/restaurant");
         String filePath = null;
 
