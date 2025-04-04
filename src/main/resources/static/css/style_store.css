@@ -343,7 +343,8 @@ button {
 
 .upper-container {
     display: flex;
-    gap: 2vh; /* 간격 추가 */
+    gap: 2vh;
+    flex-wrap: wrap;
 }
 
 .store-inner-container1 {

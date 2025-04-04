@@ -9,6 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poor+Story&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/style_store.css">
+    <link rel="stylesheet" href="/css/header_footer.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=fd7786d297e2d4aaab4aa8b6bbb06b88&libraries=services"></script>
 
@@ -18,28 +19,7 @@
 <body>
 
 <!-- header -->
-<header>
-    <section class="store-header">
-        <a href="">
-            <img class="logo" src="/img/logo.png">
-        </a>
-        <div class="store-header-container">
-            <div class="store-header-textdiv">
-                <p class="store-header-font1"> 어쩌구저쩌구 </p>
-                <div class="line-yellow"></div>
-                <p class="store-header-font2"> 어쩌구저쩌구</p>
-            </div>
-        </div>
-        <div class="logout">
-            <p class="navi-font">점주님, 환영합니다. 😊</p>
-            <a href="">
-                <button class="redbutton3 redbutton-font">
-                    로그아웃
-                </button>
-            </a>
-        </div>
-    </section>
-</header>
+<div th:replace="~{html/user_header :: userHeader}"></div>
 
 <!-- main -->
 <main>
@@ -130,13 +110,10 @@
                             <a href=""><img alt="공유" class="icon" src="/img/share.png"></a>
 <!--                            <a href=""><img src="/img/share.png"></a>-->
                         </div>
-                        <div class="mapbox">
-                            <div id="map" style="width:100%;height:30vh;"></div>
-                        </div>
                         <div class="store-inner-container2">
-                            <div class="mapbox">
-                                <div id="map" style="width:100%;height:30vh;"></div>
-                            </div>
+<!--                            <div class="mapbox">-->
+<!--                                <div id="map" style="width:100%;height:30vh;"></div>-->
+<!--                            </div>-->
                             <div class="introducebox">
                                 <p style="font-size:2.5vh;">소개</p>
                                 <pre style="font-size:2vh;" th:text="${restaurant.restaurantDescription}"></pre>
@@ -146,11 +123,15 @@
                     <div class="store-inner-container3">
                         <p style="font-size:2.5vh;">리뷰</p><br>
                         <div class="reviewbox">
-                            <div th:each="review : ${reviews}">
-                                <span style="font-size:1.5vh;" th:text="${review.reviewDate}"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="font-size:1.5vh;" th:text="${review.rating}"></span><br>
-                                <span style="font-size:1.5vh;" th:text="${review.reviewContent}"></span><br>
-                                <span style="font-size:1.5vh;" th:text="${review.reviewReply}"></span><br>
-
+                            <div>
+<!--                            <div th:each="review : ${reviews}">-->
+<!--                                <span style="font-size:1.5vh;" th:text="${review.reviewDate}"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="font-size:1.5vh;" th:text="${review.rating}"></span><br>-->
+<!--                                <span style="font-size:1.5vh;" th:text="${review.reviewContent}"></span><br>-->
+<!--                                <span style="font-size:1.5vh;" th:text="${review.reviewReply}"></span><br>-->
+                                <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus consequatur delectus dolore ea error eveniet fugit necessitatibus nobis nostrum numquam odio odit quas ratione repudiandae sunt ullam veniam, voluptas voluptatem!
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid at corporis cumque dolore doloribus ducimus, fugiat, harum, ipsam magni nam nemo nobis odio perferendis quis repellat reprehenderit tempore veniam voluptatum?
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi deleniti est magnam molestias natus quod suscipit. Ab aliquam corporis debitis delectus maiores nostrum nulla pariatur, placeat praesentium reiciendis. Earum, magni!
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores corporis eum nihil numquam obcaecati porro quam quasi repudiandae tempora veritatis! Accusantium animi, consequatur dicta dolor illo necessitatibus omnis sequi velit.</span>
                             </div>
                         </div>
                     </div>
@@ -160,24 +141,15 @@
     </section>
 </main>
 
-<!-- footer -->
-<!--<div id="footer-user"></div>-->
 
-<!--<script>-->
-<!--    fetch('/html/user_footer.html')-->
-<!--        .then(response => response.text())-->
-<!--        .then(data => {-->
-<!--            document.getElementById('footer-user').innerHTML = data;-->
-<!--        })-->
-<!--        .catch(error => console.error('Footer 로드 중 오류 발생:', error));-->
-<!--</script>-->
+<div th:replace="~{html/user_footer :: userFooter}"></div>
 
-<!--<script th:inline="javascript">-->
-<!--    let restLoc = /*[[${restaurantLocation}]]*/ "";-->
-<!--    let myLoc = "";-->
-<!--</script>-->
+<script th:inline="javascript">
+    let restLoc = /*[[${restaurantLocation}]]*/ "";
+    let myLoc = "";
+</script>
 
-<!--<script src="/js/map.js"></script>-->
+<script src="/js/map.js"></script>
 
 </body>
 
