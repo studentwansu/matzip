@@ -96,7 +96,7 @@ public class BookmarkController {
     @GetMapping
     public String listBookmarks(Model model, Principal principal,
                                 @RequestParam(defaultValue = "0") int page,
-                                @RequestParam(defaultValue = "10") int size) {
+                                @RequestParam(defaultValue = "8") int size) {
         User user = userService.findByUserId(principal.getName());
         Page<Bookmark> bookmarkPage = bookmarkService.getBookmarksForUser(user, page, size);
 

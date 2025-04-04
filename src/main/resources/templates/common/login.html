@@ -9,6 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poor+Story&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/header_footer.css">
     <link rel="stylesheet" href="/css/login.css">
+    <link rel="stylesheet" href="/css/style_user.css">
 
     <script>
         // 로그인 폼 유효성 검사 함수
@@ -45,21 +46,23 @@
 </header>
 
 <!-- main -->
-<div class="main-container">
+<div class="body-section">
     <section class="signup_container">
         <h2>로그인</h2>
+        <br>
+        <br>
         <div th:if="${param.error}">
             <p>로그인 실패: 아이디 또는 비밀번호를 확인하세요.</p>
         </div>
-        <form action="/login" method="post">
+        <form action="/login" method="post" class="login-form">
             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-            <input id="id" type="text" name="userId" placeholder="아이디">
-            <input id="pwd" type="password" name="password" placeholder="비밀번호">
+            <input class="login_id_pwd-input" id="id" type="text" name="userId" placeholder="아이디">
+            <input class="login_id_pwd-input" id="pwd" type="password" name="password" placeholder="비밀번호">
             <button class="login_button" type="submit">로그인</button>
         </form>
         <div class="find">
-            <a th:href="@{/signup}">회원가입</a>
-            <a th:href="@{/findpwd}">비밀번호찾기</a>
+            <a th:href="@{/signup}">회원가입 </a>
+            <a th:href="@{/findpwd}"> 비밀번호찾기</a>
         </div>
     </section>
 </div>

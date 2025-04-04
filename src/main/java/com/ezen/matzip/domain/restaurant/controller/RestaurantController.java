@@ -6,15 +6,11 @@ import com.ezen.matzip.domain.bookmark.service.BookmarkService;
 import com.ezen.matzip.domain.restaurant.dto.RegistDTO;
 import com.ezen.matzip.domain.restaurant.dto.RestaurantDTO;
 import com.ezen.matzip.domain.restaurant.dto.RestaurantImageDTO;
-import com.ezen.matzip.domain.restaurant.entity.Category;
 import com.ezen.matzip.domain.restaurant.entity.Restaurant;
 import com.ezen.matzip.domain.restaurant.entity.RestaurantImage;
 import com.ezen.matzip.domain.restaurant.repository.RestaurantImageRepository;
 import com.ezen.matzip.domain.restaurant.service.RestaurantService;
 import com.ezen.matzip.domain.review.dto.ReviewDTO;
-import com.ezen.matzip.domain.review.dto.ReviewImageDTO;
-import com.ezen.matzip.domain.review.entity.ReviewImage;
-import com.ezen.matzip.domain.review.service.ReviewService;
 import com.ezen.matzip.domain.user.entity.User;
 import com.ezen.matzip.domain.user.service.UserService;
 import jakarta.servlet.http.HttpSession;
@@ -31,9 +27,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Controller
@@ -175,7 +174,7 @@ public class RestaurantController {
     }
 
     @GetMapping("/search")
-    public String findByRestaurant(@RequestParam String keyword, Model model, HttpSession session)
+    public String findByRestaurant(@RequestParam String keyword, Model model, HttpSession session, Principal principal)
     {
         session.setAttribute("lastKeyword", keyword);
         List<RestaurantDTO> restaurants = restaurantService.findByKeywordOrderByScore(keyword);
