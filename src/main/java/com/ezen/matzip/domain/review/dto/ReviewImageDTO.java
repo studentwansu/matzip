@@ -1,9 +1,12 @@
 package com.ezen.matzip.domain.review.dto;
 
+import com.ezen.matzip.domain.review.entity.ReviewImage;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+
+import java.util.List;
 
 @Setter
 @Getter
@@ -17,24 +20,10 @@ public class ReviewImageDTO {
     private String reviewOriginalName;
     private String reviewSaveName;
 
-    public ReviewImageDTO(int reviewImageCode, int reviewCode, String reviewImagePath, String reviewOriginalName, String reviewSaveName) {
-        this.reviewImageCode = reviewImageCode;
-        this.reviewCode = reviewCode;
-        this.reviewImagePath = reviewImagePath;
-        this.reviewOriginalName = reviewOriginalName;
-        this.reviewSaveName = reviewSaveName;
-    }
-
-    public ReviewImageDTO(int reviewCode, String reviewImagePath, String reviewOriginalName, String reviewSaveName) {
-        this.reviewCode = reviewCode;
-        this.reviewImagePath = reviewImagePath;
-        this.reviewOriginalName = reviewOriginalName;
-        this.reviewSaveName = reviewSaveName;
-    }
-
     public ReviewImageDTO(String reviewImagePath, String reviewOriginalName, String reviewSaveName) {
         this.reviewImagePath = reviewImagePath;
         this.reviewOriginalName = reviewOriginalName;
         this.reviewSaveName = reviewSaveName;
     }
+
 }

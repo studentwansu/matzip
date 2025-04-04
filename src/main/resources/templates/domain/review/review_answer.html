@@ -27,6 +27,9 @@
     <section class="content">
         <h2>고객 리뷰 목록</h2>
 
+        <script th:inline="javascript">
+            let testReview = /*[[${reviews}]]*/ [];
+        </script>
         <script src="/js/reviewAnswer.js" defer></script> <!-- JavaScript 파일 로드 -->
 
         <form id="monthForm" th:action="@{/business/answer/{businessCode}(businessCode=${businessCode})}" method="get">
@@ -92,9 +95,9 @@
                 <h3>답변 수정</h3>
                 <div id="test"></div>
                 <form action="/business/answer/modify" class="reviewForm" id="myform" method="post" enctype="multipart/form-data">
-
+<!--                    th:action="@{/user/review/imageList/${reviewCode}(reviewCode=${review.reviewCode})}"-->
                     <div class="imageContainer">
-                        <th:block th:each="img : ${selectedReviewImgs}">
+                        <th:block th:each="img : ${reviewImages}">
                             <div class="image-preview">
                                 <img th:src="@{${img.reviewImagePath}}" class="preview-img" />
                             </div>
@@ -103,27 +106,28 @@
 
 
                     <fieldset id="star-rating">
-                        <input type="radio" name="rating" value="5" id="rate1">
+                        <input type="radio" name="rating" value="5" id="rate1" disabled>
                         <label for="rate1">★</label>
-                        <input type="radio" name="rating" value="4" id="rate2">
+                        <input type="radio" name="rating" value="4" id="rate2" disabled>
                         <label for="rate2">★</label>
-                        <input type="radio" name="rating" value="3" id="rate3">
+                        <input type="radio" name="rating" value="3" id="rate3" disabled>
                         <label for="rate3">★</label>
-                        <input type="radio" name="rating" value="2" id="rate4">
+                        <input type="radio" name="rating" value="2" id="rate4" disabled>
                         <label for="rate4">★</label>
-                        <input type="radio" name="rating" value="1" id="rate5">
+                        <input type="radio" name="rating" value="1" id="rate5" disabled>
                         <label for="rate5">★</label>
                     </fieldset>
 
                     <input type="hidden" id="hiddenReviewCode" name="reviewCode" value="">
                     <input type="hidden" id="hiddenBusinessCode" name="businessCode" value="">
-                    <textarea id="reviewContent" name="reviewContent"></textarea>
+<!--                    <textarea id="reviewContent" name="reviewContent"></textarea>-->
+                    <textarea id="reviewContent" name="reviewContent" readonly></textarea>
 
                     <div>
                         <textarea id="reviewReply" name="reviewReply" required></textarea>
                     </div>
 
-                            <input type="hidden" name="businessCode" th:value="${businessCode}" />
+                    <input type="hidden" name="businessCode" th:value="${businessCode}" />
                     <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
                     <!--                    <input type="submit" value="저장" class="save-btn">-->
                     <button type="submit" class="edit-btn">저장</button>

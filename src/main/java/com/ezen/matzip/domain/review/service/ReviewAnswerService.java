@@ -2,8 +2,11 @@ package com.ezen.matzip.domain.review.service;
 
 import com.ezen.matzip.domain.restaurant.entity.Restaurant;
 import com.ezen.matzip.domain.review.dto.ReviewDTO;
+import com.ezen.matzip.domain.review.dto.ReviewImageDTO;
 import com.ezen.matzip.domain.review.entity.Review;
+import com.ezen.matzip.domain.review.entity.ReviewImage;
 import com.ezen.matzip.domain.review.repository.ReviewAnswerRepository;
+import com.ezen.matzip.domain.review.repository.ReviewImageRepository;
 import com.ezen.matzip.domain.review.repository.ReviewRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -12,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -20,14 +24,7 @@ public class ReviewAnswerService {
     private final ReviewAnswerRepository reviewAnswerRepository;
     private final ReviewRepository reviewRepository;
     private final ModelMapper modelMapper;
-
-    public ReviewDTO findReviewByReviewCode(int reviewCode) {
-        Review found = reviewAnswerRepository.findByReviewCode2(reviewCode);
-        ReviewDTO newReviewDTO = new ReviewDTO();
-        newReviewDTO.setReviewCode(reviewCode);
-        newReviewDTO.setBusinessCode(found.getBusinessCode());
-        return newReviewDTO;
-    }
+    private final ReviewImageRepository reviewImageRepository;
 
     public List<ReviewDTO> findReviewByBusinessCode(int businessCode) {
         List<Object[]> reviews = reviewAnswerRepository.findByBusinessCode(businessCode);
@@ -44,6 +41,12 @@ public class ReviewAnswerService {
             dto.setReviewContent(e.getReviewContent());
             dto.setReviewReply(e.getReviewReply());
             dto.setRating(e.getRating());
+
+            List<ReviewImage> images = reviewImageRepository.findReviewImagesByReviewCode(e.getReviewCode());
+            List<ReviewImageDTO> imageDTOs = images.stream()
+                    .map(img -> modelMapper.map(img, ReviewImageDTO.class))
+                    .collect(Collectors.toList());
+            dto.setReviewImages(imageDTOs);
 
             result.add(dto);
         }

@@ -34,6 +34,7 @@ function openModal(reviewCode, userCode) {
 
     formContainer.innerHTML = ''; // 이미지 초기화
 
+    console.log("이미지 가져올 리뷰코드:", reviewCode);
     fetch(`/user/review/imageList/${reviewCode}`)
         .then(res => res.json())
         .then(data => {

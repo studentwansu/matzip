@@ -24,7 +24,4 @@ public interface ReviewAnswerRepository extends JpaRepository<Review, Integer> {
 
     Optional<Review> findReviewByReviewCode(int reviewCode);
 
-    @Query("SELECT r FROM Review r WHERE r.reviewCode = :reviewCode")
-    Review findByReviewCode2(@Param("reviewCode") int reviewCode);
-
 }

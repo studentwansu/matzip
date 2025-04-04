@@ -2,7 +2,9 @@ package com.ezen.matzip.domain.review.controller;
 
 import com.ezen.matzip.domain.review.dto.ReviewDTO;
 import com.ezen.matzip.domain.review.entity.Review;
+import com.ezen.matzip.domain.review.entity.ReviewImage;
 import com.ezen.matzip.domain.review.repository.ReviewAnswerRepository;
+import com.ezen.matzip.domain.review.repository.ReviewImageRepository;
 import com.ezen.matzip.domain.review.service.ReviewAnswerService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +23,7 @@ import java.util.Optional;
 public class ReviewAnswerController {
 
     private final ReviewAnswerService reviewAnswerService;
+    private final ReviewImageRepository reviewImageRepository;
     private ReviewAnswerRepository reviewAnswerRepository;
     private ModelMapper modelMapper;
 
@@ -47,7 +50,9 @@ public class ReviewAnswerController {
     @GetMapping("/business/answer/write/{reviewCode}")
     public String writeAnswer(@PathVariable int reviewCode, Model model) {
         Optional<Review> review = reviewAnswerRepository.findById(reviewCode);
+        List<ReviewImage> reviewImages = reviewImageRepository.findReviewImagesByReviewCode(reviewCode);
         model.addAttribute("review", review);
+        model.addAttribute("reviewImages", reviewImages);
         return "domain/review/review_answer";
     }
 
