@@ -112,30 +112,11 @@
                                 <th class="navi-font">날짜</th>
                                 <th class="navi-font">내용</th>
                             </tr>
-                            <tr class="navi-font">
-                                <td>1</td>
-                                <td>2025. 03. 08</td>
-                                <td><a href="">리뷰내용리뷰내용리뷰내용리뷰내용리뷰내용리뷰내용</a></td>
-                            </tr>
-                            <tr class="navi-font">
-                                <td>1</td>
-                                <td>2025. 03. 08</td>
-                                <td><a href="">리뷰내용리뷰내용리뷰내용리뷰내용리뷰내용리뷰내용</a></td>
-                            </tr>
-                            <tr class="navi-font">
-                                <td>1</td>
-                                <td>2025. 03. 08</td>
-                                <td><a href="">리뷰내용리뷰내용리뷰내용리뷰내용리뷰내용리뷰내용</a></td>
-                            </tr>
-                            <tr class="navi-font">
-                                <td>1</td>
-                                <td>2025. 03. 08</td>
-                                <td><a href="">리뷰내용리뷰내용리뷰내용리뷰내용리뷰내용리뷰내용</a></td>
-                            </tr>
-                            <tr class="navi-font">
-                                <td>1</td>
-                                <td>2025. 03. 08</td>
-                                <td><a href="">리뷰내용리뷰내용리뷰내용리뷰내용리뷰내용리뷰내용</a></td>
+<!--                            stat : 현재 몇 번째 반복 중인지 제공, stat.count는 1번부터 시작 -->
+                            <tr class="navi-font" th:each="review, stat : ${recentReviews}">
+                                <td th:text="${stat.count}"></td>
+                                <td th:text="${#dates.format(review.reviewDate, 'yyyy-MM-dd')}"></td>
+                                <td th:text="${#strings.abbreviate(review.reviewContent, 30)}"></td>
                             </tr>
                         </table>
                     </div>
