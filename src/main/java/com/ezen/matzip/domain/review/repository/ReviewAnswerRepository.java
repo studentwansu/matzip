@@ -7,6 +7,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ReviewAnswerRepository extends JpaRepository<Review, Integer> {
@@ -16,4 +17,11 @@ public interface ReviewAnswerRepository extends JpaRepository<Review, Integer> {
 
     @Query("SELECT r, r.restaurantCode FROM Review r where r.businessCode = :businessCode AND MONTH(r.reviewDate) = :month")
     List<Object[]> findByBusinessCodeAndReviewDate(@Param("businessCode") int businessCode, @Param("month") int month);
+
+    List<Review> findTop5ReviewByBusinessCodeOrderByReviewDateDesc(int businessCode);
+
+    Optional<Review> findByReviewCode(int reviewCode);
+
+    Optional<Review> findReviewByReviewCode(int reviewCode);
+
 }
