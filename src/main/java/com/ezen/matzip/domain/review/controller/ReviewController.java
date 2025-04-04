@@ -98,6 +98,11 @@ public class ReviewController {
         int userCode = user.getUserCode();
         List<ReservationDTO> resultReservation = reviewService.findReservationByUserCode(userCode);
         model.addAttribute("reservation", resultReservation);
+
+        List<ReviewDTO> reviews;
+        reviews = reviewService.findReviewByUserCode(userCode);
+        model.addAttribute("review", reviews);
+
         return "domain/review/review_write";
     }
 
