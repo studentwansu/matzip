@@ -32,7 +32,7 @@
         </script>
         <script src="/js/reviewAnswer.js" defer></script> <!-- JavaScript 파일 로드 -->
 
-        <form id="monthForm" th:action="@{/business/answer/{businessCode}(businessCode=${businessCode})}" method="get">
+        <form id="monthForm" th:action="@{/business/answer}" method="get">
                 <select id="month" name="month" onchange="document.getElementById('monthForm').submit()">
                     <option value="">월 별</option>
                     <option value="1" th:selected="${selectedMonth == 1}">1월</option>
