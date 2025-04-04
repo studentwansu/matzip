@@ -241,7 +241,7 @@ a {
 
 .introducebox {
     position: relative;
-    /*top: 30vh;*/
+    top: 30vh;
 }
 
 .navi-font {
@@ -317,192 +317,109 @@ a {
     align-items: center;
 }
 
-.container-storelist {
-    width: 88vh;
-    height: 52vh;
-    align-items: center;
-    background-color: white;
-    border: 1px solid #747474;
-    border-radius: 2vh;
-    margin-bottom: 5%;
-    padding-left: 2.5vh;
+
+/* foryou */
+.content-container {
+    position: relative;
+    margin: 4vh auto;
+    padding: 2vh;
+    width: 85vh;
+    background: white;
+    border-radius: 10px;
+    border: 0.5px solid black;
+    height: 60vh;
+}
+h2 {
+    text-align: center;
+    padding-bottom: 2vh;
+}
+.board-table {
+    font-size: 13px;
+    width: 100%;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
 }
 
-.container-storelist2 {
-    /*position:relative;*/
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 88vh;
-    height: 52vh;
-    background-color: white;
-    border: 1px solid #747474;
-    border-radius: 2vh;
-    margin-bottom: 5%;
-    /*padding-left: 2.5vh;*/
+.board-table a {
+    color: #333;
+    display: inline-block;
+    line-height: 1.4;
+    word-break: break-all;
+    vertical-align: middle;
+}
 
+.board-table a:hover {
+    text-decoration: underline;
+}
+
+.board-table th {
+    text-align: center;
+}
+
+.board-table .th-num {
+    width: 100px;
+    text-align: center;
+}
+
+.board-table .th-date {
+    width: 200px;
+}
+
+.board-table th,
+.board-table td {
+    padding: 14px 0;
+}
+
+.board-table tbody td {
+    border-top: 1px solid #e7e7e7;
+    text-align: center;
+}
+
+.board-table tbody th {
+    padding-left: 28px;
+    padding-right: 14px;
+    border-top: 1px solid #e7e7e7;
+    text-align: left;
+}
+
+.board-table tbody th p {
+    display: none;
+}
+
+/* reset */
+* {
+    list-style: none;
+    text-decoration: none;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.clearfix:after {
+    content: '';
+    display: block;
+    clear: both;
 }
 
 .container {
-    width: 88vh;
-    height: 29vh;
-    align-items: center;
-    background-color: white;
-    border: 1px solid #747474;
-    border-radius: 2vh;
-    margin-bottom: 3vh;
-    padding-left: 3.5vh;
+    width: 1100px;
+    margin: 0 auto;
 }
 
-.container-title {
-    align-content: center;
-    align-items:center;
-    margin:1vh;
-    display:flex;
-    gap:2vh;
+.blind {
+    position: absolute;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    margin: -1px;
+    width: 1px;
+    height: 1px;
+}
+.buttonbox3 {
+    position: absolute;
+    bottom: 10px; /* 원하는 간격으로 조정 */
+    right: 10px;  /* 원하는 간격으로 조정 */
 }
 
-.container-content {
-    font-size:1.6vh;
-}
-
-.container-textarea {
-    margin-top:1vh;
-    display: inline-block;
-    font-size:1.6vh;
-
-}
-
-.admit-input {
-    background-color: #d9d9d9;
-    border: none;
-    border-radius: 1vh;
-    padding: 0.5vh;
-    /*margin-bottom: 0.5vh;*/
-    resize: none;
-}
-
-
-.table-class {
-    width: 80vh;
-    border-collapse: collapse;
-    /*font-family: "Poor Story";*/
-    font-size: 1.4vh;
-    color: black;
-}
-
-.table-class th, .table-class td {
-    border-bottom: 1px solid rgba(128, 128, 128, 0.5);
-}
-
-.table-class tr:last-child td {
-    border-bottom: none;
-}
-
-.table-class2 {
-    width: 80vh;
-    border-collapse: collapse;
-    /*font-family: "Poor Story";*/
-    font-size: 1.6vh;
-    color: black;
-}
-
-.table-class2 th, .table-class2 td {
-    border-bottom: 1px solid rgba(128, 128, 128, 0.5);
-    padding:0.5vh;
-}
-
-.table-class2 tr:last-child td {
-    border-bottom: none;
-    padding:0.5vh;
-}
-
-
-.td1 {
-    width:5vh;
-}
-
-.container-font1 {
-    /*font-family: "Poor Story";*/
-    font-size: 2.4vh;
-    color: black;
-}
-
-.container-font2 {
-    /*font-family: "Poor Story";*/
-    font-size: 2.4vh;
-    color: black;
-    position:absolute;
-    right: 11vh;
-}
-
-/* storeinfo용 */
-.store-info {
-    margin-right: 15vh;
-    position: relative;
-}
-
-.store-imgs {
-    width: 85vh;
-    height: 28vh;
-    border-radius: 2vh;
-    background-color: white;
-    margin: auto;
-}
-
-.store-container {
-    width: 85vh;
-    min-height: 60vh;
-    border-radius: 2vh;
-    background-color: white;
-    border: 1px solid #747474;
-    margin-top: 2vh;
-    margin-bottom: 2vh;
-    padding: 2.5vh;
-    display: flex;
-    flex-direction: column;
-}
-
-.upper-container {
-    display: flex;
-    gap: 2vh;
-}
-
-.store-inner-container1 {
-    position: relative;
-    width: 40vh;
-}
-
-.store-inner-container2 {
-    position: relative;
-    display: block;
-    width: 40vh;
-}
-
-/* 리뷰 관련 스타일 */
-.reviewbox {
-    position: relative;
-    display: inline-block;
-    margin-bottom: 2vh;
-}
-
-.reviewimgbox {
-    position: relative;
-    flex-direction: row;
-}
-
-.reviewimg {
-    width: 10vh;
-    height: 10vh;
-}
-
-.reviewreply {
-    background-color: #d9d9d9;
-    border-radius: 1vh;
-    padding: 0.5vh;
-}
-
-/* foorer */
 footer {
     width: 100%;
     background: #f58031;
@@ -511,4 +428,3 @@ footer {
     display: flex;
     align-items: center;
 }
-

@@ -12,6 +12,8 @@ import com.ezen.matzip.domain.review.repository.RestaurantReviewRepository;
 import com.ezen.matzip.domain.review.entity.ReviewImage;
 import com.ezen.matzip.domain.review.repository.ReviewImageRepository;
 import com.ezen.matzip.domain.review.repository.ReviewRepository;
+import com.ezen.matzip.domain.user.entity.User;
+import com.ezen.matzip.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.security.Principal;
 import java.util.*;
 
 
@@ -27,12 +30,14 @@ import java.util.*;
 @RequiredArgsConstructor
 public class ReviewService {
 
+    private final UserRepository userRepository;
     private final ReviewRepository reviewRepository;
     private final RestaurantReviewRepository restaurantReviewRepository;
     private final ReviewImageRepository reviewImageRepository;
     private final ReservationRepository reservationRepository;
     private final RestaurantRepository restaurantRepository;
     private final ModelMapper modelMapper;
+
 
     public List<ReviewDTO> findReviewByUserCode(int userCode) {
 

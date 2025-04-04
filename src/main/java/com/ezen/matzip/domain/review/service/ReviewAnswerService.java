@@ -112,6 +112,15 @@ public class ReviewAnswerService {
         reviewAnswerRepository.save(review);
     }
 
+    //완수-리뷰신고기능에 필요
+    @Transactional
+    public void increaseReportCount(int reviewCode) {
+        Review review = reviewAnswerRepository.findById(reviewCode)
+                .orElseThrow(() -> new IllegalArgumentException("해당 리뷰가 없습니다."));
+        review.incrementReportCount();
+        reviewAnswerRepository.save(review);
+    }
+
 
 
 }

@@ -10,11 +10,6 @@
 
 p {
     display: inline-block;
-    /*margin-bottom: 1vh;*/
-}
-
-span {
-    /*padding-bottom: 1vh;*/
 }
 
 pre {
@@ -22,7 +17,6 @@ pre {
     word-wrap: break-word;
 }
 
-/* 링크 스타일 */
 a {
     text-decoration: none;
     color: black;
@@ -30,66 +24,14 @@ a {
     font-size: 1.6vh;
 }
 
-/* 버튼 스타일 */
 button {
     box-shadow: none;
     border: none;
     outline: none;
-    background: #ddd;
+    background: transparent;
 }
 
 /* 헤더 스타일 */
-.store-header {
-    height: 26vh;
-    width: 100%;
-    background-color: #fff3e0;
-    padding: 1vh 5%;
-    display: flex;
-    align-items: center;
-}
-
-.store-header-container {
-    width: 88vh;
-    height: 16vh;
-    background-color: white;
-    border: 1px solid #747474;
-    border-radius: 2vh;
-    display: flex;
-    position: absolute;
-    left: 25.5%;
-}
-
-.store-header-font1 {
-    font-family: "Poor Story";
-    font-size: 2vh;
-    color: #747474;
-}
-
-.store-header-font2 {
-    font-family: "Poor Story";
-    font-size: 2vh;
-    color: black;
-}
-
-.store-header-textdiv {
-    margin-left: 3.5vh;
-    margin-top: 1vh;
-}
-
-.logout {
-    position: absolute;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    right: 2vh;
-    top: 0.5vh;
-}
-
-/* 로고 스타일 */
-.logo {
-    position: relative;
-    left: 8vh;
-}
 
 /* 바디 섹션 스타일 */
 
@@ -118,7 +60,6 @@ button {
     height:1px;
     background-color: #FAB12F;
     margin:0.5vh;
-    /* margin-bottom:1vh; */
 }
 
 .line-grey {
@@ -143,7 +84,7 @@ button {
     width:19vh;
     height:20vh;
     background-color: white;
-    border: 1px solid #747474;
+    border: 1px solid #ccc;
     border-radius: 2vh;
     position:absolute;
     left:10%;
@@ -157,7 +98,7 @@ button {
     width: 25vh;
     height: 60vh;
     background-color: white;
-    border: 1px solid #747474;
+    border: 1px solid #ccc;
     border-radius: 2vh;
     position: relative;
     display: flex;
@@ -240,7 +181,6 @@ button {
 }
 
 .redbutton-font {
-    font-family: "Poor Story";
     font-size: 2vh;
     color: white;
 }
@@ -258,7 +198,7 @@ button {
     min-height: 27vh;
     align-items: center;
     background-color: white;
-    border: 1px solid #747474;
+    border: 1px solid #ccc;
     border-radius: 2vh;
     margin-bottom: 5%;
     padding-left: 3.5vh;
@@ -269,7 +209,7 @@ button {
     width: 88vh;
     min-height: 27vh;
     background-color: white;
-    border: 1px solid #747474;
+    border: 1px solid #ccc;
     border-radius: 2vh;
     margin-bottom: 5%;
     padding-left: 3.5vh;
@@ -304,7 +244,7 @@ button {
 }
 
 .table-class th, .table-class td {
-    border-bottom: 1px solid rgba(128, 128, 128, 0.5); /* 모든 셀에 선 추가 */
+    border-bottom: 1px solid #ccc; /* 모든 셀에 선 추가 */
     padding: 0.5vh;
     text-align: center;
 }
@@ -322,7 +262,7 @@ button {
 }
 
 .table-class2 th, .table-class2 td {
-    border-bottom: 1px solid rgba(128, 128, 128, 0.5);
+    border-bottom: 1px solid #ccc;
     padding:0.5vh;
 }
 
@@ -345,75 +285,6 @@ button {
     padding: 0.5vh;
     /*margin-bottom: 0.5vh;*/
     resize: none;
-}
-
-
-/* 식당 관련 스타일 */
-.store-info {
-    margin-right: 15vh;
-    position: relative;
-    display: inline-block;
-}
-
-.store-imgs {
-    width: 85vh;
-    height: 28vh;
-    border-radius: 2vh;
-    background-color: white;
-    margin: auto;
-}
-
-.store-container {
-    width: 88vh;
-    min-height: 27vh;
-    border-radius: 2vh;
-    background-color: white;
-    border: 1px solid #747474;
-    margin: auto;
-    padding: 2.5vh;
-    display: flex;
-    flex-direction: column;
-}
-
-.store-container2 {
-    width: 88vh;
-    min-height: 57vh;
-    border-radius: 2vh;
-    background-color: white;
-    border: 1px solid #747474;
-    /*margin: auto;*/
-    /*padding: 1.5vh;*/
-    display: flex;
-    flex-direction: column;
-
-    align-items: center;
-    /*margin-left:1vh;*/
-    /*margin-right:1vh;*/
-    margin-bottom: 5%;
-    padding-right: 1vh;
-    padding-left: 1vh;
-}
-
-.upper-container {
-    display: flex;
-    gap: 2vh; /* 간격 추가 */
-}
-
-.store-inner-container1 {
-    position: relative;
-    width: 40vh;
-}
-
-.store-inner-container2 {
-    position: relative;
-    display: block;
-    width: 40vh;
-}
-
-.store-inner-container3 {
-    position: relative;
-    width: 80vh;
-    margin-top: 5vh;
 }
 
 /* 버튼 박스 */
@@ -447,41 +318,6 @@ button {
     align-items: center;
     display: flex;
     flex-direction: row;
-}
-
-
-
-.introducebox {
-    position: relative;
-    top: 2vh;
-}
-
-/* 맵 박스 */
-.mapbox {
-    position:relative;
-}
-
-/* 리뷰 관련 스타일 */
-.reviewbox {
-    position: relative;
-    display: inline-block;
-    margin-bottom: 2vh;
-}
-
-.reviewimgbox {
-    position: relative;
-    flex-direction: row;
-}
-
-.reviewimg {
-    width: 10vh;
-    height: 10vh;
-}
-
-.reviewreply {
-    background-color: #d9d9d9;
-    border-radius: 1vh;
-    padding: 0.5vh;
 }
 
 /* 입력 필드 스타일 */
@@ -579,32 +415,4 @@ footer ul {
     display: flex;
     justify-content: center;
     margin-left: 50%;
-}
-
-.store-info {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    flex-wrap: nowrap; /* 줄바꿈 방지! */
-    margin-bottom: 1rem;
-    overflow-x: auto; /* 혹시 넘치면 가로 스크롤 허용 */
-    margin-top: 2vh;
-}
-
-.store-imgs {
-    width: 40vh;            /* 원하는 크기로 조정 가능 */
-    height: 40vh;
-    overflow: hidden;
-    /*border-radius: 8px;*/
-    /*border: 1px solid #ccc;*/
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.preview-img {
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: cover;
 }

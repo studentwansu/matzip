@@ -40,7 +40,7 @@
         <div class="restaurant-card" th:each="restaurant: ${restaurantList}">
             <div class="restaurant-info">
                 <a style="text-decoration: none; color: inherit; display: block; cursor: pointer;"
-                   th:href="@{/storeinfo(restaurantCode=${restaurant.restaurantCode})}">
+                   th:href="@{/restaurant/{restaurantCode}(restaurantCode=${restaurant.restaurantCode})}">
                     <h3 th:text="${restaurant.restaurantName}"></h3>
                     <p>⭐⭐⭐⭐⭐</p>
                     <p>
@@ -73,7 +73,7 @@
                              alt="북마크 추가" class="icon" src="/img/bookmark.png">
                     </button>
                 </form>
-                <a th:href="@{/storeinfo(restaurantCode=${restaurant.restaurantCode})}">
+                <a th:href="@{/restaurant/storeinfo(restaurantCode=${restaurant.restaurantCode})}">
 <!--                <a href="restaurant-detail.html">-->
                     <img alt="이동" class="icon" src="/img/share.png">
                 </a>

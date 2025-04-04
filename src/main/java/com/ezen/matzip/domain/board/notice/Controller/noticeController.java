@@ -34,31 +34,26 @@ public class noticeController {
         return "domain/board/notice/notice_list";
     }
 
-    // 공지사항 상세 조회 (URL: /board/notice/{id})
-    @GetMapping("/board/list/{id}")
+    // 공지사항 상세 조회 (URL: /admin/board/notice/{id})
+    @GetMapping("/board/notice/{id}")
     public String getNoticeById(@PathVariable String id, Model model) {
         noticeDTO notice = noticeService.getNoticeById(id);
         model.addAttribute("notice", notice);
         return "domain/board/notice/notice_detail";
     }
 
-    // 공지사항 등록 폼 (관리자 전용) - URL: /board/notice/create
-//   @PreAuthorize("hasRole('admin')")
+    // 공지사항 등록 폼 (관리자 전용) - URL: /admin/board/notice/write
     @GetMapping("/admin/board/notice/write")
     public String createNoticeForm() {
         return "domain/board/notice/notice_write_form";
     }
 
-    // 공지사항 등록 처리 (관리자 전용) - URL: /board/notice/create
-//    @PreAuthorize("hasRole('admin')")
     @PostMapping("/admin/board/notice/create")
     public String createNotice(@RequestParam String title, @RequestParam String content) {
         noticeService.createNotice(title, content);
-        return "redirect:/board/notice";
+        return "redirect:/admin/board/notice/notice_write_form";
     }
 
-    // 공지사항 수정 폼 (관리자 전용) - URL: /board/notice/edit/{id}
-//   @PreAuthorize("hasRole('admin')")
     @GetMapping("/admin/board/notice/edit/{id}")
     public String updateNoticeForm(@PathVariable String id, Model model) {
         noticeDTO notice = noticeService.getNoticeById(id);
@@ -66,20 +61,21 @@ public class noticeController {
         return "domain/board/notice/notice_edit";
     }
 
-    // 공지사항 수정 처리 (관리자 전용) - URL: /board/notice/edit/{id}
-//    @PreAuthorize("hasRole('admin')")
     @PostMapping("/admin/board/notice/edit/{id}")
     public String updateNotice(@PathVariable String id, @RequestParam String title, @RequestParam String content) {
         noticeService.updateNotice(id, title, content);
-        return "redirect:/board/notice";
+        return "redirect:/admin/board/notice/list";
     }
 
-    // 공지사항 삭제 처리 (관리자 전용) - URL: /board/notice/delete/{id}
-//    @PreAuthorize("hasRole('admin')")
     @PostMapping("/admin/board/notice/delete/{id}")
     public String deleteNotice(@PathVariable String id) {
         noticeService.deleteNotice(id);
-        return "redirect:/board/notice";
+        return "redirect:/admin/board/notice/list";
+    }
+
+    @GetMapping("/noticeList")
+    public String noticeList() {
+        return "domain/board/notice/notice_list";
     }
 }
 
