@@ -38,21 +38,6 @@
 
     <main>
         <section class="body-section">
-            <div class="navi">
-                <div class="redbutton">
-                    <span class="redbutton-font">마이페이지</span>
-                </div>
-                <ul>
-                    <li><a href="" class="navi-font">식당 등록 신청 조회</a></li>
-                    <li><a href="" class="navi-font">식당 정보 수정 요청 조회</a></li>
-                    <li><a href="" class="navi-font">신고 리뷰 조회</a></li>
-                    <li><a href="" class="navi-font">신고된 유저 계정 조회</a></li>
-                    <li><a href="" class="navi-font">공지사항</a></li>
-                    <li><a href="" class="navi-font">FAQ(자주 묻는 질문)</a></li>
-                    <li><a href="" class="navi-font">문의사항</a></li>
-                    <li><a href="" class="navi-font">식당 목록 조회</a></li>
-                </ul>
-            </div>
             <div class="store-info">
                 <div class="store-imgs">
                     <!-- 여기에 이미지 넣기 -->
@@ -61,7 +46,7 @@
                     <div class="upper-container">
                         <div class="store-inner-container1">
                             <p style="font-size:2.5vh;" th:text="${restaurant.restaurantName}"></p>
-                            <span style="font-size:1.5vh; color:#747474;">서울숲 | 파스타, 돈마호크</span>
+                            <!--                            <span style="font-size:1.5vh; color:#747474;">서울숲 | 파스타, 돈마호크</span>-->
                             <i class="fa fa-star" style="color:red;"></i> <!-- 꽉 찬 별 -->
                             <i class="fa fa-star" style="color:red;"></i> <!-- 꽉 찬 별 -->
                             <i class="fa fa-star" style="color:red;"></i> <!-- 꽉 찬 별 -->
@@ -69,7 +54,7 @@
                             <i class="fa fa-star-half-alt" style="color:red;"></i> <!-- 반쪽 별 -->
                             <br>
                             <table>
-                                <tr>
+                                <tr >
                                     <td style="font-size:2vh;">주소</td>
                                     <td style="font-size:1.5vh;" th:text="${restaurant.restaurantLocation}"></td>
                                 </tr>
@@ -77,28 +62,34 @@
                                     <td style="font-size:2vh;">전화번호</td>
                                     <td style="font-size:1.5vh;" th:text="${restaurant.restaurantContactNumber}"></td>
                                 </tr>
-                            </table>
-                            <tr>
-                                <td style="font-size:2vh;">키워드</td>
-                            </tr>
-                            <tr th:each="keyword : ${restaurant.restaurantKeywords}">
-                                <td style="font-size:2vh;" th:text=" '#' + ${keyword.getRestaurantKeyword()}"></td>
-                            </tr>
-                            <table>
+                                <tr>
+                                    <td style="font-size:2vh;">키워드</td>
+                                </tr>
+                                <tr>
+                                    <td th:each="keyword : ${restaurant.restaurantKeywords}">
+                                        <div>
+                                            <pre style="font-size:1.2vh;" th:text=" '#' + ${keyword.getRestaurantKeyword()}"></pre>
+                                        </div>
+                                    </td>
+                                </tr>
                                 <tr>
                                     <td style="font-size:2vh;">영업시간</td>
-                                    <td style="font-size:1.5vh;" th:text="${restaurant.restaurantStartTime}"> - <td th:text="${restaurant.restaurantEndTime}"></td>
+                                    <td style="font-size:1.5vh;" th:text="${restaurant.restaurantStartTime}"> -
+                                    <td th:text="${restaurant.restaurantEndTime}"></td>
                                 </tr>
                             </table>
                             <br>
                             <p style="font-size:2.5vh;">메뉴</p>
                             <table>
-                                <tr th:each="menu : ${restaurant.restaurantMenus}">
-                                    <td th:text="${menu.getMenuName()}"> --- <td th:text="${menu.getMenuPrice()}"></td>
+                                <tr th:each="menu : ${restaurant.getRestaurantMenus()}">
+                                    <td th:text="${menu.getMenuName()}"> ---
+                                    <td th:text="${menu.getMenuPrice()}"></td>
                                 </tr>
                             </table>
                             <br>
-                            <a href=""><button class="redbutton1">메뉴판 이미지</button></a>
+                            <a href="">
+                                <button class="redbutton1">메뉴판 이미지</button>
+                            </a>
                             <br>
                             <br>
                             <br>
@@ -107,11 +98,19 @@
                         </div>
                         <div class="store-inner-container2">
                             <div class="buttonbox">
-                                <a href=""><button class="redbutton1">예약하기</button></a>
-                                <a href=""><img src="../img/bookmark.png"></a>
-                                <a href=""><img src="../img/share.png"></a>
+                                <a href="">
+                                    <button class="redbutton1">예약하기</button>
+                                </a>
+                                <form method="post" style="display:inline;" th:action="@{/user/bookmarks/add}">
+                                    <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
+                                    <input name="restaurantCode" th:value="${restaurant.restaurantCode}" type="hidden"/>
+                                    <button style="background:none; border:none; padding:0;" type="submit">
+                                        <img alt="북마크됨" src="/img/bookmarked.png" th:if="${bookmarked}"/>
+                                        <img alt="북마크 추가" src="/img/bookmark.png" th:unless="${bookmarked}"/>
+                                    </button>
+                                </form>
+                                <a href=""><img alt="공유" class="icon" src="/img/share.png"></a>
                             </div>
-                        <div class="store-inner-container2">
                             <div class="mapbox">
                                 <div id="map" style="width:100%;height:30vh;"></div>
                             </div>
@@ -120,21 +119,25 @@
                                 <pre style="font-size:2vh;" th:text="${restaurant.restaurantDescription}"></pre>
                             </div>
                         </div>
-                        </div>
-                        <div class="store-inner-container3">
-                            <p style="font-size:2.5vh;">리뷰</p><br>
-                            <div class="reviewbox">
-                                <div th:each="review : ${reviews}">
-                                    <span style="font-size:1.5vh;" th:text="${review.reviewDate}"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="font-size:1.5vh;" th:text="${review.rating}"></span><br>
-                                    <span style="font-size:1.5vh;" th:text="${review.reviewContent}"></span><br>
-                                    <span style="font-size:1.5vh;" th:text="${review.reviewReply}"></span><br>
-
-                                </div>
+                    </div>
+                    <div class="store-inner-container3">
+                        <p style="font-size:2.5vh;">리뷰</p><br>
+                        <div class="reviewbox" th:each="review : ${reviews}">
+                            <span style="font-size:1.5vh;" th:text="${review.reviewDate}"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
+                                style="font-size:1.5vh;" th:text="${review.rating}"></span><br>
+                            <span style="font-size:1.5vh;" th:text="${review.reviewContent}"></span><br>
+                            <div class="reviewimgbox">
+                                <img class="reviewimg" src="/review/img/example.png">
+                                <img class="reviewimg" src="/review/img/example.png">
+                                <img class="reviewimg" src="/review/img/example.png">
+                            </div>
+                            <div class="reviewreply">
+                                <span style="font-size:1.5vh;" th:text="${review.reviewReply}"></span><br>
+                            </div>
                         </div>
                     </div>
                 </div>
-                </div>
-                </div>
+            </div>
         </section>
     </main>
 

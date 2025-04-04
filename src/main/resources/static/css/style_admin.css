@@ -241,7 +241,7 @@ a {
 
 .introducebox {
     position: relative;
-    top: 30vh;
+    /*top: 30vh;*/
 }
 
 .navi-font {

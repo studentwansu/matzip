@@ -55,6 +55,30 @@ public class RestaurantController {
     private final UserService userService;
 
 
+    @GetMapping("/restaurant/{restaurantCode}")
+    public String getRestaurantForUsers(@PathVariable int restaurantCode, Model model) {
+        RestaurantDTO restaurant = restaurantService.getRestaurantDetail(restaurantCode);
+        model.addAttribute("restaurant", restaurant);
+
+        List<ReviewDTO> resultReview = restaurantService.getReviewsByRestaurant(restaurantCode);
+        model.addAttribute("reviews", resultReview);
+//        System.out.println("reviews: " + resultReview);
+
+//        List<RestaurantImage> imgs = restaurantImageRepository.findRestaurantImageByRestaurantCode(restaurantCode);
+//        if (!imgs.isEmpty())
+//        {
+//
+//            List<RestaurantImageDTO> imgDTOs = imgs.stream()
+//                .map(img -> modelMapper.map(img, RestaurantImageDTO.class))
+//                .toList();
+//            model.addAttribute("selectedRestaurantImgs", imgDTOs);
+//        }
+
+//        model.addAttribute("selectedRestaurant", rstaurant);
+
+        return "domain/restaurant/user_restinfo";
+    }
+
     @GetMapping("/admin/restaurant/{restaurantCode}")
     public String getRestaurantDetail(@PathVariable int restaurantCode, Model model) {
         RestaurantDTO restaurant = restaurantService.getRestaurantDetail(restaurantCode);
@@ -246,7 +270,7 @@ public class RestaurantController {
         return "domain/search/user_restlist";
     }
 
-    @GetMapping("/storeinfo")
+    @GetMapping("/restaurant/storeinfo")
     public String restaurantDetail(@RequestParam("restaurantCode") int restaurantCode,
                                    Model model,
                                    Principal principal) {
@@ -283,7 +307,7 @@ public class RestaurantController {
         String location = restaurantService.findLocationByRestaurantCode(restaurantCode);
         model.addAttribute("restaurantLocation", location);
 
-        return "domain/restaurant/store_restinfo";
+        return "domain/restaurant/user_restinfo";
     }
     // 완수 끝
 }
