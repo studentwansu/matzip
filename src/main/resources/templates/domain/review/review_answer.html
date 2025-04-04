@@ -81,7 +81,7 @@
                         <span th:if="${review.reviewReply == null}">
                             <button class="edit-btn" th:onclick="'openModal(' + ${review.reviewCode} + ',' + ${review.businessCode} + ')'">작성</button>
                         </span>
-                        <button th:onclick="">신고</button>
+                        <button type="button" th:onclick="'reportReview(' + ${review.reviewCode} + ')'">신고</button>
                     </td>
                 </tr>
             </tbody>

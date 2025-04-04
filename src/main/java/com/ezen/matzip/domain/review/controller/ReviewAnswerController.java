@@ -13,6 +13,7 @@ import com.ezen.matzip.domain.user.service.BusinessService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -159,4 +160,15 @@ public class ReviewAnswerController {
         reviewAnswerService.saveReply(reviewCode, null); // null로 설정 = 삭제
         return "redirect:/business/answer";
     }
-}
+
+
+    //완수-신고기능에 필요
+    @PostMapping("/business/review/report")
+    @ResponseBody
+    public ResponseEntity<?> reportReview(@RequestParam int reviewCode) {
+        reviewAnswerService.increaseReportCount(reviewCode);
+        return ResponseEntity.ok("신고 처리 완료");
+    }
+
+
+
