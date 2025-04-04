@@ -1,6 +1,7 @@
 package com.ezen.matzip.domain.review.dto;
 
 import com.ezen.matzip.domain.restaurant.entity.Restaurant;
+import com.ezen.matzip.domain.review.entity.ReviewImage;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -35,5 +36,9 @@ public class ReviewDTO {
 
     public void setRestaurantName(Restaurant restaurant) {
         this.restaurantName = restaurant.getRestaurantName();
+    }
+
+    public List<ReviewImageDTO> getImageList(){
+        return reviewImages;
     }
 }

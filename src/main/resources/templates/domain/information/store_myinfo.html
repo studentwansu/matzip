@@ -3,114 +3,107 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>mypage</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
     <link href="https://fonts.googleapis.com/css2?family=Poor+Story&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="CSS/header_footer.css">
-    
+    <link href="/static/css/header_footer.css" rel="stylesheet">
+    <link href="/static/css/style_store.css" rel="stylesheet">
+
 <body>
-    <!-- header -->
-    <header>
-        <div class="header-container">
-            <!-- logo -->
-            <div class="logo">
-                <a href="메인.html"><img src="images/맛zip.png" alt="맛.zip 로고"></a>
+<!-- header -->
+<!--<div th:replace="~{html/store_header :: storeHeader}"></div>-->
+    <section class="store-header">
+        <a href="">
+            <img class="logo" src="/img/logo.png">
+        </a>
+        <div class="store-header-container">
+            <div class="store-header-textdiv">
+                <p class="store-header-font1"> 어쩌구저쩌구 </p>
+                <div class="line-yellow"></div>
+                <p class="store-header-font2"> 어쩌구저쩌구</p>
             </div>
-
-            <!-- search -->
-            <div class="search-container">
-                <div class="search-word">
-                    <input type="text" placeholder="검색어를 입력하세요...">
-                </div>
-
-                <div class="popular-searches">
-                    <span>인기검색어1</span>
-                    <span>인기검색어2</span>
-                    <span>인기검색어3</span>
-                    <span>인기검색어4</span>
-                    <span>인기검색어5</span>
-                    <a href="" class="nearby">가까운 곳 찾기</a>
-                    <a href="" class="game">
-                        <img id="game" src="images/gamepad-icon.png" alt="게임패드"></a>
-                </div>
-
-            </div>
-
-            <!-- menu -->
-            <div class="menu">
-                <a href="로그인.html" class="login">로그인</a>
-                <a href="회원가입.html" class="signup">회원가입</a>
-                <button class="menu-btn">
-                    <img src="images/menu-icon.png" alt="마이페이지">
+        </div>
+        <div class="logout">
+            <!-- 로그인한 사업자의 상호명을 표시 -->
+            <p class="navi-font" th:text="${#authentication.principal.restaurantName} + ' 점주님, 환영합니다. 😊'">
+                점주님, 환영합니다. 😊
+            </p>
+            <!-- POST 방식 로그아웃 폼 -->
+            <form th:action="@{/logout}" method="post">
+                <!-- CSRF 토큰 추가 -->
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                <button type="submit" class="redbutton3 redbutton-font">
+                    로그아웃
                 </button>
-            </div>
+            </form>
         </div>
-    </header>
-        <!-- mypage -->
-        <div class="mypage">
+    </section>
 
-            <!-- mapage_top -->
-            <div class="mapage_top">
-                <h3>사업자 회원가입</h3>
-            </div>
-
-             <!-- mapage_left -->
-            <div class="mapage_left">
-                <input id="name" placeholder="상호명" disabled>
-                <input id="id" placeholder="아이디" disabled><button>중복확인</button>
-                <input id="pwd" placeholder="비밀번호">
-                <input id="pwd_check" placeholder="비밀번호확인">
-                <select>
-                    <option value="question1">당신의 초등학교는?</option>
-                    <option value="question2">당신의 중학교는?</option>
-                    <option value="question3">당신의 고등학교는?</option>
-                </select>
-                <input id="pwd_answer" placeholder="비밀번호찾기답">
-            </div>
-
-            <!-- mypage_right -->
-            <div class="mypage_right">
-                <input id="email" placeholder="이메일">
-                <input id="phone" placeholder="전화번호">
-                <input id="number" placeholder="사업자 등록 번호" disabled>
-            </div>
-            
-            <!-- mypage_button -->
-            <div class="mypage_button">
-                <div class="button">
-                    <button>수정하기</button>
-                </div>
-            </div>
+<!-- mypage -->
+<div class="body-section">
+    <div class="navi">
+        <div class="redbutton">
+            <span class="redbutton-font">마이페이지</span>
         </div>
-        
-        <div class="left">
-            <div class="text">
-                <h6>마이페이지</h6>
-            </div>
+        <ul>
+            <li><a class="navi-font" th:href="@{/business/myinfo}">내 정보</a></li>
+            <li><a class="navi-font" href="">식당 등록 신청</a></li>
+            <li><a class="navi-font" href="">예약 현황 조회</a></li>
+            <li><a class="navi-font" href="">식당 정보 수정 요청</a></li>
+            <li><a class="navi-font" href="">고객 리뷰 조회</a></li>
+        </ul>
+    </div>
 
-            <div class="list">
-                <ul>
-                    <li>내 정보</li>
-                    <li>식당 등록 신청 조회</li>
-                    <li>예약 정보 조회</li>
-                    <li>식당 정보 수정 요청</li>
-                    <li>이용 고객 리뷰</li>
-                </ul>
-            </div>
-        </div>
+    <!-- mapage_top -->
+    <div class="mapage_top">
+        <h3>사업자 회원가입</h3>
+    </div>
 
-    <!-- footer -->
-    <footer>
-        <div class="footer-container">
-            <p>Copyright 2025 맛zip All Right Reserved</p>
-            <ul class="footer-menu">
-                <li><a href="#">공지사항</a></li>
-                <li><a href="#">FAQ</a></li>
-                <li><a href="#">Q&A</a></li>
-            </ul>
+    <!-- mapage_left -->
+    <div class="mapage_left">
+        <input disabled id="name" placeholder="상호명">
+        <input disabled id="id" placeholder="아이디">
+        <button>중복확인</button>
+        <input id="pwd" placeholder="비밀번호">
+        <input id="pwd_check" placeholder="비밀번호확인">
+        <select>
+            <option value="question1">당신의 초등학교는?</option>
+            <option value="question2">당신의 중학교는?</option>
+            <option value="question3">당신의 고등학교는?</option>
+        </select>
+        <input id="pwd_answer" placeholder="비밀번호찾기답">
+    </div>
+
+    <!-- mypage_right -->
+    <div class="mypage_right">
+        <input id="email" placeholder="이메일">
+        <input id="phone" placeholder="전화번호">
+        <input disabled id="number" placeholder="사업자 등록 번호">
+    </div>
+
+    <!-- mypage_button -->
+    <div class="mypage_button">
+        <div class="button">
+            <button>수정하기</button>
         </div>
-    </footer>
+    </div>
+</div>
+
+
+
+<!-- footer -->
+<div th:replace="~{html/user_footer :: userFooter}"></div>
+<footer>
+    <div class="footer-container">
+        <p>Copyright 2025 맛zip All Right Reserved</p>
+        <ul class="footer-menu">
+            <li><a href="#">공지사항</a></li>
+            <li><a href="#">FAQ</a></li>
+            <li><a href="#">Q&A</a></li>
+        </ul>
+    </div>
+</footer>
 </body>
 </html>

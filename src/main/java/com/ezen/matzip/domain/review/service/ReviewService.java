@@ -12,6 +12,8 @@ import com.ezen.matzip.domain.review.repository.RestaurantReviewRepository;
 import com.ezen.matzip.domain.review.entity.ReviewImage;
 import com.ezen.matzip.domain.review.repository.ReviewImageRepository;
 import com.ezen.matzip.domain.review.repository.ReviewRepository;
+import com.ezen.matzip.domain.user.entity.User;
+import com.ezen.matzip.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.security.Principal;
 import java.util.*;
 
 
@@ -27,12 +30,14 @@ import java.util.*;
 @RequiredArgsConstructor
 public class ReviewService {
 
+    private final UserRepository userRepository;
     private final ReviewRepository reviewRepository;
     private final RestaurantReviewRepository restaurantReviewRepository;
     private final ReviewImageRepository reviewImageRepository;
     private final ReservationRepository reservationRepository;
     private final RestaurantRepository restaurantRepository;
     private final ModelMapper modelMapper;
+
 
     public List<ReviewDTO> findReviewByUserCode(int userCode) {
 
@@ -59,33 +64,6 @@ public class ReviewService {
     public void deleteReview(int reviewCode) {
         reviewRepository.deleteById(reviewCode);
     }
-
-
-//    @Transactional
-//    public void modifyReview(ReviewDTO reviewDTO) {
-//        System.out.println("수정 요청 받은 리뷰 코드: " + reviewDTO.getReviewCode());
-//        System.out.println("수정 요청 받은 평점: " + reviewDTO.getRating());
-////        Optional<Review> optionalReview = reviewRepository.findByReviewCode(reviewDTO.getReviewCode());
-//        List<Object> reviews = findReviewAndReviewImagesByReviewCode(reviewDTO.getReviewCode());
-//        Review foundReview = (Review) reviews.get(0);
-//        List<ReviewImage> reviewImages = new ArrayList<>();
-//        for (int i = 1; i < reviews.size(); i++) {
-//            ReviewImage reviewImage = (ReviewImage) reviews.get(i); // 실제 객체
-//            ReviewImageDTO reviewImageDTO = modelMapper.map(reviewImage, ReviewImageDTO.class); // DTO로 변환
-//            reviewImageRepository.save(reviewImage);
-//            reviewImages.add(reviewImage);
-//        }
-//
-//        // 리뷰 수정
-//        foundReview.modifyReview(reviewDTO.getReviewContent(), reviewDTO.getRating());
-//        reviewRepository.save(foundReview);
-//
-//        for( ReviewImage reviewImage : reviewImages ) {
-//            reviewImageRepository.delete(reviewImage);
-//        }
-//
-//    }
-
 
     @Transactional
     public void modifyReview(ReviewDTO reviewDTO, List<MultipartFile> multiFiles) {

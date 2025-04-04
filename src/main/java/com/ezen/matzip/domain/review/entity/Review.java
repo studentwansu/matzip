@@ -2,10 +2,7 @@ package com.ezen.matzip.domain.review.entity;
 
 import com.ezen.matzip.domain.restaurant.entity.Restaurant;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -15,6 +12,7 @@ import java.util.List;
 @Entity
 @Table(name = "review")
 @Getter
+@ToString
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Review {
 
@@ -77,5 +75,18 @@ public class Review {
         this.reviewDate = new Date();
     }
 
+    public void writeReply(String replyContent) {
+        this.reviewReply = replyContent;
+    }
+
+    public void modifyAnswer(String reviewReply){
+        this.reviewReply = reviewReply;
+    }
+
 //    setter 필요한 필드만 setter 만들어서 사용
+
+    //완수-리뷰신고기능에 필요
+    public void incrementReportCount() {
+        this.reviewReportCount++;
+    }
 }

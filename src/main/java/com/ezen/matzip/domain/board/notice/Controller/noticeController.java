@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping("/admin")
+@RequestMapping
 public class noticeController {
 
     private final noticeService noticeService;
@@ -43,35 +43,31 @@ public class noticeController {
     }
 
     // 공지사항 등록 폼 (관리자 전용) - URL: /admin/board/notice/write
-    @GetMapping("/board/notice/write")
+    @GetMapping("/admin/board/notice/write")
     public String createNoticeForm() {
         return "domain/board/notice/notice_write_form";
     }
 
-    // 공지사항 등록 처리 (관리자 전용) - URL: /admin/board/notice/create
-    @PostMapping("/board/notice/create")
+    @PostMapping("/admin/board/notice/create")
     public String createNotice(@RequestParam String title, @RequestParam String content) {
         noticeService.createNotice(title, content);
         return "redirect:/admin/board/notice/notice_write_form";
     }
 
-    // 공지사항 수정 폼 (관리자 전용) - URL: /admin/board/notice/edit/{id}
-    @GetMapping("/board/notice/edit/{id}")
+    @GetMapping("/admin/board/notice/edit/{id}")
     public String updateNoticeForm(@PathVariable String id, Model model) {
         noticeDTO notice = noticeService.getNoticeById(id);
         model.addAttribute("notice", notice);
         return "domain/board/notice/notice_edit";
     }
 
-    // 공지사항 수정 처리 (관리자 전용) - URL: /admin/board/notice/edit/{id}
-    @PostMapping("/board/notice/edit/{id}")
+    @PostMapping("/admin/board/notice/edit/{id}")
     public String updateNotice(@PathVariable String id, @RequestParam String title, @RequestParam String content) {
         noticeService.updateNotice(id, title, content);
         return "redirect:/admin/board/notice/list";
     }
 
-    // 공지사항 삭제 처리 (관리자 전용) - URL: /admin/board/notice/delete/{id}
-    @PostMapping("/board/notice/delete/{id}")
+    @PostMapping("/admin/board/notice/delete/{id}")
     public String deleteNotice(@PathVariable String id) {
         noticeService.deleteNotice(id);
         return "redirect:/admin/board/notice/list";

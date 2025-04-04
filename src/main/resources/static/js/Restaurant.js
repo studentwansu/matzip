@@ -1,5 +1,6 @@
 function openModal(reviewCode, userCode) {
     document.getElementById("reviewModal").style.display = "block";
+    const formContainer = document.getElementById("test");
 
     // reviewCode 값을 hidden 필드에 설정
     const hiddenReviewCode = document.getElementById("hiddenReviewCode");
@@ -29,13 +30,26 @@ function openModal(reviewCode, userCode) {
     const reviewContent = document.getElementById("reviewContent");
     reviewContent.value = targetReview.reviewContent;
 
+    // // 이미지 표시
+    // if (targetReview.reviewImages && targetReview.reviewImages.length > 0) {
+    //     formContainer.innerHTML = ''; // 기존 내용 초기화
+    //     targetReview.reviewImages.forEach(image => {
+    //         const div = document.createElement('div');
+    //         const img = document.createElement('img');
+    //         img.setAttribute('src', image.reviewImagePath);
+    //         img.setAttribute('alt', '리뷰 이미지');
+    //         div.appendChild(img);
+    //         formContainer.appendChild(div);
+    //     });
+    // } else {
+    //     formContainer.innerHTML = '이미지가 없습니다.';
+    // }
 
-    const formContainer = document.querySelector(".imageContainer");
+    // 이미지 먼저 지움
+    formContainer.innerHTML = '';
 
-    formContainer.innerHTML = ''; // 이미지 초기화
-
-    console.log("이미지 가져올 리뷰코드:", reviewCode);
-    fetch(`/user/review/imageList/${reviewCode}`)
+// 이미지 가져오기 (서버에서)
+    fetch(`/review/imageList/${reviewCode}`)
         .then(res => res.json())
         .then(data => {
             if (data.length === 0) {
@@ -43,13 +57,16 @@ function openModal(reviewCode, userCode) {
             } else {
                 data.forEach(image => {
                     const div = document.createElement('div');
-                    div.classList.add("image-preview"); // 이 클래스 중요함!
-
                     const img = document.createElement('img');
-                    img.src = '/' + image.reviewImagePath.replace(/^\/+/, '');
-                    img.alt = '리뷰 이미지';
-                    img.classList.add("preview-img"); // 스타일 입히려면 꼭 필요!
+                    // img.src = image.reviewImagePath;
 
+                    img.src = '/' + image.reviewImagePath.replace(/^\/+/, '');
+
+                    // img.src = img.src.substring(7);
+                    console.log(img.src);
+                    img.alt = '리뷰 이미지';
+                    img.style.width = "150px";
+                    img.style.margin = "5px";
                     div.appendChild(img);
                     formContainer.appendChild(div);
                 });
@@ -60,6 +77,13 @@ function openModal(reviewCode, userCode) {
 function closeModal() {
     document.getElementById("reviewModal").style.display = "none";
 }
+
+window.onclick = function(event) {
+    if (event.target == document.getElementById("reviewModal")) {
+        closeModal();
+    }
+}
+
 
 window.addEventListener("DOMContentLoaded", () => {
     document.querySelectorAll(".fileInput").forEach(input => {
@@ -72,3 +96,4 @@ window.addEventListener("DOMContentLoaded", () => {
         });
     });
 });
+

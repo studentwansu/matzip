@@ -60,12 +60,12 @@
         </div>
 
 
-        <form action="/restaurant/regist" method="post">
+        <form action="/business/regist" method="post">
         <div class="store-info">
-            <div class="store-imgs">
-
+            <div>
+                <input type="file" name="multiFiles" class="store-imgs" multiple accept="image/*">
             </div>
-
+        </div>
             <div class="store-container">
                 <div class="upper-container">
                     <div class="store-inner-container1">
@@ -78,12 +78,12 @@
 
                         <p style="font-size:2vh;">
                             <label for="restaurantLocation">주소</label>
-                            <input type="text" id="restaurantLocation" name="restaurantLocation" placeholder="주소" style="font-size:1.5vh;" required>
+                            <input class="store-input-long" type="text" id="restaurantLocation" name="restaurantLocation" placeholder="주소" style="font-size:1.5vh;" required>
                         </p>
                         <br>
                         <p style="font-size:2vh;">
                             <label for="restaurantContactNumber">전화번호</label>
-                            <input type="text" id="restaurantContactNumber" name="restaurantContactNumber" placeholder="전화번호" style="font-size:1.5vh;" required>
+                            <input class="store-input-middle" type="text" id="restaurantContactNumber" name="restaurantContactNumber" placeholder="전화번호" style="font-size:1.5vh;" required>
                         </p>
                         <p style="font-size:2vh;">
                             <label for="restaurantKeyword">키워드</label>

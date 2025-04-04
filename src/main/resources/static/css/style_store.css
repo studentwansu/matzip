@@ -39,57 +39,6 @@ button {
 }
 
 /* 헤더 스타일 */
-.store-header {
-    height: 26vh;
-    width: 100%;
-    background-color: #fff3e0;
-    padding: 1vh 5%;
-    display: flex;
-    align-items: center;
-}
-
-.store-header-container {
-    width: 88vh;
-    height: 16vh;
-    background-color: white;
-    border: 1px solid #747474;
-    border-radius: 2vh;
-    display: flex;
-    position: absolute;
-    left: 25.5%;
-}
-
-.store-header-font1 {
-    font-family: "Poor Story";
-    font-size: 2vh;
-    color: #747474;
-}
-
-.store-header-font2 {
-    font-family: "Poor Story";
-    font-size: 2vh;
-    color: black;
-}
-
-.store-header-textdiv {
-    margin-left: 3.5vh;
-    margin-top: 1vh;
-}
-
-.logout {
-    position: absolute;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    right: 2vh;
-    top: 0.5vh;
-}
-
-/* 로고 스타일 */
-.logo {
-    position: relative;
-    left: 8vh;
-}
 
 /* 바디 섹션 스타일 */
 
@@ -118,7 +67,6 @@ button {
     height:1px;
     background-color: #FAB12F;
     margin:0.5vh;
-    /* margin-bottom:1vh; */
 }
 
 .line-grey {
@@ -143,7 +91,7 @@ button {
     width:19vh;
     height:20vh;
     background-color: white;
-    border: 1px solid #747474;
+    border: 1px solid #ccc;
     border-radius: 2vh;
     position:absolute;
     left:10%;
@@ -157,7 +105,7 @@ button {
     width: 25vh;
     height: 60vh;
     background-color: white;
-    border: 1px solid #747474;
+    border: 1px solid #ccc;
     border-radius: 2vh;
     position: relative;
     display: flex;
@@ -258,7 +206,7 @@ button {
     min-height: 27vh;
     align-items: center;
     background-color: white;
-    border: 1px solid #747474;
+    border: 1px solid #ccc;
     border-radius: 2vh;
     margin-bottom: 5%;
     padding-left: 3.5vh;
@@ -269,7 +217,7 @@ button {
     width: 88vh;
     min-height: 27vh;
     background-color: white;
-    border: 1px solid #747474;
+    border: 1px solid #ccc;
     border-radius: 2vh;
     margin-bottom: 5%;
     padding-left: 3.5vh;
@@ -304,7 +252,7 @@ button {
 }
 
 .table-class th, .table-class td {
-    border-bottom: 1px solid rgba(128, 128, 128, 0.5); /* 모든 셀에 선 추가 */
+    border-bottom: 1px solid #ccc; /* 모든 셀에 선 추가 */
     padding: 0.5vh;
     text-align: center;
 }
@@ -322,7 +270,7 @@ button {
 }
 
 .table-class2 th, .table-class2 td {
-    border-bottom: 1px solid rgba(128, 128, 128, 0.5);
+    border-bottom: 1px solid #ccc;
     padding:0.5vh;
 }
 
@@ -367,7 +315,7 @@ button {
     min-height: 27vh;
     border-radius: 2vh;
     background-color: white;
-    border: 1px solid #747474;
+    border: 1px solid #ccc;
     margin: auto;
     padding: 2.5vh;
     display: flex;
@@ -379,7 +327,7 @@ button {
     min-height: 57vh;
     border-radius: 2vh;
     background-color: white;
-    border: 1px solid #747474;
+    border: 1px solid #ccc;
     /*margin: auto;*/
     /*padding: 1.5vh;*/
     display: flex;
@@ -395,7 +343,8 @@ button {
 
 .upper-container {
     display: flex;
-    gap: 2vh; /* 간격 추가 */
+    gap: 2vh;
+    flex-wrap: wrap;
 }
 
 .store-inner-container1 {

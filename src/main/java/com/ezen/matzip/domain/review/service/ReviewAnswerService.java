@@ -2,27 +2,29 @@ package com.ezen.matzip.domain.review.service;
 
 import com.ezen.matzip.domain.restaurant.entity.Restaurant;
 import com.ezen.matzip.domain.review.dto.ReviewDTO;
+import com.ezen.matzip.domain.review.dto.ReviewImageDTO;
 import com.ezen.matzip.domain.review.entity.Review;
+import com.ezen.matzip.domain.review.entity.ReviewImage;
 import com.ezen.matzip.domain.review.repository.ReviewAnswerRepository;
+import com.ezen.matzip.domain.review.repository.ReviewImageRepository;
+import com.ezen.matzip.domain.review.repository.ReviewRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class ReviewAnswerService {
 
     private final ReviewAnswerRepository reviewAnswerRepository;
+    private final ReviewRepository reviewRepository;
     private final ModelMapper modelMapper;
-
-//    public List<ReviewDTO> findReviewByBusinessCode(int businessCode) {
-//        List<Review> reviews = reviewAnswerRepository.findByBusinessCode(businessCode);
-//
-//        return reviews.stream().map(review -> modelMapper.map(review, ReviewDTO.class)).toList();
-//    }
+    private final ReviewImageRepository reviewImageRepository;
 
     public List<ReviewDTO> findReviewByBusinessCode(int businessCode) {
         List<Object[]> reviews = reviewAnswerRepository.findByBusinessCode(businessCode);
@@ -39,6 +41,12 @@ public class ReviewAnswerService {
             dto.setReviewContent(e.getReviewContent());
             dto.setReviewReply(e.getReviewReply());
             dto.setRating(e.getRating());
+
+            List<ReviewImage> images = reviewImageRepository.findReviewImagesByReviewCode(e.getReviewCode());
+            List<ReviewImageDTO> imageDTOs = images.stream()
+                    .map(img -> modelMapper.map(img, ReviewImageDTO.class))
+                    .collect(Collectors.toList());
+            dto.setReviewImages(imageDTOs);
 
             result.add(dto);
         }
@@ -60,12 +68,58 @@ public class ReviewAnswerService {
             dto.setReviewContent(e.getReviewContent());
             dto.setReviewReply(e.getReviewReply());
             dto.setRating(e.getRating());
-
+            dto.setBusinessCode(e.getBusinessCode());
             result.add(dto);
         }
         return result;
     }
 
+    public List<Review> getRecentReview(int businessCode) {
+        return reviewAnswerRepository.findTop5ReviewByBusinessCodeOrderByReviewDateDesc(businessCode);
+    }
+
+
+    @Transactional
+    public ReviewDTO modifyAnswer(ReviewDTO dto) {
+        Review review = reviewAnswerRepository.findReviewByReviewCode(dto.getReviewCode())
+                .orElseThrow(() -> new IllegalArgumentException("해당 리뷰 없음"));
+        System.out.println("리뷰리뷰리뷰" + review);
+
+        System.out.println("수정 요청된 리뷰 코드: " + dto.getReviewCode());
+        System.out.println("수정 요청된 비즈니스코드: " + dto.getBusinessCode());
+        review.modifyAnswer(dto.getReviewReply());
+        reviewAnswerRepository.save(review);
+
+        ReviewDTO result = new ReviewDTO();
+        result.setReviewCode(review.getReviewCode());
+        result.setReviewDate(review.getReviewDate());
+        result.setReviewContent(review.getReviewContent());
+        result.setReviewReply(review.getReviewReply());
+        result.setRating(review.getRating());
+        result.setBusinessCode(review.getBusinessCode());
+        result.setUserCode(review.getUserCode());
+
+        return result;
+    }
+
+
+    @Transactional
+    public void saveReply(int reviewCode, String replyContent){
+        Review review = reviewAnswerRepository.findById(reviewCode)
+                .orElseThrow(() -> new IllegalArgumentException("해당 리뷰가 없습니다."));
+
+        review.writeReply(replyContent);
+        reviewAnswerRepository.save(review);
+    }
+
+    //완수-리뷰신고기능에 필요
+    @Transactional
+    public void increaseReportCount(int reviewCode) {
+        Review review = reviewAnswerRepository.findById(reviewCode)
+                .orElseThrow(() -> new IllegalArgumentException("해당 리뷰가 없습니다."));
+        review.incrementReportCount();
+        reviewAnswerRepository.save(review);
+    }
 
 
 

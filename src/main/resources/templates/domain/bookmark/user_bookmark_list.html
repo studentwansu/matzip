@@ -1,139 +1,82 @@
 <!DOCTYPE html>
-<html lang="ko">
-
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>review_list</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <title>북마크 목록</title>
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
     <link href="https://fonts.googleapis.com/css2?family=Poor+Story&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/static/css/style_user.css">
+    <link href="/css/style_user.css" rel="stylesheet">
+    <link href="/css/header_footer.css" rel="stylesheet">
 </head>
-
 <body>
+<!-- 헤더 -->
+<div th:replace="~{html/user_header :: userHeader}"></div>
 
-<!-- header -->
-<div id="header-user"></div>
+<div class="body-section">
+    <aside class="sidebar">
+        <h3>마이페이지</h3>
+        <ul>
+            <li><a href="#">내 정보</a></li>
+            <li><a href="#">예약 목록</a></li>
+            <li><a href="#">이용 목록</a></li>
+            <li><a href="#">북마크 목록</a></li>
+            <li><a href="#">작성 리뷰 목록</a></li>
+        </ul>
+    </aside>
+    <section class="container-bookmarklist">
+        <h2 class="container-title">북마크 목록</h2>
+        <div class="line-yellow"></div>
+        <table class="user-table-class2">
+            <thead>
+            <tr>
+                <th>번호</th>
+                <th>식당</th>
+                <th>대표메뉴</th>
+                <th>위치</th>
+                <th>관리</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr style="cursor:pointer;"
+                th:each="bookmark, iterStat : ${bookmarks}"
+                th:onclick="'location.href=\'/storeinfo?restaurantCode=' + ${bookmark.restaurant.restaurantCode} + '\';'">
+                <td th:text="${iterStat.index + 1}"></td>
+                <td th:text="${bookmark.restaurant.restaurantName}"></td>
+                <td th:text="${bookmark.restaurant.mainMenu}"></td>
+                <td th:text="${bookmark.restaurant.restaurantLocation}"></td>
+                <td>
+                    <form method="post"
+                          th:action="@{/user/bookmarks/{bookmarkCode}/delete(bookmarkCode=${bookmark.bookmarkCode})}">
+                        <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
+                        <button class="redbutton4 redbutton-font" onclick="event.stopPropagation();" type="submit">삭제
+                        </button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="pagination">
+            <!-- 이전 버튼 -->
+            <span th:if="${currentPage > 0}">
+                <a th:href="@{/user/bookmarks(page=${currentPage - 1}, size=${size})}">이전</a>
+            </span>
+            <!-- 페이지 번호 -->
+            <span th:each="i : ${#numbers.sequence(0, totalPages - 1)}">
+                <a th:href="@{/user/bookmarks(page=${i}, size=${size})}"
+                    th:if="${i != currentPage}"
+                    th:text="${i + 1}"></a>
+                <span th:if="${i == currentPage}" th:text="${i + 1}"></span>
+            </span>
+            <!-- 다음 버튼 -->
+            <span th:if="${currentPage < totalPages - 1}">
+                <a th:href="@{/user/bookmarks(page=${currentPage + 1}, size=${size})}">다음</a>
+            </span>
+        </div>
+    </section>
+</div>
 
-<script>
-    fetch('/html/user_header.html')
-        .then(response => response.text())
-        .then(data => {
-            document.getElementById('header-user').innerHTML = data;
-        })
-        .catch(error => console.error('Header 로드 중 오류 발생:', error));
-</script>
-
-    <!-- main -->
-    <div class="body-section">
-        <!-- 사이드바 -->
-        <aside class="sidebar">
-            <h3>마이페이지</h3>
-            <ul>
-                <li><a href="#">내 정보</a></li>
-                <li><a href="#">예약 목록</a></li>
-                <li><a href="#">이용 목록</a></li>
-                <li><a href="#">북마크 목록</a></li>
-                <li><a href="#">작성 리뷰 목록</a></li>
-            </ul>
-        </aside>
-        <!-- 북마크 리스트 -->
-        <section class="container-bookmarklist">
-            <h2 class="container-title">북마크 목록</h2>
-            <div class="line-yellow"></div>
-            <table class="table-class3">
-                <thead>
-                    <tr>
-                        <th>번호</th>
-                        <th>식당</th>
-                        <th>대표메뉴</th>
-                        <th>위치</th>
-                        <th>관리</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>온량</td>
-                        <td>파스타, 스테이크</td>
-                        <td>서울 성동구</td>
-                        <td><button class="delete-btn">삭제</button></td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>르프리크</td>
-                        <td>햄버거, 맥앤치즈</td>
-                        <td>서울 성동구</td>
-                        <td><button class="delete-btn">삭제</button></td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>르프리크</td>
-                        <td>햄버거, 맥앤치즈</td>
-                        <td>서울 성동구</td>
-                        <td><button class="delete-btn">삭제</button></td>
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td>르프리크</td>
-                        <td>햄버거, 맥앤치즈</td>
-                        <td>서울 성동구</td>
-                        <td><button class="delete-btn">삭제</button></td>
-                    </tr>
-                    <tr>
-                        <td>5</td>
-                        <td>르프리크</td>
-                        <td>햄버거, 맥앤치즈</td>
-                        <td>서울 성동구</td>
-                        <td><button class="delete-btn">삭제</button></td>
-                    </tr>
-<!--                    <tr>-->
-<!--                        <td>6</td>-->
-<!--                        <td>르프리크</td>-->
-<!--                        <td>햄버거, 맥앤치즈</td>-->
-<!--                        <td>서울 성동구</td>-->
-<!--                        <td><button class="delete-btn">삭제</button></td>-->
-<!--                    </tr>-->
-<!--                    <tr>-->
-<!--                        <td>7</td>-->
-<!--                        <td>르프리크</td>-->
-<!--                        <td>햄버거, 맥앤치즈</td>-->
-<!--                        <td>서울 성동구</td>-->
-<!--                        <td><button class="delete-btn">삭제</button></td>-->
-<!--                    </tr>-->
-<!--                    <tr>-->
-<!--                        <td>8</td>-->
-<!--                        <td>르프리크</td>-->
-<!--                        <td>햄버거, 맥앤치즈</td>-->
-<!--                        <td>서울 성동구</td>-->
-<!--                        <td><button class="delete-btn">삭제</button></td>-->
-<!--                    </tr>-->
-                </tbody>
-            </table>
-
-            <!-- 페이지네이션 -->
-            <div class="pagination">
-                <a href="#">1</a>
-                <a href="#">2</a>
-                <a href="#">3</a>
-            </div>
-        </section>
-    </div>
-
-<!-- footer -->
-<div id="footer-user"></div>
-
-<script>
-    fetch('/html/user_footer.html')
-        .then(response => response.text())
-        .then(data => {
-            document.getElementById('footer-user').innerHTML = data;
-        })
-        .catch(error => console.error('Footer 로드 중 오류 발생:', error));
-</script>
-
-
+<!-- 푸터 -->
+<div th:replace="~{html/user_footer :: userFooter}"></div>
 </body>
-
 </html>

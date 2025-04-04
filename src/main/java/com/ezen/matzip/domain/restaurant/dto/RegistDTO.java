@@ -31,4 +31,5 @@ public class RegistDTO {
     private List<Integer> menuPrice;
     private List<String> restaurantKeyword;
     private String restaurantCategory;
+
 }

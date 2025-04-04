@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 public class Menu {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int menuCode;
     private String menuName;
     private int menuPrice;

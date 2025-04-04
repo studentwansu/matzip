@@ -1,157 +1,118 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
+
 <head>
     <meta charset="UTF-8">
-    <title>사업자 메인페이지</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>mypage</title>
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
     <link href="https://fonts.googleapis.com/css2?family=Poor+Story&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/css/style_store.css">
-</head>
+    <link href="/css/header_footer.css" rel="stylesheet">
+    <link href="/css/style_store.css" rel="stylesheet">
+
 <body>
-    <header>
-        <section class="store-header">
-            <a href="">
-                <img class="logo" src="/img/logo.png">
-            </a>
-            <div class="store-header-container">
-                <div class="store-header-textdiv">
-                    <p class="store-header-font1"> 어쩌구저쩌구 </p>
-                    <div class="line-yellow"></div>
-                    <p class="store-header-font2"> 어쩌구저쩌구</p>
-                </div>
-            </div>
-            <div class="logout">
-                <!-- 로그인한 사업자의 상호명을 표시 -->
-                <p class="navi-font" th:text="${#authentication.principal.restaurantName} + ' 점주님, 환영합니다. 😊'">
-                    점주님, 환영합니다. 😊
-                </p>
-                <!-- POST 방식 로그아웃 폼 -->
-                <form th:action="@{/logout}" method="post">
-                    <!-- CSRF 토큰 추가 -->
-                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-                    <button type="submit" class="redbutton3 redbutton-font">
-                        로그아웃
-                    </button>
-                </form>
-            </div>
+<!-- header -->
+<div th:replace="~{html/store_header :: storeHeader}"></div>
 
-        </section>
-    </header>
-
-    <main>
-        <section class="body-section2">
-            <div class="navi">
-                <div class="redbutton">
-                    <span class="redbutton-font">마이페이지</span>
-                </div>
-                <ul>
-                    <li><a th:href="@{/business/myinfo}" class="navi-font">내 정보</a></li>
-                    <li><a href="" class="navi-font">식당 등록 신청</a></li>
-                    <li><a href="" class="navi-font">예약 현황 조회</a></li>
-                    <li><a href="" class="navi-font">식당 정보 수정 요청</a></li>
-                    <li><a href="" class="navi-font">고객 리뷰 조회</a></li>
-                </ul>
+<main>
+    <section class="body-section2">
+        <div class="navi">
+            <div class="redbutton">
+                <span class="redbutton-font">마이페이지</span>
             </div>
-            <div class="container-section">
-                <div class="container">
-                    <div class="container-title">
-                        <span class="container-font1">예약 현황 조회</span>
-                        <a href=""><button class="redbutton2">+</button></a>
-                    </div>
-                    <div class="line-yellow"></div>
-                        <table class="table-class">
-                            <tr>
-                                <th class="navi-font">번호</th>
-                                <th class="navi-font">날짜</th>
-                                <th class="navi-font">시간</th>
-                                <th class="navi-font">인원 수</th>
-                            </tr>
-                            <tr class="navi-font">
-                                <td>1</td>
-                                <td>2025. 03. 08</td>
-                                <td>17:00</td>
-                                <td>성인 2명</td>
-                            </tr>
-                            <tr class="navi-font">
-                                <td>1</td>
-                                <td>2025. 03. 08</td>
-                                <td>17:00</td>
-                                <td>성인 2명</td>
-                            </tr>
-                            <tr class="navi-font">
-                                <td>1</td>
-                                <td>2025. 03. 08</td>
-                                <td>17:00</td>
-                                <td>성인 2명</td>
-                            </tr>
-                            <tr class="navi-font">
-                                <td>1</td>
-                                <td>2025. 03. 08</td>
-                                <td>17:00</td>
-                                <td>성인 2명</td>
-                            </tr>
-                            <tr class="navi-font">
-                                <td>1</td>
-                                <td>2025. 03. 08</td>
-                                <td>17:00</td>
-                                <td>성인 2명</td>
-                            </tr>
-                        </table>
+            <ul>
+                <li><a class="navi-font" th:href="@{/business/myinfo}">내 정보</a></li>
+                <li><a class="navi-font" href="">식당 등록 신청</a></li>
+                <li><a class="navi-font" href="">예약 현황 조회</a></li>
+                <li><a class="navi-font" href="">식당 정보 수정 요청</a></li>
+                <li><a class="navi-font" th:href="@{/business/answer}">고객 리뷰 조회</a></li>
+            </ul>
+        </div>
+        <div class="container-section">
+            <div class="container">
+                <div class="container-title">
+                    <span class="container-font1">예약 현황 조회</span>
+                    <a href="">
+                        <button class="redbutton2">+</button>
+                    </a>
                 </div>
-                <div class="container">
-                    <div class="container-title">
-                        <span class="container-font1">고객 리뷰 조회</span>
-                        <a th:href="@{/business/answer/{businessCode}(businessCode=${businessCode})}"><button class="redbutton2 redbutton-font" >+</button></a>
-                    </div>
-                    <div class="line-yellow"></div>
-                    <div class="table-class">
-                        <table class="table-class">
-                            <tr>
-                                <th class="navi-font">번호</th>
-                                <th class="navi-font">날짜</th>
-                                <th class="navi-font">내용</th>
-                            </tr>
-                            <tr class="navi-font">
-                                <td>1</td>
-                                <td>2025. 03. 08</td>
-                                <td><a href="">리뷰내용리뷰내용리뷰내용리뷰내용리뷰내용리뷰내용</a></td>
-                            </tr>
-                            <tr class="navi-font">
-                                <td>1</td>
-                                <td>2025. 03. 08</td>
-                                <td><a href="">리뷰내용리뷰내용리뷰내용리뷰내용리뷰내용리뷰내용</a></td>
-                            </tr>
-                            <tr class="navi-font">
-                                <td>1</td>
-                                <td>2025. 03. 08</td>
-                                <td><a href="">리뷰내용리뷰내용리뷰내용리뷰내용리뷰내용리뷰내용</a></td>
-                            </tr>
-                            <tr class="navi-font">
-                                <td>1</td>
-                                <td>2025. 03. 08</td>
-                                <td><a href="">리뷰내용리뷰내용리뷰내용리뷰내용리뷰내용리뷰내용</a></td>
-                            </tr>
-                            <tr class="navi-font">
-                                <td>1</td>
-                                <td>2025. 03. 08</td>
-                                <td><a href="">리뷰내용리뷰내용리뷰내용리뷰내용리뷰내용리뷰내용</a></td>
-                            </tr>
-                        </table>
-                    </div>
+                <div class="line-yellow"></div>
+                <table class="table-class">
+                    <tr>
+                        <th class="navi-font">번호</th>
+                        <th class="navi-font">날짜</th>
+                        <th class="navi-font">시간</th>
+                        <th class="navi-font">인원 수</th>
+                    </tr>
+                    <tr class="navi-font">
+                        <td>1</td>
+                        <td>2025. 03. 08</td>
+                        <td>17:00</td>
+                        <td>성인 2명</td>
+                    </tr>
+                    <tr class="navi-font">
+                        <td>1</td>
+                        <td>2025. 03. 08</td>
+                        <td>17:00</td>
+                        <td>성인 2명</td>
+                    </tr>
+                    <tr class="navi-font">
+                        <td>1</td>
+                        <td>2025. 03. 08</td>
+                        <td>17:00</td>
+                        <td>성인 2명</td>
+                    </tr>
+                    <tr class="navi-font">
+                        <td>1</td>
+                        <td>2025. 03. 08</td>
+                        <td>17:00</td>
+                        <td>성인 2명</td>
+                    </tr>
+                    <tr class="navi-font">
+                        <td>1</td>
+                        <td>2025. 03. 08</td>
+                        <td>17:00</td>
+                        <td>성인 2명</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="container">
+                <div class="container-title">
+                    <span class="container-font1">고객 리뷰 조회</span>
+                    <a th:href="@{/business/answer}">
+                        <button class="redbutton2 redbutton-font">+</button>
+                    </a>
+                </div>
+                <div class="line-yellow"></div>
+                <div class="table-class">
+                    <table class="table-class">
+                        <tr>
+                            <th class="navi-font">번호</th>
+                            <th class="navi-font">날짜</th>
+                            <th class="navi-font">내용</th>
+                        </tr>
+                        <!--                            stat : 현재 몇 번째 반복 중인지 제공, stat.count는 1번부터 시작 -->
+                        <tr class="navi-font" th:each="review, stat : ${recentReviews}">
+                            <td th:text="${stat.count}"></td>
+                            <td th:text="${#dates.format(review.reviewDate, 'yyyy-MM-dd')}"></td>
+                            <td th:text="${#strings.abbreviate(review.reviewContent, 30)}"></td>
+                        </tr>
+                    </table>
                 </div>
             </div>
-        </section>
-    </main>
+        </div>
+    </section>
+</main>
 
-    <footer>
-        <p class="footer-font">Copyright 2025 맛zip All Right Reserved</p>
-        <ul>
-            <li class="footer-font"><a href="">공지사항</a></li>
-            <li class="footer-font"><a href="">FAQ</a></li>
-            <li class="footer-font"><a href="">Q&A</a></li>
-        </ul>
-    </footer>
+<footer>
+    <p class="footer-font">Copyright 2025 맛zip All Right Reserved</p>
+    <ul>
+        <li class="footer-font"><a href="">공지사항</a></li>
+        <li class="footer-font"><a href="">FAQ</a></li>
+        <li class="footer-font"><a href="">Q&A</a></li>
+    </ul>
+</footer>
 
 </body>
 </html>
