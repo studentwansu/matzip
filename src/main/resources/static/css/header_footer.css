@@ -130,6 +130,65 @@
     width: 25px;
 }
 
+/* 스토어 헤더 */
+.store-header {
+    height: 26vh;
+    width: 100%;
+    background-color: #fff3e0;
+    padding: 1vh 5%;
+    display: flex;
+    align-items: center;
+}
+
+.store-header-container {
+    width: 88vh;
+    height: 16vh;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 2vh;
+    display: flex;
+    position: absolute;
+    left: 25.5%;
+}
+
+.store-header-font1 {
+    font-size: 2vh;
+    color: #747474;
+}
+
+.store-header-font2 {
+    font-size: 2vh;
+    color: black;
+}
+
+.store-header-textdiv {
+    margin-left: 3.5vh;
+    margin-top: 1vh;
+}
+
+.logout {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    right: 2vh;
+    top: 0.5vh;
+}
+
+/* 로고 스타일 */
+.logo {
+    position: relative;
+    left: 8vh;
+}
+
+.line-yellow {
+    width:80vh;
+    height:1px;
+    background-color: #FAB12F;
+    margin:0.5vh;
+    /* margin-bottom:1vh; */
+}
+
 /* footer */
 footer {
     width: 100%;

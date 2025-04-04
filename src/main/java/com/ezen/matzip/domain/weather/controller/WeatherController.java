@@ -29,7 +29,6 @@ public class WeatherController {
     public String getWeatherCondition(@RequestBody WeatherRequest request)
     {
         String weatherConditionHashtags = weatherService.weatherKeyword(request.getWeatherKeyword());
-        System.out.println("잘 되고 있나?: " + weatherConditionHashtags);
         return weatherConditionHashtags;
     }
 
