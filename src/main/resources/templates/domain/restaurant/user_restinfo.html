@@ -38,7 +38,7 @@
                         <i class="fa fa-star-half-alt" style="color:red;"></i> <!-- 반쪽 별 -->
                         <br>
                         <table>
-                            <tr>
+                            <tr >
                                 <td style="font-size:2vh;">주소</td>
                                 <td style="font-size:1.5vh;" th:text="${restaurant.restaurantLocation}"></td>
                             </tr>
@@ -46,14 +46,16 @@
                                 <td style="font-size:2vh;">전화번호</td>
                                 <td style="font-size:1.5vh;" th:text="${restaurant.restaurantContactNumber}"></td>
                             </tr>
-                        </table>
-                        <tr>
-                            <td style="font-size:2vh;">키워드</td>
-                        </tr>
-                        <tr th:each="keyword : ${restaurant.restaurantKeywords}">
-                            <td style="font-size:2vh;" th:text=" '#' + ${keyword.getRestaurantKeyword()}"></td>
-                        </tr>
-                        <table>
+                            <tr>
+                                <td style="font-size:2vh;">키워드</td>
+                            </tr>
+                            <tr>
+                                <td th:each="keyword : ${restaurant.restaurantKeywords}">
+                                    <div>
+                                        <pre style="font-size:1.2vh;" th:text=" '#' + ${keyword.getRestaurantKeyword()}"></pre>
+                                    </div>
+                                </td>
+                            </tr>
                             <tr>
                                 <td style="font-size:2vh;">영업시간</td>
                                 <td style="font-size:1.5vh;" th:text="${restaurant.restaurantStartTime}"> -
