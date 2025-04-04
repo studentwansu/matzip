@@ -27,9 +27,9 @@
         <ul>
             <li><a href="#">내 정보</a></li>
             <li><a href="#">예약 목록</a></li>
-            <li><a th:href="@{/user/review/write/{userCode}(userCode=${userCode})}">이용 목록</a></li>
+            <li><a th:href="@{/user/review/write}">이용 목록</a></li>
             <li><a href="#">북마크 목록</a></li>
-            <li><a th:href="@{/user/review/{userCode}(userCode=${userCode})}">작성 리뷰 목록</a></li>
+            <li><a th:href="@{/user/review}">작성 리뷰 목록</a></li>
         </ul>
     </aside>
 
@@ -63,7 +63,7 @@
 <!--                    <form th:action="@{/review/myReview/{reviewCode}(reviewCode=${selectedReview.reviewCode})}">-->
                     <button type="button" class="edit-btn" th:onclick="'openModal(' + ${review.reviewCode} + ', ' + ${review.userCode} + ')'">수정</button>
 <!--                    </form>-->
-                    <form th:id="'deleteForm-' + ${review.reviewCode}" th:action="@{/user/review/delete/{reviewCode}/{userCode}(reviewCode=${review.reviewCode}, userCode=${review.userCode})}" method="post" style="display:inline">
+                    <form th:id="'deleteForm-' + ${review.reviewCode}" th:action="@{/user/review/delete/{reviewCode}(reviewCode=${review.reviewCode})}" method="post" style="display:inline">
                         <button class="delete-btn">삭제</button>
                     </form>
                 </td>

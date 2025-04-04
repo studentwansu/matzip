@@ -32,7 +32,7 @@
         </script>
         <script src="/js/reviewAnswer.js" defer></script> <!-- JavaScript 파일 로드 -->
 
-        <form id="monthForm" th:action="@{/business/answer/{businessCode}(businessCode=${businessCode})}" method="get">
+        <form id="monthForm" th:action="@{/business/answer}" method="get">
                 <select id="month" name="month" onchange="document.getElementById('monthForm').submit()">
                     <option value="">월 별</option>
                     <option value="1" th:selected="${selectedMonth == 1}">1월</option>
@@ -81,7 +81,7 @@
                         <span th:if="${review.reviewReply == null}">
                             <button class="edit-btn" th:onclick="'openModal(' + ${review.reviewCode} + ',' + ${review.businessCode} + ')'">작성</button>
                         </span>
-                        <button th:onclick="">신고</button>
+                        <button type="button" th:onclick="'reportReview(' + ${review.reviewCode} + ')'">신고</button>
                     </td>
                 </tr>
             </tbody>
@@ -92,7 +92,7 @@
         <div id="reviewModal" class="modal">
             <div class="modal-content">
                 <span class="close" onclick="closeModal()">&times;</span>
-                <h3>답변 수정</h3>
+                <h3>답변</h3>
                 <div id="test"></div>
                 <form action="/business/answer/modify" class="reviewForm" id="myform" method="post" enctype="multipart/form-data">
 <!--                    th:action="@{/user/review/imageList/${reviewCode}(reviewCode=${review.reviewCode})}"-->
@@ -123,9 +123,7 @@
 <!--                    <textarea id="reviewContent" name="reviewContent"></textarea>-->
                     <textarea id="reviewContent" name="reviewContent" readonly></textarea>
 
-                    <div>
-                        <textarea id="reviewReply" name="reviewReply" required></textarea>
-                    </div>
+                    <textarea id="reviewReply" name="reviewReply" required></textarea>
 
                     <input type="hidden" name="businessCode" th:value="${businessCode}" />
                     <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>

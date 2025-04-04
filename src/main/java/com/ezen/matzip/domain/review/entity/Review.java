@@ -84,4 +84,9 @@ public class Review {
     }
 
 //    setter 필요한 필드만 setter 만들어서 사용
+
+    //완수-리뷰신고기능에 필요
+    public void incrementReportCount() {
+        this.reviewReportCount++;
+    }
 }
