@@ -31,9 +31,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Controller
@@ -175,7 +178,7 @@ public class RestaurantController {
     }
 
     @GetMapping("/search")
-    public String findByRestaurant(@RequestParam String keyword, Model model, HttpSession session)
+    public String findByRestaurant(@RequestParam String keyword, Model model, HttpSession session, Principal principal)
     {
         session.setAttribute("lastKeyword", keyword);
         List<RestaurantDTO> restaurants = restaurantService.findByKeywordOrderByScore(keyword);
@@ -251,15 +254,34 @@ public class RestaurantController {
     public String restaurantDetail(@RequestParam("restaurantCode") int restaurantCode,
                                    Model model,
                                    Principal principal) {
-        Restaurant restaurant = restaurantService.findByRestaurantCode(restaurantCode);
-        model.addAttribute("restaurant", restaurant);
 
-        // 북마크 여부 처리 (로그인한 사용자의 경우)
+        // 엔티티 대신 DTO 사용
+        RestaurantDTO restaurantDTO = restaurantService.getRestaurantDetail(restaurantCode);
+        model.addAttribute("restaurant", restaurantDTO);
+
+//        Restaurant restaurant = restaurantService.findByRestaurantCode(restaurantCode);
+//        model.addAttribute("restaurant", restaurant);
+
+        // 로그인한 사용자의 북마크 여부 처리
+//        if (principal != null) {
+//            User user = userService.findByUserId(principal.getName());
+//            boolean bookmarked = bookmarkService.isBookmarked(user, restaurantDTO.convertToEntity());
+//            model.addAttribute("bookmarked", bookmarked);
+//        }
+
+        // 엔티티를 별도로 조회해서 북마크 여부 확인
+        Restaurant restaurant = restaurantService.findByRestaurantCode(restaurantCode);
         if (principal != null) {
             User user = userService.findByUserId(principal.getName());
             boolean bookmarked = bookmarkService.isBookmarked(user, restaurant);
             model.addAttribute("bookmarked", bookmarked);
         }
+//        // 북마크 여부 처리 (로그인한 사용자의 경우)
+//        if (principal != null) {
+//            User user = userService.findByUserId(principal.getName());
+//            boolean bookmarked = bookmarkService.isBookmarked(user, restaurant);
+//            model.addAttribute("bookmarked", bookmarked);
+//        }
 
         // 위치 정보 추가 (필요한 경우, restaurant 엔티티나 별도 조회 메서드를 통해 얻어올 수 있음)
         String location = restaurantService.findLocationByRestaurantCode(restaurantCode);
