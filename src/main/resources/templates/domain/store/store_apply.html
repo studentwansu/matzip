@@ -55,169 +55,85 @@
                     <li><a href="" class="navi-font">고객 리뷰 조회</a></li>
                 </ul>
             </div>
-
+            <form action="/business/regist" method="post" enctype="multipart/form-data">
             <div class="store-info">
-                <div class="store-imgs">
-                <!-- 여기에 이미지 넣기 -->
+                <div>
+                    <input type="file" name="multiFiles" class="store-imgs" multiple accept="image/*" required>
                 </div>
+            </div>
                 <div class="store-container">
                     <div class="upper-container">
                         <div class="store-inner-container1">
-                            <input class="store-input-middle" type="text" id="식당명" name="식당명" placeholder="식당명을 입력하세요">
+                            <label for="restaurantName">가게명</label>
+                            <input class="store-input-middle" type="text" id="restaurantName" name="restaurantName" placeholder="가게명" required>
                             <table>
                             <tr>
                                 <td style="font-size:2vh;">주소</td>
-                                <td><input class="store-input-long" type="text" id="주소" name="주소" placeholder="주소를 입력하세요"></td>
+                                <td><input class="store-input-long" type="text" id="restaurantLocation" name="restaurantLocation" placeholder="주소를 입력하세요" required></td>
                             </tr>
                             <tr>
                                 <td style="font-size:2vh;">전화번호</td>
-                                <td style="font-size:1.5vh;"><input class="store-input-middle" type="text" id="전화번호" name="전화번호" placeholder="연락처를 입력하세요">
+                                <td style="font-size:1.5vh;"><input class="store-input-middle" type="text" id="restaurantContactNumber" name="restaurantContactNumber" placeholder="전화번호" required>
                                 </td>
                             </tr>
                             <tr>
                                 <td style="font-size:2vh;">키워드</td>
                                 <td style="font-size:1.5vh;">
-                                    <input class="store-input-small2" type="text" id="키워드1" name="키워드1" placeholder="키워드1">
-                                    <input class="store-input-small2" type="text" id="키워드2" name="키워드2" placeholder="키워드2">
-                                    <input class="store-input-small2" type="text" id="키워드3" name="키워드3" placeholder="키워드3">
-                                    <input class="store-input-small2" type="text" id="키워드4" name="키워드4" placeholder="키워드4">
-                                    <input class="store-input-small2" type="text" id="키워드5" name="키워드5" placeholder="키워드5">
+                                    <input class="store-input-small2" type="text" id="restaurantKeyword1" name="restaurantKeyword" placeholder="키워드1" required>
+                                    <input class="store-input-small2" type="text" id="restaurantKeyword2" name="restaurantKeyword" placeholder="키워드2" >
+                                    <input class="store-input-small2" type="text" id="restaurantKeyword3" name="restaurantKeyword" placeholder="키워드3" >
+                                    <input class="store-input-small2" type="text" id="restaurantKeyword4" name="restaurantKeyword" placeholder="키워드4" >
+                                    <input class="store-input-small2" type="text" id="restaurantKeyword5" name="restaurantKeyword" placeholder="키워드5" >
                                 </td>
                             </tr>
                             <tr>
                                 <td style="font-size:2vh;">영업시간</td>
                                 <td style="font-size:1.5vh;">
-                                    <select id="오픈시간" name="오픈시간">
-                                        <option value="00:00">00:00</option>
-                                        <option value="00:30">00:30</option>
-                                        <option value="01:00">01:00</option>
-                                        <option value="01:30">01:30</option>
-                                        <option value="02:00">02:00</option>
-                                        <option value="02:30">02:30</option>
-                                        <option value="03:00">03:00</option>
-                                        <option value="03:30">03:30</option>
-                                        <option value="04:00">04:00</option>
-                                        <option value="04:30">04:30</option>
-                                        <option value="05:00">05:00</option>
-                                        <option value="05:30">05:30</option>
-                                        <option value="06:00">06:00</option>
-                                        <option value="06:30">06:30</option>
-                                        <option value="07:00">07:00</option>
-                                        <option value="07:30">07:30</option>
-                                        <option value="08:00">08:00</option>
-                                        <option value="08:30">08:30</option>
-                                        <option value="09:00">09:00</option>
-                                        <option value="09:30">09:30</option>
-                                        <option value="10:00">10:00</option>
-                                        <option value="10:30">10:30</option>
-                                        <option value="11:00">11:00</option>
-                                        <option value="11:30">11:30</option>
-                                        <option value="12:00">12:00</option>
-                                        <option value="12:30">12:30</option>
-                                        <option value="13:00">13:00</option>
-                                        <option value="13:30">13:30</option>
-                                        <option value="14:00">14:00</option>
-                                        <option value="14:30">14:30</option>
-                                        <option value="15:00">15:00</option>
-                                        <option value="15:30">15:30</option>
-                                        <option value="16:00">16:00</option>
-                                        <option value="16:30">16:30</option>
-                                        <option value="17:00">17:00</option>
-                                        <option value="17:30">17:30</option>
-                                        <option value="18:00">18:00</option>
-                                        <option value="18:30">18:30</option>
-                                        <option value="19:00">19:00</option>
-                                        <option value="19:30">19:30</option>
-                                        <option value="20:00">20:00</option>
-                                        <option value="20:30">20:30</option>
-                                        <option value="21:00">21:00</option>
-                                        <option value="21:30">21:30</option>
-                                        <option value="22:00">22:00</option>
-                                        <option value="22:30">22:30</option>
-                                        <option value="23:00">23:00</option>
-                                        <option value="23:30">23:30</option>
-                                    </select>
+                                    <input type="time" name="restaurantStartTime" value="09:00" required>
                                     -
-                                    <select id="클로즈시간" name="클로즈시간">
-                                        <option value="00:00">00:00</option>
-                                        <option value="00:30">00:30</option>
-                                        <option value="01:00">01:00</option>
-                                        <option value="01:30">01:30</option>
-                                        <option value="02:00">02:00</option>
-                                        <option value="02:30">02:30</option>
-                                        <option value="03:00">03:00</option>
-                                        <option value="03:30">03:30</option>
-                                        <option value="04:00">04:00</option>
-                                        <option value="04:30">04:30</option>
-                                        <option value="05:00">05:00</option>
-                                        <option value="05:30">05:30</option>
-                                        <option value="06:00">06:00</option>
-                                        <option value="06:30">06:30</option>
-                                        <option value="07:00">07:00</option>
-                                        <option value="07:30">07:30</option>
-                                        <option value="08:00">08:00</option>
-                                        <option value="08:30">08:30</option>
-                                        <option value="09:00">09:00</option>
-                                        <option value="09:30">09:30</option>
-                                        <option value="10:00">10:00</option>
-                                        <option value="10:30">10:30</option>
-                                        <option value="11:00">11:00</option>
-                                        <option value="11:30">11:30</option>
-                                        <option value="12:00">12:00</option>
-                                        <option value="12:30">12:30</option>
-                                        <option value="13:00">13:00</option>
-                                        <option value="13:30">13:30</option>
-                                        <option value="14:00">14:00</option>
-                                        <option value="14:30">14:30</option>
-                                        <option value="15:00">15:00</option>
-                                        <option value="15:30">15:30</option>
-                                        <option value="16:00">16:00</option>
-                                        <option value="16:30">16:30</option>
-                                        <option value="17:00">17:00</option>
-                                        <option value="17:30">17:30</option>
-                                        <option value="18:00">18:00</option>
-                                        <option value="18:30">18:30</option>
-                                        <option value="19:00">19:00</option>
-                                        <option value="19:30">19:30</option>
-                                        <option value="20:00">20:00</option>
-                                        <option value="20:30">20:30</option>
-                                        <option value="21:00">21:00</option>
-                                        <option value="21:30">21:30</option>
-                                        <option value="22:00">22:00</option>
-                                        <option value="22:30">22:30</option>
-                                        <option value="23:00">23:00</option>
-                                        <option value="23:30">23:30</option>
-                                    </select>
+                                    <input type="time" name="restaurantEndTime" value="22:00" required>
                                 </td>
                             </tr>
+                            <tr>
+                                <td style="font-size:2vh;">카테고리</td>
+                                <select id="restaurantCategory" name="restaurantCategory" required>
+                                    <option value="1">한식</option>
+                                    <option value="2">중식</option>
+                                    <option value="3">일식</option>
+                                    <option value="4">양식</option>
+                                    <option value="5">비건</option>
+                                </select>
+                                </td>
+                            </tr>
+
                         </table>
                         <br>
                         <p style="font-size:2.5vh;">메뉴 <button onclick="addMenu()">추가</button> <button onclick="deleteMenu()">삭제</button></p>
 
                         <table id="menu">
                             <tr>
-                                <td><input type="radio" id="대표메뉴" name="대표메뉴" value="메뉴1"></td>
-                                <td><input class="store-input-small" type="text" id="메뉴1" name="메뉴1" placeholder="메뉴명"></td>
+                                <td><input type="radio" id="mainMenu1" name="mainMenu" value="메뉴1" required></td>
+                                <td><input class="store-input-small" type="text" id="menuName1" name="menuName" placeholder="메뉴명" required></td>
                                 <td>---------- </td>
-                                <td><input class="store-input-small" type="text" id="메뉴1가격" name="메뉴1가격" placeholder="가격">원</td>
+                                <td><input class="store-input-small" type="text" id="menuPrice1" name="menuPrice" placeholder="가격" required>원</td>
                             </tr>
                             <tr>
-                                <td><input type="radio" id="대표메뉴" name="대표메뉴" value="메뉴2"></td>
-                                <td><input class="store-input-small" type="text" id="메뉴2" name="메뉴2" placeholder="메뉴명"></td>
+                                <td><input type="radio" id="mainMenu2" name="mainMenu" value="메뉴2"></td>
+                                <td><input class="store-input-small" type="text" id="menuName2" name="menuName" placeholder="메뉴명"></td>
                                 <td>---------- </td>
-                                <td><input class="store-input-small" type="text" id="메뉴2가격" name="메뉴2가격" placeholder="가격">원</td>
+                                <td><input class="store-input-small" type="text" id="menuPrice2" name="menuPrice" placeholder="가격">원</td>
                             </tr>
                             <tr>
-                                <td><input type="radio" id="대표메뉴" name="대표메뉴" value="메뉴3"></td>
-                                <td><input class="store-input-small" type="text" id="메뉴3" name="메뉴3" placeholder="메뉴명"></td>
+                                <td><input type="radio" id="mainMenu3" name="mainMenu" value="메뉴3"></td>
+                                <td><input class="store-input-small" type="text" id="menuName3" name="menuName" placeholder="메뉴명"></td>
                                 <td>---------- </td>
-                                <td><input class="store-input-small" type="text" id="메뉴3가격" name="메뉴3가격" placeholder="가격">원</td>
+                                <td><input class="store-input-small" type="text" id="menuPrice3" name="menuPrice" placeholder="가격">원</td>
                             </tr>
                             <tr>
-                                <td><input type="radio" id="대표메뉴" name="대표메뉴" value="메뉴4"></td>
-                                <td><input class="store-input-small" type="text" id="메뉴4" name="메뉴4" placeholder="메뉴명"></td>
+                                <td><input type="radio" id="mainMenu4" name="mainMenu" value="메뉴4"></td>
+                                <td><input class="store-input-small" type="text" id="menuName4" name="menuName" placeholder="메뉴명"></td>
                                 <td>---------- </td>
-                                <td><input class="store-input-small" type="text" id="메뉴4가격" name="메뉴4가격" placeholder="가격">원</td>
+                                <td><input class="store-input-small" type="text" id="menuPrice4" name="menuPrice" placeholder="가격">원</td>
                             </tr>
                         </table>
                         <br>
@@ -226,7 +142,7 @@
                         <br>
                         <br>
                         <p style="font-size:2.5vh;">편의시설 및 서비스</p>
-                        <p style="font-size:1.5vh;"><input class="store-input-long" type="text" id="편의시설" name="편의시설" placeholder="주차, 와이파이, 노키즈존 등의 여부를 입력하세요"></p>
+                        <p style="font-size:1.5vh;"><input class="store-input-long" type="text" id="restaurantService" name="restaurantService" placeholder="주차, 와이파이, 노키즈존 등의 여부를 입력하세요" required></p>
                         </div>
                         <div class="store-inner-container2">
                             <div>
@@ -234,10 +150,11 @@
                             </div>
                             <div class="introducebox">
                                 <p style="font-size:2.5vh;">소개</p>
-                                <textarea class="store-input-large" type="textarea" id="소개" name="소개"></textarea>
+                                <textarea class="store-input-large" type="textarea" id="restaurantDescription" name="restaurantDescription" required></textarea>
                             </div>
                             <div class="buttonbox2">
-                                <a href=""><input type="submit" class="redbutton1 button"></a>
+                                <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
+                                <a href=""><input type="submit" class="redbutton1 button" value="전송"></a>
                             </div>
                         </div>
                     </div>
@@ -245,6 +162,7 @@
             </div>
             <!-- <div class="navi">
             </div> -->
+            </form>
         </section>
     </main>
         

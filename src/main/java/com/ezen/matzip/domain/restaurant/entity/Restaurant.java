@@ -78,6 +78,9 @@ public class Restaurant {
     @OneToMany(mappedBy = "restaurantCode", cascade = CascadeType.ALL)
     private List<RestaurantKeyword> restaurantKeywords;
 
+    @OneToMany(mappedBy = "restaurantCode", cascade = CascadeType.ALL)
+    private List<RestaurantImage> restaurantImages;
+
 
     @Builder
     public Restaurant(int restaurantCode, String restaurantName, int businessCode) {

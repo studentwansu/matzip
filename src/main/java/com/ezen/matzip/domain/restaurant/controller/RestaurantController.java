@@ -5,25 +5,35 @@ import com.ezen.matzip.domain.bookmark.entity.Bookmark;
 import com.ezen.matzip.domain.bookmark.service.BookmarkService;
 import com.ezen.matzip.domain.restaurant.dto.RegistDTO;
 import com.ezen.matzip.domain.restaurant.dto.RestaurantDTO;
+import com.ezen.matzip.domain.restaurant.dto.RestaurantImageDTO;
 import com.ezen.matzip.domain.restaurant.entity.Category;
 import com.ezen.matzip.domain.restaurant.entity.Restaurant;
+import com.ezen.matzip.domain.restaurant.entity.RestaurantImage;
+import com.ezen.matzip.domain.restaurant.repository.RestaurantImageRepository;
 import com.ezen.matzip.domain.restaurant.service.RestaurantService;
 import com.ezen.matzip.domain.review.dto.ReviewDTO;
+import com.ezen.matzip.domain.review.dto.ReviewImageDTO;
+import com.ezen.matzip.domain.review.entity.ReviewImage;
 import com.ezen.matzip.domain.review.service.ReviewService;
 import com.ezen.matzip.domain.user.entity.User;
 import com.ezen.matzip.domain.user.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.security.Principal;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
+import java.util.UUID;
 
 @Slf4j
 @Controller
@@ -33,6 +43,10 @@ public class RestaurantController {
 
     @Autowired
     private final RestaurantService restaurantService;
+    private RestaurantImageRepository restaurantImageRepository;
+    private ModelMapper modelMapper;
+    @Autowired
+    private ResourceLoader resourceLoader;
 //    private final ReviewService reviewService;
 
     //완수 북마크 기능에 필요
@@ -51,6 +65,14 @@ public class RestaurantController {
         model.addAttribute("reviews", resultReview);
         System.out.println("test: " + resultReview);
 
+        List<RestaurantImage> imgs = restaurantImageRepository.findRestaurantImageByRestaurantCode(restaurantCode);
+        List<RestaurantImageDTO> imgDTOs = imgs.stream()
+                .map(img -> modelMapper.map(img, RestaurantImageDTO.class))
+                .toList();
+
+        model.addAttribute("selectedRestaurant", modelMapper.map(restaurant, RestaurantDTO.class));
+        model.addAttribute("selectedRestaurantImgs", imgDTOs);
+
         return "domain/restaurant/admin_restinfo";
     }
 
@@ -63,20 +85,77 @@ public class RestaurantController {
         model.addAttribute("reviews", resultReview);
         System.out.println("test: " + resultReview);
 
+        List<RestaurantImage> imgs = restaurantImageRepository.findRestaurantImageByRestaurantCode(restaurantCode);
+        List<RestaurantImageDTO> imgDTOs = imgs.stream()
+                .map(img -> modelMapper.map(img, RestaurantImageDTO.class))
+                .toList();
+
+        model.addAttribute("selectedRestaurant", modelMapper.map(restaurant, RestaurantDTO.class));
+        model.addAttribute("selectedRestaurantImgs", imgDTOs);
+
         return "domain/restaurant/store_restinfo";
     }
 
     @GetMapping("/business/regist")
     public String registPage() {
+//        return "restaurant/restaurant_regist";
         return "domain/store/store_apply";
     }
 
     @PostMapping("/business/regist")
-    public String regist(@ModelAttribute RegistDTO registDTO) {
+    public String regist(@ModelAttribute RegistDTO registDTO,
+                         @RequestParam List<MultipartFile> multiFiles) throws IOException {
+        Resource resource = resourceLoader.getResource("file:C:/dev/img/restaurant");
+        String filePath = null;
+
+        if(!resource.exists())
+        {
+            String root = "C:/dev/img/restaurant";
+            File file = new File(root);
+            file.mkdirs(); // 경로가 없다면 위의 root 경로를 생성하는 메소드
+
+            filePath = file.getAbsolutePath();
+        }
+        else
+            filePath = resource.getFile().getAbsolutePath();
+        System.out.println("filePath: " + filePath);
+        /** 파일에 관한 정보 저장을 위한 처리 */
+        List<RestaurantImageDTO> files = new ArrayList<>(); // 파일에 관한 정보 저장할 리스트
+        List<String> savedFiles = new ArrayList<>();
+
+        try {
+            int count = 0;
+            for (MultipartFile file : multiFiles) {
+                if (count >= 3) break;
+                /** 파일명 변경 처리 */
+//                int restaurantCode = Integer.parseInt(file.getOriginalFilename());
+                String originFileName = file.getOriginalFilename();
+                String ext = originFileName.substring(originFileName.lastIndexOf("."));
+                String savedFileName = UUID.randomUUID().toString().replace("-", "") + ext;
+
+                /** 파일정보 등록 */
+                files.add(new RestaurantImageDTO( "/img/restaurant/" + savedFileName, originFileName, savedFileName));
+
+                /** 파일 저장 */
+                file.transferTo(new File(filePath + "/" + savedFileName));
+                savedFiles.add("C:/dev/img/restaurant" + savedFileName);
+
+                count++;
+            }
+
+//            model.addAttribute("message", "파일 업로드 성공!");
+//            model.addAttribute("imgs", savedFiles);
+        } catch (Exception e) {
+            for (RestaurantImageDTO file : files)
+            {
+                new File(filePath + "/" + file.getRestaurantSavedName()).delete();
+            }
+//            model.addAttribute("message", "파일 업로드 실패!");
+        }
 
         System.out.println("=== DTO 로그 ===");
         System.out.println(registDTO.toString());
-     restaurantService.registRestaurant(registDTO);
+     restaurantService.registRestaurant(registDTO,files);
 
         return "redirect:/restaurant/" + registDTO.getRestaurantCode();
     }

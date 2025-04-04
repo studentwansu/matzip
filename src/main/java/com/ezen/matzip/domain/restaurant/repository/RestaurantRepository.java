@@ -2,6 +2,7 @@ package com.ezen.matzip.domain.restaurant.repository;
 
 import com.ezen.matzip.domain.restaurant.entity.Menu;
 import com.ezen.matzip.domain.restaurant.entity.Restaurant;
+import com.ezen.matzip.domain.restaurant.entity.RestaurantImage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;

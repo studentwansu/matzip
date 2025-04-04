@@ -2,6 +2,7 @@ package com.ezen.matzip.domain.restaurant.dto;
 
 import com.ezen.matzip.domain.restaurant.entity.Menu;
 import com.ezen.matzip.domain.restaurant.entity.Restaurant;
+import com.ezen.matzip.domain.restaurant.entity.RestaurantImage;
 import com.ezen.matzip.domain.restaurant.entity.RestaurantKeyword;
 //import com.ezen.matzip.domain.restaurant.entity.Review;
 
@@ -23,6 +24,7 @@ public class RestaurantDTO {
     private List<MenuDTO> restaurantMenus;
     private List<RestaurantKeywordDTO> restaurantKeywords;
     private List<Review> reviews;
+    private List<RestaurantImageDTO> restaurantImages;
     private int restaurantCode;
     private String restaurantLocation;
     private String restaurantContactNumber;
@@ -38,7 +40,7 @@ public class RestaurantDTO {
     private int restaurantStatus;
     private String restaurantService;
 
-    public RestaurantDTO (Restaurant restaurant, List<Menu> menus, List<RestaurantKeyword> keywords)
+    public RestaurantDTO (Restaurant restaurant, List<Menu> menus, List<RestaurantKeyword> keywords, List<RestaurantImage> restaurantImages)
     {
         this.restaurantName = restaurant.getRestaurantName();
         this.restaurantMenus = menus.stream().map
@@ -46,6 +48,9 @@ public class RestaurantDTO {
                 .collect(Collectors.toList());
         this.restaurantKeywords = keywords.stream().map
                 (keyword -> new RestaurantKeywordDTO(keyword.getRestaurantKeywordCode(), keyword.getRestaurantCode().getRestaurantCode(), keyword.getRestaurantKeyword()))
+                .collect(Collectors.toList());
+        this.restaurantImages = restaurantImages.stream().map
+                (restaurantImage -> new RestaurantImageDTO( restaurantImage.getRestaurantImagePath(), restaurantImage.getRestaurantOriginalName(), restaurantImage.getRestaurantSavedName()))
                 .collect(Collectors.toList());
         this.restaurantCode = restaurant.getRestaurantCode();
         this.restaurantLocation = restaurant.getRestaurantLocation();
