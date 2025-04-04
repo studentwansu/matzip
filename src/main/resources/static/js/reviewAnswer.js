@@ -75,6 +75,8 @@ function openModal(reviewCode, businessCode) {
         return;
     }
 
+    document.getElementById("reviewReply").value = targetReview.reviewReply;
+
     // 고객 리뷰 내용 채우기
     document.getElementById("reviewContent").value = targetReview.reviewContent;
 
