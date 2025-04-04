@@ -1,8 +1,12 @@
 package com.ezen.matzip.domain.user.service;
 
+import com.ezen.matzip.domain.user.entity.Business;
+import com.ezen.matzip.domain.user.entity.User;
 import com.ezen.matzip.domain.user.repository.BusinessRepository;
 import com.ezen.matzip.domain.user.repository.UserRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class UserIdCheckService {
@@ -22,5 +26,10 @@ public class UserIdCheckService {
         System.out.println("userId: " + userId + " - exists in User: " + existsInUser + ", exists in Business: " + existsInBusiness);
 
         return !existsInUser && !existsInBusiness;
+    }
+
+    public Integer getBusinessCodeByUserid(String userId) {
+        Optional<Business> business = businessRepository.findByUserId(userId);
+        return business.isPresent() ? business.get().getBusinessCode() : null;
     }
 }
