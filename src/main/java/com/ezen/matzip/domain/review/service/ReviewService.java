@@ -60,33 +60,6 @@ public class ReviewService {
         reviewRepository.deleteById(reviewCode);
     }
 
-
-//    @Transactional
-//    public void modifyReview(ReviewDTO reviewDTO) {
-//        System.out.println("수정 요청 받은 리뷰 코드: " + reviewDTO.getReviewCode());
-//        System.out.println("수정 요청 받은 평점: " + reviewDTO.getRating());
-////        Optional<Review> optionalReview = reviewRepository.findByReviewCode(reviewDTO.getReviewCode());
-//        List<Object> reviews = findReviewAndReviewImagesByReviewCode(reviewDTO.getReviewCode());
-//        Review foundReview = (Review) reviews.get(0);
-//        List<ReviewImage> reviewImages = new ArrayList<>();
-//        for (int i = 1; i < reviews.size(); i++) {
-//            ReviewImage reviewImage = (ReviewImage) reviews.get(i); // 실제 객체
-//            ReviewImageDTO reviewImageDTO = modelMapper.map(reviewImage, ReviewImageDTO.class); // DTO로 변환
-//            reviewImageRepository.save(reviewImage);
-//            reviewImages.add(reviewImage);
-//        }
-//
-//        // 리뷰 수정
-//        foundReview.modifyReview(reviewDTO.getReviewContent(), reviewDTO.getRating());
-//        reviewRepository.save(foundReview);
-//
-//        for( ReviewImage reviewImage : reviewImages ) {
-//            reviewImageRepository.delete(reviewImage);
-//        }
-//
-//    }
-
-
     @Transactional
     public void modifyReview(ReviewDTO reviewDTO, List<MultipartFile> multiFiles) {
         System.out.println("수정 요청 받은 리뷰 코드: " + reviewDTO.getReviewCode());

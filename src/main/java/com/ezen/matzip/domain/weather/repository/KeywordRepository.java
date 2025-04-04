@@ -15,4 +15,6 @@ public interface KeywordRepository extends JpaRepository<Keyword, Integer> {
     List<Keyword> findByWeatherCode(@Param("weatherCode") Integer weatherCode);
 
     List<Keyword> findAllByKeywordDescriptionIsNotNull();
+
+    Keyword findByKeyword(String keyword);
 }

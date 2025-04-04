@@ -19,42 +19,77 @@ public class MiniGameService {
     private final ModelMapper modelMapper;
 
     // 1. 처음 키워드 모은 다음 섞기
-    public List<KeywordDTO> shuffleKeywords() {
+    public List<KeywordDTO>[] shuffleKeywords() {
 
-        List<Keyword> keywords = keywordRepository.findAllByKeywordDescriptionIsNotNull();
-        Collections.shuffle(keywords);
-        List<KeywordDTO> keywordDTOs = new ArrayList<>();
-        for (Keyword keyword : keywords) {
-            keywordDTOs.add(modelMapper.map(keyword, KeywordDTO.class));
+        List<Keyword> keywordEntities = keywordRepository.findAllByKeywordDescriptionIsNotNull();
+        Collections.shuffle(keywordEntities);
+        keywordEntities.remove(keywordEntities.get(0));
+        System.out.println("현재 키워드 갯수: " + keywordEntities.size());
+        List<KeywordDTO>[] keywords = new List[3];
+        keywords[0] = new ArrayList<>();
+        keywords[1] = new ArrayList<>();
+        keywords[2] = new ArrayList<>();
+        for (Keyword keyword : keywordEntities) {
+            keywords[0].add(modelMapper.map(keyword, KeywordDTO.class));
         }
-
-        return keywordDTOs;
+        return keywords;
     }
 
     // 2. 두 개의 키워드 내보내기
-
-    public List<KeywordDTO> showKeywords(List<KeywordDTO> remainedKeywords)
+    public List<KeywordDTO>[] showKeywords(List<KeywordDTO>[] keywords)
     {
-        Collections.shuffle(remainedKeywords);
+        if(keywords[0].size() + keywords[1].size() + keywords[2].size() > 1)
+        {
+            keywords[1].add(keywords[0].get(0));
+            keywords[0].remove(keywords[0].get(0));
 
-        List<KeywordDTO> showKeywords = new ArrayList<>();
-        showKeywords.add(remainedKeywords.get(0));
-        showKeywords.add(remainedKeywords.get(1));
+            keywords[1].add(keywords[0].get(0));
+            keywords[0].remove(keywords[0].get(0));
+        }
 
-        return showKeywords;
+        return keywords;
     }
 
+    public String checkCurrentRound(List<KeywordDTO>[] keywords)
+    {
+        if (keywords[0].size() > 2 && keywords[2].isEmpty())
+        {
+            return (keywords[0].size()) + "강 시작!";
+        }
+        else if (keywords[0].size() == 2 && keywords[2].isEmpty())
+        {
+            System.out.println("결승0: " + keywords[0]);
+            System.out.println("결승2" + keywords[2]);
+            return "결승!";
+        }
+        else if (keywords[0].isEmpty() && keywords[2].size() == 1)
+        {
+            System.out.println("끝0: " + keywords[0]);
+            System.out.println("끝2" + keywords[2]);
+            return "끝!";
+        }
 
-    public List<KeywordDTO> sortKeyword(String selected, String defeated) {
-
-
-        return null;
+            return null;
     }
 
-    public List<KeywordDTO> miniGame(List<KeywordDTO> remainedKeywords)
-    {
+    public List<KeywordDTO>[] sortKeyword(List<KeywordDTO>[] remainedKeywords, String selected) {
 
+        Keyword foundKeyword = keywordRepository.findByKeyword(selected);
+        remainedKeywords[2].add(modelMapper.map(foundKeyword, KeywordDTO.class));
+        remainedKeywords[1].clear();
+
+        if (remainedKeywords[0].isEmpty() && remainedKeywords[2].size() > 1)
+        {
+            remainedKeywords[0].addAll(remainedKeywords[2]);
+            remainedKeywords[2].clear();
+            Collections.shuffle(remainedKeywords[0]);
+        }
         return remainedKeywords;
+    }
+
+    public KeywordDTO foundKeyword(String selected)
+    {
+        return modelMapper.map(keywordRepository.findByKeyword(selected), KeywordDTO.class);
     }
 
 }

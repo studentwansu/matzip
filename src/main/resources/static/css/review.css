@@ -96,3 +96,8 @@
     max-height: 100%;
     object-fit: cover;
 }
+
+#month {
+    float: left;
+    margin-bottom: 1vh;
+}

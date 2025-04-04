@@ -1,8 +1,10 @@
 package com.ezen.matzip.domain.restaurant.service;
 
+import com.ezen.matzip.domain.bookmark.dto.RestaurantForBookmarkDTO;
+import com.ezen.matzip.domain.restaurant.dto.MenuDTO;
 import com.ezen.matzip.domain.restaurant.dto.RegistDTO;
 import com.ezen.matzip.domain.restaurant.dto.RestaurantDTO;
-import com.ezen.matzip.domain.restaurant.dto.RestaurantImageDTO;
+import com.ezen.matzip.domain.restaurant.dto.*;
 import com.ezen.matzip.domain.restaurant.entity.*;
 import com.ezen.matzip.domain.restaurant.repository.*;
 import com.ezen.matzip.domain.review.dto.ReviewDTO;
@@ -287,4 +289,37 @@ public class RestaurantService {
         // 레스토랑 정보 저장
         restaurantRepository.save(foundModify);
     }
+
+    //완수 북마크 기능에 필요
+    public Restaurant findByRestaurantCode(int restaurantCode) {
+        return restaurantRepository.findByRestaurantCode(restaurantCode);
+    }
+
+    public List<Restaurant> findAll() {
+        return restaurantRepository.findAll();
+    }
+
+    public RestaurantForBookmarkDTO convertToRestaurantForBookmarkDTO(Restaurant restaurant) {
+        RestaurantForBookmarkDTO dto = new RestaurantForBookmarkDTO();
+        dto.setRestaurantCode(restaurant.getRestaurantCode());
+        dto.setRestaurantName(restaurant.getRestaurantName());
+        dto.setMainMenu(restaurant.getMainMenu());
+        dto.setRestaurantLocation(restaurant.getRestaurantLocation());
+        dto.setRestaurantMenus(
+                restaurant.getMenus().stream()
+                        .map(menu -> new MenuDTO(menu.getMenuCode(), menu.getMenuName(), menu.getMenuPrice(), restaurant))
+                        .collect(Collectors.toList())
+        );
+        // 변환: restaurant 엔티티에 있는 키워드들을 RestaurantKeywordDTO 리스트로 매핑
+        dto.setRestaurantKeywords(
+                restaurant.getRestaurantKeywords().stream()
+                        .map(keyword -> new RestaurantKeywordDTO(
+                                keyword.getRestaurantKeywordCode(),
+                                keyword.getRestaurantCode().getRestaurantCode(),
+                                keyword.getRestaurantKeyword()))
+                        .collect(Collectors.toList())
+        );
+        return dto;
+    }
+    //완수 끝
 }

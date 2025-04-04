@@ -28,7 +28,7 @@
                     <input name="keyword" type="hidden" value="">
                     <a class="nearby" href="#" onclick="myLocation()">가까운 곳 찾기</a>
                 </form>
-                <a class="game" th:href="@{/minigame}">
+                <a class="game" th:href="@{/minigame/first}">
                     <img alt="게임패드" id="game" src="/img/gamepad-icon.png">
                 </a>
             </div>
@@ -63,7 +63,7 @@
                     <li><a th:href="@{/user/myinfo}">내 정보</a></li>
                     <li><a href="/page2">예약 목록</a></li>
                     <li><a th:href="@{/user/review/write/{userCode}(userCode=${userCode})}">이용 목록</a></li>
-                    <li><a href="/page3">북마크 목록</a></li>
+                    <li><a th:href="@{/user/bookmarks}">북마크 목록</a></li>
                     <li><a th:href="@{/user/review/{userCode}(userCode=${userCode})}">작성 리뷰 목록</a></li>
                 </ul>
             </nav>
