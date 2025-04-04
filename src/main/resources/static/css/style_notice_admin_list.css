@@ -1,0 +1,430 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poor Story", system-ui;
+    font-weight: 400;
+    font-style: normal;
+}
+
+p {
+    display: inline-block;
+    /*margin-bottom: 1vh;*/
+    margin:1vh;
+}
+
+span {
+    /* padding-bottom: 1vh; */
+}
+
+pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+button {
+    box-shadow: none;   /* 그림자 제거 */
+    border: none;       /* 테두리 제거 */
+    outline: none;      /* 클릭 시 외곽선 제거 */
+    background: #ddd;   /* 단색 배경 */
+}
+
+/* header */
+a {
+    text-decoration: none; /* 밑줄 제거 */
+    color: black; /* 글자색 변경 */
+    font-family: "Poor Story";
+    font-size: 1.6vh;
+}
+
+.admin-header {
+    height: 26vh;
+    width: 100%;
+    background-color: #fff3e0;
+    padding: 1vh 5%;
+    display: flex;
+    align-items: center;
+}
+.admin-header-container {
+    width: 88vh;
+    height: 16vh;
+    background-color: white;
+    border: 1px solid #747474;
+    border-radius: 2vh;
+    display:flex;
+    position:absolute;
+    left: 25.5%;
+}
+
+.admin-header-font1 {
+    font-family: "Poor Story";
+    font-size: 2vh;
+    color: #747474;
+}
+
+.admin-header-font2 {
+    font-family: "Poor Story";
+    font-size: 2vh;
+    color:black;
+}
+
+.admin-header-textdiv {
+    margin-left: 3.5vh;
+    margin-top: 1vh;
+}
+
+.logout {
+    position:absolute;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    right:2vh;
+    top:0.5vh;
+}
+
+
+/* logo */
+.logo{
+    position:relative;
+    left:8vh;
+}
+
+
+/* body */
+.body-section {
+    width: 100%;
+    min-height: 67.5vh;
+    position: relative;
+    background-color: #fff3e0;
+    display: flex;
+    justify-content: center;
+}
+
+.line-yellow {
+    width:80vh;
+    height:1px;
+    background-color: #FAB12F;
+    margin:0.5vh;
+    /* margin-bottom:1vh; */
+}
+
+.line-grey {
+    width:80vh;
+    height:1px;
+    background-color: #747474;
+    opacity: 30%;
+    margin-top:1vh;
+    transform: translate(3.5%, 3.5%);
+}
+
+.line-grey2 {
+    width:80vh;
+    height:1px;
+    background-color: #747474;
+    opacity: 30%;
+    margin:1vh;
+}
+
+
+
+
+.navi {
+    width:19vh;
+    height:27vh;
+    background-color: white;
+    border: 1px solid #747474;
+    border-radius: 2vh;
+    position:absolute;
+    left:10%;
+    justify-items: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.navi ul {
+    padding-left: 2vh;
+    text-align: left;
+}
+
+.redbutton {
+    width: 10vh;
+    height: 4vh;
+    background-color: #FA4032;
+    border-radius: 1vh;
+    margin:1vh;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+
+.redbutton1 {
+    background-color: #fa4032;
+    border-radius: 1vh;
+    width: 10vh;
+    height: 3.5vh;
+    color: white;
+    font-size: 1.6vh;
+    box-shadow: none;
+    border: none;
+    outline: none;
+}
+
+.redbutton2 {
+    width: 2.5vh;
+    height: 2.5vh;
+    background-color: #FA4032;
+    border-radius: 1vh;
+    font-family: "Poor Story";
+    font-size: 2vh;
+    color: white;
+}
+
+.redbutton3 {
+    width: 8vh;
+    height: 4vh;
+    background-color: #FA4032;
+    border-radius: 1vh;
+    margin:1vh;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+
+.redbutton4 {
+    width: 6vh;
+    height: 2vh;
+    background-color: #FA4032;
+    border-radius: 1vh;
+    margin:1vh;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    font-size: 1vh;
+    color:white;
+}
+
+.redbutton-font {
+    font-size: 2vh;
+    color: white;
+}
+
+.buttonbox {
+    position: absolute;
+    right: 3vh;
+    align-content: center;
+    align-items: center;
+    justify-content: right;
+}
+
+.buttonbox2 {
+    position: absolute;
+    right: 3vh;
+    align-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+}
+
+.buttonbox3 {
+    position: absolute;
+    right: 3vh;
+    bottom: 10%;
+    align-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+}
+
+.introducebox {
+    position: relative;
+    top: 30vh;
+}
+
+.navi-font {
+    /*font-family: "Poor Story";*/
+    font-size: 1.6vh;
+    color: black;
+}
+
+
+.container-section {
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    left: 25.5%;
+}
+
+.container-search {
+    width: 88vh;
+    height: 8vh;
+    align-items: center;
+    background-color: white;
+    border: 1px solid #747474;
+    border-radius: 2vh;
+    margin-bottom:1vh;
+    padding-left: 3.5vh;
+    display: flex;
+    flex-direction: row;
+}
+
+.custom-input {
+    appearance: none;
+    width: 15px;
+    height: 15px;
+    accent-color:#747474;
+    background-color: #d9d9d9;
+    border: none;
+}
+
+.custom-input:checked::before {
+    content: "✔";
+}
+
+.admin-input-long {
+    appearance:none;
+    height: 3vh;
+    width: 30vh;
+    background-color: #d9d9d9;
+    border: none;
+    border-radius: 1vh;
+    padding: 0.5vh;
+    margin-bottom: 0.5vh;
+}
+
+.container-search2
+{
+    position:relative;
+    width: 40vh;
+    height: 6vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.container-search3
+{
+    position:relative;
+    width: 40vh;
+    height: 6vh;
+    display: flex;
+    flex-direction: row;
+    justify-items: center;
+    justify-content: center;
+    align-items: center;
+}
+
+
+/* foryou */
+.content-container {
+    position: relative;
+    margin: 4vh auto;
+    padding: 2vh;
+    width: 85vh;
+    background: white;
+    border-radius: 10px;
+    border: 0.5px solid black;
+    height: 60vh;
+}
+h2 {
+    text-align: center;
+    padding-bottom: 2vh;
+}
+.board-table {
+    font-size: 13px;
+    width: 100%;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+}
+
+.board-table a {
+    color: #333;
+    display: inline-block;
+    line-height: 1.4;
+    word-break: break-all;
+    vertical-align: middle;
+}
+
+.board-table a:hover {
+    text-decoration: underline;
+}
+
+.board-table th {
+    text-align: center;
+}
+
+.board-table .th-num {
+    width: 100px;
+    text-align: center;
+}
+
+.board-table .th-date {
+    width: 200px;
+}
+
+.board-table th,
+.board-table td {
+    padding: 14px 0;
+}
+
+.board-table tbody td {
+    border-top: 1px solid #e7e7e7;
+    text-align: center;
+}
+
+.board-table tbody th {
+    padding-left: 28px;
+    padding-right: 14px;
+    border-top: 1px solid #e7e7e7;
+    text-align: left;
+}
+
+.board-table tbody th p {
+    display: none;
+}
+
+/* reset */
+* {
+    list-style: none;
+    text-decoration: none;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.clearfix:after {
+    content: '';
+    display: block;
+    clear: both;
+}
+
+.container {
+    width: 1100px;
+    margin: 0 auto;
+}
+
+.blind {
+    position: absolute;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    margin: -1px;
+    width: 1px;
+    height: 1px;
+}
+.buttonbox3 {
+    position: absolute;
+    bottom: 10px; /* 원하는 간격으로 조정 */
+    right: 10px;  /* 원하는 간격으로 조정 */
+}
+
+footer {
+    width: 100%;
+    background: #f58031;
+    color: #690305;
+    height: 60px;
+    display: flex;
+    align-items: center;
+}

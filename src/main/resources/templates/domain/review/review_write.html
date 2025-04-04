@@ -27,9 +27,9 @@
         <ul>
             <li><a href="#">내 정보</a></li>
             <li><a href="#">예약 목록</a></li>
-            <li><a th:href="@{/user/review/write/{userCode}(userCode=${userCode})}">이용 목록</a></li>
+            <li><a th:href="@{/user/review/write/}">이용 목록</a></li>
             <li><a href="#">북마크 목록</a></li>
-            <li><a th:href="@{/user/review/{userCode}(userCode=${userCode})}">작성 리뷰 목록</a></li>
+            <li><a th:href="@{/user/review/}">작성 리뷰 목록</a></li>
         </ul>
     </aside>
 
@@ -62,7 +62,7 @@
                     <button type="button" class="edit-btn" th:onclick="'openWriteModal(' + ${reservation.userCode} + ',' + ${reservation.restaurantCode} + ',' + ${reservation.reservationCode} + ')'">리뷰 작성</button>
                 </td>
                 <td>
-                    <button type="button" class="delete-btn">레시피</button>
+                    <button type="button" class="delete-btn">레시피 보기</button>
                 </td>
             </tr>
             </tbody>

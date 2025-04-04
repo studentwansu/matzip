@@ -39,3 +39,17 @@ function previewWriteImages(input) {
         reader.readAsDataURL(file);
     }
 }
+
+function searchRecipe(restaurantCode) {
+    fetch(`/restaurant/menu/${restaurantCode}`)
+        .then(response => response.json())
+        .then(data => {
+            const menu = data.mainMenu; // 예: "된장찌개"
+            const youtubeUrl = `https://www.youtube.com/results?search_query=${encodeURIComponent(menu)}+레시피`;
+            window.open(youtubeUrl, '_blank'); // 새 탭에서 열기
+        })
+        .catch(err => {
+            console.error("레시피 검색 실패", err);
+            alert("레시피를 가져올 수 없습니다.");
+        });
+}
