@@ -36,8 +36,8 @@ public class SecurityConfig {
                         .requestMatchers("/user/**").hasRole("USER")
                         .requestMatchers("/business/**").hasRole("BUSINESS")
                         .requestMatchers("/admin/**").hasRole("ADMIN")
-                        // 일단 테스트를 위해 모든 요청 허용 (추후 수정)
-                        .anyRequest().permitAll()
+                        // 나머지 요청은 인증된 사용자만 접근 가능하도록 변경
+                        .anyRequest().authenticated()
                 )
                 .formLogin(login -> login
                         .loginPage("/login")
