@@ -1,0 +1,143 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poor Story", system-ui;
+    font-weight: 400;
+    font-style: normal;
+}
+
+p {
+    display: inline-block;
+}
+
+pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+    font-family: "Poor Story";
+    font-size: 1.6vh;
+}
+
+button {
+    box-shadow: none;
+    border: none;
+    outline: none;
+    background: transparent;
+}
+
+.body-section {
+    width: 100%;
+    min-height: 67.5vh;
+    position: relative;
+    background-color: #fff3e0;
+    display: flex;
+    justify-content: center;
+}
+
+.store-info {
+    margin-right: 15vh;
+    position: relative;
+}
+
+.store-imgs {
+    width: 88vh;
+    height: 28vh;
+    border-radius: 2vh;
+    background-color: white;
+    margin-bottom: 2vh;
+}
+
+.store-container {
+    width: 88vh;
+    min-height: 27vh;
+    border-radius: 2vh;
+    background-color: white;
+    border: 1px solid #ccc;
+    margin-bottom: 2vh;
+    padding: 2.5vh;
+    display: flex;
+    flex-direction: column;
+}
+
+
+.upper-container {
+    display: flex;
+    gap: 2vh; /* 간격 추가 */
+}
+
+.store-inner-container1 {
+    position: relative;
+    width: 40vh;
+}
+
+.store-inner-container2 {
+    position: relative;
+    display: block;
+    width: 40vh;
+}
+
+.store-inner-container3 {
+    position: relative;
+    width: 80vh;
+    display: flex;
+    flex-direction: column;
+    margin-top: 5vh;
+}
+
+.introducebox {
+    position: relative;
+    top: 10vh;
+}
+
+.mapbox {
+    position:relative;
+    top:10vh;
+}
+
+/* 리뷰 관련 스타일 */
+.reviewbox {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 2vh;
+}
+
+.reviewimgbox {
+    position: relative;
+    flex-direction: row;
+}
+
+.reviewimg {
+    width: 10vh;
+    height: 10vh;
+}
+
+.reviewreply {
+    background-color: #d9d9d9;
+    border-radius: 1vh;
+    padding: 0.5vh;
+}
+
+.redbutton1 {
+    background-color: #fa4032;
+    border-radius: 1vh;
+    width: 10vh;
+    height: 3.5vh;
+    color: white;
+    font-size: 1.6vh;
+    box-shadow: none;
+    border: none;
+    outline: none;
+}
+
+.buttonbox {
+    position: absolute;
+    right: 3vh;
+    align-content: center;
+    align-items: center;
+    justify-content: right;
+}
