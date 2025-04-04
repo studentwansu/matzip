@@ -1,28 +1,24 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="_csrf" th:content="${_csrf.token}" />
-    <meta name="_csrf_header" th:content="${_csrf.headerName}" />
-    <title>공지사항 상세/수정/등록/삭제</title>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <title>notice_detail</title>
     <link href="https://fonts.googleapis.com" rel="preconnect">
     <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
     <link href="https://fonts.googleapis.com/css2?family=Poor+Story&display=swap" rel="stylesheet">
     <link href="/css/style_notice_detail.css" rel="stylesheet">
+    <link href="/css/header_footer.css" rel="stylesheet">
+    <script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=fd7786d297e2d4aaab4aa8b6bbb06b88&libraries=services"
+            type="text/javascript"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <style>
-        /* contenteditable 요소들이 일반 텍스트처럼 보이도록 스타일 적용 */
-        .editable {
-            border: none;
-            outline: none;
-            background: transparent;
-            font-size: 1em;
-        }
-        .button-group button {
-            margin-right: 10px;
-        }
-    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script th:src="@{/js/myLocation.js}"></script>
+    <script th:src="@{/js/weather.js}"></script>
     <script>
         // 수정 버튼 클릭 시 호출되는 함수
         function updateNotice(noticeId) {
@@ -84,98 +80,89 @@
                 });
         }
 
-        // 새 공지사항 등록 모드로 전환: 텍스트를 초기화
-        function clearForm() {
-            document.getElementById('noticeTitle').innerText = '';
-            document.getElementById('noticeContent').innerText = '';
-        }
-
+        // CSRF 토큰을 axios 기본 헤더에 설정
         const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
         const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
         axios.defaults.headers.common[csrfHeader] = csrfToken;
     </script>
 </head>
 <body>
-<!-- 헤더: 직접 작성한 헤더 -->
+<!-- 헤더: 역할에 따라 다른 외부 헤더 프래그먼트를 포함 -->
 <header>
-    <div class="header-container">
-        <!-- logo -->
-        <div class="logo">
-            <img src="/img/logo.png" alt="맛.zip 로고">
-        </div>
-        <!-- search -->
-        <div class="search-container">
-            <div class="search-word">
-                <input type="text" placeholder="검색어를 입력하세요...">
-            </div>
-            <div class="popular-searches">
-                <span>인기검색어1</span>
-                <span>인기검색어2</span>
-                <span>인기검색어3</span>
-                <span>인기검색어4</span>
-                <span>인기검색어5</span>
-                <a href="#" class="nearby">가까운 곳 찾기</a>
-                <a href="#" class="game">
-                    <img id="game" src="/js/gamepad-icon.png" alt="게임패드">
-                </a>
-            </div>
-        </div>
-        <!-- menu -->
-        <div class="menu">
-            <a href="#" class="login">로그인</a>
-            <a href="#" class="signup">회원가입</a>
-        </div>
+    <!-- 게스트 및 일반 사용자(ROLE_USER)는 같은 user_header.html 사용 -->
+    <div sec:authorize="isAnonymous() or hasRole('USER')">
+        <div th:replace="~{html/user_header :: userHeader}"></div>
+    </div>
+
+    <!-- 점주(사업자) 헤더 -->
+    <div sec:authorize="hasRole('BUSINESS')">
+        <div th:replace="~{html/store_header :: storeHeader}"></div>
+    </div>
+
+    <!-- 관리자 헤더 -->
+    <div sec:authorize="hasRole('ADMIN')">
+        <div th:replace="~{html/admin_header :: adminHeader}"></div>
     </div>
 </header>
 
-<!-- 메인 콘텐츠: 상세보기와 동시에 편집 가능한 인라인 모드 -->
+<!-- 메인 콘텐츠: 공지사항 상세 페이지 (인라인 편집) -->
 <main>
     <div class="content-container">
-        <h2 id="noticeTitle" contenteditable="true" class="editable"
-            th:text="${notice != null ? notice.title : ''}">공지 제목</h2>
-        <p th:if="${notice != null}" th:text="${#temporals.format(notice.createdAt, 'yyyy-MM-dd HH:mm')}">
-            작성일: 2025-04-02 10:00
-        </p>
-        <div id="noticeContent" contenteditable="true" class="editable"
-             th:text="${notice != null ? notice.content : ''}">
-            공지 내용
-        </div>
+        <table class="board-table">
+            <h2> 공지사항</h2>
+            <thead>
+            <tr>
+                <!-- noticeIndex가 모델에 전달되어 있다면 사용, 없으면 기본값으로 1 사용 -->
+                <th style="padding-right: 10px;" th:text="${noticeIndex != null ? noticeIndex : 1}">1</th>
+                <th th:text="${notice.title}">공지 제목</th>
+                <th th:text="${#temporals.format(notice.createdAt, 'yyyy.MM.dd')}">2025.07.13</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td colspan="3">
+                    <div class="notice-content" contenteditable="true" th:text="${notice.content}">
+                        공지 내용
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+            <!-- 버튼 그룹: 관리자만 표시 -->
+            <div class="button-group" sec:authorize="hasRole('ADMIN')">
+                <!-- 수정 버튼 -->
+                <button type="button" th:attr="data-id=${notice.id}"
+                        onclick="updateNotice(this.getAttribute('data-id'))"
+                        th:if="${notice != null and notice.id != ''}">수정
+                </button>
+                <!-- 삭제 버튼 -->
+                <button type="button" th:attr="data-id=${notice.id}"
+                        onclick="deleteNotice(this.getAttribute('data-id'))"
+                        th:if="${notice != null and notice.id != ''}">삭제
+                </button>
+                <!-- 등록 버튼 (공지사항 객체가 없을 경우) -->
+                <button type="button" onclick="createNotice()"
+                        th:if="${notice == null or notice.id == ''}">등록
+                </button>
+                <!-- 새 공지사항 등록 페이지로 전환 -->
+                <button type="button" onclick="window.location.href='/board/notice/write'">
+                    새 공지사항 등록
+                </button>
+            </div>
 
-        <!-- 버튼 그룹 -->
-        <div class="button-group">
-            <!-- 수정 버튼 (notice 객체가 있을 경우만) -->
-            <button type="button" th:attr="data-id=${notice.id}"
-                    onclick="updateNotice(this.getAttribute('data-id'))"
-                    th:if="${notice != null and notice.id != ''}">수정</button>
-            <!-- 삭제 버튼 (notice 객체가 있을 경우만) -->
-            <button type="button" data-id="${notice.id}"
-                    onclick="deleteNotice(this.getAttribute('data-id'))"
-                    th:if="${notice != null and notice.id != ''}">삭제</button>
-            <!-- 등록 버튼 (notice 객체가 없거나 id가 빈 경우) -->
-            <button type="button" onclick="createNotice()"
-                    th:if="${notice == null or notice.id == ''}">등록</button>
-            <!-- 새 공지사항 등록으로 전환 -->
-            <button type="button" onclick="window.location.href='/board/notice/write'">새 공지사항 등록</button>
-        </div>
-
-        <!-- 목록으로 돌아가기 -->
-        <div>
-            <a th:href="@{/board/notice/list}">
-                <button type="button">목록으로</button>
-            </a>
-        </div>
+            <!-- 목록으로 돌아가기 -->
+            <div class="list-btn">
+                <a th:href="@{/board/notice/list}">
+                    <button type="button">뒤로가기</button>
+                </a>
+            </div>
+        </table>
     </div>
 </main>
 
-<!-- 푸터: 직접 작성한 푸터 -->
+<!-- 푸터: 외부 푸터 프래그먼트 -->
 <footer>
     <div class="footer-container">
-        <p>Copyright 2025 맛zip All Right Reserved</p>
-        <ul class="footer-menu">
-            <li><a th:href="@{/board/notice/list}">공지사항</a></li>
-            <li><a th:href="@{/board/faq/list}">FAQ</a></li>
-            <li><a href="#">Q&A</a></li>
-        </ul>
+        <div th:replace="~{html/user_footer :: userFooter}"></div>
     </div>
 </footer>
 </body>
