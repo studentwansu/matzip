@@ -278,15 +278,6 @@ button {
 
 }
 
-.admit-input {
-    background-color: #d9d9d9;
-    border: none;
-    border-radius: 1vh;
-    padding: 0.5vh;
-    /*margin-bottom: 0.5vh;*/
-    resize: none;
-}
-
 /* 버튼 박스 */
 .buttonbox {
     position: absolute;
@@ -370,49 +361,4 @@ button {
     padding: 0.5vh;
     margin-bottom: 0.5vh;
     resize: none;
-}
-
-/* 푸터 스타일 */
-footer {
-    width: 100%;
-    background: #f58031;
-    color: #690305;;
-    height: 60px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.footer-container {
-    width: 90%;
-    max-width: 1440px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.footer-menu {
-    list-style: none;
-    display: flex;
-    gap: 100px;
-}
-
-.footer-menu li a {
-    text-decoration: none;
-    color: #690305;
-    font-size: 16px;
-}
-
-.footer-font {
-    padding-left: 6.5vh;
-    font-family: "Poor Story";
-    font-size: 2.4vh;
-    color: #690305;
-}
-
-footer ul {
-    list-style: none;
-    display: flex;
-    justify-content: center;
-    margin-left: 50%;
 }

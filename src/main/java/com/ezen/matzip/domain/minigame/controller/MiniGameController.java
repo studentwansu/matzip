@@ -6,7 +6,9 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -29,8 +31,7 @@ public class MiniGameController {
     }
 
     @GetMapping("/minigame/select")
-    public String getSelected(@RequestParam("selected") String selected, HttpSession session, Model model)
-    {
+    public String getSelected(@RequestParam("selected") String selected, HttpSession session, Model model) {
         return "domain/minigame/user_minigame";
     }
 
@@ -39,19 +40,15 @@ public class MiniGameController {
         List<KeywordDTO>[] currentKeywords = (List<KeywordDTO>[]) session.getAttribute("currentKeywords");
 
         currentKeywords = miniGameService.sortKeyword(currentKeywords, selected);
-
         String announce = miniGameService.checkCurrentRound(currentKeywords);
-        if (announce != null)
-        {
-            if (announce.equals("끝!"))
-            {
+
+        if (announce != null) {
+            if (announce.equals("끝!")) {
                 KeywordDTO lastKeyword = miniGameService.foundKeyword(selected);
                 model.addAttribute("lastKeyword", lastKeyword);
                 model.addAttribute("announce", announce);
                 return "domain/minigame/user_minigameresult";
-            }
-            else
-            {
+            } else {
                 model.addAttribute("announce", announce);
             }
         }

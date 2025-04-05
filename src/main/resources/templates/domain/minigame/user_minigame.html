@@ -28,7 +28,8 @@
             <div class="minigame-imgbox" th:each="shownKeywords: ${currentKeywords[1]}">
                 <form action="/minigame/select" class="minigame-imgs" method="post">
                     <button style="background: none; font-size:2vh; flex-direction: column" type="submit">
-                        <img class="minigame-img" th:alt="${shownKeywords.getKeyword()}" th:src="${shownKeywords.getKeywordImgPath()}">
+                        <img class="minigame-img" th:alt="${shownKeywords.getKeyword()}"
+                             th:src="${shownKeywords.getKeywordImgPath()}">
                         <input name="selected" th:value="${shownKeywords.getKeyword()}" type="hidden">
                         <input name="currentKeywords" th:value="${currentKeywords}" type="hidden">
                         <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
