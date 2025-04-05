@@ -81,5 +81,18 @@ public class User {
         this.categoryCode = categoryCode;
         this.isVegan = isVegan;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return userCode != null && userCode.equals(user.userCode);
+    }
+
+    @Override
+    public int hashCode() {
+        return userCode != null ? userCode.hashCode() : 0;
+    }
 }
 
