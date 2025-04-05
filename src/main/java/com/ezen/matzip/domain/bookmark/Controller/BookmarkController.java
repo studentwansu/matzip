@@ -13,7 +13,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
-import java.util.List;
 
 @Controller
 @RequestMapping("/user/bookmarks")
@@ -43,8 +42,7 @@ public class BookmarkController {
 
         // 이미 북마크되어 있으면 삭제, 아니면 추가
         if (bookmarkService.isBookmarked(user, restaurant)) {
-            Bookmark bookmark = bookmarkService.findByUserAndRestaurant(user, restaurant)
-                    .orElseThrow(() -> new RuntimeException("북마크 정보를 찾을 수 없습니다."));
+            Bookmark bookmark = bookmarkService.findByUserAndRestaurant(user, restaurant).orElseThrow(() -> new RuntimeException("북마크 정보를 찾을 수 없습니다."));
             bookmarkService.deleteBookmark(bookmark.getBookmarkCode());
         } else {
             Bookmark bookmark = new Bookmark();

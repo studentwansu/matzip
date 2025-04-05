@@ -1,6 +1,6 @@
 html, body {
     height: 100%;
-    margin-bottom: 20vh;
+    /*margin-bottom: 20vh;*/
     padding: 0;
     background-color: #fff3e0;
 }
@@ -85,12 +85,11 @@ pre {
     height: 6vh;
     border: none;
     border-radius: 10px;
-    margin: 1vh;
     cursor: pointer;
     text-align: center;
-    
+
     float: right;
-    margin-left: auto;
+    margin: 1vh auto;
 }
 
 .inside_signup_btn a{
@@ -108,20 +107,36 @@ pre {
 }
 
 /* 메인 컨테이너 */
-.main-container {
+.body-section {
+    width: 100%;
+    flex: 1;
+    background-color: #fff3e0;
+    position: relative;
     display: flex;
     justify-content: center;
+    flex-direction: row-reverse;
     align-items: flex-start;
-    padding-bottom: 10vh;
+    overflow: auto;
+
 }
 
 /* 콘텐츠 영역 */
+
+.container-section {
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    left: 25.5%;
+}
+
 .content {
     background: white;
     padding: 20px;
-    border-radius: 10px;
-    border: 1px solid #f58031;
-    width: 850px;
+    border-radius: 2vh;
+    border: 1px solid #ccc;
+    width: 88vh;
+    overflow: auto;
+    margin-bottom:10vh;
 }
 
 .content h2 {
@@ -138,7 +153,7 @@ table {
 
 th,
 td {
-    padding: 10px;
+    padding: 5px;
     font-size: 14px;
 }
 
