@@ -12,8 +12,9 @@
     <link href="/css/style_store.css" rel="stylesheet">
 
 <body>
-<!-- header -->
+<header>
 <div th:replace="~{html/store_header :: storeHeader}"></div>
+</header>
 
 <main>
     <section class="body-section">
@@ -108,12 +109,7 @@
 </main>
 
 <footer>
-    <p class="footer-font">Copyright 2025 맛zip All Right Reserved</p>
-    <ul>
-        <li class="footer-font"><a href="">공지사항</a></li>
-        <li class="footer-font"><a href="">FAQ</a></li>
-        <li class="footer-font"><a href="">Q&A</a></li>
-    </ul>
+    <div th:replace="~{html/user_footer :: userFooter}"></div>
 </footer>
 
 </body>

@@ -32,7 +32,7 @@
             </div>
             <ul>
                 <li><a class="navi-font" th:href="@{/business/myinfo}">내 정보</a></li>
-                <li><a class="navi-font" th:href="@{/business/restaurant}">내 식당 정보</a></li>
+                <li><a class="navi-font" th:href="@{/business/restaurant/{restaurantCode}(restaurantCode=${restaurantCode})}">내 식당 정보</a></li>
                 <li><a class="navi-font" href="">식당 등록 신청</a></li>
                 <li><a class="navi-font" href="">예약 현황 조회</a></li>
                 <li><a class="navi-font" href="">식당 정보 수정 요청</a></li>
@@ -128,6 +128,8 @@
                 <div class="store-inner-container3">
                     <p style="font-size:2.5vh;">리뷰</p><br>
                     <div class="reviewbox" th:each="review : ${reviews}">
+<!--                        <span style="font-size:1.5vh;" th:text="${review.유저ID표시}"-->
+<!--                        <span style="font-size:1.5vh;" th:text="${review.유저국적표시}"-->
                         <span style="font-size:1.5vh;" th:text="${review.reviewDate}"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
                             style="font-size:1.5vh;" th:text="${review.rating}"></span><br>
                         <span style="font-size:1.5vh;" th:text="${review.reviewContent}"></span><br>
@@ -146,8 +148,9 @@
     </section>
 </main>
 
-
+<footer>
 <div th:replace="~{html/user_footer :: userFooter}"></div>
+</footer>
 
 <script th:inline="javascript">
     let restLoc = /*[[${restaurant.restaurantLocation}]]*/ "";
