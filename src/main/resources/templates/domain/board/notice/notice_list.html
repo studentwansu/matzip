@@ -53,7 +53,7 @@
         <tr th:each="notice, stat : ${notices}">
             <td th:text="${stat.index + 1}">1</td>
             <td>
-                <a th:href="@{/board/list/{id}(id=${notice.id})}" th:text="${notice.title}">제목</a>
+                <a th:href="@{/board/notice/{id}(id=${notice.id})}" th:text="${notice.title}">제목</a>
             </td>
             <td th:text="${#temporals.format(notice.createdAt, 'yyyy.MM.dd')}">2025.07.13</td>
         </tr>

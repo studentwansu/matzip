@@ -32,12 +32,13 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/", "/main/main", "/login", "/signup", "/signup/**", "/css/**", "/js/**", "/img/**", "/html/**", "checkUserId",
                                 "/fragments/**", "/search", "/search/**", "/storeinfo/**", "/minigame/**", "/weather/**","/restaurant/**",
-                                "/findpwd", "/checkUserInfo", "/resetPassword").permitAll()
+                                "/findpwd", "/checkUserInfo", "/resetPassword","/board/**" ).permitAll()
                         .requestMatchers("/user/**").hasRole("USER")
                         .requestMatchers("/business/**").hasRole("BUSINESS")
                         .requestMatchers("/admin/**").hasRole("ADMIN")
-                        // 나머지 요청은 인증된 사용자만 접근 가능하도록 변경
+                        .requestMatchers("/css/**", "/js/**", "/images/**").permitAll()
                         .anyRequest().authenticated()
+                        // 나머지 요청은 인증된 사용자만 접근 가능하도록 변경
                 )
                 .formLogin(login -> login
                         .loginPage("/login")

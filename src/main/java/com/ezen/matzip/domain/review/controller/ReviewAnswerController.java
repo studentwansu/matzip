@@ -169,6 +169,7 @@ public class ReviewAnswerController {
         reviewAnswerService.increaseReportCount(reviewCode);
         return ResponseEntity.ok("신고 처리 완료");
     }
+}
 
 
 
