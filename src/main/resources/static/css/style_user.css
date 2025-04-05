@@ -38,7 +38,7 @@ pre {
 
 .body-section {
     width: 100%;
-    flex:1;
+    flex: 1;
     background-color: #fff3e0;
     min-height: 67.5vh;
     position: relative;
@@ -69,37 +69,47 @@ pre {
     background: white;
     border-radius: 2vh;
     border: 1px solid #ccc;
-    margin-bottom:5vh;
+    margin-bottom: 5vh;
 
 }
 
 .food-list {
     display: flex;
     justify-content: space-around;
-    margin:2vh;
+    margin: 2vh;
 }
 
 .food-item {
     position: relative;
     display: inline-block;
     text-align: center;
+    width: 150px;
+    height: 200px;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border-radius: 1vh;
+    flex-direction: column;
 }
 
-.food-item img {
-    width: 150px;
-    height: 150px;
-    border-radius: 10px;
+
+.main-img {
+    border-radius: 1vh;
+    aspect-ratio: 1 / 1; /* 1:1 비율 유지 (정사각형) */
+    width: min(100%, 800px); /* 최대 240px, 하지만 너무 크면 100% 제한 */
+    height: min(100%, 800px); /* 최대 240px, 하지만 너무 크면 100% 제한 */
+    object-fit: cover; /* 비율 유지하며 안에 맞춤 */
 }
 
 /* user 레스토랑 리스트 페이지 */
 .navi {
-    width:19vh;
-    height:23vh;
+    width: 19vh;
+    height: 23vh;
     background-color: white;
     border: 1px solid #ccc;
     border-radius: 2vh;
-    position:fixed;
-    left:10%;
+    position: fixed;
+    left: 10%;
     justify-items: center;
     display: flex;
     flex-direction: column;
@@ -110,14 +120,14 @@ pre {
 .restaurant-list {
     display: block;
     gap: 15px;
-    position:absolute;
-    left:30%;
+    position: absolute;
+    left: 30%;
     padding-bottom: 5vh;
 
 }
 
 .restaurant-card {
-    width:85vh;
+    width: 85vh;
     background: white;
     display: flex;
     align-items: center;
@@ -177,12 +187,12 @@ pre {
 
 .sidebar {
     width: 19vh;
-    height:27vh;
+    height: 27vh;
     background-color: white;
     border: 1px solid #ccc;
     border-radius: 2vh;
-    position:absolute;
-    left:10%;
+    position: absolute;
+    left: 10%;
     justify-items: center;
     display: flex;
     flex-direction: column;
@@ -215,7 +225,6 @@ pre {
 }
 
 
-
 .container {
     padding: 2vh;
     width: 70%;
@@ -234,47 +243,47 @@ pre {
     align-content: center;
     align-items: center;
     justify-content: center;
-    margin:1vh;
-    display:flex;
-    gap:2vh;
+    margin: 1vh;
+    display: flex;
+    gap: 2vh;
 }
 
 .container-content {
-    font-size:2vh;
-    margin:1vh;
+    font-size: 2vh;
+    margin: 1vh;
 }
 
 .line-yellow {
-    width:80vh;
-    height:1px;
+    width: 80vh;
+    height: 1px;
     background-color: #FAB12F;
-    margin:0.5vh;
+    margin: 0.5vh;
     /* margin-bottom:1vh; */
 }
 
 .line-yellow-100 {
-    width:100vh;
-    height:1px;
+    width: 100vh;
+    height: 1px;
     background-color: #FAB12F;
-    margin:0.5vh;
+    margin: 0.5vh;
     /* margin-bottom:1vh; */
 }
 
 .line-grey-100 {
-    width:100vh;
-    height:1px;
+    width: 100vh;
+    height: 1px;
     background-color: #747474;
     opacity: 30%;
-    margin-top:1vh;
+    margin-top: 1vh;
     transform: translate(3.5%, 3.5%);
 }
 
 .line-grey2-100 {
-    width:100vh;
-    height:1px;
+    width: 100vh;
+    height: 1px;
     background-color: #747474;
     opacity: 30%;
-    margin:1vh;
+    margin: 1vh;
 }
 
 .user-table-class {
@@ -293,12 +302,12 @@ pre {
 
 .table-class2 th, .table-class2 td {
     border: 1px solid #ccc;
-    padding:0.5vh;
+    padding: 0.5vh;
 }
 
 .table-class2 tr:last-child td {
     border-bottom: none;
-    padding:0.5vh;
+    padding: 0.5vh;
 }
 
 .table-class3 {
@@ -311,12 +320,12 @@ pre {
 
 .table-class3 th, .table-class3 td {
     border: 1px solid #ccc;
-    padding:1vh;
+    padding: 1vh;
 }
 
 .table-class3 tr:last-child td {
     border-bottom: none;
-    padding:1vh;
+    padding: 1vh;
 }
 
 .user-table-class2 {
@@ -328,14 +337,13 @@ pre {
 
 .user-table-class2 th, .user-table-class2 td {
     border-bottom: 1px solid #ccc;
-    padding:3px;
+    padding: 3px;
 }
 
 /*.user-table-class2 tr:last-child td {*/
 /*    !*border-bottom: none;*!*/
 /*    !*padding:0.5vh;*!*/
 /*}*/
-
 
 
 .container-section {
@@ -356,7 +364,7 @@ pre {
 }
 
 .container-content {
-    font-size:1.6vh;
+    font-size: 1.6vh;
 }
 
 
@@ -394,6 +402,7 @@ pre {
     display: flex;
     flex-direction: row;
 }
+
 .redbutton3 {
     width: 8vh;
     height: 4vh;
@@ -411,13 +420,13 @@ pre {
     height: 2vh;
     background-color: #FA4032;
     border-radius: 1vh;
-    margin:1vh;
+    margin: 1vh;
     align-content: center;
     align-items: center;
     justify-content: center;
     display: flex;
     font-size: 1vh;
-    color:white;
+    color: white;
 }
 
 .container-boardlist {
@@ -434,7 +443,7 @@ pre {
 .container-bookmarklist {
     width: 88vh;
     height: 52vh;
-    display:flex;
+    display: flex;
     flex-direction: column;
     align-items: center;
     background-color: white;
@@ -442,16 +451,17 @@ pre {
     border-radius: 2vh;
     margin-bottom: 5%;
 }
+
 .container-textarea {
-    margin-top:1vh;
+    margin-top: 1vh;
     display: inline-block;
-    font-size:1.6vh;
+    font-size: 1.6vh;
 
 }
 
 .pagination {
-    position:absolute;
-    top:72%;
+    position: absolute;
+    top: 72%;
     text-align: center;
 }
 

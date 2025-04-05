@@ -112,3 +112,40 @@
     font-size: 16px;
     resize: none;
 }
+
+.input-style
+{
+    position:absolute;
+    background-color: #d9d9d9;
+    border: none;
+    border-radius: 1vh;
+    padding: 0.5vh;
+    resize: none;
+    top:1%;
+}
+
+.reply-complete {
+    width: 6vh;
+    height: 3vh;
+    background-color: green;
+    border-radius: 1vh;
+    margin: 1vh;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    color:white;
+}
+
+.reply-before {
+    width: 6vh;
+    height: 3vh;
+    background-color: #FA4032;
+    border-radius: 1vh;
+    margin: 1vh;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    color:white;
+}
