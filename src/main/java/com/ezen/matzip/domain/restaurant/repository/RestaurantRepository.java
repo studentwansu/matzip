@@ -44,4 +44,6 @@ public interface RestaurantRepository extends JpaRepository<Restaurant, Integer>
 
     Restaurant findByBusinessCode(int businessCode);
 
+    int countAllByRestaurantActiveStatus(int activeStatus);
+
 }
