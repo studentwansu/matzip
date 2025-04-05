@@ -10,11 +10,6 @@
 
 p {
     display: inline-block;
-    /*margin-bottom: 1vh;*/
-}
-
-span {
-    /*padding-bottom: 1vh;*/
 }
 
 pre {
@@ -22,7 +17,6 @@ pre {
     word-wrap: break-word;
 }
 
-/* 링크 스타일 */
 a {
     text-decoration: none;
     color: black;
@@ -30,12 +24,11 @@ a {
     font-size: 1.6vh;
 }
 
-/* 버튼 스타일 */
 button {
     box-shadow: none;
     border: none;
     outline: none;
-    background: #ddd;
+    background: transparent;
 }
 
 /* 헤더 스타일 */
@@ -188,7 +181,6 @@ button {
 }
 
 .redbutton-font {
-    font-family: "Poor Story";
     font-size: 2vh;
     color: white;
 }
@@ -295,75 +287,6 @@ button {
     resize: none;
 }
 
-
-/* 식당 관련 스타일 */
-.store-info {
-    margin-right: 15vh;
-    position: relative;
-}
-
-.store-imgs {
-    width: 85vh;
-    height: 28vh;
-    border-radius: 2vh;
-    background-color: white;
-    margin: auto;
-}
-
-.store-container {
-    width: 88vh;
-    min-height: 27vh;
-    border-radius: 2vh;
-    background-color: white;
-    border: 1px solid #ccc;
-    margin: auto;
-    padding: 2.5vh;
-    display: flex;
-    flex-direction: column;
-}
-
-.store-container2 {
-    width: 88vh;
-    min-height: 57vh;
-    border-radius: 2vh;
-    background-color: white;
-    border: 1px solid #ccc;
-    /*margin: auto;*/
-    /*padding: 1.5vh;*/
-    display: flex;
-    flex-direction: column;
-
-    align-items: center;
-    /*margin-left:1vh;*/
-    /*margin-right:1vh;*/
-    margin-bottom: 5%;
-    padding-right: 1vh;
-    padding-left: 1vh;
-}
-
-.upper-container {
-    display: flex;
-    gap: 2vh;
-    flex-wrap: wrap;
-}
-
-.store-inner-container1 {
-    position: relative;
-    width: 40vh;
-}
-
-.store-inner-container2 {
-    position: relative;
-    display: block;
-    width: 40vh;
-}
-
-.store-inner-container3 {
-    position: relative;
-    width: 80vh;
-    margin-top: 5vh;
-}
-
 /* 버튼 박스 */
 .buttonbox {
     position: absolute;
@@ -395,41 +318,6 @@ button {
     align-items: center;
     display: flex;
     flex-direction: row;
-}
-
-
-
-.introducebox {
-    position: relative;
-    top: 2vh;
-}
-
-/* 맵 박스 */
-.mapbox {
-    position:relative;
-}
-
-/* 리뷰 관련 스타일 */
-.reviewbox {
-    position: relative;
-    display: inline-block;
-    margin-bottom: 2vh;
-}
-
-.reviewimgbox {
-    position: relative;
-    flex-direction: row;
-}
-
-.reviewimg {
-    width: 10vh;
-    height: 10vh;
-}
-
-.reviewreply {
-    background-color: #d9d9d9;
-    border-radius: 1vh;
-    padding: 0.5vh;
 }
 
 /* 입력 필드 스타일 */

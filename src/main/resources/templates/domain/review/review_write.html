@@ -62,7 +62,9 @@
                     <button type="button" class="edit-btn" th:onclick="'openWriteModal(' + ${reservation.userCode} + ',' + ${reservation.restaurantCode} + ',' + ${reservation.reservationCode} + ')'">리뷰 작성</button>
                 </td>
                 <td>
-                    <button type="button" class="delete-btn">레시피 보기</button>
+                    <a th:href="${reservation.recipe}" target="_blank">
+                        <button type="button" class="delete-btn">레시피 보기</button>
+                    </a>
                 </td>
             </tr>
             </tbody>

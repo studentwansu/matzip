@@ -1,5 +1,6 @@
 package com.ezen.matzip.domain.review.service;
 
+import com.ezen.matzip.domain.bookmark.entity.Bookmark;
 import com.ezen.matzip.domain.reservation.dto.ReservationDTO;
 import com.ezen.matzip.domain.reservation.entity.Reservation;
 import com.ezen.matzip.domain.reservation.repository.ReservationRepository;
@@ -16,12 +17,17 @@ import com.ezen.matzip.domain.user.entity.User;
 import com.ezen.matzip.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.security.Principal;
 import java.util.*;
 
@@ -37,6 +43,10 @@ public class ReviewService {
     private final ReservationRepository reservationRepository;
     private final RestaurantRepository restaurantRepository;
     private final ModelMapper modelMapper;
+    private String generateYoutubeUrl(String menu){
+        String keyword = menu + " 레시피";
+        return "https://www.youtube.com/results?search_query=" + URLEncoder.encode(keyword, StandardCharsets.UTF_8);
+    }
 
 
     public List<ReviewDTO> findReviewByUserCode(int userCode) {
@@ -153,7 +163,9 @@ public class ReviewService {
             dto.setReservationPeople(e.getReservationPeople());
             dto.setRestaurantCode(restaurant);
             dto.setRestaurantName(restaurant);
-            dto.setRecipe(e.getRecipe());
+
+            String youtubeUrl = generateYoutubeUrl(restaurant.getMainMenu());
+            dto.setRecipe(youtubeUrl);
 
             result.add(dto);
         }
@@ -185,4 +197,5 @@ public class ReviewService {
         }
 
     }
+
 }
