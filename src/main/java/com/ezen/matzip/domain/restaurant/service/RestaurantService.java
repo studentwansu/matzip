@@ -8,7 +8,9 @@ import com.ezen.matzip.domain.restaurant.dto.*;
 import com.ezen.matzip.domain.restaurant.entity.*;
 import com.ezen.matzip.domain.restaurant.repository.*;
 import com.ezen.matzip.domain.review.dto.ReviewDTO;
+import com.ezen.matzip.domain.review.dto.ReviewImageDTO;
 import com.ezen.matzip.domain.review.entity.Review;
+import com.ezen.matzip.domain.review.entity.ReviewImage;
 import com.ezen.matzip.domain.review.repository.ReviewRepository;
 import com.ezen.matzip.domain.user.entity.Business;
 import jakarta.transaction.Transactional;
@@ -16,7 +18,10 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.sql.Time;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -172,7 +177,7 @@ public class RestaurantService {
     }
 
     @Transactional
-    public void registRestaurant(RegistDTO registDTO, List<RestaurantImageDTO> restaurantImageDTO) {
+    public Restaurant registRestaurant(RegistDTO registDTO, List<RestaurantImageDTO> restaurantImageDTO) {
         String startTimeString = registDTO.getRestaurantStartTime();
         String endTimeString = registDTO.getRestaurantEndTime();
 
@@ -229,12 +234,15 @@ public class RestaurantService {
                     regist, dto.getRestaurantImagePath(), dto.getRestaurantOriginalName(), dto.getRestaurantSavedName());
             restaurantImageRepository.save(restaurantImage);
         }
+
+        return regist;
     }
 
     @Transactional
-    public void modifyRestaurant(RegistDTO registDTO) {
+    public void modifyRestaurant(RegistDTO registDTO, List<MultipartFile> multiFiles) {
         // 레스토랑 코드로 레스토랑 찾기
         Restaurant foundModify = restaurantRepository.findByRestaurantCode(registDTO.getRestaurantCode());
+        System.out.println("foundModify : " + foundModify);
 
         // 시간 변환
         String startTimeString = registDTO.getRestaurantStartTime();
@@ -255,7 +263,8 @@ public class RestaurantService {
                 startTime,
                 endTime,
                 registDTO.getRestaurantService(),
-                category);
+                category,
+                registDTO.getBusinessCode());
 
 
         List<Menu> foundMenus = menuRepository.findByRestaurantCode(foundModify);
@@ -284,11 +293,56 @@ public class RestaurantService {
         List<RestaurantKeyword> keywordList = registDTO.getRestaurantKeyword().stream()
                 .map(keyword -> new RestaurantKeyword(keyword, foundModify)) // 새로운 키워드 추가
                 .collect(Collectors.toList());
-        foundModify.getRestaurantKeywords().addAll(keywordList); // 새로운 키워드 추가
+        foundModify.getRestaurantKeywords().addAll(keywordList);
+
+        List<RestaurantImage> oldImages = restaurantImageRepository.findRestaurantImageByRestaurantCode(foundModify.getRestaurantCode());
+        for (RestaurantImage img : oldImages) {
+            File oldFile = new File("C:/dev/img/restaurant" + img.getRestaurantImagePath());
+            if (oldFile.exists()) oldFile.delete();
+            restaurantImageRepository.delete(img);
+        }// 새로운 키워드 추가
+
+        List<RestaurantImageDTO> files = new ArrayList<>();
+        String filePath;
+
+        try {
+            File fileDir = new File("C:/dev/img/restaurant");
+            if (!fileDir.exists()) fileDir.mkdirs();
+            filePath = fileDir.getAbsolutePath();
+
+            int count = 0;
+            for (MultipartFile file : multiFiles) {
+                if (file.isEmpty()) continue;
+                if (count >= 3) break;
+
+                String originFileName = file.getOriginalFilename();
+                String ext = originFileName.substring(originFileName.lastIndexOf("."));
+                String savedFileName = UUID.randomUUID().toString().replace("-", "") + ext;
+
+                // 실제 저장
+                file.transferTo(new File(filePath + "/" + savedFileName));
+
+                // 파일 정보 저장
+                files.add(new RestaurantImageDTO("/img/restaurant/" + savedFileName, originFileName, savedFileName));
+                count++;
+            }
+
+            for (RestaurantImageDTO dto : files) {
+                RestaurantImage restaurantImage = new RestaurantImage(
+                        foundModify, dto.getRestaurantImagePath(), dto.getRestaurantOriginalName(), dto.getRestaurantSavedName());
+                restaurantImageRepository.save(restaurantImage);
+            }
+
+
+        } catch (IOException e) {
+            System.out.println("파일 저장 실패");
+            e.printStackTrace();
+        }
 
         // 레스토랑 정보 저장
         restaurantRepository.save(foundModify);
     }
+
 
     //완수 북마크 기능에 필요
     public Restaurant findByRestaurantCode(int restaurantCode) {

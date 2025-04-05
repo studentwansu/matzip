@@ -59,7 +59,7 @@ public class Restaurant {
 
     public void Modify(int restaurantCode, String restaurantName, String restaurantLocation, String restaurantContactNumber,
                        String restaurantDescription, String mainMenu, Time restaurantStartTime, Time restaurantEndTime,
-                       String restaurantService, Category restaurantCategory) {
+                       String restaurantService, Category restaurantCategory, int businessCode) {
         this.restaurantCode = restaurantCode;
         this.restaurantName = restaurantName;
         this.restaurantLocation = restaurantLocation;
@@ -70,6 +70,7 @@ public class Restaurant {
         this.restaurantEndTime = restaurantEndTime;
         this.restaurantService = restaurantService;
         this.category = restaurantCategory;
+        this.businessCode = businessCode;
     }
 
     @OneToMany(mappedBy = "restaurantCode", cascade = CascadeType.ALL)

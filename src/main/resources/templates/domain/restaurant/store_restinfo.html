@@ -21,7 +21,7 @@
 <body>
 
 <!-- header -->
-<div th:replace="~{html/user_header :: userHeader}"></div>
+<div th:replace="~{html/store_header :: storeHeader}"></div>
 
 <!-- main -->
 <main>
@@ -42,6 +42,9 @@
         <div class="store-info">
             <div class="store-imgs">
                 <!-- 여기에 이미지 넣기 -->
+                <div class="store-imgs" th:each="img : ${selectedRestaurantImgs}">
+                    <img th:src="@{${img.restaurantImagePath}}" class="preview-img" />
+                </div>
             </div>
             <div class="store-container">
                 <div class="upper-container">
