@@ -4,6 +4,7 @@ import com.ezen.matzip.domain.restaurant.entity.Category;
 import com.ezen.matzip.domain.restaurant.entity.RestaurantKeyword;
 import com.ezen.matzip.domain.restaurant.entity.Menu;
 import com.ezen.matzip.domain.restaurant.entity.Restaurant;
+import com.ezen.matzip.domain.user.entity.Business;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -31,5 +32,6 @@ public class RegistDTO {
     private List<Integer> menuPrice;
     private List<String> restaurantKeyword;
     private String restaurantCategory;
+    private int businessCode;
 
 }

@@ -1,5 +1,6 @@
 package com.ezen.matzip.domain.restaurant.entity;
 
+import com.ezen.matzip.domain.user.entity.Business;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -50,7 +51,9 @@ public class Regist {
 
 //    @ManyToOne
 //    @JoinColumn(name = "business_code")
-    private int businessCode;
+//    @ManyToOne
+//    @JoinColumn(name = "business_code")
+//    private Business business;
 //    private int categoryCode;
     @OneToMany
     @JoinColumn(name = "restaurant_code")

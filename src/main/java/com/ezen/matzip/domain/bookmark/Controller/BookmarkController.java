@@ -33,10 +33,14 @@ public class BookmarkController {
 //    }
 
     @PostMapping("/toggle")
-    public String toggleBookmark(@RequestParam("restaurantCode") int restaurantCode, Principal principal) {
+    public String toggleBookmark(
+            @RequestParam("restaurantCode") int restaurantCode,
+            @RequestParam(value = "redirectUrl", required = false) String redirectUrl,
+            Principal principal) {
         User user = userService.findByUserId(principal.getName());
         Restaurant restaurant = restaurantService.findByRestaurantCode(restaurantCode);
-        // 이미 북마크되어 있으면 삭제, 그렇지 않으면 추가
+
+        // 이미 북마크되어 있으면 삭제, 아니면 추가
         if (bookmarkService.isBookmarked(user, restaurant)) {
             Bookmark bookmark = bookmarkService.findByUserAndRestaurant(user, restaurant).orElseThrow(() -> new RuntimeException("북마크 정보를 찾을 수 없습니다."));
             bookmarkService.deleteBookmark(bookmark.getBookmarkCode());
@@ -46,8 +50,9 @@ public class BookmarkController {
             bookmark.setRestaurant(restaurant);
             bookmarkService.addBookmark(bookmark);
         }
-        // 토글 후 식당 목록 페이지로 리다이렉트 (또는 원하는 페이지)
-        return "redirect:/restaurants";
+
+        // redirectUrl 파라미터가 있으면 해당 URL로, 없으면 기본값으로 리다이렉트
+        return "redirect:" + (redirectUrl != null && !redirectUrl.isEmpty() ? redirectUrl : "/restaurants");
     }
 
 //    // 북마크 추가 (식당 목록, 상세 페이지 등에서)

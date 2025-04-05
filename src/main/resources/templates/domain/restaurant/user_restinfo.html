@@ -40,36 +40,40 @@
                         <i class="fa fa-star-half-alt" style="color:red;"></i> <!-- 반쪽 별 -->
                         <br>
                         <table>
-                            <tr >
-                                <td style="font-size:2vh;">주소</td>
+                            <tr>
+                                <td style="font-size:2vh; width:160px; white-space: nowrap;">주소</td>
                                 <td style="font-size:1.5vh;" th:text="${restaurant.restaurantLocation}"></td>
                             </tr>
                             <tr>
-                                <td style="font-size:2vh;">전화번호</td>
+                                <td style="font-size:2vh; width:160px; white-space: nowrap;">전화번호</td>
                                 <td style="font-size:1.5vh;" th:text="${restaurant.restaurantContactNumber}"></td>
                             </tr>
                             <tr>
-                                <td style="font-size:2vh;">키워드</td>
-                            </tr>
-                            <tr>
-                                <td th:each="keyword : ${restaurant.restaurantKeywords}">
-                                    <div>
-                                        <pre style="font-size:1.2vh;" th:text=" '#' + ${keyword.getRestaurantKeyword()}"></pre>
+                                <td style="font-size:2vh; width:160px; white-space: nowrap;">키워드</td>
+                                <td>
+                                    <div style="width:320px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                        <span style="font-size:1.2vh;" th:each="keyword, iterStat : ${restaurant.restaurantKeywords}">
+                                            <span th:text="'#' + ${keyword.getRestaurantKeyword()}"></span>
+                                            <span th:if="${!iterStat.last}" th:text="' '"></span>
+                                        </span>
                                     </div>
                                 </td>
                             </tr>
                             <tr>
-                                <td style="font-size:2vh;">영업시간</td>
-                                <td style="font-size:1.5vh;" th:text="${restaurant.restaurantStartTime}"> -
-                                <td th:text="${restaurant.restaurantEndTime}"></td>
+                                <td style="font-size:2vh; width:160px; white-space: nowrap;">영업시간</td>
+                                <td style="font-size:1.5vh; white-space: nowrap;">
+                                    <span th:text="${#strings.substring(restaurant.restaurantStartTime, 0, 5)}"></span>
+                                    <span> - </span>
+                                    <span th:text="${#strings.substring(restaurant.restaurantEndTime, 0, 5)}"></span>
+                                </td>
                             </tr>
                         </table>
                         <br>
                         <p style="font-size:2.5vh;">메뉴</p>
                         <table>
                             <tr th:each="menu : ${restaurant.getRestaurantMenus()}">
-                                <td th:text="${menu.getMenuName()}"> ---
-                                <td th:text="${menu.getMenuPrice()}"></td>
+                                <td th:text="${menu.getMenuName()}"></td>
+                                <td th:text="' --- ' + ${menu.getMenuPrice()}"></td>
                             </tr>
                         </table>
                         <br>
@@ -87,12 +91,13 @@
                             <a href="">
                                 <button class="redbutton1">예약하기</button>
                             </a>
-                            <form method="post" style="display:inline;" th:action="@{/user/bookmarks/add}">
+                            <form method="post" style="display:inline;" th:action="@{/user/bookmarks/toggle}">
+                                <!-- 수정 후 -->
+                                <input type="hidden" name="redirectUrl" th:value="${currentUri}" />
                                 <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
                                 <input name="restaurantCode" th:value="${restaurant.restaurantCode}" type="hidden"/>
                                 <button style="background:none; border:none; padding:0;" type="submit">
-                                    <img alt="북마크됨" src="/img/bookmarked.png" th:if="${bookmarked}"/>
-                                    <img alt="북마크 추가" src="/img/bookmark.png" th:unless="${bookmarked}"/>
+                                    <img alt="북마크" th:src="${bookmarked} ? '/img/bookmarked.png' : '/img/bookmark.png'"/>
                                 </button>
                             </form>
                             <a href=""><img alt="공유" class="icon" src="/img/share.png"></a>
@@ -109,13 +114,15 @@
                 <div class="store-inner-container3">
                     <p style="font-size:2.5vh;">리뷰</p><br>
                     <div class="reviewbox" th:each="review : ${reviews}">
+                        <!--                        <span style="font-size:1.5vh;" th:text="${review.유저ID표시}"-->
+                        <!--                        <span style="font-size:1.5vh;" th:text="${review.유저국적표시}"-->
                         <span style="font-size:1.5vh;" th:text="${review.reviewDate}"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
                             style="font-size:1.5vh;" th:text="${review.rating}"></span><br>
                         <span style="font-size:1.5vh;" th:text="${review.reviewContent}"></span><br>
                         <div class="reviewimgbox">
                             <img class="reviewimg" src="/review/img/example.png">
-                            <img class="reviewimg" src="/review/img/example.png">
-                            <img class="reviewimg" src="/review/img/example.png">
+                            <!--                            <img class="reviewimg" src="/review/img/example.png">-->
+                            <!--                            <img class="reviewimg" src="/review/img/example.png">-->
                         </div>
                         <div class="reviewreply">
                             <span style="font-size:1.5vh;" th:text="${review.reviewReply}"></span><br>
@@ -127,10 +134,12 @@
     </section>
 </main>
 
-
+<footer>
 <div th:replace="~{html/user_footer :: userFooter}"></div>
+</footer>
+
 <script th:inline="javascript">
-    let restLoc = /*[[${restaurantLocation}]]*/ "";
+    let restLoc = /*[[${restaurant.restaurantLocation}]]*/ "";
     let myLoc = "";
 </script>
 

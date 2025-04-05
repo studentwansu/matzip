@@ -24,7 +24,6 @@ public class MiniGameService {
         List<Keyword> keywordEntities = keywordRepository.findAllByKeywordDescriptionIsNotNull();
         Collections.shuffle(keywordEntities);
         keywordEntities.remove(keywordEntities.get(0));
-        System.out.println("현재 키워드 갯수: " + keywordEntities.size());
         List<KeywordDTO>[] keywords = new List[3];
         keywords[0] = new ArrayList<>();
         keywords[1] = new ArrayList<>();
@@ -58,14 +57,10 @@ public class MiniGameService {
         }
         else if (keywords[0].size() == 2 && keywords[2].isEmpty())
         {
-            System.out.println("결승0: " + keywords[0]);
-            System.out.println("결승2" + keywords[2]);
             return "결승!";
         }
         else if (keywords[0].isEmpty() && keywords[2].size() == 1)
         {
-            System.out.println("끝0: " + keywords[0]);
-            System.out.println("끝2" + keywords[2]);
             return "끝!";
         }
 

@@ -10,6 +10,7 @@ import com.ezen.matzip.domain.restaurant.repository.*;
 import com.ezen.matzip.domain.review.dto.ReviewDTO;
 import com.ezen.matzip.domain.review.entity.Review;
 import com.ezen.matzip.domain.review.repository.ReviewRepository;
+import com.ezen.matzip.domain.user.entity.Business;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -191,7 +192,8 @@ public class RestaurantService {
                 startTime,
                 endTime,
                 registDTO.getRestaurantService(),
-                category
+                category,
+                registDTO.getBusinessCode()
         );
 
         // 추가적인 레스토랑 속성 설정
@@ -199,7 +201,6 @@ public class RestaurantService {
         regist.setRestaurantActiveStatus(0);  // 활성 상태
         regist.setRestaurantUniqueKeywords(null);  // 예시 키워드
         regist.setRestaurantStatus(0);
-        regist.setBusinessCode(11);
 
         // 메뉴 추가
         List<Menu> menuList = IntStream.range(0, registDTO.getMenuName().size())

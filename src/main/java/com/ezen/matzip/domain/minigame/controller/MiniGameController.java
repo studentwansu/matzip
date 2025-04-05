@@ -54,8 +54,8 @@ public class MiniGameController {
         }
 
         currentKeywords = miniGameService.showKeywords(currentKeywords);
-
         model.addAttribute("currentKeywords", currentKeywords);
+
         return "domain/minigame/user_minigame";
     }
 

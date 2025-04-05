@@ -31,13 +31,14 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/", "/main/main", "/login", "/signup", "/signup/**", "/css/**", "/js/**", "/img/**", "/html/**", "checkUserId",
-                                "/fragments/**", "/search", "/search/**", "/minigame/**", "/weather/**","/restaurant/**",
-                                "/findpwd", "/checkUserInfo", "/resetPassword").permitAll()
+                                "/fragments/**", "/search", "/search/**", "/storeinfo/**", "/minigame/**", "/weather/**","/restaurant/**",
+                                "/findpwd", "/checkUserInfo", "/resetPassword","/board/**" ).permitAll()
                         .requestMatchers("/user/**").hasRole("USER")
                         .requestMatchers("/business/**").hasRole("BUSINESS")
                         .requestMatchers("/admin/**").hasRole("ADMIN")
-                        // 나머지 요청은 인증된 사용자만 접근 가능하도록 변경
+                        .requestMatchers("/css/**", "/js/**", "/images/**").permitAll()
                         .anyRequest().authenticated()
+                        // 나머지 요청은 인증된 사용자만 접근 가능하도록 변경
                 )
                 .formLogin(login -> login
                         .loginPage("/login")
@@ -61,7 +62,7 @@ public class SecurityConfig {
                 )
                 .csrf(withDefaults())
                 .csrf(csrf -> csrf
-                        .ignoringRequestMatchers("/api/**", "/dapi/**", "/html/**", "/checkUserId", "business/review/report"));
+                        .ignoringRequestMatchers("/api/**", "/dapi/**", "/html/**", "/checkUserId", "business/review/report", "/search/**", "/js/**"));
 
         return http.build();
     }

@@ -1,10 +1,13 @@
 package com.ezen.matzip.domain.user.entity;
 
 import com.ezen.matzip.domain.Role;
+import com.ezen.matzip.domain.restaurant.entity.Restaurant;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -69,6 +72,10 @@ public class Business {
             this.restaurantName = restaurantName;
         }
     }
+
+    @OneToMany(mappedBy = "businessCode", cascade = CascadeType.PERSIST)
+    private List<Restaurant> restaurants;
+
 }
 
 //@ManyToOne

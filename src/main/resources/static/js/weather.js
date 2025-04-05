@@ -55,6 +55,7 @@ async function currentWeather() {
                 success: function (data) {
                     let foodListHtml = "";
                     data.forEach(food => {
+                        console.log(food.keyword);
                         foodListHtml += `
                 <form action="/search">
                     <div class="food-item">

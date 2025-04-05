@@ -2,6 +2,7 @@ package com.ezen.matzip.domain.restaurant.entity;
 
 import com.ezen.matzip.domain.restaurant.dto.MenuDTO;
 import com.ezen.matzip.domain.review.entity.Review;
+import com.ezen.matzip.domain.user.entity.Business;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -35,13 +36,14 @@ public class Restaurant {
     private String restaurantUniqueKeywords;
     private int businessCode;
     private int restaurantStatus;
+
     @ManyToOne
     @JoinColumn(name = "category_code")
     private Category category;
 
     public Restaurant(int restaurantCode, String restaurantName, String restaurantLocation, String restaurantContactNumber,
                       String restaurantDescription, String mainMenu, Time restaurantStartTime, Time restaurantEndTime,
-                      String restaurantService, Category restaurantCategory) {
+                      String restaurantService, Category restaurantCategory, int businessCode) {
         this.restaurantCode = restaurantCode;
         this.restaurantName = restaurantName;
         this.restaurantLocation = restaurantLocation;
@@ -52,6 +54,7 @@ public class Restaurant {
         this.restaurantEndTime = restaurantEndTime;
         this.restaurantService = restaurantService;
         this.category = restaurantCategory;
+        this.businessCode = businessCode;
     }
 
     public void Modify(int restaurantCode, String restaurantName, String restaurantLocation, String restaurantContactNumber,
@@ -82,10 +85,10 @@ public class Restaurant {
     private List<RestaurantImage> restaurantImages;
 
 
+
     @Builder
-    public Restaurant(int restaurantCode, String restaurantName, int businessCode) {
+    public Restaurant(int restaurantCode, String restaurantName) {
         this.restaurantCode = restaurantCode;
         this.restaurantName = restaurantName;
-        this.businessCode = businessCode;
     }
 }

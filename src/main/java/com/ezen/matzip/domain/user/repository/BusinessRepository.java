@@ -1,6 +1,7 @@
 package com.ezen.matzip.domain.user.repository;
 
 import com.ezen.matzip.domain.user.entity.Business;
+import com.ezen.matzip.domain.user.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -8,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.Optional;
 
 public interface BusinessRepository extends JpaRepository<Business, Integer> {
+
     Optional<Business> findByUserId(String userId);
 
 //    boolean existsByUserId(String userId);
@@ -33,5 +35,7 @@ public interface BusinessRepository extends JpaRepository<Business, Integer> {
             String passwordQuestion,
             String passwordAnswer
     );
+
+//    Business findByUserId(String username);
 
 }

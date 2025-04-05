@@ -60,7 +60,7 @@
         </div>
 
 
-        <form action="/restaurant/modify" method="post">
+        <form th:action="@{/modify/{businessCode}(businessCode=${businessCode})}" method="post">
         <div class="store-info">
             <div class="store-imgs">
                 <!-- 여기에 이미지 넣기 -->

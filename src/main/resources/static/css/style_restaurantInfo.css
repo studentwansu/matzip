@@ -91,12 +91,12 @@ button {
 
 .introducebox {
     position: relative;
-    top: 10vh;
+    top: 8vh;
 }
 
 .mapbox {
     position:relative;
-    top:10vh;
+    top:5vh;
 }
 
 /* 리뷰 관련 스타일 */
@@ -124,6 +124,18 @@ button {
 
 .redbutton1 {
     background-color: #fa4032;
+    border-radius: 1vh;
+    width: 10vh;
+    height: 3.5vh;
+    color: white;
+    font-size: 1.6vh;
+    box-shadow: none;
+    border: none;
+    outline: none;
+}
+
+.greenbutton1 {
+    background-color: green;
     border-radius: 1vh;
     width: 10vh;
     height: 3.5vh;
