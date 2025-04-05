@@ -31,10 +31,8 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/", "/main/main", "/login", "/signup", "/signup/**", "/css/**", "/js/**", "/img/**", "/html/**", "checkUserId",
-
                                 "/fragments/**", "/search", "/search/**", "/storeinfo/**", "/minigame/**", "/weather/**","/restaurant/**",
                                 "/findpwd", "/checkUserInfo", "/resetPassword","/board/**" ).permitAll()
-
                         .requestMatchers("/user/**").hasRole("USER")
                         .requestMatchers("/business/**").hasRole("BUSINESS")
                         .requestMatchers("/admin/**").hasRole("ADMIN")
@@ -64,7 +62,7 @@ public class SecurityConfig {
                 )
                 .csrf(withDefaults())
                 .csrf(csrf -> csrf
-                        .ignoringRequestMatchers("/api/**", "/dapi/**", "/html/**", "/checkUserId", "business/review/report"));
+                        .ignoringRequestMatchers("/api/**", "/dapi/**", "/html/**", "/checkUserId", "business/review/report", "/search/**", "/js/**"));
 
         return http.build();
     }

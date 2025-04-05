@@ -7,8 +7,6 @@ import com.ezen.matzip.domain.review.repository.ReviewAnswerRepository;
 import com.ezen.matzip.domain.review.repository.ReviewImageRepository;
 import com.ezen.matzip.domain.review.service.ReviewAnswerService;
 import com.ezen.matzip.domain.user.entity.Business;
-import com.ezen.matzip.domain.user.entity.User;
-import com.ezen.matzip.domain.user.repository.BusinessRepository;
 import com.ezen.matzip.domain.user.service.BusinessService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,70 +19,6 @@ import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
-//
-//@Slf4j
-//@Controller
-//@RequestMapping
-//@RequiredArgsConstructor
-//public class ReviewAnswerController {
-//
-//    private final ReviewAnswerService reviewAnswerService;
-//    private final ReviewImageRepository reviewImageRepository;
-//    private ReviewAnswerRepository reviewAnswerRepository;
-//    private ModelMapper modelMapper;
-//    private final BusinessRepository businessRepository;
-//
-//    @GetMapping(value = "/business/answer/{businessCode}")
-//    public String findReviewByBusinessCode(@PathVariable int businessCode,
-//                                           @RequestParam(required = false) Integer month,
-//                                           Model model) {
-//
-//        List<ReviewDTO> reviews;
-//
-//        if (month != null) {
-//            reviews = reviewAnswerService.findReviewByBusinessCodeAndMonth(businessCode, month);
-//            model.addAttribute("selectedMonth", month);
-//        } else {
-//            reviews = reviewAnswerService.findReviewByBusinessCode(businessCode);
-//        }
-//        model.addAttribute("reviews", reviews);
-//
-//        return "domain/review/review_answer";
-//    }
-//
-//
-//
-//    @GetMapping("/business/answer/write/{reviewCode}")
-//    public String writeAnswer(@PathVariable int reviewCode, Model model) {
-//        Optional<Review> review = reviewAnswerRepository.findById(reviewCode);
-//        List<ReviewImage> reviewImages = reviewImageRepository.findReviewImagesByReviewCode(reviewCode);
-//        model.addAttribute("review", review);
-//        model.addAttribute("reviewImages", reviewImages);
-//        return "domain/review/review_answer";
-//    }
-//
-//    @PostMapping("/business/answer/modify")
-//    public String modifyAnswer(@ModelAttribute ReviewDTO reviewDTO) {
-//        reviewDTO = reviewAnswerService.modifyAnswer(reviewDTO);
-//        return "redirect:/business/answer/" + reviewDTO.getBusinessCode();
-//    }
-//
-//    @PostMapping("/business/answer/save/{reviewCode}")
-//    public String saveAnswer(@ModelAttribute ReviewDTO reviewDTO, @RequestParam int reviewCode, @RequestParam String replyContent){
-//        reviewAnswerService.saveReply(reviewCode, replyContent);
-//        return "redirect:/business/answer/" + reviewDTO.getBusinessCode();
-//    }
-//
-//    @PostMapping("/business/answer/delete/{reviewCode}")
-//    public String deleteAnswer(@ModelAttribute ReviewDTO reviewDTO, @PathVariable int reviewCode) {
-//        reviewAnswerService.saveReply(reviewCode, null); // null로 설정 = 삭제
-//        return "redirect:/business/answer/" + reviewDTO.getBusinessCode();
-//    }
-//
-//
-//}
-
-
 
 @Slf4j
 @Controller
@@ -161,7 +95,6 @@ public class ReviewAnswerController {
         return "redirect:/business/answer";
     }
 
-
     //완수-신고기능에 필요
     @PostMapping("/business/review/report")
     @ResponseBody
@@ -170,5 +103,3 @@ public class ReviewAnswerController {
         return ResponseEntity.ok("신고 처리 완료");
     }
 }
-
-

@@ -11,6 +11,7 @@ import com.ezen.matzip.domain.restaurant.entity.RestaurantImage;
 import com.ezen.matzip.domain.restaurant.repository.RestaurantImageRepository;
 import com.ezen.matzip.domain.restaurant.service.RestaurantService;
 import com.ezen.matzip.domain.review.dto.ReviewDTO;
+import com.ezen.matzip.domain.user.dto.UserRequestDTO;
 import com.ezen.matzip.domain.user.entity.User;
 import com.ezen.matzip.domain.user.service.UserService;
 import com.ezen.matzip.domain.user.service.UserIdCheckService;
@@ -72,7 +73,7 @@ public class RestaurantController {
 
         List<ReviewDTO> resultReview = restaurantService.getReviewsByRestaurant(restaurantCode);
         model.addAttribute("reviews", resultReview);
-
+        List<RestaurantImage> imgs = restaurantImageRepository.findRestaurantImageByRestaurantCode(restaurantCode);
         // 완수-사용자가 로그인한 경우 북마크 여부 확인 후 모델에 추가
         // 로그인한 사용자라면 북마크 여부 체크
         if (principal != null) {
@@ -95,8 +96,13 @@ public class RestaurantController {
 //                .toList();
 //            model.addAttribute("selectedRestaurantImgs", imgDTOs);
 //        }
+            List<RestaurantImageDTO> imgDTOs = imgs.stream()
+                .map(img -> modelMapper.map(img, RestaurantImageDTO.class))
+                .toList();
+            model.addAttribute("selectedRestaurantImgs", imgDTOs);
+        }
 
-//        model.addAttribute("selectedRestaurant", rstaurant);
+        model.addAttribute("selectedRestaurant", restaurant);
 
         // 완수-현재 URL을 모델에 추가
         model.addAttribute("currentUri", request.getRequestURI());
@@ -131,7 +137,6 @@ public class RestaurantController {
 
         List<ReviewDTO> resultReview = restaurantService.getReviewsByRestaurant(restaurantCode);
         model.addAttribute("reviews", resultReview);
-        System.out.println("test: " + resultReview);
 
         List<RestaurantImage> imgs = restaurantImageRepository.findRestaurantImageByRestaurantCode(restaurantCode);
         List<RestaurantImageDTO> imgDTOs = imgs.stream()
@@ -259,13 +264,13 @@ public class RestaurantController {
         return "domain/search/user_restlist";
     }
 
-    @GetMapping("/storeinfo")
-    public String markingLocation(@RequestParam Integer restaurantCode, Model model)
-    {
-        String location = restaurantService.findLocationByRestaurantCode(restaurantCode);
-        model.addAttribute("restaurantLocation", location);
-        return "/domain/restaurant/store_restinfo";
-    }
+//    @GetMapping("/storeinfo")
+//    public String markingLocation(@RequestParam Integer restaurantCode, Model model)
+//    {
+//        String location = restaurantService.findLocationByRestaurantCode(restaurantCode);
+//        model.addAttribute("restaurantLocation", location);
+//        return "/domain/restaurant/store_restinfo";
+//    }
 
     @GetMapping(value = "/search", params = "categoryCode")
     public String filteringRestaurants(@RequestParam int categoryCode, Model model, HttpSession session)

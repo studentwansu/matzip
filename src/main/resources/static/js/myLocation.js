@@ -11,7 +11,15 @@ function myLocation() {
 
                 const form = document.querySelector('form[id="findByLoc"]');
                 const locationInput = form.querySelector('input[name="keyword"]');
-                locationInput.value = result[0].road_address.road_name;
+                console.log(result);
+                if (result[0].road_address == undefined || result[0].road_address == null)
+                {
+                    locationInput.value = result[0].address.region_3depth_name;
+                }
+                else
+                {
+                    locationInput.value = result[0].road_address.road_name;
+                }
                 form.submit();
             }
         });

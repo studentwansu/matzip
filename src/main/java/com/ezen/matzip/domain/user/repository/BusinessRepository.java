@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.Optional;
 
 public interface BusinessRepository extends JpaRepository<Business, Integer> {
+
     Optional<Business> findByUserId(String userId);
 
 //    boolean existsByUserId(String userId);

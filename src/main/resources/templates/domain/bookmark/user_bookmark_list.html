@@ -38,19 +38,24 @@
             </tr>
             </thead>
             <tbody>
-            <tr style="cursor:pointer;"
-                th:each="bookmark, iterStat : ${bookmarks}"
-                th:onclick="'location.href=\'/restaurant/storeinfo?restaurantCode=' + ${bookmark.restaurant.restaurantCode} + '\';'">
+            <tr style="cursor:pointer;" th:each="bookmark, iterStat : ${bookmarks}">
                 <td th:text="${iterStat.index + 1}"></td>
-                <td th:text="${bookmark.restaurant.restaurantName}"></td>
-                <td th:text="${bookmark.restaurant.mainMenu}"></td>
-                <td th:text="${bookmark.restaurant.restaurantLocation}"></td>
                 <td>
-                    <form method="post"
-                          th:action="@{/user/bookmarks/{bookmarkCode}/delete(bookmarkCode=${bookmark.bookmarkCode})}">
+                    <a th:href="@{/restaurant/{restaurantCode}(restaurantCode=${bookmark.getRestaurant().getBusinessCode()})}"
+                       th:text="${bookmark.restaurant.restaurantName}"></a>
+                </td>
+                <td>
+                    <a th:href="@{/restaurant/{restaurantCode}(restaurantCode=${bookmark.getRestaurant().getBusinessCode()})}"
+                       th:text="${bookmark.restaurant.mainMenu}"></a>
+                </td>
+                <td>
+                    <a th:href="@{/restaurant/{restaurantCode}(restaurantCode=${bookmark.getRestaurant().getBusinessCode()})}"
+                       th:text="${bookmark.restaurant.restaurantLocation}"></a>
+                </td>
+                <td>
+                    <form method="post" th:action="@{/user/bookmarks/{bookmarkCode}/delete(bookmarkCode=${bookmark.bookmarkCode})}">
                         <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
-                        <button class="redbutton4 redbutton-font" onclick="event.stopPropagation();" type="submit">삭제
-                        </button>
+                        <button class="redbutton4 redbutton-font" onclick="event.stopPropagation();" type="submit">삭제</button>
                     </form>
                 </td>
             </tr>

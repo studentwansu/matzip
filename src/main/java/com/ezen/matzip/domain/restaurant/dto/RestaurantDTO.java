@@ -62,8 +62,8 @@ public class RestaurantDTO {
         this.mainMenu = restaurant.getMainMenu();
         this.businessCode = restaurant.getBusinessCode();
         this.categoryCode = new CategoryDTO(restaurant.getCategory().getCategoryCode(), restaurant.getCategory().getCategory());
-        this.restaurantStartTime = getRestaurantStartTime();
-        this.restaurantEndTime = getRestaurantEndTime();
+        this.restaurantStartTime = restaurant.getRestaurantStartTime().toString();
+        this.restaurantEndTime = restaurant.getRestaurantEndTime().toString();
         this.restaurantStatus = restaurant.getRestaurantStatus();
         this.restaurantService = restaurant.getRestaurantService();
     }

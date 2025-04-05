@@ -42,4 +42,6 @@ public interface RestaurantRepository extends JpaRepository<Restaurant, Integer>
     //완수 북마크 기능에 필요
     Restaurant findByRestaurantCode(int restaurantCode);
 
+    Restaurant findByBusinessCode(int businessCode);
+
 }
