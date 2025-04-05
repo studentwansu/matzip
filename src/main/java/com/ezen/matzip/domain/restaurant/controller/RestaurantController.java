@@ -14,6 +14,7 @@ import com.ezen.matzip.domain.review.dto.ReviewDTO;
 import com.ezen.matzip.domain.user.entity.User;
 import com.ezen.matzip.domain.user.service.UserService;
 import com.ezen.matzip.domain.user.service.UserIdCheckService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -62,12 +63,27 @@ public class RestaurantController {
 
 
     @GetMapping("/restaurant/{restaurantCode}")
-    public String getRestaurantForUsers(@PathVariable int restaurantCode, Model model) {
+    public String getRestaurantForUsers(@PathVariable int restaurantCode, Model model, HttpServletRequest request, Principal principal) {
         RestaurantDTO restaurant = restaurantService.getRestaurantDetail(restaurantCode);
         model.addAttribute("restaurant", restaurant);
 
+        // 완수-현재 요청 URL 추가
+        model.addAttribute("currentUri", request.getRequestURI());
+
         List<ReviewDTO> resultReview = restaurantService.getReviewsByRestaurant(restaurantCode);
         model.addAttribute("reviews", resultReview);
+
+        // 완수-사용자가 로그인한 경우 북마크 여부 확인 후 모델에 추가
+        // 로그인한 사용자라면 북마크 여부 체크
+        if (principal != null) {
+            User user = userService.findByUserId(principal.getName());
+            // 북마크 여부를 판단할 때, findByUserAndRestaurant로 조회해 보세요.
+            boolean bookmarked = bookmarkService.findByUserAndRestaurant(user, restaurantService.findByRestaurantCode(restaurantCode)).isPresent();
+            model.addAttribute("bookmarked", bookmarked);
+        } else {
+            // 로그인하지 않은 경우 false로 처리
+            model.addAttribute("bookmarked", false);
+        }
 //        System.out.println("reviews: " + resultReview);
 
 //        List<RestaurantImage> imgs = restaurantImageRepository.findRestaurantImageByRestaurantCode(restaurantCode);
@@ -81,6 +97,9 @@ public class RestaurantController {
 //        }
 
 //        model.addAttribute("selectedRestaurant", rstaurant);
+
+        // 완수-현재 URL을 모델에 추가
+        model.addAttribute("currentUri", request.getRequestURI());
 
         return "domain/restaurant/user_restinfo";
     }
