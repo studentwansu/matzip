@@ -32,4 +32,9 @@ public class UserIdCheckService {
         Optional<Business> business = businessRepository.findByUserId(userId);
         return business.isPresent() ? business.get().getBusinessCode() : null;
     }
+
+    public Business findByUserId (String userId) {
+        return businessRepository.findByUserId(userId)
+                .orElseThrow(() -> new RuntimeException("User not found: " + userId));
+    }
 }
