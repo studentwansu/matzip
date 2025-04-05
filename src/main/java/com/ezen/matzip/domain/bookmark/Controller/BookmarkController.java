@@ -33,10 +33,7 @@ public class BookmarkController {
 //    }
 
     @PostMapping("/toggle")
-    public String toggleBookmark(
-            @RequestParam("restaurantCode") int restaurantCode,
-            @RequestParam(value = "redirectUrl", required = false) String redirectUrl,
-            Principal principal) {
+    public String toggleBookmark(@RequestParam("restaurantCode") int restaurantCode, @RequestParam(value = "redirectUrl", required = false) String redirectUrl, Principal principal) {
         User user = userService.findByUserId(principal.getName());
         Restaurant restaurant = restaurantService.findByRestaurantCode(restaurantCode);
 

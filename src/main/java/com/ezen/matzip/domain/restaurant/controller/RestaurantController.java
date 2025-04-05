@@ -100,7 +100,7 @@ public class RestaurantController {
                 .map(img -> modelMapper.map(img, RestaurantImageDTO.class))
                 .toList();
             model.addAttribute("selectedRestaurantImgs", imgDTOs);
-        }
+
 
         model.addAttribute("selectedRestaurant", restaurant);
 

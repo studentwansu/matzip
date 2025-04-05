@@ -20,7 +20,7 @@
 <div th:replace="~{html/user_header :: userHeader}"></div>
 
 <!-- main -->
-<div class="main-container">
+<div class="body-section2">
     <!-- 사이드바 -->
     <aside class="sidebar">
         <h3>마이페이지</h3>
@@ -34,7 +34,7 @@
     </aside>
 
     <!-- 작성 리뷰 목록 -->
-    <div class="container-section">
+    <div class="review-container-section">
         <div class="content">
             <h2>작성 리뷰 목록</h2>
             <script th:inline="javascript">
@@ -43,7 +43,7 @@
                 console.log("로드된 리뷰 데이터:", testReview); // 로그로 데이터 확인
             </script>
             <script defer src="/js/review.js"></script> <!-- JavaScript 파일 로드 -->
-
+            <div class="line-yellow"></div>
             <table>
                 <thead>
                 <tr>
