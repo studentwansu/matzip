@@ -69,19 +69,19 @@ public class RestaurantController {
 
         List<ReviewDTO> resultReview = restaurantService.getReviewsByRestaurant(restaurantCode);
         model.addAttribute("reviews", resultReview);
-//        System.out.println("reviews: " + resultReview);
+        System.out.println("reviews: " + resultReview);
 
-//        List<RestaurantImage> imgs = restaurantImageRepository.findRestaurantImageByRestaurantCode(restaurantCode);
-//        if (!imgs.isEmpty())
-//        {
-//
-//            List<RestaurantImageDTO> imgDTOs = imgs.stream()
-//                .map(img -> modelMapper.map(img, RestaurantImageDTO.class))
-//                .toList();
-//            model.addAttribute("selectedRestaurantImgs", imgDTOs);
-//        }
+        List<RestaurantImage> imgs = restaurantImageRepository.findRestaurantImageByRestaurantCode(restaurantCode);
+        if (!imgs.isEmpty())
+        {
 
-//        model.addAttribute("selectedRestaurant", restaurant);
+            List<RestaurantImageDTO> imgDTOs = imgs.stream()
+                .map(img -> modelMapper.map(img, RestaurantImageDTO.class))
+                .toList();
+            model.addAttribute("selectedRestaurantImgs", imgDTOs);
+        }
+
+        model.addAttribute("selectedRestaurant", restaurant);
 
         return "domain/restaurant/user_restinfo";
     }
@@ -240,13 +240,13 @@ public class RestaurantController {
         return "domain/search/user_restlist";
     }
 
-    @GetMapping("/storeinfo")
-    public String markingLocation(@RequestParam Integer restaurantCode, Model model)
-    {
-        String location = restaurantService.findLocationByRestaurantCode(restaurantCode);
-        model.addAttribute("restaurantLocation", location);
-        return "/domain/restaurant/store_restinfo";
-    }
+//    @GetMapping("/storeinfo")
+//    public String markingLocation(@RequestParam Integer restaurantCode, Model model)
+//    {
+//        String location = restaurantService.findLocationByRestaurantCode(restaurantCode);
+//        model.addAttribute("restaurantLocation", location);
+//        return "/domain/restaurant/store_restinfo";
+//    }
 
     @GetMapping(value = "/search", params = "categoryCode")
     public String filteringRestaurants(@RequestParam int categoryCode, Model model, HttpSession session)

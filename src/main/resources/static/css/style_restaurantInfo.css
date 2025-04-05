@@ -134,6 +134,18 @@ button {
     outline: none;
 }
 
+.greenbutton1 {
+    background-color: green;
+    border-radius: 1vh;
+    width: 10vh;
+    height: 3.5vh;
+    color: white;
+    font-size: 1.6vh;
+    box-shadow: none;
+    border: none;
+    outline: none;
+}
+
 .buttonbox {
     position: absolute;
     right: 3vh;
