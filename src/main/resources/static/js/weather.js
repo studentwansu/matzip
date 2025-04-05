@@ -29,8 +29,6 @@ async function currentWeather() {
                     xhr.setRequestHeader(csrfHeader, csrfToken);
                 },
                 success: function (data) {
-                    // console.log(data);
-                    // console.log("이것은 해시태그 데이터: " + data);
                     let hashtags = "";
                     hashtags += data;
                     $('p[id="weatherHashtags"]').text(hashtags);
@@ -57,10 +55,11 @@ async function currentWeather() {
                 success: function (data) {
                     let foodListHtml = "";
                     data.forEach(food => {
+                        console.log(food.keyword);
                         foodListHtml += `
                 <form action="/search">
                 <div class="food-item">
-                    <button style="text-decoration: none; color: inherit; display: block; cursor: pointer; background: none;" name="keyword" type="submit">
+                    <button style="text-decoration: none; color: inherit; display: block; cursor: pointer; background: none;" type="submit">
                         <img src="${food.keywordImgPath}" alt="${food.keyword}" width="100">
                         <p>${food.keyword}</p>
                         <input type="hidden" name="keyword" value="${food.keyword}">

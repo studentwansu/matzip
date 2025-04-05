@@ -91,12 +91,12 @@ button {
 
 .introducebox {
     position: relative;
-    top: 10vh;
+    top: 8vh;
 }
 
 .mapbox {
     position:relative;
-    top:10vh;
+    top:5vh;
 }
 
 /* 리뷰 관련 스타일 */

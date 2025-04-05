@@ -80,7 +80,7 @@ public class RestaurantController {
 //            model.addAttribute("selectedRestaurantImgs", imgDTOs);
 //        }
 
-//        model.addAttribute("selectedRestaurant", rstaurant);
+//        model.addAttribute("selectedRestaurant", restaurant);
 
         return "domain/restaurant/user_restinfo";
     }

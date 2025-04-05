@@ -21,13 +21,13 @@
 <!-- 사업자 회원정보 수정 폼 -->
 <div class="body-section">
     <!-- 페이지 상단 제목 -->
-
     <div class="navi">
         <div class="redbutton">
             <span class="redbutton-font">마이페이지</span>
         </div>
         <ul>
             <li><a class="navi-font" th:href="@{/business/myinfo}">내 정보</a></li>
+            <li><a class="navi-font" th:href="@{/business/restaurant}">내 식당 정보</a></li>
             <li><a class="navi-font" href="">식당 등록 신청</a></li>
             <li><a class="navi-font" href="">예약 현황 조회</a></li>
             <li><a class="navi-font" href="">식당 정보 수정 요청</a></li>
@@ -51,15 +51,13 @@
                     <dl>
                         <!-- 상호명 (회사명) -->
                         <dt>
-                            상호명
+                            <span class="label-text">상호명</span>
                             <input class="myinfo-input" id="name" name="companyName" placeholder="상호명"
                                    th:value="${user.restaurantName}"/>
                         </dt>
                         <!-- 아이디: 수정 불가 -->
                         <dt>
-                            아이디
-                            <br>
-                            (수정 불가)
+                            <span class="label-text">아이디(수정불가)</span>
                             <input class="myinfo-input" disabled id="id" placeholder="아이디"
                                    th:value="${user.userId}"/>
                             <input class="myinfo-input" name="userId" th:value="${user.userId}"
@@ -67,17 +65,17 @@
                         </dt>
                         <!-- 비밀번호 및 비밀번호 확인 -->
                         <dt>
-                            비밀번호
+                            <span class="label-text">비밀번호</span>
                             <input class="myinfo-input" id="pwd" name="password" placeholder="비밀번호"
                                    type="password"/>
                         </dt>
                         <dt>
-                            비밀번호확인
+                            <span class="label-text">비밀번호확인</span>
                             <input class="myinfo-input" id="pwd_check" name="passwordCheck"
                                    placeholder="비밀번호확인" type="password"/>
                         </dt>
                         <dt>
-                            비밀번호 답 찾기 질문
+                            <span class="label-text">비밀번호찾기질문</span>
                             <select class="myinfo-input" name="passwordQuestion">
                                 <option th:selected="${user.passwordQuestion == 'question1'}" value="question1">당신의
                                     초등학교는?
@@ -91,7 +89,7 @@
                             </select>
                         </dt>
                         <dt>
-                            비밀번호 답 찾기 답변
+                            <span class="label-text">비밀번호찾기답변</span>
                             <input class="myinfo-input" id="pwd_answer" name="passwordAnswer"
                                    placeholder="비밀번호찾기답"
                                    th:value="${user.passwordAnswer}"/>
@@ -102,25 +100,25 @@
                 <div class="store-inner-container1">
                     <dl>
                         <dt>
-                            이메일
+                            <span class="label-text">이메일</span>
                             <input class="myinfo-input" id="email" placeholder="이메일" th:field="*{email}"/>
                             <p style="color:red;" th:errors="*{email}" th:if="${#fields.hasErrors('email')}">이메일 형식과 맞지
                                 않습니다.</p>
                         </dt>
                         <dt>
-                            전화번호
+                            <span class="label-text">전화번호</span>
                             <input class="myinfo-input" id="phone" placeholder="전화번호" th:field="*{phoneNumber}"/>
                             <p th:errors="*{phoneNumber}" th:if="${#fields.hasErrors('phoneNumber')}">전화번호 형식과 맞지
                                 않습니다.</p>
                         </dt>
                         <dt>
-                            사업자 등록 번호 (수정 불가)
+                            <span class="label-text">사업자 등록번호(수정 불가)</span>
                             <input class="myinfo-input" disabled id="number" placeholder="사업자 등록 번호"
                                    th:value="${user.businessNumber}"/>
                             <input name="businessNumber" th:value="${user.businessNumber}" type="hidden"/>
                         </dt>
                         <!-- 수정 버튼 -->
-                        <div class="mypage_button">
+                        <div class="myinfo_button">
                             <div>
                                 <button class="redbutton3 redbutton-font" type="submit">수정하기</button>
                             </div>
