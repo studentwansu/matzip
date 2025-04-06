@@ -98,5 +98,7 @@ public class User {
     public void setUserReportCount(int count) {
         this.userReportCount = count;
     }
+
+    public void setAccountStatus(int status) { this.accountStatus = status; }
 }
 

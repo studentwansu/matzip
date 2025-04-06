@@ -29,4 +29,9 @@ public interface ReviewRepository extends JpaRepository<Review, Integer> {
     @Query("SELECT COALESCE(SUM(r.reviewReportCount), 0) FROM Review r WHERE r.userCode = :userCode")
     int sumReportCountByUserCode(@Param("userCode") int userCode);
 
+    // 계정 정지 상태 변경 시, 해당 유저의 모든 리뷰의 hiddenFlag를 업데이트 (1: 숨김, 0: 노출)
+    @Modifying
+    @Query("update Review r set r.hiddenFlag = :hiddenFlag where r.userCode = :userCode")
+    void updateHiddenFlagByUserCode(@Param("userCode") int userCode, @Param("hiddenFlag") int hiddenFlag);
+    //완수 끝
 }
