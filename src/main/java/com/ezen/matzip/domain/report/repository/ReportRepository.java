@@ -23,10 +23,12 @@ public interface ReportRepository extends JpaRepository<Review, Integer> {
             "from Review r, com.ezen.matzip.domain.user.entity.User usr " +
             "where r.userCode = usr.userCode " +
             "and r.reviewReportCount >= :reportCountThreshold " +
-            "and r.hiddenFlag in :hiddenFlags")
+            "and r.hiddenFlag in :hiddenFlags " +
+            "and (:userId = '' or usr.userId like concat('%', :userId, '%'))")
     Page<ReportedReviewDTO> findReportedReviewsWithUserId(
             @Param("reportCountThreshold") int reportCountThreshold,
             @Param("hiddenFlags") List<Integer> hiddenFlags,
+            @Param("userId") String userId,
             Pageable pageable
     );
 

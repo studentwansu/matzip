@@ -37,7 +37,10 @@ public class ReportService {
         Pageable pageable = PageRequest.of(page - 1, 10);
         // 바로 Repository에서 받은 DTO 페이지를 반환
         return reportRepository.findReportedReviewsWithUserId(
-                criteria.getReportCountThreshold(), hiddenFlags, pageable);
+                criteria.getReportCountThreshold(),
+                hiddenFlags,
+                criteria.getUserId(),
+                pageable);
     }
 
     public int countByHiddenFlag(int hiddenFlag) {
