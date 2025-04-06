@@ -40,8 +40,13 @@ public class BusinessService {
 
     public RestaurantDTO findRestaurantByUserId(String userId)
     {
-        Business business = businessRepository.findByUserId(userId).orElseThrow();
+        Business business = businessRepository.findByUserId(userId)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found: " + userId));
         Restaurant restaurant = restaurantRepository.findByBusinessCode(business.getBusinessCode());
+        if (restaurant == null) {
+            // 레스토랑 정보가 없으면 null 반환
+            return null;
+        }
 
         return new RestaurantDTO(restaurant,
                 menuRepository.findByRestaurantCode(restaurant),
