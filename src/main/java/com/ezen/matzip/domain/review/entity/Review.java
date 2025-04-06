@@ -91,4 +91,9 @@ public class Review {
     public void incrementReportCount() {
         this.reviewReportCount++;
     }
+
+    //완수-신고된리뷰기능에필요
+    public void setHiddenFlag(int hiddenFlag) {
+        this.hiddenFlag = hiddenFlag;
+    }
 }

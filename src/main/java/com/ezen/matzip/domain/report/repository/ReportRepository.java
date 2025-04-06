@@ -32,6 +32,19 @@ public interface ReportRepository extends JpaRepository<Review, Integer> {
             Pageable pageable
     );
 
+    @Query("select new com.ezen.matzip.domain.report.dto.ReportedReviewDTO(" +
+            "r.reviewCode, " +
+            "r.hiddenFlag, " +
+            "r.restaurantCode.restaurantCode, " +
+            "usr.userId, " +
+            "r.reviewReportCount, " +
+            "r.reviewContent, " +
+            "r.reviewDate) " +
+            "from Review r, com.ezen.matzip.domain.user.entity.User usr " +
+            "where r.userCode = usr.userCode " +
+            "and r.reviewCode = :reviewCode")
+    ReportedReviewDTO findReviewDetail(@Param("reviewCode") int reviewCode);
+
     // 처리 상태별 카운트
     int countByHiddenFlag(int hiddenFlag);
 }
