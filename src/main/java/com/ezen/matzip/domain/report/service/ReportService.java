@@ -4,6 +4,8 @@ import com.ezen.matzip.domain.report.dto.ReportedReviewDTO;
 import com.ezen.matzip.domain.report.dto.SearchCriteria;
 import com.ezen.matzip.domain.report.repository.ReportRepository;
 import com.ezen.matzip.domain.review.entity.Review;
+import com.ezen.matzip.domain.review.repository.ReviewRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -20,6 +22,8 @@ import java.util.stream.Collectors;
 public class ReportService {
 
     private final ReportRepository reportRepository;
+    // ReviewRepository를 이용하여 엔티티 업데이트
+    private final ReviewRepository reviewRepository;
 
     public Page<ReportedReviewDTO> getReportedReviews(SearchCriteria criteria, int page) {
         List<Integer> hiddenFlags = new ArrayList<>();
@@ -43,7 +47,20 @@ public class ReportService {
                 pageable);
     }
 
+    public ReportedReviewDTO getReportedReviewDetail(int reviewCode) {
+        return reportRepository.findReviewDetail(reviewCode);
+    }
+
     public int countByHiddenFlag(int hiddenFlag) {
         return reportRepository.countByHiddenFlag(hiddenFlag);
+    }
+
+    @Transactional
+    public void toggleHiddenStatus(int reviewCode) {
+        ReportedReviewDTO reviewDTO = reportRepository.findReviewDetail(reviewCode);
+        int newHiddenFlag = reviewDTO.getHiddenFlag() == 0 ? 1 : 0;
+        Review review = reviewRepository.findById(reviewCode).orElseThrow(() -> new RuntimeException("리뷰를 찾을 수 없습니다."));
+        review.setHiddenFlag(newHiddenFlag);
+        reviewRepository.save(review);
     }
 }

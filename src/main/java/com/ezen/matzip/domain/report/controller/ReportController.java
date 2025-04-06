@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -46,6 +47,19 @@ public class ReportController {
         model.addAttribute("maxReportCount", maxReportCount);
 
         return "domain/admin/admin_revreportlist";  // 템플릿 경로에 맞게 작성 (예: src/main/resources/templates/domain/admin/admin_revreportlist.html)
+    }
+
+    @GetMapping("/admin_revreportdetail")
+    public String getReportedReviewDetail(@RequestParam("reviewCode") int reviewCode, Model model) {
+        ReportedReviewDTO reviewDTO = reportService.getReportedReviewDetail(reviewCode);
+        model.addAttribute("review", reviewDTO);
+        return "domain/admin/admin_revreportdetail";  // 신고 상세 페이지 템플릿
+    }
+
+    @PostMapping("/updateReviewStatus")
+    public String updateReviewStatus(@RequestParam int reviewCode) {
+        reportService.toggleHiddenStatus(reviewCode);
+        return "redirect:/admin/admin_revreportdetail?reviewCode=" + reviewCode;
     }
 }
 
