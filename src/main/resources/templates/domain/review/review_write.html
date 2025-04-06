@@ -59,12 +59,24 @@
                     <td th:text="${stat.count}"></td>
                     <td th:text="${reservation.reservationDate}"></td>
                     <td th:text="${reservation.restaurantName}"></td>
+                    <td th:each="review : ${review}"></td>
                     <td>
-                        <button class="edit-btn" th:onclick="'openWriteModal(' + ${reservation.userCode} + ',' + ${reservation.restaurantCode} + ',' + ${reservation.reservationCode} + ')'"
-                                type="button">
-                            리뷰 작성
-                        </button>
+                        <div th:unless="${reviewMap.containsKey(reservation.reservationCode)}">
+                            <button class="edit-btn"
+                                    th:onclick="'openWriteModal(' + ${reservation.userCode} + ',' + ${reservation.restaurantCode} + ',' + ${reservation.reservationCode} + ')'"
+                                    type="button">
+                                리뷰 작성
+                            </button>
+                        </div>
+                        <div th:if="${reviewMap.containsKey(reservation.reservationCode)}">
+                            <button class="delete-btn" type="button" disabled>
+                                리뷰 완료
+                            </button>
+                        </div>
                     </td>
+
+
+
                     <td>
                         <a target="_blank" th:href="${reservation.recipe}">
                             <button class="delete-btn" type="button">레시피 보기</button>
@@ -118,6 +130,9 @@
                 </div>
             </div>
         </div>
+
+
+
     </div>
 </div>
 <!-- user footer 아래 복사 -->

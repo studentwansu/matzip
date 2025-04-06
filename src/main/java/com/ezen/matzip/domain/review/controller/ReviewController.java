@@ -27,7 +27,9 @@ import java.io.IOException;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Controller
@@ -68,7 +70,7 @@ public class ReviewController {
 
     @GetMapping("/user/review/imageList/{reviewCode}")
     @ResponseBody
-    public List<ReviewImageDTO> getReviewImages(@PathVariable int reviewCode) {
+    public List<ReviewImageDTO> getReviewImages(@PathVariable(required = false) int reviewCode) {
         List<ReviewImage> images = reviewImageRepository.findReviewImagesByReviewCode(reviewCode);
         return images.stream()
                 .map(img -> modelMapper.map(img, ReviewImageDTO.class))
@@ -92,37 +94,68 @@ public class ReviewController {
         return "redirect:/user/review";
     }
 
+//    @GetMapping("/user/review/write")
+//    public String findReservation(Model model, Principal principal) {
+//        User user = userService.findByUserId(principal.getName());
+//        int userCode = user.getUserCode();
+//        List<ReservationDTO> resultReservation = reviewService.findReservationByUserCode(userCode);
+//        model.addAttribute("reservation", resultReservation);
+//
+//        List<ReviewDTO> reviews;
+//        reviews = reviewService.findReviewByUserCode(userCode);
+//        model.addAttribute("review", reviews);
+//
+//        return "domain/review/review_write";
+//    }
+
     @GetMapping("/user/review/write")
     public String findReservation(Model model, Principal principal) {
         User user = userService.findByUserId(principal.getName());
         int userCode = user.getUserCode();
+
         List<ReservationDTO> resultReservation = reviewService.findReservationByUserCode(userCode);
         model.addAttribute("reservation", resultReservation);
 
-        List<ReviewDTO> reviews;
-        reviews = reviewService.findReviewByUserCode(userCode);
-        model.addAttribute("review", reviews);
+        List<ReviewDTO> reviews = reviewService.findReviewByUserCode(userCode);
+
+        Map<Integer, ReviewDTO> reviewMap = reviews.stream()
+                .collect(Collectors.toMap(
+                        ReviewDTO::getReservationCode,
+                        review -> review,
+                        (r1, r2) -> r1 // 중복 방지
+                ));
+        model.addAttribute("reviewMap", reviewMap);
 
         return "domain/review/review_write";
     }
 
+
+
+
     @PostMapping("/user/review/save")
     public String saveReview(@ModelAttribute ReviewDTO reviewDTO,
-                             @RequestParam List<MultipartFile> multiFiles,
+                             @RequestParam(required = false) List<MultipartFile> multiFiles,
                              Principal principal) throws IOException {
+
         User user = userService.findByUserId(principal.getName());
-        int userCode = user.getUserCode();
-        reviewDTO.setUserCode(userCode);
+        reviewDTO.setUserCode(user.getUserCode());
 
         Resource resource = resourceLoader.getResource("C:/matzip-storage/img/review");
         String filePath = resource.exists() ? resource.getFile().getAbsolutePath() : new File("C:/matzip-storage/img/review").getAbsolutePath();
-
         new File(filePath).mkdirs();
 
         List<ReviewImageDTO> files = new ArrayList<>();
-        for (int i = 0; i < Math.min(multiFiles.size(), 3); i++) {
-            MultipartFile file = multiFiles.get(i);
+        List<MultipartFile> safeFiles = (multiFiles != null) ? multiFiles : new ArrayList<>();
+
+        for (int i = 0; i < Math.min(safeFiles.size(), 3); i++) {
+            MultipartFile file = safeFiles.get(i);
+            if (file.isEmpty()) continue;
+
             String originFileName = file.getOriginalFilename();
+            if (originFileName == null || !originFileName.contains(".")) {
+                throw new IllegalArgumentException("잘못된 파일명: " + originFileName);
+            }
+
             String ext = originFileName.substring(originFileName.lastIndexOf("."));
             String savedFileName = UUID.randomUUID().toString().replace("-", "") + ext;
 
@@ -133,6 +166,9 @@ public class ReviewController {
         reviewService.writeReview(reviewDTO, files);
         return "redirect:/user/review";
     }
+
+
+
 
     @PostMapping("/user/review/image/delete/{reviewImageCode}")
     @ResponseBody
