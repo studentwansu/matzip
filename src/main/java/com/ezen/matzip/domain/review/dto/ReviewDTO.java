@@ -43,5 +43,4 @@ public class ReviewDTO {
     public List<ReviewImageDTO> getImageList(){
         return reviewImages;
     }
-
 }

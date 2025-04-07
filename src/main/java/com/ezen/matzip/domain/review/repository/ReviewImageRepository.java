@@ -1,5 +1,6 @@
 package com.ezen.matzip.domain.review.repository;
 
+import com.ezen.matzip.domain.restaurant.entity.Restaurant;
 import com.ezen.matzip.domain.review.entity.Review;
 import com.ezen.matzip.domain.review.entity.ReviewImage;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -16,5 +17,9 @@ public interface ReviewImageRepository extends JpaRepository<ReviewImage, Intege
 
    @Query("SELECT i FROM ReviewImage i WHERE i.reviewCode.reviewCode = :reviewCode")
     List<ReviewImage> findReviewImagesByReviewCode(@Param("reviewCode") int reviewCode);
+
+    @Query("SELECT i FROM ReviewImage i WHERE i.reviewCode.reviewCode = :reviewCode")
+    List<ReviewImage> findByReviewCode(@Param("reviewCode") int reviewCode);
+
 
 }
