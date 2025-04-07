@@ -18,8 +18,10 @@ public class qnaService {
     }
 
     public List<qnaDTO> getAll() {
-        return qnaRepository.findAll().stream()
-                .map(qnaDTO::new).collect(Collectors.toList());
+        return qnaRepository.findAllByOrderByCreatedAtDesc()
+                .stream()
+                .map(qnaDTO::new)
+                .collect(Collectors.toList());
     }
 
     public void create(String title, String content, String writer) {
@@ -32,7 +34,7 @@ public class qnaService {
     }
 
     public List<qnaDTO> getByWriter(String writer) {
-        return qnaRepository.findByWriter(writer)
+        return qnaRepository.findByWriterOrderByCreatedAtDesc(writer)
                 .stream()
                 .map(qnaDTO::new)
                 .collect(Collectors.toList());
@@ -51,6 +53,7 @@ public class qnaService {
         qna.writeAnswer(answer);
         qnaRepository.save(qna);
     }
+
 
 }
 
