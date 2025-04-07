@@ -1,32 +1,32 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
+  <meta charset="UTF-8">
     <title>관리자 등록신청목록페이지</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poor+Story&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <title>신고된 리뷰 목록</title>
     <link rel="stylesheet" href="/static/css/style_admin.css">
 </head>
 <body>
 <header>
     <section class="admin-header">
-        <a href="">
-            <img class="logo" src="/static/img/logo.png">
+        <a href="/">
+            <img class="logo" src="/static/img/logo.png" alt="logo">
         </a>
         <div class="admin-header-container">
             <div class="admin-header-textdiv">
-                <p class="admin-header-font1"> 어쩌구저쩌구 </p>
+                <p class="admin-header-font1">어드민 페이지</p>
                 <div class="line-yellow"></div>
-                <p class="admin-header-font2"> 어쩌구저쩌구</p>
-            </div>
+                <p class="admin-header-font2">신고된 리뷰 관리</p>
         </div>
         <div class="logout">
             <p class="navi-font">관리자님, 환영합니다. 😊</p>
-            <a href="">
-                <button class="redbutton3 redbutton-font">
-                    로그아웃
-                </button>
+
+            <a th:href="@{/logout}">
+                <button class="redbutton3 redbutton-font">로그아웃</button>
             </a>
         </div>
     </section>
@@ -34,11 +34,13 @@
 
 <main>
     <section class="body-section">
+
         <div class="navi">
             <div class="redbutton">
                 <span class="redbutton-font">마이페이지</span>
             </div>
             <ul>
+
                 <li><a href="" class="navi-font">식당 등록 신청 조회</a></li>
                 <li><a href="" class="navi-font">식당 정보 수정 요청 조회</a></li>
                 <li><a href="" class="navi-font">신고 리뷰 조회</a></li>
@@ -125,18 +127,126 @@
 
         </div>
         </div>
+
+                <li><a th:href="@{/admin/restaurantApplications}" class="navi-font">식당 등록 신청 조회</a></li>
+                <li><a th:href="@{/admin/restaurantUpdateRequests}" class="navi-font">식당 정보 수정 요청 조회</a></li>
+                <li><a th:href="@{/admin/admin_revreportlist}" class="navi-font">신고 리뷰 조회</a></li>
+                <li><a th:href="@{/admin/reportedUsers}" class="navi-font">신고된 유저 계정 조회</a></li>
+                <li><a th:href="@{/admin/notice}" class="navi-font">공지사항</a></li>
+                <li><a th:href="@{/admin/faq}" class="navi-font">FAQ</a></li>
+                <li><a th:href="@{/admin/qna}" class="navi-font">문의사항</a></li>
+                <li><a th:href="@{/admin/restaurantList}" class="navi-font">식당 목록 조회</a></li>
+            </ul>
+        </div>
+
+        <!-- 메인 컨텐츠 영역 -->
+        <div class="container-section">
+            <!-- 검색 및 필터 영역 -->
+            <form th:action="@{/admin/admin_revreportlist}" method="get">
+                <div class="container-search">
+                    <div class="container-search2 navi-font">
+                        <label for="reportCountSlider">신고 횟수 필터:</label>
+                        <input type="range" id="reportCountSlider" name="reportCountThreshold"
+                               min="1" th:attr="max=${maxReportCount}"
+                               th:value="${searchCriteria.reportCountThreshold}"
+                               oninput="document.getElementById('sliderValue').innerText = this.value">
+                        <span id="sliderValue" th:text="${searchCriteria.reportCountThreshold}">1</span>
+                    </div>
+                    <div class="container-search3 navi-font">
+                        <label>
+                            <input type="checkbox" name="unprocessed" th:checked="${searchCriteria.unprocessed}" />
+                            처리되지 않은 리뷰
+                        </label>
+                        <label>
+                            <input type="checkbox" name="processed" th:checked="${searchCriteria.processed}" />
+                            처리된 리뷰
+                        </label>
+                        <input class="admin-input-long" type="text" id="userId" name="userId" placeholder="유저아이디 검색"
+                               th:value="${searchCriteria.userId}" />
+                        <button class="redbutton redbutton-font" type="submit">검색</button>
+                    </div>
+                </div>
+            </form>
+
+            <!-- 처리된/처리되지 않은 리뷰 건수 표시 -->
+            <div class="container-title">
+                <span class="container-font1">
+                    처리되지 않은 리뷰 <span th:text="${unprocessedCount}">0</span>건 /
+                    처리된 리뷰 <span th:text="${processedCount}">0</span>건
+                </span>
+                <p class="container-font2">신고된 리뷰 목록</p>
+            </div>
+            <div class="line-yellow"></div>
+
+            <!-- 리뷰 목록 테이블 -->
+            <table class="table-class">
+                <thead>
+                <tr>
+                    <th></th>
+                    <th></th>
+                    <th>리뷰 코드</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="review : ${reviews}"
+                    th:onclick="|location.href='@{/admin/admin_revreportdetail(reviewCode=${review.reviewCode})}'|"
+                    style="cursor: pointer;">
+                    <td>
+                        <div>
+                            <span th:if="${review.hiddenFlag == 0}">처리되지 않음</span>
+                            <span th:if="${review.hiddenFlag == 1}">처리됨</span>
+                        </div>
+                        <div>
+                            <a class="redbutton4" th:href="@{/restaurant/{id}(id=${review.restaurantCode})}" target="_blank"
+                               onclick="event.stopPropagation();">
+                                식당바로가기
+                            </a>
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            <span th:text="${review.userId}"></span> /
+                            <span th:text="${review.reportCount}"></span>번 신고됨
+                        </div>
+                        <div th:text="${review.reviewContent}"></div>
+                    </td>
+                    <td th:text="${review.reviewCode}"></td>
+                </tr>
+                </tbody>
+            </table>
+
+            <!-- 페이지네이션 -->
+            <div class="pagination">
+                <span th:if="${currentPage > 1}">
+                    <a th:href="@{/admin/admin_revreportlist(page=${currentPage-1},
+                        reportCountThreshold=${searchCriteria.reportCountThreshold},
+                        unprocessed=${searchCriteria.unprocessed},
+                        processed=${searchCriteria.processed},
+                        userId=${searchCriteria.userId})}">&laquo; 이전</a>
+                </span>
+                <span th:each="pageNum : ${#numbers.sequence(1, totalPages)}"
+                      th:classappend="${pageNum == currentPage} ? 'active'">
+                    <a th:href="@{/admin/admin_revreportlist(page=${pageNum},
+                        reportCountThreshold=${searchCriteria.reportCountThreshold},
+                        unprocessed=${searchCriteria.unprocessed},
+                        processed=${searchCriteria.processed},
+                        userId=${searchCriteria.userId})}"
+                       th:text="${pageNum}"></a>
+                </span>
+                <span th:if="${currentPage < totalPages}">
+                    <a th:href="@{/admin/admin_revreportlist(page=${currentPage+1},
+                        reportCountThreshold=${searchCriteria.reportCountThreshold},
+                        unprocessed=${searchCriteria.unprocessed},
+                        processed=${searchCriteria.processed},
+                        userId=${searchCriteria.userId})}">다음 &raquo;</a>
+                </span>
+            </div>
+
         </div>
     </section>
 </main>
 
-<footer>
-    <p class="footer-font">Copyright 2025 맛zip All Right Reserved</p>
-    <!-- <ul>
-        <li class="footer-font"><a href="">공지사항</a></li>
-        <li class="footer-font"><a href="">FAQ</a></li>
-        <li class="footer-font"><a href="">Q&A</a></li>
-    </ul> -->
 </footer>
-
 </body>
 </html>
+

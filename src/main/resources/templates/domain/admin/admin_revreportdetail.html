@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>신고된 리뷰 상세페이지</title>
+  <link rel="stylesheet" href="/static/css/style_admin.css">
+</head>
+<body>
+<header>
+  <!-- 헤더 및 네비게이션은 목록 페이지와 동일하게 구성 -->
+  <section class="admin-header">
+    <a href="/">
+      <img class="logo" src="/static/img/logo.png" alt="logo">
+    </a>
+    <div class="admin-header-container">
+      <div class="admin-header-textdiv">
+        <p class="admin-header-font1">어드민 페이지</p>
+        <div class="line-yellow"></div>
+        <p class="admin-header-font2">신고된 리뷰 관리</p>
+      </div>
+    </div>
+    <div class="logout">
+      <p class="navi-font">관리자님, 환영합니다. 😊</p>
+      <a th:href="@{/logout}">
+        <button class="redbutton3 redbutton-font">로그아웃</button>
+      </a>
+    </div>
+  </section>
+</header>
+<main>
+  <div class="container-section">
+    <div class="container-title">
+      <!-- 처리 상태에 따른 버튼 텍스트 표시 -->
+      <button class="redbutton4" th:if="${review.hiddenFlag == 0}">처리되지 않음</button>
+      <button class="redbutton4" th:if="${review.hiddenFlag == 1}">처리됨</button>
+      <span class="container-font1">리뷰 번호: <span th:text="${review.reviewCode}"></span></span>
+    </div>
+    <div class="line-yellow"></div>
+    <table class="table-class">
+      <tr>
+        <td>작성자: <span th:text="${review.userId}"></span></td>
+      </tr>
+      <tr>
+        <td>
+          작성된 식당:
+          <a class="redbutton4" th:href="@{/restaurant/{id}(id=${review.restaurantCode})}" target="_blank">
+            식당바로가기
+          </a>
+        </td>
+      </tr>
+      <tr>
+        <td>신고된 횟수: <span th:text="${review.reportCount}"></span></td>
+      </tr>
+      <tr>
+        <td>
+          리뷰 내용<br>
+          <span th:text="${review.reviewContent}"></span>
+        </td>
+      </tr>
+    </table>
+    <div>
+      <!-- 리뷰 상태 토글 폼 -->
+      <form th:action="@{/admin/updateReviewStatus}" method="post">
+        <input type="hidden" name="reviewCode" th:value="${review.reviewCode}" />
+        <button type="submit" class="redbutton4"
+                th:text="${review.hiddenFlag == 0 ? '숨김' : '숨김 해제'}"></button>
+      </form>
+      <!-- 뒤로가기 버튼 -->
+      <button class="redbutton4" onclick="window.location.href='/admin/admin_revreportlist'">뒤로가기</button>
+    </div>
+  </div>
+</main>
+<footer>
+  <p class="footer-font">Copyright 2025 맛zip All Right Reserved</p>
+</footer>
+</body>
+</html>

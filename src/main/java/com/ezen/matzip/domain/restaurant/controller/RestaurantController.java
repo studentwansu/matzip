@@ -9,9 +9,11 @@ import com.ezen.matzip.domain.restaurant.dto.RestaurantImageDTO;
 import com.ezen.matzip.domain.restaurant.entity.Restaurant;
 import com.ezen.matzip.domain.restaurant.entity.RestaurantImage;
 import com.ezen.matzip.domain.restaurant.repository.RestaurantImageRepository;
+import com.ezen.matzip.domain.restaurant.repository.RestaurantRepository;
 import com.ezen.matzip.domain.restaurant.service.RestaurantService;
 import com.ezen.matzip.domain.review.dto.ReviewDTO;
 import com.ezen.matzip.domain.user.dto.UserRequestDTO;
+import com.ezen.matzip.domain.user.entity.Business;
 import com.ezen.matzip.domain.user.entity.User;
 import com.ezen.matzip.domain.user.service.UserService;
 import com.ezen.matzip.domain.user.service.UserIdCheckService;
@@ -61,6 +63,8 @@ public class RestaurantController {
     private final BookmarkService bookmarkService;
     @Autowired
     private final UserService userService;
+    @Autowired
+    private RestaurantRepository restaurantRepository;
 
 
     @GetMapping("/restaurant/{restaurantCode}")
@@ -100,7 +104,6 @@ public class RestaurantController {
                 .map(img -> modelMapper.map(img, RestaurantImageDTO.class))
                 .toList();
             model.addAttribute("selectedRestaurantImgs", imgDTOs);
-
 
         model.addAttribute("selectedRestaurant", restaurant);
 
@@ -154,6 +157,8 @@ public class RestaurantController {
         String username = principal.getName();
         int businessCode = userIdCheckService.getBusinessCodeByUserid(username);
 
+
+
         Model model = new ExtendedModelMap();
         model.addAttribute("businessCode", businessCode);
 
@@ -169,10 +174,15 @@ public class RestaurantController {
         String username = principal.getName();
         // userService에서 username을 사용하여 businessCode를 가져오기
         Integer businessCode = userIdCheckService.getBusinessCodeByUserid(username);
+
+        Restaurant existingRestaurant = restaurantRepository.findByBusinessCode(businessCode);
+        if (existingRestaurant != null) {
+            // 레스토랑이 이미 등록되어 있으면 등록을 막고 경고 메시지를 반환
+            throw new RuntimeException("이미 식당을 등록 하셨습니다.");
+        }
+
         // RegistDTO에 비즈니스 코드 설정
         registDTO.setBusinessCode(businessCode); // 비즈니스 코드 설정
-
-
 
         Resource resource = resourceLoader.getResource("file:C:/dev/img/restaurant");
         String filePath = null;
@@ -224,21 +234,45 @@ public class RestaurantController {
 
         System.out.println("=== DTO 로그 ===");
         System.out.println(registDTO.toString());
-     restaurantService.registRestaurant(registDTO,files);
+        int restaurantCode = restaurantService.registRestaurant(registDTO,files).getRestaurantCode();
 
-        return "redirect:/restaurant/" + registDTO.getRestaurantCode();
+
+
+        return "redirect:/business/restaurant/" + restaurantCode;
     }
 
 
     @GetMapping("/business/modify")
-    public String modifyPage() {
-        return "restaurant/restaurant-modify";
+    public String modifyPage(Principal principal) {
+        String username = principal.getName();
+        int businessCode = userIdCheckService.getBusinessCodeByUserid(username);
+
+        Model model = new ExtendedModelMap();
+        model.addAttribute("businessCode", businessCode);
+        return "domain/store/store_edit";
     }
 
     @PostMapping("/business/modify")
-    public String modify(@ModelAttribute RegistDTO registDTO) {
+    public String modify(@ModelAttribute RegistDTO registDTO,
+                         @RequestParam ("multiFiles")List<MultipartFile> multiFiles, Principal principal) {
+
+        Business business = userIdCheckService.findByUserId(principal.getName());
+        int businessCode = business.getBusinessCode();
+        registDTO.setBusinessCode(businessCode);
+
+        Restaurant foundRestaurant = restaurantRepository.findByBusinessCode(businessCode);
+        registDTO.setRestaurantCode(foundRestaurant.getRestaurantCode());
+
+//        // Principal에서 현재 로그인된 사용자 이름 가져오기
+//        String username = principal.getName();
+//        // userService에서 username을 사용하여 businessCode를 가져오기
+//        Integer businessCode = userIdCheckService.getBusinessCodeByUserid(username);
+//        // RegistDTO에 비즈니스 코드 설정
+//        registDTO.setBusinessCode(businessCode); // 비즈니스 코드 설정
+
+        System.out.println("businessCode: " + businessCode);
         System.out.println("modify: " + registDTO.toString());
-        restaurantService.modifyRestaurant(registDTO);
+        restaurantService.modifyRestaurant(registDTO, multiFiles);
 
         return "redirect:/restaurant/" + registDTO.getRestaurantCode();
     }

@@ -27,4 +27,9 @@ public interface ReviewRepository extends JpaRepository<Review, Integer> {
 
 //    Page<Review> findByUserCode(int userCode, Pageable pageable);
 
+    //완수- 신고수 동기화에 필요
+    // 특정 유저(userCode)가 작성한 리뷰들의 신고 수 합계를 반환 (신고가 없으면 0 반환)
+    @Query("SELECT COALESCE(SUM(r.reviewReportCount), 0) FROM Review r WHERE r.userCode = :userCode")
+    int sumReportCountByUserCode(@Param("userCode") int userCode);
+
 }
