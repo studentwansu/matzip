@@ -24,4 +24,7 @@ public interface ReviewRepository extends JpaRepository<Review, Integer> {
 
     List<Review> findByRestaurantCode(@Param("restaurantCode") Restaurant restaurantCode);
 
+    int countByReviewReportCountGreaterThan(int reviewReportCount);
+
+    int countByHiddenFlag(int hiddenFlag);
 }

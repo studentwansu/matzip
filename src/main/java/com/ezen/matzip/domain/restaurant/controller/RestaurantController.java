@@ -11,7 +11,6 @@ import com.ezen.matzip.domain.restaurant.entity.RestaurantImage;
 import com.ezen.matzip.domain.restaurant.repository.RestaurantImageRepository;
 import com.ezen.matzip.domain.restaurant.service.RestaurantService;
 import com.ezen.matzip.domain.review.dto.ReviewDTO;
-import com.ezen.matzip.domain.user.dto.UserRequestDTO;
 import com.ezen.matzip.domain.user.entity.User;
 import com.ezen.matzip.domain.user.service.UserService;
 import com.ezen.matzip.domain.user.service.UserIdCheckService;
@@ -87,18 +86,14 @@ public class RestaurantController {
         }
 //        System.out.println("reviews: " + resultReview);
 
-//        List<RestaurantImage> imgs = restaurantImageRepository.findRestaurantImageByRestaurantCode(restaurantCode);
-//        if (!imgs.isEmpty())
-//        {
-//
-//            List<RestaurantImageDTO> imgDTOs = imgs.stream()
-//                .map(img -> modelMapper.map(img, RestaurantImageDTO.class))
-//                .toList();
-//            model.addAttribute("selectedRestaurantImgs", imgDTOs);
-//        }
-            List<RestaurantImageDTO> imgDTOs = imgs.stream()
+        List<RestaurantImage> restaurantImages = restaurantImageRepository.findRestaurantImageByRestaurantCode(restaurantCode);
+        List<RestaurantImageDTO> imgDTOs = new ArrayList<>();
+        if (!restaurantImages.isEmpty())
+        {
+            imgDTOs = restaurantImages.stream()
                 .map(img -> modelMapper.map(img, RestaurantImageDTO.class))
                 .toList();
+        }
             model.addAttribute("selectedRestaurantImgs", imgDTOs);
 
         model.addAttribute("selectedRestaurant", restaurant);
@@ -235,6 +230,7 @@ public class RestaurantController {
     public String findByRestaurant(@RequestParam String keyword, Model model, HttpSession session, Principal principal) {
         session.setAttribute("lastKeyword", keyword);
         List<RestaurantDTO> restaurants = restaurantService.findByKeywordOrderByScore(keyword);
+//        List<RestaurantImageDTO> restaurantImageDTOS;
         model.addAttribute("restaurantList", restaurants);
         model.addAttribute("myLoc", keyword);
 
@@ -248,14 +244,6 @@ public class RestaurantController {
 
         return "domain/search/user_restlist";
     }
-
-//    @GetMapping("/storeinfo")
-//    public String markingLocation(@RequestParam Integer restaurantCode, Model model)
-//    {
-//        String location = restaurantService.findLocationByRestaurantCode(restaurantCode);
-//        model.addAttribute("restaurantLocation", location);
-//        return "/domain/restaurant/store_restinfo";
-//    }
 
     @GetMapping(value = "/search", params = "categoryCode")
     public String filteringRestaurants(@RequestParam int categoryCode, Model model, HttpSession session) {

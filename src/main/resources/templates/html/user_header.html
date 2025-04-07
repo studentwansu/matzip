@@ -58,15 +58,15 @@
                 <img src="/img/menu-icon.png" alt="메뉴">
             </button>
 
-            <nav class="nav-menu" style="display: none;">
-                <ul>
+            <div class="nav-menu">
+                <ul class="navi-menu-ul">
                     <li><a th:href="@{/user/myinfo}">내 정보</a></li>
                     <li><a href="/page2">예약 목록</a></li>
                     <li><a th:href="@{/user/review/write}">이용 목록</a></li>
                     <li><a th:href="@{/user/bookmarks}">북마크 목록</a></li>
                     <li><a th:href="@{/user/review}">작성 리뷰 목록</a></li>
                 </ul>
-            </nav>
+            </div>
 
             <script>
                 document.addEventListener("DOMContentLoaded", function() {

@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface qnaRepository extends JpaRepository<qnaEntity, String> {
     List<qnaEntity> findByWriter(String writer);
+
+    int countByAnswerIsNull();
 }
