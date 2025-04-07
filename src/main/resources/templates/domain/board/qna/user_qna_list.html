@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <title>사용자 Q&A 리스트</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poor+Story&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style_user.css">
+    <script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=fd7786d297e2d4aaab4aa8b6bbb06b88&libraries=services"
+            type="text/javascript"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script th:src="@{/js/myLocation.js}"></script>
+    <script th:src="@{/js/weather.js}"></script>
+    <link rel="stylesheet" href="/static/css/style_admin.css">
+</head>
+<body>
+
+<!-- header -->
+<header>
+    <div th:replace="~{html/user_header :: userHeader}"></div>
+</header>
+
+<main>
+    <section class="body-section">
+        <div class="container-title" style="justify-content:center;">
+            <span class="container-font1">Q&A</span>
+        </div>
+        <!-- 목록 페이지는 팝업용 메시지 영역 대신 confirm 스크립트에서 처리 -->
+        <div class="line-yellow-100"></div>
+        <table class="user-table-class">
+            <thead>
+            <tr>
+                <th style="width:3vh; text-align:center;">번호</th>
+                <th>답변 상태</th>
+                <th>제목</th>
+                <th style="text-align:right;">날짜</th>
+            </tr>
+            </thead>
+            <tbody th:each="qna,stat : ${qnaList}">
+            <!-- 1) 제목 행 -->
+            <tr>
+                <td th:text="${stat.index + 1}" style="text-align:center;"></td>
+                <td>
+                    <div class="redbutton4 redbutton-font"
+                         th:text="${qna.answer != null ? '답변완료' : '답변전'}"></div>
+                </td>
+                <td>
+                    <a href="#" class="qna-title" th:text="${qna.title}"></a>
+                </td>
+                <td th:text="${#temporals.format(qna.createdAt,'yyyy.MM.dd')}"
+                    style="text-align:right;"></td>
+            </tr>
+
+            <!-- 2) 질문+답변 내용 행 -->
+            <tr class="qna-content-row" style="display:none;">
+                <td colspan="4" style="background:#f9f9f9; padding:10px;">
+                    <!-- 질문 내용 -->
+                    <div>
+                        <strong>질문 내용:</strong>
+                        <p th:text="${qna.content}"></p>
+                    </div>
+                    <!-- 답변 내용이 있을 때만 -->
+                    <div th:if="${qna.answer}">
+                        <strong>답변 내용:</strong>
+                        <p th:text="${qna.answer}"></p>
+                        <!-- 답변된 시간(Optional) -->
+                        <p style="text-align:right; font-size:0.8em; color:#666;"
+                           th:text="${#temporals.format(qna.answeredAt,'yyyy.MM.dd HH:mm')}"></p>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <!-- ★ 여기서 작성하기 버튼 추가 ★ -->
+        <div style="text-align: right; margin-top: 1.5em;">
+            <a th:href="@{/board/qna/write}" class="redbutton redbutton-font" style="color:black">작성하기</a>
+        </div>
+    </section>
+</main>
+
+<!-- footer -->
+<div id="footer-user"></div>
+<footer>
+    <div th:replace="~{html/user_footer :: userFooter}"></div>
+</footer>
+
+<!-- 팝업창 처리 스크립트 (msg 값이 전달되면 confirm 팝업을 띄움) -->
+<script>
+    $(document).ready(function(){
+        $(".qna-title").click(function(e){
+            e.preventDefault();
+            $(this).closest("tr")
+                .next(".qna-content-row")
+                .slideToggle();
+        });
+    });
+</script>
+</script>
+
+</body>
+</html>
