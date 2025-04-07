@@ -109,7 +109,7 @@
 <main>
     <div class="content-container">
         <table class="board-table">
-            <h2> 공지사항</h2>
+            <caption>공지사항</caption>
             <thead>
             <tr>
                 <!-- noticeIndex가 모델에 전달되어 있다면 사용, 없으면 기본값으로 1 사용 -->
@@ -121,50 +121,52 @@
             <tbody>
             <tr>
                 <td colspan="3">
-                    <div class="notice-content" contenteditable="true" th:text="${notice.content}">
+                    <div id="noticeContent" class="notice-content" contenteditable="true" th:text="${notice.content}">
                         공지 내용
                     </div>
                 </td>
             </tr>
             </tbody>
-            <!-- 목록으로 돌아가기 -->
-            <div class="list-btn">
-                <a th:href="@{/board/notice/list}">
-                    <button type="button">뒤로가기</button>
+        </table>
+
+        <!-- 목록으로 돌아가기 -->
+        <div class="list-btn">
+            <a th:href="@{/board/notice/list}">
+                <button type="button">뒤로가기</button>
+            </a>
+        </div>
+
+        <!-- 버튼 그룹: 관리자만 표시 -->
+        <div class="button-group" sec:authorize="hasRole('ADMIN')">
+            <!-- 수정 버튼 -->
+            <button type="button" th:attr="data-id=${notice.id}"
+                    onclick="updateNotice(this.getAttribute('data-id'))"
+                    th:if="${notice != null and notice.id != ''}">수정
+            </button>
+            <!-- 삭제 버튼 -->
+            <button type="button" th:attr="data-id=${notice.id}"
+                    onclick="deleteNotice(this.getAttribute('data-id'))"
+                    th:if="${notice != null and notice.id != ''}">삭제
+            </button>
+            <!-- 등록 버튼 (공지사항 객체가 없을 경우) -->
+            <button type="button" onclick="createNotice()"
+                    th:if="${notice == null or notice.id == ''}">등록
+            </button>
+            <!-- 새 공지사항 등록 페이지로 전환 -->
+            <div class="buttonbox3">
+                <a th:href="@{/admin/board/notice/write}">
+                    <button type="button">새 공지사항 등록</button>
                 </a>
             </div>
-            <!-- 버튼 그룹: 관리자만 표시 -->
-            <div class="button-group" sec:authorize="hasRole('ADMIN')">
-                <!-- 수정 버튼 -->
-                <button type="button" th:attr="data-id=${notice.id}"
-                        onclick="updateNotice(this.getAttribute('data-id'))"
-                        th:if="${notice != null and notice.id != ''}">수정
-                </button>
-                <!-- 삭제 버튼 -->
-                <button type="button" th:attr="data-id=${notice.id}"
-                        onclick="deleteNotice(this.getAttribute('data-id'))"
-                        th:if="${notice != null and notice.id != ''}">삭제
-                </button>
-                <!-- 등록 버튼 (공지사항 객체가 없을 경우) -->
-                <button type="button" onclick="createNotice()"
-                        th:if="${notice == null or notice.id == ''}">등록
-                </button>
-                <!-- 새 공지사항 등록 페이지로 전환 -->
-                <div class="buttonbox3">
-                    <a th:href="@{/admin/board/notice/write}">
-                        <button type="button">새 공지사항 등록</button>
-                    </a>
-                </div>
-        </table>
+        </div>
     </div>
 </main>
 
 <!-- 푸터: 외부 푸터 프래그먼트 -->
 <footer>
     <div class="footer-container">
-        <div th:replace="~{html/user_footer :: userFooter}"></div>
+        <div th:replace="~{html/admin_footer :: adminFooter}"></div>
     </div>
 </footer>
 </body>
 </html>
-

@@ -100,7 +100,7 @@ public class RestaurantController {
                 .map(img -> modelMapper.map(img, RestaurantImageDTO.class))
                 .toList();
             model.addAttribute("selectedRestaurantImgs", imgDTOs);
-        }
+
 
         model.addAttribute("selectedRestaurant", restaurant);
 
@@ -215,8 +215,7 @@ public class RestaurantController {
 //            model.addAttribute("message", "파일 업로드 성공!");
 //            model.addAttribute("imgs", savedFiles);
         } catch (Exception e) {
-            for (RestaurantImageDTO file : files)
-            {
+            for (RestaurantImageDTO file : files) {
                 new File(filePath + "/" + file.getRestaurantSavedName()).delete();
             }
 //            model.addAttribute("message", "파일 업로드 실패!");
