@@ -34,7 +34,7 @@ public class qnaController {
         qnaDTO qna = qnaService.getById(id);
 
         if (!qna.getWriter().equals(userDetails.getUsername())) {
-            return "error/404";
+            return "error404";
         }
 
         model.addAttribute("qna", qna);
