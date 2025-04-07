@@ -386,5 +386,12 @@ public class RestaurantService {
                 .map(RestaurantDTO::fromEntity)
                 .collect(Collectors.toList());
     }
+    public void updateRestaurantStatus(int restaurantCode, int statusCode) {
+        Restaurant restaurant = restaurantRepository.findById(restaurantCode)
+                .orElseThrow(() -> new IllegalArgumentException("해당 식당을 찾을 수 없습니다."));
+        restaurant.setRestaurantStatus(statusCode);
+        restaurantRepository.save(restaurant);
+    }
+
 
 }

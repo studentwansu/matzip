@@ -52,12 +52,12 @@
             <div class="container-section">
                 <div class="container-search">
                     <div class="container-search2 navi-font">
-                        <label id="latest" name="latest">
-                            <input class="custom-input" type="checkbox" id="latest" name="latest">
+                        <label>
+                            <input class="custom-input" type="checkbox" id="sortDate" name="sort">
                             신청일 순으로 정렬
                         </label>
-                        <label id="latest" name="latest">
-                            <input class="custom-input" type="checkbox" id="name" name="name">
+                        <label>
+                            <input class="custom-input" type="checkbox" id="sortName" name="sort">
                             식당명 순으로 정렬
                         </label>
 
@@ -75,54 +75,17 @@
                     </div>
                     <div class="line-yellow"></div>
                     <table class="table-class">
+                        <thead>
                         <tr>
-                            <td style="width:1vh;"><button class="redbutton4">수락</button><button class="redbutton4">반려</button></td>
-                            <td style="text-align: left;">투썸플레이스 종각역점<br>
-                                신청일 : 2025. 03. 04. 12:22<br>
-                                수정일 : 2025. 03. 05. 15:32<br>
-                            </td>
-                            <td style="text-align: center;">1234-1234</td>
+                            <th>액션</th>
+                            <th>식당 정보</th>
+                            <th>신청 번호</th>
                         </tr>
-                        <tr>
-                            <td style="width:1vh;"><button class="redbutton4">수락</button><button class="redbutton4">반려</button></td>
-                            <td style="text-align: left;">투썸플레이스 종각역점<br>
-                                신청일 : 2025. 03. 04. 12:22<br>
-                                수정일 : 2025. 03. 05. 15:32<br>
-                            </td>
-                            <td style="text-align: center;">1234-1234</td>
-                        </tr>
-                        <tr>
-                            <td style="width:1vh;"><button class="redbutton4">수락</button><button class="redbutton4">반려</button></td>
-                            <td style="text-align: left;">투썸플레이스 종각역점<br>
-                                신청일 : 2025. 03. 04. 12:22<br>
-                                수정일 : 2025. 03. 05. 15:32<br>
-                            </td>
-                            <td style="text-align: center;">1234-1234</td>
-                        </tr>                        
-                        <tr>
-                            <td style="width:1vh;"><button class="redbutton4">수락</button><button class="redbutton4">반려</button></td>
-                            <td style="text-align: left;">투썸플레이스 종각역점<br>
-                                신청일 : 2025. 03. 04. 12:22<br>
-                                수정일 : 2025. 03. 05. 15:32<br>
-                            </td>
-                            <td style="text-align: center;">1234-1234</td>
-                        </tr>                        
-                        <tr>
-                            <td style="width:1vh;"><button class="redbutton4">수락</button><button class="redbutton4">반려</button></td>
-                            <td style="text-align: left;">투썸플레이스 종각역점<br>
-                                신청일 : 2025. 03. 04. 12:22<br>
-                                수정일 : 2025. 03. 05. 15:32<br>
-                            </td>
-                            <td style="text-align: center;">1234-1234</td>
-                        </tr>                        
-                        <tr>
-                            <td style="width:1vh;"><button class="redbutton4">수락</button><button class="redbutton4">반려</button></td>
-                            <td style="text-align: left;">투썸플레이스 종각역점<br>
-                                신청일 : 2025. 03. 04. 12:22<br>
-                                수정일 : 2025. 03. 05. 15:32<br>
-                            </td>
-                            <td style="text-align: center;">1234-1234</td>
-                        </tr>                        
+                        </thead>
+                        <tbody id="restaurant-table-body">
+                        <!-- JS가 여기다 <tr>들을 넣어줄 거예요 -->
+                        </tbody>
+                    </table>
 
                     </table>
                 </div>
@@ -141,6 +104,112 @@
             <li class="footer-font"><a href="">Q&A</a></li>
         </ul> -->
     </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const sortDateCb = document.getElementById('sortDate');
+            const sortNameCb = document.getElementById('sortName');
 
+            // 체크박스 클릭 시 서로 배타적으로 동작시키고, 로드 재호출
+            sortDateCb.addEventListener('change', () => {
+                if (sortDateCb.checked) {
+                    sortNameCb.checked = false;
+                    loadPendingRestaurants('date');
+                } else {
+                    loadPendingRestaurants();  // 기본 정렬
+                }
+            });
+            sortNameCb.addEventListener('change', () => {
+                if (sortNameCb.checked) {
+                    sortDateCb.checked = false;
+                    loadPendingRestaurants('name');
+                } else {
+                    loadPendingRestaurants();  // 기본 정렬
+                }
+            });
+
+            // 초기 로드 (기본 정렬)
+            loadPendingRestaurants();
+        });
+
+        function loadPendingRestaurants(sortBy) {
+            fetch('/admin/restaurants/pending')
+                .then(res => res.json())
+                .then(data => {
+                    // 1) 클라이언트에서 정렬
+                    if (sortBy === 'date') {
+                        // 최신 신청일 순 (내림차순)
+                        data.sort((a, b) =>
+                            new Date(b.restaurantRegistrationDate) - new Date(a.restaurantRegistrationDate)
+                        );
+                    } else if (sortBy === 'name') {
+                        // 식당명 오름차순
+                        data.sort((a, b) =>
+                            a.restaurantName.localeCompare(b.restaurantName)
+                        );
+                    }
+                    renderTable(data);
+                })
+                .catch(console.error);
+        }
+
+        function renderTable(data) {
+            const tbody = document.getElementById('restaurant-table-body');
+            tbody.innerHTML = '';
+            data.forEach(r => {
+                const tr = document.createElement('tr');
+                // 액션
+                const tdAct = document.createElement('td');
+                tdAct.style.width = '1vh';
+                tdAct.innerHTML = `
+      <button class="redbutton4" onclick="handleApprove(${r.restaurantCode})">수락</button>
+      <button class="redbutton4" onclick="handleReject(${r.restaurantCode})">반려</button>
+    `;
+                tr.appendChild(tdAct);
+                // 정보
+                const tdInfo = document.createElement('td');
+                tdInfo.style.textAlign = 'left';
+                let info = `${r.restaurantName}<br>신청일 : ${formatDate(r.restaurantRegistrationDate)}<br>`;
+                if (r.restaurantStatus === 2 && r.rejectionDate) {
+                    info += `반려일 : ${formatDate(r.rejectionDate)}<br>`;
+                }
+                tdInfo.innerHTML = info;
+                tr.appendChild(tdInfo);
+                // 코드
+                const tdCode = document.createElement('td');
+                tdCode.style.textAlign = 'center';
+                tdCode.textContent = r.restaurantCode;
+                tr.appendChild(tdCode);
+
+                tbody.appendChild(tr);
+            });
+        }
+
+        function formatDate(dateStr) {
+            const d = new Date(dateStr);
+            const yyyy = d.getFullYear();
+            const MM   = String(d.getMonth()+1).padStart(2,'0');
+            const dd   = String(d.getDate()).padStart(2,'0');
+            const hh   = String(d.getHours()).padStart(2,'0');
+            const mm   = String(d.getMinutes()).padStart(2,'0');
+            return `${yyyy}. ${MM}. ${dd}. ${hh}:${mm}`;
+        }
+
+        // 기존 승인/반려 핸들러
+        function handleApprove(code) {
+            fetch(`/admin/restaurants/${code}/approve`, { method: 'PATCH' })
+                .then(r => r.ok ? loadPendingRestaurants(getCurrentSort()) : alert('승인 실패'));
+        }
+        function handleReject(code) {
+            fetch(`/admin/restaurants/${code}/reject`, { method: 'PATCH' })
+                .then(r => r.ok ? loadPendingRestaurants(getCurrentSort()) : alert('반려 실패'));
+        }
+
+        // 현재 체크된 정렬 기준 반환
+        function getCurrentSort() {
+            if (document.getElementById('sortDate').checked) return 'date';
+            if (document.getElementById('sortName').checked) return 'name';
+            return null;
+        }
+    </script>
 </body>
 </html>
