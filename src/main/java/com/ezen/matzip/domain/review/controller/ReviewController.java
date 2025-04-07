@@ -13,10 +13,8 @@ import com.ezen.matzip.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -94,20 +92,6 @@ public class ReviewController {
         return "redirect:/user/review";
     }
 
-//    @GetMapping("/user/review/write")
-//    public String findReservation(Model model, Principal principal) {
-//        User user = userService.findByUserId(principal.getName());
-//        int userCode = user.getUserCode();
-//        List<ReservationDTO> resultReservation = reviewService.findReservationByUserCode(userCode);
-//        model.addAttribute("reservation", resultReservation);
-//
-//        List<ReviewDTO> reviews;
-//        reviews = reviewService.findReviewByUserCode(userCode);
-//        model.addAttribute("review", reviews);
-//
-//        return "domain/review/review_write";
-//    }
-
     @GetMapping("/user/review/write")
     public String findReservation(Model model, Principal principal) {
         User user = userService.findByUserId(principal.getName());
@@ -121,8 +105,7 @@ public class ReviewController {
         Map<Integer, ReviewDTO> reviewMap = reviews.stream()
                 .collect(Collectors.toMap(
                         ReviewDTO::getReservationCode,
-                        review -> review,
-                        (r1, r2) -> r1 // 중복 방지
+                        review -> review
                 ));
         model.addAttribute("reviewMap", reviewMap);
 
@@ -167,17 +150,4 @@ public class ReviewController {
         return "redirect:/user/review";
     }
 
-
-
-
-    @PostMapping("/user/review/image/delete/{reviewImageCode}")
-    @ResponseBody
-    public ResponseEntity<?> deleteReviewImage(@PathVariable int reviewImageCode) {
-        reviewImageRepository.findById(reviewImageCode).ifPresent(image -> {
-            File file = new File("C:/matzip-storage/img/review" + image.getReviewImagePath());
-            if (file.exists()) file.delete();
-            reviewImageRepository.deleteById(reviewImageCode);
-        });
-        return ResponseEntity.ok().build();
-    }
 }

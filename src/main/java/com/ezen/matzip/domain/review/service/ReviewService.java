@@ -31,13 +31,11 @@ import java.util.*;
 @RequiredArgsConstructor
 public class ReviewService {
 
-    private final UserRepository userRepository;
     private final ReviewRepository reviewRepository;
-    private final RestaurantReviewRepository restaurantReviewRepository;
     private final ReviewImageRepository reviewImageRepository;
     private final ReservationRepository reservationRepository;
     private final RestaurantRepository restaurantRepository;
-    private final ModelMapper modelMapper;
+
     private String generateYoutubeUrl(String menu){
         String keyword = menu + " 레시피";
         return "https://www.youtube.com/results?search_query=" + URLEncoder.encode(keyword, StandardCharsets.UTF_8);
