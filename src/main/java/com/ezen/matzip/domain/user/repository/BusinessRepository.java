@@ -12,8 +12,6 @@ public interface BusinessRepository extends JpaRepository<Business, Integer> {
 
     Optional<Business> findByUserId(String userId);
 
-//    @Query("SELECT CASE WHEN COUNT(u) > 0 THEN true ELSE false END FROM User u WHERE u.userId = :userId")
-//    boolean existsByUserId(@Param("userId") String userId);
 @Query("SELECT CASE WHEN COUNT(b) > 0 THEN true ELSE false END FROM Business b WHERE b.userId = :userId")
 boolean existsByUserId(@Param("userId") String userId);
 
