@@ -158,20 +158,7 @@ public class RestaurantController {
         model.addAttribute("selectedRestaurantImgs", imgDTOs);
 
         return "domain/restaurant/store_restinfo";
-
     }
-
-//    @GetMapping("/restaurant/{restaurantCode}")
-//    public String getReviewImages(@PathVariable(required = false) int reviewCode, Model model) {
-//        List<ReviewImage> images = reviewImageRepository.findByReviewCode(reviewCode);
-//        List<ReviewImageDTO> imgDTOss = images.stream()
-//                .map(img -> modelMapper.map(img, ReviewImageDTO.class))
-//                .toList();
-//
-//        model.addAttribute("selectedRestaurantImgs", imgDTOss);
-//
-//        return "domain/restaurant/store_restinfo";
-//    }
 
     @GetMapping("/business/regist")
     public String registPage(Principal principal) {
@@ -199,7 +186,6 @@ public class RestaurantController {
         String username = principal.getName();
         // userService에서 username을 사용하여 businessCode를 가져오기
         Integer businessCode = userIdCheckService.getBusinessCodeByUserid(username);
-
 
 
         // RegistDTO에 비즈니스 코드 설정
@@ -300,7 +286,8 @@ public class RestaurantController {
     {
         session.setAttribute("lastKeyword", keyword);
         List<RestaurantDTO> restaurants = restaurantService.findByKeywordOrderByScore(keyword);
-//        List<RestaurantImageDTO> restaurantImageDTOS;
+        restaurants = restaurantService.findRestaurantsAndImgs(restaurants);
+
         model.addAttribute("restaurantList", restaurants);
         model.addAttribute("myLoc", keyword);
 
@@ -316,14 +303,6 @@ public class RestaurantController {
 
         return "domain/search/user_restlist";
     }
-
-//    @GetMapping("/storeinfo")
-//    public String markingLocation(@RequestParam Integer restaurantCode, Model model)
-//    {
-//        String location = restaurantService.findLocationByRestaurantCode(restaurantCode);
-//        model.addAttribute("restaurantLocation", location);
-//        return "/domain/restaurant/store_restinfo";
-//    }
 
     @GetMapping(value = "/search", params = "categoryCode")
     public String filteringRestaurants(@RequestParam int categoryCode, Model model, HttpSession session)

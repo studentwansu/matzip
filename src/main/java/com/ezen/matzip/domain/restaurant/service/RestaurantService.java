@@ -170,11 +170,28 @@ public class RestaurantService {
         return filteredList;
     }
 
-    public List<Object[]> findRestaurantsAndImgs(List<RestaurantDTO> restaurantDTOList)
+    public List<RestaurantDTO> findRestaurantsAndImgs(List<RestaurantDTO> restaurantDTOList)
     {
-//        List<Object[]> list = new ArrayList<>();
-//        list.addAll(restaurantDTOList.)
-        return null;
+
+        for (int i = 0; i < restaurantDTOList.size(); i++)
+        {
+            List<RestaurantImage> img = restaurantImageRepository.findRestaurantImageByRestaurantCode(restaurantDTOList.get(i).getRestaurantCode());
+            List<RestaurantImageDTO> imgDTOList = new ArrayList<>();
+            for (int j = 0; j < img.size(); j++)
+            {
+                RestaurantImageDTO imgDTO = new RestaurantImageDTO();
+                imgDTO.setRestaurantCode(restaurantDTOList.get(i).getRestaurantCode());
+                imgDTO.setRestaurantImagePath(img.get(j).getRestaurantImagePath());
+                imgDTO.setRestaurantImageCode(img.get(j).getRestaurantImageCode());
+                imgDTO.setRestaurantSavedName(img.get(j).getRestaurantSavedName());
+                imgDTO.setRestaurantOriginalName(img.get(j).getRestaurantOriginalName());
+                imgDTOList.add(imgDTO);
+            }
+
+            restaurantDTOList.get(i).setRestaurantImages(imgDTOList);
+        }
+
+        return restaurantDTOList;
     }
 
 //    public List<RestaurantDTO> filteredRestaurantsByCountry(String keyword,)
