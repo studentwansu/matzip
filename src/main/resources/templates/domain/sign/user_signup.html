@@ -156,17 +156,19 @@
                     <div class="label">
                         <label for="nationality">국적: </label>
                         <select id="nationality" th:field="*{nationality}">
-                            <option value="Korea">Korea</option>
-                            <option value="Japan">Japan</option>
-                            <option value="China">China</option>
-                            <option value="USA">United States</option>
-                            <option value="France">France</option>
+                            <option value="Korea">한국</option>
+                            <option value="Japan">일본</option>
+                            <option value="China">중국</option>
+                            <option value="USA">미국</option>
+                            <option value="France">프랑스</option>
                         </select>
                     </div>
                     <label for="categoryCode">좋아하는 음식 카테고리: </label>
                     <select id="categoryCode" th:field="*{categoryCode}">
                         <option value="1">한식</option>
                         <option value="2">일식</option>
+                        <option value="3">양식</option>
+                        <option value="4">중식</option>
                     </select>
                     <div class="vegan">
                         <!-- 비건 여부 체크박스: DTO의 isVegan은 Boolean이어야 합니다 -->

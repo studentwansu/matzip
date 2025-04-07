@@ -115,6 +115,9 @@
                         <select disabled>
                             <option value="korea" th:selected="${user.nationality == 'korea'}">한국</option>
                             <option value="japan" th:selected="${user.nationality == 'japan'}">일본</option>
+                            <option value="china" th:selected="${user.nationality == 'china'}">중국</option>
+                            <option value="usa" th:selected="${user.nationality == 'usa'}">미국</option>
+                            <option value="france" th:selected="${user.nationality == 'france'}">프랑스</option>
                         </select>
                         <input type="hidden" name="nationality" th:value="${user.nationality}" />
                     </div>
@@ -123,6 +126,8 @@
                     <select name="categoryCode">
                         <option value="1" th:selected="${user.categoryCode == 1}">한식</option>
                         <option value="2" th:selected="${user.categoryCode == 2}">일식</option>
+                        <option value="3" th:selected="${user.categoryCode == 3}">양식</option>
+                        <option value="4" th:selected="${user.categoryCode == 4}">중식</option>
                     </select>
                     <!-- 비건 여부 -->
                     <div class="vegan">
