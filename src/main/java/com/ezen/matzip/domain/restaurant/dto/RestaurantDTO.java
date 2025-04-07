@@ -67,7 +67,43 @@ public class RestaurantDTO {
         this.restaurantStatus = restaurant.getRestaurantStatus();
         this.restaurantService = restaurant.getRestaurantService();
     }
+    // 희영 식당 등록요청 목록조회 기능
+    // ✅ 간단한 fromEntity 정적 팩토리 메서드 (메뉴/이미지/리뷰 없이 Restaurant만 매핑)
+    public static RestaurantDTO fromEntity(Restaurant restaurant) {
+        RestaurantDTO dto = new RestaurantDTO();
 
+        dto.setRestaurantName(restaurant.getRestaurantName());
+        dto.setRestaurantCode(restaurant.getRestaurantCode());
+        dto.setRestaurantLocation(restaurant.getRestaurantLocation());
+        dto.setRestaurantContactNumber(restaurant.getRestaurantContactNumber());
+        dto.setRestaurantDescription(restaurant.getRestaurantDescription());
+        dto.setRestaurantRegistrationDate(restaurant.getRestaurantRegistrationDate());
+        dto.setRestaurantActiveStatus(restaurant.getRestaurantActiveStatus());
+        dto.setRestaurantUniqueKeywords(restaurant.getRestaurantUniqueKeywords());
+        dto.setMainMenu(restaurant.getMainMenu());
+        dto.setBusinessCode(restaurant.getBusinessCode());
+        dto.setRestaurantStatus(restaurant.getRestaurantStatus());
+        dto.setRestaurantService(restaurant.getRestaurantService());
+
+        if (restaurant.getRestaurantStartTime() != null) {
+            dto.setRestaurantStartTime(restaurant.getRestaurantStartTime().toString());
+        }
+        if (restaurant.getRestaurantEndTime() != null) {
+            dto.setRestaurantEndTime(restaurant.getRestaurantEndTime().toString());
+        }
+        if (restaurant.getCategory() != null) {
+            dto.setCategoryCode(new CategoryDTO(
+                    restaurant.getCategory().getCategoryCode(),
+                    restaurant.getCategory().getCategory()
+            ));
+        }
+
+        return dto;
+    }
+    public RestaurantDTO() {
+        // 기본 생성자
+    }
+    // 희영 완료
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
@@ -80,4 +116,10 @@ public class RestaurantDTO {
     public int hashCode() {
         return Integer.hashCode(getRestaurantCode());
     }
+
 }
+
+
+
+
+
