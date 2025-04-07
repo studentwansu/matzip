@@ -39,6 +39,26 @@
     resize: none;
 }
 
+.body-section {
+    width: 100%;
+    flex: 1;
+    background-color: #fff3e0;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    flex-direction: row-reverse;
+    align-items: flex-start;
+    overflow: auto;
+}
+
+.review-container-section {
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    left: 25.5%;
+}
+
+
 /* 모달 스타일 */
 .modal {
     display: none;
@@ -111,4 +131,78 @@
     border-radius: 5px;
     font-size: 16px;
     resize: none;
+}
+
+.input-style
+{
+    position:absolute;
+    background-color: #d9d9d9;
+    border: none;
+    border-radius: 1vh;
+    padding: 0.5vh;
+    resize: none;
+    top:1%;
+}
+
+.reply-complete {
+    width: 6vh;
+    height: 3vh;
+    background-color: green;
+    border-radius: 1vh;
+    margin: 1vh;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    color:white;
+}
+
+.reply-before {
+    width: 6vh;
+    height: 3vh;
+    background-color: #FA4032;
+    border-radius: 1vh;
+    margin: 1vh;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    color:white;
+}
+
+.input-style
+{
+    position:absolute;
+    background-color: #d9d9d9;
+    border: none;
+    border-radius: 1vh;
+    padding: 0.5vh;
+    resize: none;
+    top:1%;
+}
+
+.reply-complete {
+    width: 6vh;
+    height: 3vh;
+    background-color: green;
+    border-radius: 1vh;
+    margin: 1vh;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    color:white;
+}
+
+.reply-before {
+    width: 6vh;
+    height: 3vh;
+    background-color: #FA4032;
+    border-radius: 1vh;
+    margin: 1vh;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    color:white;
 }

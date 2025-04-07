@@ -94,5 +94,11 @@ public class User {
     public int hashCode() {
         return userCode != null ? userCode.hashCode() : 0;
     }
+
+    public void setUserReportCount(int count) {
+        this.userReportCount = count;
+    }
+
+    public void setAccountStatus(int status) { this.accountStatus = status; }
 }
 

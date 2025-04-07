@@ -58,13 +58,13 @@ async function currentWeather() {
                         console.log(food.keyword);
                         foodListHtml += `
                 <form action="/search">
-                <div class="food-item">
-                    <button style="text-decoration: none; color: inherit; display: block; cursor: pointer; background: none;" type="submit">
-                        <img src="${food.keywordImgPath}" alt="${food.keyword}" width="100">
-                        <p>${food.keyword}</p>
-                        <input type="hidden" name="keyword" value="${food.keyword}">
-                    </button>
-                </div>
+                    <div class="food-item">
+                        <button style="text-decoration: none; color: inherit; display: block; cursor: pointer; background: none;" type="submit">
+                            <img class="main-img" src="${food.keywordImgPath}" alt="${food.keyword}" width="100">
+                            <p style="font-size: 1.6vh;">${food.keyword}</p>
+                            <input type="hidden" name="keyword" value="${food.keyword}">
+                        </button>
+                    </div>
                 </form>`;
                     });
                     $(".food-list").html(foodListHtml);

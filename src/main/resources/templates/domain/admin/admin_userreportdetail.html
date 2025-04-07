@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>신고된 유저 상세페이지</title>
+    <link rel="stylesheet" href="/static/css/style_admin.css">
+</head>
+<body>
+<header>
+    <!-- 공통 헤더 영역 -->
+    <section class="admin-header">
+        <a href="/">
+            <img class="logo" src="/static/img/logo.png" alt="logo">
+        </a>
+        <div class="admin-header-container">
+            <div class="admin-header-textdiv">
+                <p class="admin-header-font1">어드민 페이지</p>
+                <div class="line-yellow"></div>
+                <p class="admin-header-font2">신고된 유저 관리</p>
+            </div>
+        </div>
+        <div class="logout">
+            <p class="navi-font">관리자님, 환영합니다. 😊</p>
+            <a th:href="@{/logout}">
+                <button class="redbutton3 redbutton-font">로그아웃</button>
+            </a>
+        </div>
+    </section>
+</header>
+<main>
+    <div class="container-section">
+        <div class="container-title">
+            <!-- 계정 상태에 따른 버튼 텍스트 표시 -->
+            <button class="redbutton4" th:if="${user.banned == false}">정지되지 않음</button>
+            <button class="redbutton4" th:if="${user.banned == true}">정지됨</button>
+            <span class="container-font1">유저 코드: <span th:text="${user.userCode}"></span></span>
+        </div>
+        <div class="line-yellow"></div>
+        <table class="table-class">
+            <tr>
+                <td>아이디: <span th:text="${user.userId}"></span></td>
+            </tr>
+            <tr>
+                <td>신고당한 횟수: <span th:text="${user.reportCount}"></span></td>
+            </tr>
+            <tr>
+                <td>
+                    신고된 리뷰 목록
+                    <ul>
+                        <!-- user.reviewList는 유저가 작성한 리뷰 목록 -->
+                        <li th:each="review : ${user.reviewList}">
+                            리뷰 번호: <span th:text="${review.reviewCode}"></span>
+                            <!-- 리뷰 상세 페이지로 이동하는 버튼 (해당 reviewCode 전달) -->
+                            <button class="redbutton4" type="button"
+                                    th:onclick="|location.href='/admin/admin_revreportdetail?reviewCode=${review.reviewCode}'|">
+                                리뷰 상세보기
+                            </button>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        </table>
+        <div>
+            <!-- 정지 처리/해제 토글 폼 (userId도 함께 전송하여 상세 페이지 복귀 처리) -->
+            <form th:action="@{/admin/updateUserStatus}" method="post">
+                <input type="hidden" name="userCode" th:value="${user.userCode}" />
+                <input type="hidden" name="userId" th:value="${user.userId}" />
+                <button type="submit" class="redbutton4"
+                        th:text="${user.banned == false ? '정지 처리' : '정지 해제'}"></button>
+            </form>
+            <!-- 뒤로가기 버튼 -->
+            <button class="redbutton4" onclick="window.location.href='/admin/reportedUsers'">뒤로가기</button>
+        </div>
+    </div>
+</main>
+<footer>
+    <p class="footer-font">Copyright 2025 맛zip All Right Reserved</p>
+</footer>
+</body>
+</html>

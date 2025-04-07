@@ -40,7 +40,7 @@ public class qnaController {
     public String userQnaDetail(@PathVariable String id, Model model, @AuthenticationPrincipal UserDetails userDetails) {
         qnaDTO qna = qnaService.getById(id);
         if (!qna.getWriter().equals(userDetails.getUsername())) {
-            return "error/404";
+            return "error404";
         }
         model.addAttribute("qna", qna);
         return "domain/board/qna/user_qna_detail";  // 수정: 사용자 전용 상세보기 뷰

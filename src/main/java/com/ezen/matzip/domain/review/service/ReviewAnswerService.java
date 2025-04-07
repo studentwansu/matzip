@@ -1,5 +1,7 @@
 package com.ezen.matzip.domain.review.service;
 
+import com.ezen.matzip.domain.Role;
+import com.ezen.matzip.domain.report.service.UserReportSyncService;
 import com.ezen.matzip.domain.restaurant.entity.Restaurant;
 import com.ezen.matzip.domain.review.dto.ReviewDTO;
 import com.ezen.matzip.domain.review.dto.ReviewImageDTO;
@@ -8,6 +10,8 @@ import com.ezen.matzip.domain.review.entity.ReviewImage;
 import com.ezen.matzip.domain.review.repository.ReviewAnswerRepository;
 import com.ezen.matzip.domain.review.repository.ReviewImageRepository;
 import com.ezen.matzip.domain.review.repository.ReviewRepository;
+import com.ezen.matzip.domain.user.entity.User;
+import com.ezen.matzip.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -25,6 +29,10 @@ public class ReviewAnswerService {
     private final ReviewRepository reviewRepository;
     private final ModelMapper modelMapper;
     private final ReviewImageRepository reviewImageRepository;
+
+    //완수 - 신고수 동기화에 필요
+    private final UserRepository userRepository;
+    private final UserReportSyncService userReportSyncService;
 
     public List<ReviewDTO> findReviewByBusinessCode(int businessCode) {
         List<Object[]> reviews = reviewAnswerRepository.findByBusinessCode(businessCode);
@@ -119,6 +127,13 @@ public class ReviewAnswerService {
                 .orElseThrow(() -> new IllegalArgumentException("해당 리뷰가 없습니다."));
         review.incrementReportCount();
         reviewAnswerRepository.save(review);
+
+        // 신고 대상이 일반 유저인 경우에만 동기화 (예: Role.USER)
+        User user = userRepository.findById(review.getUserCode())
+                .orElseThrow(() -> new IllegalArgumentException("해당 유저가 없습니다."));
+        if (user.getRole() == Role.USER) {  // Role 비교는 실제 구현에 맞게 수정
+            userReportSyncService.updateUserReportCount(review.getUserCode());
+        }
     }
 
 

@@ -13,28 +13,8 @@
 
 </head>
 <body>
-    <header>
-        <section class="admin-header">
-            <a href="">
-                <img class="logo" src="/img/logo.png">
-            </a>
-            <div class="admin-header-container">
-                <div class="admin-header-textdiv">
-                    <p class="admin-header-font1"> 어쩌구저쩌구 </p>
-                    <div class="line-yellow"></div>
-                    <p class="admin-header-font2"> 어쩌구저쩌구</p>
-                </div>
-            </div>
-            <div class="logout">
-                <p class="navi-font">관리자님, 환영합니다. 😊</p>
-                <a href="">
-                    <button class="redbutton3 redbutton-font">
-                        로그아웃
-                    </button>
-                </a>
-            </div>
-        </section>
-    </header>
+
+<div th:replace="~{html/admin_header :: adminHeader}"></div>
 
     <main>
         <section class="body-section">
@@ -54,6 +34,9 @@
             <div class="store-info">
                 <div class="store-imgs">
                     <!-- 여기에 이미지 넣기 -->
+                    <div class="store-imgs" th:each="img : ${selectedRestaurantImgs}">
+                        <img th:src="@{${img.restaurantImagePath}}" class="preview-img" />
+                    </div>
                 </div>
                 <div class="store-container">
                     <div class="upper-container">
@@ -153,7 +136,7 @@
         </section>
     </main>
     <footer>
-        <p class="footer-font">Copyright 2025 맛zip All Right Reserved</p>
+        <div th:replace="~{html/admin_footer :: adminFooter}"></div>
     </footer>
     <script th:inline="javascript">
         let restLoc = /*[[${restaurantLocation}]]*/ "";

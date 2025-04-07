@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>신고된 리뷰 조회 페이지</title>
+  <!-- 예시용 리셋/기본 CSS -->
+  <style>
+    /* 임시 스타일링 (필요에 따라 별도 CSS 파일로 분리) */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: sans-serif;
+    }
+
+    body {
+      background-color: #f9f9f9;
+      color: #333;
+    }
+
+    header {
+      background-color: #fef7e0;
+      padding: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .logo {
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+    .user-menu a {
+      margin-left: 1rem;
+      text-decoration: none;
+      color: #333;
+      font-size: 0.9rem;
+    }
+
+    .container {
+      display: flex;
+      width: 90%;
+      margin: 2rem auto;
+    }
+
+    /* 왼쪽 사이드바 */
+    nav.sidebar {
+      width: 200px;
+      margin-right: 2rem;
+    }
+    nav.sidebar ul {
+      list-style: none;
+    }
+    nav.sidebar li {
+      margin-bottom: 1rem;
+    }
+    nav.sidebar a {
+      text-decoration: none;
+      color: #333;
+      padding: 0.5rem 0.75rem;
+      display: block;
+      background-color: #fff;
+      border-radius: 4px;
+    }
+    nav.sidebar a:hover {
+      background-color: #f0f0f0;
+    }
+    nav.sidebar a.active {
+      background-color: #ffeb99;
+    }
+
+    /* 메인 컨텐츠 영역 */
+    main {
+      flex: 1;
+      background-color: #fff;
+      border-radius: 4px;
+      padding: 1.5rem;
+    }
+
+    .tab-menu {
+      margin-bottom: 1rem;
+    }
+    .tab-menu button {
+      background-color: #eee;
+      border: none;
+      padding: 0.5rem 1rem;
+      margin-right: 0.5rem;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .tab-menu button.active {
+      background-color: #ffd300;
+    }
+
+    .review-summary {
+      margin-bottom: 1rem;
+      font-size: 0.9rem;
+      color: #666;
+    }
+
+    .review-list {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .review-list thead {
+      background-color: #fafafa;
+    }
+    .review-list th, .review-list td {
+      text-align: left;
+      padding: 0.75rem;
+      border-bottom: 1px solid #ddd;
+      font-size: 0.9rem;
+    }
+    .review-list th {
+      width: 150px;
+    }
+    .review-list td.status-pending {
+      color: red;
+    }
+    .review-list td.status-complete {
+      color: green;
+    }
+
+    /* 하단 푸터 */
+    footer {
+      text-align: center;
+      margin-top: 2rem;
+      font-size: 0.8rem;
+      color: #999;
+    }
+  </style>
+</head>
+<body>
+<!-- 헤더 영역 -->
+<header>
+  <div class="logo">맛.z.i.p POOMAP</div>
+  <div class="user-menu">
+    <span>관리자님, 환영합니다.</span>
+    <a href="#">로그아웃</a>
+  </div>
+</header>
+
+<!-- 콘텐츠 래퍼 -->
+<div class="container">
+  <!-- 사이드바 -->
+  <nav class="sidebar">
+    <ul>
+      <li><a href="#">메인</a></li>
+      <li><a href="#" class="active">신고된 리뷰</a></li>
+      <li><a href="#">차단된 리뷰</a></li>
+      <li><a href="#">유저 차단</a></li>
+    </ul>
+  </nav>
+
+  <!-- 메인 컨텐츠 -->
+  <main>
+    <!-- 상단 탭/필터 -->
+    <div class="tab-menu">
+      <button class="active">전체</button>
+      <button>미처리</button>
+      <button>처리</button>
+    </div>
+
+    <!-- 신고된 리뷰 통계/개요 -->
+    <div class="review-summary">
+      처리되지 않은 리뷰 17건 / 처리된 리뷰 30건
+    </div>
+
+    <!-- 테이블 목록 -->
+    <table class="review-list">
+      <thead>
+      <tr>
+        <th>리뷰 번호</th>
+        <th>작성자</th>
+        <th>리뷰 내용</th>
+        <th>신고 사유</th>
+        <th>처리 상태</th>
+        <th>등록일</th>
+      </tr>
+      </thead>
+      <tbody>
+      <!-- 반복구간 예시 -->
+      <tr>
+        <td>1024</td>
+        <td>user123</td>
+        <td>리뷰 내용 예시입니다.</td>
+        <td>욕설/비방</td>
+        <td class="status-pending">미처리</td>
+        <td>2025-04-01</td>
+      </tr>
+      <tr>
+        <td>1025</td>
+        <td>foodlover</td>
+        <td>이 리뷰는 처리되었습니다.</td>
+        <td>부적절한 이미지</td>
+        <td class="status-complete">처리완료</td>
+        <td>2025-04-02</td>
+      </tr>
+      <!-- //반복구간 예시 -->
+      </tbody>
+    </table>
+  </main>
+</div>
+
+<!-- 푸터 -->
+<footer>
+  Copyright 2025 맛.z.i.p All Right Reserved
+</footer>
+</body>
+</html>
