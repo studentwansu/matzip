@@ -26,38 +26,55 @@
 
 <main>
     <section class="body-section">
-        <div class="container-section">
-            <div class="container-section" th:if="${qnaList != null and #lists.isEmpty(qnaList)}"
-                 style="justify-content:center;">
-                <!-- qnaList가 비어 있을 경우 placeholder 대신 팝업을 위한 영역(또는 빈 영역) -->
-            </div>
-            <div class="container-section" th:if="${qnaList != null and !#lists.isEmpty(qnaList)}"
-                 style="justify-content:center;">
-                <!-- qnaList가 있을 때만 실제 목록을 렌더링 -->
-                <!-- 예: Q&A 목록 테이블 -->
-            </div>
+        <div class="container-title" style="justify-content:center;">
             <span class="container-font1">Q&A</span>
         </div>
         <!-- 목록 페이지는 팝업용 메시지 영역 대신 confirm 스크립트에서 처리 -->
         <div class="line-yellow-100"></div>
         <table class="user-table-class">
+            <thead>
             <tr>
-                <td style="width:3vh; text-align: center;">1</td>
-                <td>
-                    <div class="redbutton4 redbutton-font">답변전</div>
-                </td>
-                <td>질문1</td>
-                <td style="text-align: right;">2025. 03. 08</td>
+                <th style="width:3vh; text-align:center;">번호</th>
+                <th>답변 상태</th>
+                <th>제목</th>
+                <th style="text-align:right;">날짜</th>
             </tr>
+            </thead>
+            <tbody th:each="qna,stat : ${qnaList}">
+            <!-- 1) 제목 행 -->
+            <tr>
+                <td th:text="${stat.index + 1}" style="text-align:center;"></td>
+                <td>
+                    <div class="redbutton4 redbutton-font"
+                         th:text="${qna.answer != null ? '답변완료' : '답변전'}"></div>
+                </td>
+                <td>
+                    <a href="#" class="qna-title" th:text="${qna.title}"></a>
+                </td>
+                <td th:text="${#temporals.format(qna.createdAt,'yyyy.MM.dd')}"
+                    style="text-align:right;"></td>
+            </tr>
+
+            <!-- 2) 질문+답변 내용 행 -->
+            <tr class="qna-content-row" style="display:none;">
+                <td colspan="4" style="background:#f9f9f9; padding:10px;">
+                    <!-- 질문 내용 -->
+                    <div>
+                        <strong>질문 내용:</strong>
+                        <p th:text="${qna.content}"></p>
+                    </div>
+                    <!-- 답변 내용이 있을 때만 -->
+                    <div th:if="${qna.answer}">
+                        <strong>답변 내용:</strong>
+                        <p th:text="${qna.answer}"></p>
+                        <!-- 답변된 시간(Optional) -->
+                        <p style="text-align:right; font-size:0.8em; color:#666;"
+                           th:text="${#temporals.format(qna.answeredAt,'yyyy.MM.dd HH:mm')}"></p>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
         </table>
-        <div class="line-grey2-100"></div>
-        <div class="container-content">
-            <pre>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad assumenda blanditiis dolor eligendi expedita in iusto minima nesciunt odit optio quaerat qui reiciendis repellendus soluta suscipit tempore tenetur vitae, voluptatem.</pre>
-        </div>
-        <div class="buttonbox3">
-            <a href="" style="font-size:2vh;">뒤로가기</a>
-        </div>
-        </div>
     </section>
 </main>
 
@@ -68,15 +85,15 @@
 </footer>
 
 <!-- 팝업창 처리 스크립트 (msg 값이 전달되면 confirm 팝업을 띄움) -->
-<script th:inline="javascript">
-    /*<![CDATA[*/
-    var msg = /*[[${msg}]]*/ "";
-    if (msg !== "") {
-        if (confirm(msg + "\n작성하러 가시겠습니까?")) {
-            window.location.href = /*[[@{/board/qna/write}]]*/ "";
-        }
-    }
-    /*]]>*/
+<script>
+    $(document).ready(function(){
+        $(".qna-title").click(function(e){
+            e.preventDefault();
+            $(this).closest("tr")
+                .next(".qna-content-row")
+                .slideToggle();
+        });
+    });
 </script>
 </script>
 

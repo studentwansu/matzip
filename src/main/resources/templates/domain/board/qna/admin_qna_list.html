@@ -44,35 +44,52 @@
             <div class="container-title" style="justify-content:center;">
                 <h2>QNA</h2>
             </div>
-            <!-- 작성 버튼 추가: 클릭 시 관리자 작성 화면으로 이동 -->
-            <div class="buttonbox" style="text-align: center; margin: 10px 0;">
-                <a href="/admin/board/qna/write" class="redbutton redbutton-font">작성</a>
-            </div>
             <div class="line-yellow"></div>
+
             <table class="table-class2">
+                <thead>
                 <tr>
-                    <td style="text-align: center; width:5vh;">번호</td>
-                    <td style="text-align: left; width:2vh;">답변 상태</td>
-                    <td style="text-align: left;"><a href="">제목</a></td>
-                    <td style="text-align: right;">날짜</td>
+                    <th style="text-align:center; width:5vh;">번호</th>
+                    <th style="text-align:left; width:2vh;">답변 상태</th>
+                    <th style="text-align:left;">제목</th>
+                    <th style="text-align:right;">날짜</th>
                 </tr>
-                <tr class="qna-row">
-                    <td style="text-align: center; width:5vh;">1</td>
-                    <td style="text-align: left; width:2vh;">
-                        <button class="redbutton4 redbutton-font">답변전</button>
+                </thead>
+                <tbody th:each="qna, stat : ${qnaList}">
+                <!-- 제목/상태/날짜 행 -->
+                <tr>
+                    <td th:text="${stat.index + 1}" style="text-align:center;"></td>
+                    <td>
+                        <button class="redbutton4 redbutton-font"
+                                th:text="${qna.answer != null ? '답변완료' : '답변전'}"></button>
                     </td>
-                    <td style="text-align: left;">
-                        <a href="#" class="qna-title">회원가입 시 유의사항</a>
+                    <td>
+                        <a href="#" class="admin-qna-title" th:text="${qna.title}"></a>
                     </td>
-                    <td style="text-align: right;">2025. 03. 08</td>
+                    <td th:text="${#temporals.format(qna.createdAt,'yyyy.MM.dd')}"
+                        style="text-align:right;"></td>
                 </tr>
-                <!-- 질문 내용을 담은 숨겨진 row -->
-                <tr class="qna-content-row" style="display: none;">
-                    <td colspan="4" style="background-color: #f9f9f9; padding: 10px;">
-                        <!-- 질문 내용 출력 (예: Thymeleaf 사용 시 변수 처리) -->
-                        <p>여기에 질문 상세 내용이 표시됩니다.</p>
+                <!-- 질문+답변 내용 행 (숨김) -->
+                <tr class="admin-qna-content-row" style="display:none;">
+                    <td colspan="4" style="background:#f9f9f9; padding:10px;">
+                        <div>
+                            <strong>질문:</strong>
+                            <p th:text="${qna.content}"></p>
+                        </div>
+                        <div th:if="${qna.answer}">
+                            <strong>답변:</strong>
+                            <p th:text="${qna.answer}"></p>
+                            <p style="text-align:right; font-size:0.8em; color:#666;"
+                               th:text="${#temporals.format(qna.answeredAt,'yyyy.MM.dd HH:mm')}"></p>
+                        </div>
+                        <!-- 답변 작성 폼으로 이동 버튼 -->
+                        <div style="margin-top:1em;">
+                            <a th:href="@{/admin/board/qna/write/{id}(id=${qna.id})}"
+                               class="redbutton3 redbutton-font">답변 작성</a>
+                        </div>
                     </td>
                 </tr>
+                </tbody>
             </table>
         </div>
     </div>
@@ -82,15 +99,18 @@
 <footer>
     <p>Copyright 2025 맛zip All Right Reserved</p>
 </footer>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-    $(document).ready(function(){
-        $(".qna-title").click(function(e){
-            e.preventDefault(); // 기본 링크 동작 방지
-            // 클릭한 제목 행 바로 아래의 qna-content-row를 토글
-            $(this).closest("tr").next(".qna-content-row").slideToggle();
+    $(function(){
+        $(".admin-qna-title").click(function(e){
+            e.preventDefault();
+            $(this).closest("tr")
+                .next(".admin-qna-content-row")
+                .slideToggle();
         });
     });
 </script>
+
 
 </body>
 </html>

@@ -79,7 +79,7 @@ public class qnaController {
     public String adminQnaDetail(@PathVariable String id, Model model) {
         qnaDTO qna = qnaService.getById(id);
         model.addAttribute("qna", qna);
-        return "domain/board/qna/admin_qna_detail";  // 관리자 전용 상세보기 뷰
+        return "domain/board/qna/admin_qna_write_form";  // 관리자 전용 상세보기 뷰
     }
 
     // 관리자가 QnA에 답변을 수정/등록 (공지사항, FAQ의 edit 경로와 동일한 패턴)
@@ -89,4 +89,13 @@ public class qnaController {
         qnaService.updateAnswer(id, answer);
         return "redirect:/admin/board/qna";
     }
+    // ========== 관리자 전용 QnA 답변 작성 폼 ==========
+    @GetMapping("/admin/board/qna/write/{id}")
+    public String showAdminWriteForm(@PathVariable String id, Model model) {
+        qnaDTO qna = qnaService.getById(id);
+        model.addAttribute("qna", qna);
+        // 실제 파일명이 admin_qna_write_form.html 이므로 뷰 이름도 그대로
+        return "domain/board/qna/admin_qna_write_form";
+    }
+
 }
