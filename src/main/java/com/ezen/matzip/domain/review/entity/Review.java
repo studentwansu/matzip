@@ -1,6 +1,7 @@
 package com.ezen.matzip.domain.review.entity;
 
 import com.ezen.matzip.domain.restaurant.entity.Restaurant;
+import com.ezen.matzip.domain.user.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -31,6 +32,7 @@ public class Review {
     @ManyToOne
     @JoinColumn(name = "restaurant_code")
     private Restaurant restaurantCode;
+
     private int reservationCode;
 
 //    @OneToMany
@@ -88,5 +90,10 @@ public class Review {
     //완수-리뷰신고기능에 필요
     public void incrementReportCount() {
         this.reviewReportCount++;
+    }
+
+    //완수-신고된리뷰기능에필요
+    public void setHiddenFlag(int hiddenFlag) {
+        this.hiddenFlag = hiddenFlag;
     }
 }

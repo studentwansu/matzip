@@ -91,7 +91,6 @@ public class UpdateUserController {
         }
 
         if (result.hasErrors()) {
-//            model.addAttribute("user", existingUser);
             return "domain/sign/user_myinfo";
         }
 

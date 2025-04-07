@@ -18,14 +18,6 @@ public class UserIdCheckController {
         this.userIdCheckService = userIdCheckService;
     }
 
-//    @PostMapping("/checkUserId")
-//    @ResponseBody
-//    public Map<String, Object> checkUserId(@RequestParam("userId") String userId) {
-//        boolean available = userIdCheckService.isUserIdAvailable(userId);
-//        Map<String, Object> response = new HashMap<>();
-//        return response;
-//    }
-
     @PostMapping("/checkUserId")
     @ResponseBody
     public Map<String, Object> checkUserId(@RequestParam("userId") String userId) {

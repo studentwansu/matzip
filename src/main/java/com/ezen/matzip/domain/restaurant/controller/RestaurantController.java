@@ -9,8 +9,11 @@ import com.ezen.matzip.domain.restaurant.dto.RestaurantImageDTO;
 import com.ezen.matzip.domain.restaurant.entity.Restaurant;
 import com.ezen.matzip.domain.restaurant.entity.RestaurantImage;
 import com.ezen.matzip.domain.restaurant.repository.RestaurantImageRepository;
+import com.ezen.matzip.domain.restaurant.repository.RestaurantRepository;
 import com.ezen.matzip.domain.restaurant.service.RestaurantService;
 import com.ezen.matzip.domain.review.dto.ReviewDTO;
+import com.ezen.matzip.domain.user.dto.UserRequestDTO;
+import com.ezen.matzip.domain.user.entity.Business;
 import com.ezen.matzip.domain.user.entity.User;
 import com.ezen.matzip.domain.user.service.UserService;
 import com.ezen.matzip.domain.user.service.UserIdCheckService;
@@ -60,6 +63,8 @@ public class RestaurantController {
     private final BookmarkService bookmarkService;
     @Autowired
     private final UserService userService;
+    @Autowired
+    private RestaurantRepository restaurantRepository;
 
 
     @GetMapping("/restaurant/{restaurantCode}")
@@ -93,8 +98,8 @@ public class RestaurantController {
             imgDTOs = restaurantImages.stream()
                 .map(img -> modelMapper.map(img, RestaurantImageDTO.class))
                 .toList();
-        }
             model.addAttribute("selectedRestaurantImgs", imgDTOs);
+        }
 
         model.addAttribute("selectedRestaurant", restaurant);
 
@@ -114,7 +119,9 @@ public class RestaurantController {
         System.out.println("test: " + resultReview);
 
         List<RestaurantImage> imgs = restaurantImageRepository.findRestaurantImageByRestaurantCode(restaurantCode);
-        List<RestaurantImageDTO> imgDTOs = imgs.stream().map(img -> modelMapper.map(img, RestaurantImageDTO.class)).toList();
+        List<RestaurantImageDTO> imgDTOs = imgs.stream()
+                .map(img -> modelMapper.map(img, RestaurantImageDTO.class))
+                .toList();
 
         model.addAttribute("selectedRestaurant", modelMapper.map(restaurant, RestaurantDTO.class));
         model.addAttribute("selectedRestaurantImgs", imgDTOs);
@@ -131,7 +138,9 @@ public class RestaurantController {
         model.addAttribute("reviews", resultReview);
 
         List<RestaurantImage> imgs = restaurantImageRepository.findRestaurantImageByRestaurantCode(restaurantCode);
-        List<RestaurantImageDTO> imgDTOs = imgs.stream().map(img -> modelMapper.map(img, RestaurantImageDTO.class)).toList();
+        List<RestaurantImageDTO> imgDTOs = imgs.stream()
+                .map(img -> modelMapper.map(img, RestaurantImageDTO.class))
+                .toList();
 
         model.addAttribute("selectedRestaurant", modelMapper.map(restaurant, RestaurantDTO.class));
         model.addAttribute("selectedRestaurantImgs", imgDTOs);
@@ -159,19 +168,29 @@ public class RestaurantController {
         String username = principal.getName();
         // userService에서 username을 사용하여 businessCode를 가져오기
         Integer businessCode = userIdCheckService.getBusinessCodeByUserid(username);
+
+        Restaurant existingRestaurant = restaurantRepository.findByBusinessCode(businessCode);
+        if (existingRestaurant != null) {
+            // 레스토랑이 이미 등록되어 있으면 등록을 막고 경고 메시지를 반환
+            throw new RuntimeException("이미 식당을 등록 하셨습니다.");
+        }
+
         // RegistDTO에 비즈니스 코드 설정
         registDTO.setBusinessCode(businessCode); // 비즈니스 코드 설정
 
         Resource resource = resourceLoader.getResource("file:C:/dev/img/restaurant");
         String filePath = null;
 
-        if (!resource.exists()) {
+        if(!resource.exists())
+        {
             String root = "C:/dev/img/restaurant";
             File file = new File(root);
             file.mkdirs(); // 경로가 없다면 위의 root 경로를 생성하는 메소드
 
             filePath = file.getAbsolutePath();
-        } else filePath = resource.getFile().getAbsolutePath();
+        }
+        else
+            filePath = resource.getFile().getAbsolutePath();
         System.out.println("filePath: " + filePath);
         /** 파일에 관한 정보 저장을 위한 처리 */
         List<RestaurantImageDTO> files = new ArrayList<>(); // 파일에 관한 정보 저장할 리스트
@@ -188,7 +207,7 @@ public class RestaurantController {
                 String savedFileName = UUID.randomUUID().toString().replace("-", "") + ext;
 
                 /** 파일정보 등록 */
-                files.add(new RestaurantImageDTO("/img/restaurant/" + savedFileName, originFileName, savedFileName));
+                files.add(new RestaurantImageDTO( "/img/restaurant/" + savedFileName, originFileName, savedFileName));
 
                 /** 파일 저장 */
                 file.transferTo(new File(filePath + "/" + savedFileName));
@@ -208,26 +227,50 @@ public class RestaurantController {
         }
         System.out.println("=== DTO 로그 ===");
         System.out.println(registDTO.toString());
-        restaurantService.registRestaurant(registDTO, files);
+        int restaurantCode = restaurantService.registRestaurant(registDTO,files).getRestaurantCode();
+
 
         return "redirect:/restaurant/" + registDTO.getRestaurantCode();
     }
 
     @GetMapping("/business/modify")
-    public String modifyPage() {
-        return "restaurant/restaurant-modify";
+    public String modifyPage(Principal principal) {
+        String username = principal.getName();
+        int businessCode = userIdCheckService.getBusinessCodeByUserid(username);
+
+        Model model = new ExtendedModelMap();
+        model.addAttribute("businessCode", businessCode);
+        return "domain/store/store_edit";
     }
 
     @PostMapping("/business/modify")
-    public String modify(@ModelAttribute RegistDTO registDTO) {
+    public String modify(@ModelAttribute RegistDTO registDTO,
+                         @RequestParam ("multiFiles")List<MultipartFile> multiFiles, Principal principal) {
+
+        Business business = userIdCheckService.findByUserId(principal.getName());
+        int businessCode = business.getBusinessCode();
+        registDTO.setBusinessCode(businessCode);
+
+        Restaurant foundRestaurant = restaurantRepository.findByBusinessCode(businessCode);
+        registDTO.setRestaurantCode(foundRestaurant.getRestaurantCode());
+
+//        // Principal에서 현재 로그인된 사용자 이름 가져오기
+//        String username = principal.getName();
+//        // userService에서 username을 사용하여 businessCode를 가져오기
+//        Integer businessCode = userIdCheckService.getBusinessCodeByUserid(username);
+//        // RegistDTO에 비즈니스 코드 설정
+//        registDTO.setBusinessCode(businessCode); // 비즈니스 코드 설정
+
+        System.out.println("businessCode: " + businessCode);
         System.out.println("modify: " + registDTO.toString());
-        restaurantService.modifyRestaurant(registDTO);
+        restaurantService.modifyRestaurant(registDTO, multiFiles);
 
         return "redirect:/restaurant/" + registDTO.getRestaurantCode();
     }
 
     @GetMapping("/search")
-    public String findByRestaurant(@RequestParam String keyword, Model model, HttpSession session, Principal principal) {
+    public String findByRestaurant(@RequestParam String keyword, Model model, HttpSession session, Principal principal)
+    {
         session.setAttribute("lastKeyword", keyword);
         List<RestaurantDTO> restaurants = restaurantService.findByKeywordOrderByScore(keyword);
 //        List<RestaurantImageDTO> restaurantImageDTOS;
@@ -238,15 +281,26 @@ public class RestaurantController {
         if (principal != null) {
             User user = userService.findByUserId(principal.getName());
             List<Bookmark> bookmarks = bookmarkService.getBookmarksForUser(user);
-            Set<Integer> bookmarkedRestaurantCodes = bookmarks.stream().map(b -> b.getRestaurant().getRestaurantCode()).collect(Collectors.toSet());
+            Set<Integer> bookmarkedRestaurantCodes = bookmarks.stream()
+                    .map(b -> b.getRestaurant().getRestaurantCode())
+                    .collect(Collectors.toSet());
             model.addAttribute("bookmarkedRestaurantCodes", bookmarkedRestaurantCodes);
         }
 
         return "domain/search/user_restlist";
     }
 
+//    @GetMapping("/storeinfo")
+//    public String markingLocation(@RequestParam Integer restaurantCode, Model model)
+//    {
+//        String location = restaurantService.findLocationByRestaurantCode(restaurantCode);
+//        model.addAttribute("restaurantLocation", location);
+//        return "/domain/restaurant/store_restinfo";
+//    }
+
     @GetMapping(value = "/search", params = "categoryCode")
-    public String filteringRestaurants(@RequestParam int categoryCode, Model model, HttpSession session) {
+    public String filteringRestaurants(@RequestParam int categoryCode, Model model, HttpSession session)
+    {
         String keyword = (String) session.getAttribute("lastKeyword");
         List<RestaurantDTO> restaurants = restaurantService.filteredRestaurantsByCategory(keyword, categoryCode);
         model.addAttribute("restaurantList", restaurants);
@@ -261,7 +315,9 @@ public class RestaurantController {
         List<Restaurant> restaurantEntities = restaurantService.findAll();
 
         // 각 엔티티를 RestaurantForBookmarkDTO로 변환
-        List<RestaurantForBookmarkDTO> restaurantDTOs = restaurantEntities.stream().map(restaurant -> restaurantService.convertToRestaurantForBookmarkDTO(restaurant)).collect(Collectors.toList());
+        List<RestaurantForBookmarkDTO> restaurantDTOs = restaurantEntities.stream()
+                .map(restaurant -> restaurantService.convertToRestaurantForBookmarkDTO(restaurant))
+                .collect(Collectors.toList());
 
         restaurantDTOs.forEach(dto -> log.info("Converted DTO: {}", dto));
 
@@ -271,7 +327,9 @@ public class RestaurantController {
         if (principal != null) {
             User user = userService.findByUserId(principal.getName());
             List<Bookmark> bookmarks = bookmarkService.getBookmarksForUser(user);
-            Set<Integer> bookmarkedRestaurantCodes = bookmarks.stream().map(b -> b.getRestaurant().getRestaurantCode()).collect(Collectors.toSet());
+            Set<Integer> bookmarkedRestaurantCodes = bookmarks.stream()
+                    .map(b -> b.getRestaurant().getRestaurantCode())
+                    .collect(Collectors.toSet());
             log.info("북마크된 식당 코드: {}", bookmarkedRestaurantCodes);
             model.addAttribute("bookmarkedRestaurantCodes", bookmarkedRestaurantCodes);
 
@@ -285,7 +343,9 @@ public class RestaurantController {
     }
 
     @GetMapping("/restaurant/storeinfo")
-    public String restaurantDetail(@RequestParam("restaurantCode") int restaurantCode, Model model, Principal principal) {
+    public String restaurantDetail(@RequestParam("restaurantCode") int restaurantCode,
+                                   Model model,
+                                   Principal principal) {
 
         // 엔티티 대신 DTO 사용
         RestaurantDTO restaurantDTO = restaurantService.getRestaurantDetail(restaurantCode);

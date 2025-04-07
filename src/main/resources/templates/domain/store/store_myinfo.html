@@ -27,10 +27,10 @@
         </div>
         <ul>
             <li><a class="navi-font" th:href="@{/business/myinfo}">내 정보</a></li>
-            <li><a class="navi-font" th:href="@{/business/restaurant}">내 식당 정보</a></li>
-            <li><a class="navi-font" href="">식당 등록 신청</a></li>
+            <li><a class="navi-font" th:href="@{/business/restaurant/{restaurantCode}(restaurantCode=${restaurantCode})}">내 식당 정보</a></li>
+            <li><a class="navi-font" th:href="@{/business/regist}" >식당 등록 신청</a></li>
             <li><a class="navi-font" href="">예약 현황 조회</a></li>
-            <li><a class="navi-font" href="">식당 정보 수정 요청</a></li>
+            <li><a class="navi-font" th:href="@{/business/modify}">식당 정보 수정 요청</a></li>
             <li><a class="navi-font" href="">고객 리뷰 조회</a></li>
         </ul>
     </div>
@@ -77,15 +77,16 @@
                         <dt>
                             <span class="label-text">비밀번호찾기질문</span>
                             <select class="myinfo-input" name="passwordQuestion">
-                                <option th:selected="${user.passwordQuestion == 'question1'}" value="question1">당신의
-                                    초등학교는?
-                                </option>
-                                <option th:selected="${user.passwordQuestion == 'question2'}" value="question2">당신의
-                                    중학교는?
-                                </option>
-                                <option th:selected="${user.passwordQuestion == 'question3'}" value="question3">당신의
-                                    고등학교는?
-                                </option>
+                                <option th:selected="${user.passwordQuestion == '당신의 초등학교는?'}" value="당신의 초등학교는?">당신의 초등학교는?</option>
+                                <option th:selected="${user.passwordQuestion == '당신의 중학교는?'}" value="당신의 중학교는?">당신의 중학교는?</option>
+                                <option th:selected="${user.passwordQuestion == '당신의 고등학교는?'}" value="당신의 고등학교는?">당신의 고등학교는?</option>
+                                <option th:selected="${user.passwordQuestion == '당신의 첫 반려동물은?'}" value="당신의 첫 반려동물은?">당신의 첫 반려동물은?</option>
+                                <option th:selected="${user.passwordQuestion == '당신의 어머니 성함은?'}" value="당신의 어머니 성함은?">당신의 어머니 성함은?</option>
+                                <option th:selected="${user.passwordQuestion == '당신의 아버지 성함은?'}" value="당신의 아버지 성함은?">당신의 아버지 성함은?</option>
+                                <option th:selected="${user.passwordQuestion == '당신의 첫번째 보물은?'}" value="당신의 첫번째 보물은?">당신의 첫번째 보물은?</option>
+                                <option th:selected="${user.passwordQuestion == '당신의 어릴 적 별명은?'}" value="당신의 어릴 적 별명은?">당신의 어릴 적 별명은?</option>
+                                <option th:selected="${user.passwordQuestion == '당신이 태어난 도시는?'}" value="당신이 태어난 도시는?">당신이 태어난 도시는?</option>
+                                <option th:selected="${user.passwordQuestion == '당신이 제일 좋아하는 음식은?'}" value="당신이 제일 좋아하는 음식은?">당신이 제일 좋아하는 음식은?</option>
                             </select>
                         </dt>
                         <dt>

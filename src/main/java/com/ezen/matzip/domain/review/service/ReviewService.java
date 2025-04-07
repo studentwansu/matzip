@@ -1,6 +1,5 @@
 package com.ezen.matzip.domain.review.service;
 
-import com.ezen.matzip.domain.bookmark.entity.Bookmark;
 import com.ezen.matzip.domain.reservation.dto.ReservationDTO;
 import com.ezen.matzip.domain.reservation.entity.Reservation;
 import com.ezen.matzip.domain.reservation.repository.ReservationRepository;
@@ -13,13 +12,9 @@ import com.ezen.matzip.domain.review.repository.RestaurantReviewRepository;
 import com.ezen.matzip.domain.review.entity.ReviewImage;
 import com.ezen.matzip.domain.review.repository.ReviewImageRepository;
 import com.ezen.matzip.domain.review.repository.ReviewRepository;
-import com.ezen.matzip.domain.user.entity.User;
 import com.ezen.matzip.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -36,13 +31,11 @@ import java.util.*;
 @RequiredArgsConstructor
 public class ReviewService {
 
-    private final UserRepository userRepository;
     private final ReviewRepository reviewRepository;
-    private final RestaurantReviewRepository restaurantReviewRepository;
     private final ReviewImageRepository reviewImageRepository;
     private final ReservationRepository reservationRepository;
     private final RestaurantRepository restaurantRepository;
-    private final ModelMapper modelMapper;
+
     private String generateYoutubeUrl(String menu){
         String keyword = menu + " 레시피";
         return "https://www.youtube.com/results?search_query=" + URLEncoder.encode(keyword, StandardCharsets.UTF_8);
@@ -62,6 +55,7 @@ public class ReviewService {
             dto.setReviewCode(e.getReviewCode());
             dto.setReviewDate(e.getReviewDate());
             dto.setReviewContent(e.getReviewContent());
+            dto.setReservationCode(e.getReservationCode());
             dto.setRating(e.getRating());
 
             result.add(dto);

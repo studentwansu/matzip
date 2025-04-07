@@ -23,20 +23,8 @@ public class BookmarkController {
     private final BookmarkService bookmarkService;
     private final RestaurantService restaurantService;
 
-    // 북마크 목록 조회 (유저 전용)
-//    @GetMapping
-//    public String listBookmarks(Model model, Principal principal) {
-//        User user = userService.findByUserId(principal.getName());
-//        List<Bookmark> bookmarks = bookmarkService.getBookmarksForUser(user);
-//        model.addAttribute("bookmarks", bookmarks);
-//        return "domain/bookmark/user_bookmark_list";
-//    }
-
     @PostMapping("/toggle")
-    public String toggleBookmark(
-            @RequestParam("restaurantCode") int restaurantCode,
-            @RequestParam(value = "redirectUrl", required = false) String redirectUrl,
-            Principal principal) {
+    public String toggleBookmark(@RequestParam("restaurantCode") int restaurantCode, @RequestParam(value = "redirectUrl", required = false) String redirectUrl, Principal principal) {
         User user = userService.findByUserId(principal.getName());
         Restaurant restaurant = restaurantService.findByRestaurantCode(restaurantCode);
 
@@ -55,22 +43,6 @@ public class BookmarkController {
         return "redirect:" + (redirectUrl != null && !redirectUrl.isEmpty() ? redirectUrl : "/restaurants");
     }
 
-//    // 북마크 추가 (식당 목록, 상세 페이지 등에서)
-//    @PostMapping("/add")
-//    public String addBookmark(@RequestParam("restaurantCode") int restaurantCode, Principal principal) {
-//        User user = userService.findByUserId(principal.getName());
-//        Restaurant restaurant = restaurantService.findByRestaurantCode(restaurantCode);
-//        if (!bookmarkService.isBookmarked(user, restaurant)) {
-//            Bookmark bookmark = new Bookmark();
-//            bookmark.setUser(user);
-//            bookmark.setRestaurant(restaurant);
-//            bookmarkService.addBookmark(bookmark);
-//        }
-//        // 북마크 추가 후 식당 목록 페이지로 리다이렉트
-//        return "redirect:/restaurants";
-//    }
-//
-
     // 북마크 삭제
     @PostMapping("/{bookmarkCode}/delete")
     public String deleteBookmark(@PathVariable("bookmarkCode") Long bookmarkCode, Principal principal) {
@@ -78,23 +50,6 @@ public class BookmarkController {
         bookmarkService.deleteBookmark(bookmarkCode);
         return "redirect:/user/bookmarks";
     }
-
-//    @GetMapping
-//    public String listBookmarks(Model model, Principal principal,
-//                                @RequestParam(defaultValue = "0") int page,
-//                                @RequestParam(defaultValue = "10") int size) {
-//        User user = userService.findByUserId(principal.getName());
-//        Page<Bookmark> bookmarkPage = bookmarkService.getBookmarksForUser(user, page, size);
-//
-//        model.addAttribute("bookmarkPage", bookmarkPage);
-//        model.addAttribute("bookmarks", bookmarkPage.getContent());
-//
-//        // 페이지네이션 처리를 위한 정보 추가
-//        model.addAttribute("currentPage", page);
-//        model.addAttribute("totalPages", bookmarkPage.getTotalPages());
-//
-//        return "domain/bookmark/user_bookmark_list";
-//    }
 
     @GetMapping
     public String listBookmarks(Model model, Principal principal,

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QnA 답변 작성</title>
+    <link rel="stylesheet" href="/css/style_admin.css">
+</head>
+<body>
+<header th:replace="~{html/admin_header :: adminHeader}"></header>
+
+<main class="body-section">
+    <div class="container-section">
+        <h2>QnA 답변 작성</h2>
+        <div>
+            <strong>제목:</strong> <span th:text="${qna.title}"></span>
+        </div>
+        <div>
+            <strong>내용:</strong>
+            <p th:text="${qna.content}"></p>
+        </div>
+
+        <form th:action="@{/admin/board/qna/edit/{id}(id=${qna.id})}" method="post">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+            <div>
+                <label for="answer">답변:</label><br>
+                <textarea id="answer" name="answer" rows="6" cols="80"
+                          placeholder="답변을 입력하세요." th:text="${qna.answer}"></textarea>
+            </div>
+            <div style="margin-top:1em;">
+                <button type="submit" class="redbutton3 redbutton-font">답변 등록</button>
+                <a th:href="@{/admin/board/qna}" class="button">목록으로</a>
+            </div>
+        </form>
+    </div>
+</main>
+
+<footer th:replace="~{html/admin_footer :: adminFooter}"></footer>
+</body>
+</html>

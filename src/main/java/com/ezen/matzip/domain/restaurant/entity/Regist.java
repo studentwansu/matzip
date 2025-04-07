@@ -35,6 +35,7 @@ public class Regist {
     private String restaurantUniqueKeywords;
     private int restaurantStatus;
 
+
     public Regist(int restaurantCode, String restaurantName, String restaurantLocation, String restaurantContactNumber, String restaurantDescription, String mainMenu, Time restaurantStartTime, Time restaurantEndTime, String restaurantService, List<Menu> menu, List<RestaurantKeyword> keyword ) {
         this.restaurantCode = restaurantCode;
         this.restaurantName = restaurantName;
