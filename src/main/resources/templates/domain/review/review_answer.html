@@ -68,6 +68,7 @@
                 <thead>
                 <tr>
                     <th class="th-num" scope="col">번호</th>
+                    <th class="th-user" scope="col">작성자</th>
                     <th class="th-answer" scope="col">답변상태</th>
                     <th class="th-title" scope="col">리뷰작성날짜</th>
                     <th class="th-content" scope="col">답변내용</th>
@@ -77,6 +78,7 @@
                 <tbody>
                 <tr th:each="review, stat : ${reviews}">
                     <td th:text="${stat.count}"></td>
+                    <td th:text="${review.userId}"></td>
                     <td>
                         <button class="reply-complete" th:if="${review.reviewReply != null}">
                             답변완료
@@ -116,8 +118,7 @@
                     <span class="close" onclick="closeModal()">&times;</span>
                     <h3>답변</h3>
                     <div id="test"></div>
-                    <form action="/business/answer/modify" class="reviewForm" enctype="multipart/form-data" id="myform"
-                          method="post">
+                    <form action="/business/answer/modify" class="reviewForm" enctype="multipart/form-data" id="myform" method="post">
                         <!--                    th:action="@{/user/review/imageList/${reviewCode}(reviewCode=${review.reviewCode})}"-->
                         <div class="imageContainer">
                             <th:block th:each="img : ${reviewImages}">

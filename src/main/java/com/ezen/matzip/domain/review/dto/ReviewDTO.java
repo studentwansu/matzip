@@ -27,6 +27,8 @@ public class ReviewDTO {
     private int reservationCode;
 
     private String restaurantName;
+    private String userId;
+    private String nationality;
 
     private List<ReviewImageDTO> reviewImages;
 
@@ -41,4 +43,5 @@ public class ReviewDTO {
     public List<ReviewImageDTO> getImageList(){
         return reviewImages;
     }
+
 }

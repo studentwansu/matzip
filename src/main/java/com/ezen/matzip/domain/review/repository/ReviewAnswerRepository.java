@@ -24,4 +24,10 @@ public interface ReviewAnswerRepository extends JpaRepository<Review, Integer> {
 
     Optional<Review> findReviewByReviewCode(int reviewCode);
 
+    @Query("SELECT r, r.restaurantCode, u.userId, u.nationality " +
+            "FROM Review r " +
+            "JOIN User u ON r.userCode = u.userCode " +
+            "WHERE r.businessCode = :businessCode")
+    List<Object[]> findByBusinessCodeWithUserId(@Param("businessCode") int businessCode);
+
 }
