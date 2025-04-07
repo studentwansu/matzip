@@ -69,6 +69,7 @@
                 <tr>
                     <th class="th-num" scope="col">번호</th>
                     <th class="th-user" scope="col">작성자</th>
+                    <th class="th-nation" scope="col">나라</th>
                     <th class="th-answer" scope="col">답변상태</th>
                     <th class="th-title" scope="col">리뷰작성날짜</th>
                     <th class="th-content" scope="col">답변내용</th>
@@ -79,6 +80,7 @@
                 <tr th:each="review, stat : ${reviews}">
                     <td th:text="${stat.count}"></td>
                     <td th:text="${review.userId}"></td>
+                    <td th:text="${review.nationality}"></td>
                     <td>
                         <button class="reply-complete" th:if="${review.reviewReply != null}">
                             답변완료

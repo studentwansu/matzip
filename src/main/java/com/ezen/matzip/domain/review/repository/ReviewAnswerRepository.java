@@ -20,14 +20,9 @@ public interface ReviewAnswerRepository extends JpaRepository<Review, Integer> {
 
     List<Review> findTop5ReviewByBusinessCodeOrderByReviewDateDesc(int businessCode);
 
-    Optional<Review> findByReviewCode(int reviewCode);
-
     Optional<Review> findReviewByReviewCode(int reviewCode);
 
-    @Query("SELECT r, r.restaurantCode, u.userId, u.nationality " +
-            "FROM Review r " +
-            "JOIN User u ON r.userCode = u.userCode " +
-            "WHERE r.businessCode = :businessCode")
+    @Query("SELECT r, r.restaurantCode, u.userId, u.nationality FROM Review r JOIN User u ON r.userCode = u.userCode WHERE r.businessCode = :businessCode")
     List<Object[]> findByBusinessCodeWithUserId(@Param("businessCode") int businessCode);
 
 }
