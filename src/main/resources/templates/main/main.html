@@ -1,14 +1,72 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>test</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+
+    <title>main</title>
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Poor+Story&display=swap" rel="stylesheet">
+    <link href="/css/style_user.css" rel="stylesheet">
+    <link href="/css/header_footer.css" rel="stylesheet">
+    <script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=fd7786d297e2d4aaab4aa8b6bbb06b88&libraries=services"
+            type="text/javascript"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script th:src="@{/js/myLocation.js}"></script>
+    <script th:src="@{/js/weather.js}"></script>
 </head>
-<body>
-    <h1>레스토랑 주소로 조회</h1>
-    <form action="/test/result">
-    <input type="text" name="keyword">키워드 입력
-    <input type="submit">
-</form>
+
+<body id="weatherBody" onload="currentWeather();">
+<!-- user header 아래 복사 -->
+<div th:replace="~{html/user_header :: userHeader}"></div>
+
+<!-- main -->
+<section class="body-section">
+    <div class="container-main">
+        <form action="/weather/hashtags">
+            <input name="weatherCondition" type="hidden" value=""/>
+            <p id="weatherHashtags"></p>
+        </form>
+        <div class="line-yellow-100"></div>
+        <div class="food-list" id="food-list">
+            <form action="/weather" id="weatherTest">
+                <input name="recommendKeywords" type="hidden" value=""/>
+            </form>
+        </div>
+    </div>
+
+    <div class="container-main">
+        <p>#중국인에게추천 #보리밥 #해물탕 #감자탕</p>
+        <div class="line-yellow-100"></div>
+        <!--        <div class="food-list">-->
+        <!--                <div class="food-item"><img src="/img/삼계탕.jpg" alt="삼계탕">-->
+        <!--                    <p>보리밥</p>-->
+        <!--                </div>-->
+        <!--                <div class="food-item"><img src="/img/삼계탕.jpg" alt="삼계탕">-->
+        <!--                    <p>해물탕</p>-->
+        <!--                </div>-->
+        <!--                <div class="food-item"><img src="/img/삼계탕.jpg" alt="삼계탕">-->
+        <!--                    <p>감자탕</p>-->
+        <!--                </div>-->
+        <!--                <div class="food-item"><img src="/img/삼계탕.jpg" alt="삼계탕">-->
+        <!--                    <p>감자탕</p>-->
+        <!--                </div>-->
+        <!--                <div class="food-item"><img src="/img/삼계탕.jpg" alt="삼계탕">-->
+        <!--                    <p>감자탕</p>-->
+        <!--                </div>-->
+    </div>
+</section>
+
+<!-- user footer 아래 복사 -->
+<footer>
+    <div th:replace="~{html/user_footer :: userFooter}"></div>
+</footer>
+
 </body>
 </html>
+

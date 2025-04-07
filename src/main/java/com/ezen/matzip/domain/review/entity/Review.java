@@ -1,15 +1,19 @@
 package com.ezen.matzip.domain.review.entity;
 
+import com.ezen.matzip.domain.restaurant.entity.Restaurant;
+import com.ezen.matzip.domain.user.entity.User;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+
 
 @Entity
 @Table(name = "review")
 @Getter
+@ToString
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Review {
 
@@ -17,6 +21,7 @@ public class Review {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int reviewCode;
     private String reviewContent;
+    @Temporal(TemporalType.TIMESTAMP)
     private Date reviewDate;
     private int reviewReportCount;
     private int hiddenFlag;
@@ -24,6 +29,71 @@ public class Review {
     private int rating;
     private int userCode;
     private int businessCode;
-    private int restaurantCode;
+    @ManyToOne
+    @JoinColumn(name = "restaurant_code")
+    private Restaurant restaurantCode;
+
     private int reservationCode;
+
+//    @OneToMany
+//    @JoinColumn(name = "review_code")
+    @OneToMany(mappedBy = "reviewCode", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ReviewImage> reviewImageList = new ArrayList<>();
+
+    @PrePersist
+    protected void onCreate() {
+        if (this.reviewDate == null) {
+            this.reviewDate = new Date();
+        }
+    }
+
+    @Builder
+    public Review(String reviewContent, Date reviewDate, int reviewReportCount, int hiddenFlag,
+                  String reviewReply, int rating, int userCode, int businessCode, int reservationCode,
+                  Restaurant restaurantCode) {
+        this.reviewContent = reviewContent;
+        this.reviewDate = reviewDate;
+        this.reviewReportCount = reviewReportCount;
+        this.hiddenFlag = hiddenFlag;
+        this.reviewReply = reviewReply;
+        this.rating = rating;
+        this.userCode = userCode;
+        this.businessCode = businessCode;
+        this.reservationCode = reservationCode;
+        this.restaurantCode = restaurantCode;
+    }
+
+    public void modifyReview(String reviewContent, int rating) {
+        this.reviewContent = reviewContent;
+        this.rating = rating;
+        this.reviewDate = new Date();
+    }
+
+    public void deleteReviewImage(ReviewImage reviewImage) {
+        this.reviewImageList.remove(reviewImage);
+    }
+
+    public void writeReview() {
+        this.reviewDate = new Date();
+    }
+
+    public void writeReply(String replyContent) {
+        this.reviewReply = replyContent;
+    }
+
+    public void modifyAnswer(String reviewReply){
+        this.reviewReply = reviewReply;
+    }
+
+//    setter 필요한 필드만 setter 만들어서 사용
+
+    //완수-리뷰신고기능에 필요
+    public void incrementReportCount() {
+        this.reviewReportCount++;
+    }
+
+    //완수-신고된리뷰기능에필요
+    public void setHiddenFlag(int hiddenFlag) {
+        this.hiddenFlag = hiddenFlag;
+    }
 }

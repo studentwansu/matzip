@@ -2,12 +2,15 @@ package com.ezen.matzip.domain.restaurant.dto;
 
 import com.ezen.matzip.domain.restaurant.entity.Menu;
 import com.ezen.matzip.domain.restaurant.entity.Restaurant;
-import com.ezen.matzip.domain.restaurant.entity.RestaurantStarKeyword;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import com.ezen.matzip.domain.restaurant.entity.RestaurantImage;
+import com.ezen.matzip.domain.restaurant.entity.RestaurantKeyword;
+//import com.ezen.matzip.domain.restaurant.entity.Review;
+
+import com.ezen.matzip.domain.review.entity.Review;
+import lombok.*;
 
 import java.sql.Time;
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -19,7 +22,9 @@ public class RestaurantDTO {
 
     private String restaurantName;
     private List<MenuDTO> restaurantMenus;
-    private List<String> restaurantKeywords;
+    private List<RestaurantKeywordDTO> restaurantKeywords;
+    private List<Review> reviews;
+    private List<RestaurantImageDTO> restaurantImages;
     private int restaurantCode;
     private String restaurantLocation;
     private String restaurantContactNumber;
@@ -30,18 +35,23 @@ public class RestaurantDTO {
     private String mainMenu;
     private int businessCode;
     private CategoryDTO categoryCode;
-    private Time restaurantStartTime;
-    private Time restaurantEndTime;
+    private String restaurantStartTime;
+    private String restaurantEndTime;
     private int restaurantStatus;
     private String restaurantService;
 
-    public RestaurantDTO (Restaurant restaurant, List<Menu> menus, List<RestaurantStarKeyword> keywords)
+    public RestaurantDTO (Restaurant restaurant, List<Menu> menus, List<RestaurantKeyword> keywords, List<RestaurantImage> restaurantImages)
     {
         this.restaurantName = restaurant.getRestaurantName();
         this.restaurantMenus = menus.stream().map
                 (menu -> new MenuDTO(menu.getMenuCode(), menu.getMenuName(), menu.getMenuPrice(), restaurant))
                 .collect(Collectors.toList());
-        this.restaurantKeywords = keywords.stream().map(RestaurantStarKeyword::getRestaurantKeyword).collect(Collectors.toList());
+        this.restaurantKeywords = keywords.stream().map
+                (keyword -> new RestaurantKeywordDTO(keyword.getRestaurantKeywordCode(), keyword.getRestaurantCode().getRestaurantCode(), keyword.getRestaurantKeyword()))
+                .collect(Collectors.toList());
+        this.restaurantImages = restaurantImages.stream().map
+                (restaurantImage -> new RestaurantImageDTO( restaurantImage.getRestaurantImagePath(), restaurantImage.getRestaurantOriginalName(), restaurantImage.getRestaurantSavedName()))
+                .collect(Collectors.toList());
         this.restaurantCode = restaurant.getRestaurantCode();
         this.restaurantLocation = restaurant.getRestaurantLocation();
         this.restaurantContactNumber = restaurant.getRestaurantContactNumber();
@@ -52,8 +62,8 @@ public class RestaurantDTO {
         this.mainMenu = restaurant.getMainMenu();
         this.businessCode = restaurant.getBusinessCode();
         this.categoryCode = new CategoryDTO(restaurant.getCategory().getCategoryCode(), restaurant.getCategory().getCategory());
-        this.restaurantStartTime = restaurant.getRestaurantStartTime();
-        this.restaurantEndTime = restaurant.getRestaurantEndTime();
+        this.restaurantStartTime = restaurant.getRestaurantStartTime().toString();
+        this.restaurantEndTime = restaurant.getRestaurantEndTime().toString();
         this.restaurantStatus = restaurant.getRestaurantStatus();
         this.restaurantService = restaurant.getRestaurantService();
     }

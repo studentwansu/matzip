@@ -1,0 +1,115 @@
+html, body {
+    height: 100%;
+    padding: 0;
+    background-color: #fff3e0;
+}
+
+/* foryou */
+.content-container {
+    position: relative;
+    margin: 4vh auto;
+    padding: 2vh;
+    width: 85vh;
+    background: white;
+    border-radius: 10px;
+    border: 0.5px solid black;
+    height: 60vh;
+}
+.list-btn {
+    position: absolute;
+    bottom: 3vh;
+    right: 4vh;
+    /* 추가 스타일 (예: padding, background-color 등) 적용 가능 */
+}
+h2 {
+    text-align: center;
+    padding-bottom: 2vh;
+}
+.board-table {
+    font-size: 13px;
+    width: 100%;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+}
+
+.board-table a {
+    color: #333;
+    display: inline-block;
+    line-height: 1.4;
+    word-break: break-all;
+    vertical-align: middle;
+}
+
+.board-table a:hover {
+    text-decoration: underline;
+}
+
+.board-table th {
+    text-align: center;
+    padding-bottom: 1vh;
+    padding-top: 1vh;
+}
+
+.board-table .th-num {
+    width: 100px;
+    text-align: center;
+}
+
+.board-table .th-date {
+    width: 200px;
+}
+
+.board-table td {
+    padding: 14px 0;
+    height: 40vh;
+}
+
+.board-table tbody td {
+    border-top: 1px solid #e7e7e7;
+    text-align: center;
+}
+
+.board-table tbody th {
+    padding-left: 28px;
+    padding-right: 14px;
+    border-top: 1px solid #e7e7e7;
+    text-align: left;
+}
+
+.board-table tbody th p {
+    display: none;
+}
+
+.notice-content {
+    white-space: pre-wrap;
+}
+
+/* reset */
+* {
+    list-style: none;
+    text-decoration: none;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.clearfix:after {
+    content: '';
+    display: block;
+    clear: both;
+}
+
+.container {
+    width: 1100px;
+    margin: 0 auto;
+}
+
+.blind {
+    position: absolute;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    margin: -1px;
+    width: 1px;
+    height: 1px;
+}
+

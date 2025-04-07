@@ -1,0 +1,21 @@
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<footer th:fragment="userFooter">
+    <div class="footer-container">
+        <p>Copyright 2025 맛zip All Right Reserved</p>
+        <ul class="footer-menu">
+            <li><a th:href="@{/board/notice/list}">공지사항</a></li>
+            <li><a th:href="@{/board/faq/list}">FAQ</a></li>
+            <li>
+                <span sec:authorize="isAuthenticated()">
+                    <a th:href="@{/board/qna}" class="navi-font">Q&A</a>
+                </span>
+                <span sec:authorize="!isAuthenticated()">
+                    <a th:href="@{/login}" class="navi-font">Q&A</a>
+                </span>
+            </li>
+        </ul>
+    </div>
+</footer>
+
+

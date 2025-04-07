@@ -1,0 +1,71 @@
+.signup_container {
+    text-align: center; /* 텍스트를 가운데 정렬 */
+    align-items: center;
+    align-content: center;
+    justify-items: center;
+    justify-content: center;
+    padding: 5vh;
+    width: 85vh;
+    height: 55vh;
+    background-color: white;
+    border: 1px solid #D9D9D9;
+    border-radius: 10px;
+}
+.login-form {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-items: center;
+    flex-direction: column;
+}
+
+.login_id_pwd {
+    justify-content: center;
+    padding-top: 70px;
+    padding-left: 155px;
+}
+
+.login_id_pwd-input{
+    display: block;
+    width: 40vh;
+    height: 4vh;
+    border-radius: 1vh;
+    border: 1px solid #ccc;
+    margin: 5px;
+    padding: 3px;
+    background-color: #d9d9d9;
+}
+
+.login_button{
+    background-color: #FA4032;
+    color: white;
+    width: 40vh;
+    height: 5vh;
+    border: none;
+    border-radius: 10px;
+    margin: 3vh;
+    cursor: pointer;
+    font-size:3vh;
+}
+
+.login_button a {
+    color: white; /* 링크 텍스트 색상 */
+    text-decoration: none; /* 링크 밑줄 제거 */
+    display: block;
+    font-size: 2vh;
+}
+
+.login_button:hover {
+    background-color: #cd3429; /* 버튼 호버 시 배경색 */
+}
+
+.find {
+    position: relative;
+    margin:auto;
+    width:40vh;
+}
+.find a {
+    font-size: 2vh;
+    color: black; /* 링크 텍스트 색상 */
+    text-decoration: none; /* 링크 밑줄 제거 */
+}

@@ -1,0 +1,35 @@
+<html lang="ko"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
+      xmlns:th="http://www.thymeleaf.org">
+
+
+<header th:fragment="adminHeader">
+    <section class="admin-header">
+        <a th:href="@{/admin/main}">
+            <img class="logo" src="/img/logo.png">
+        </a>
+        <div class="admin-header-container">
+            <div class="admin-header-textdiv">
+                <p class="admin-header-font1"> 💡알림 </p>
+                <div class="line-yellow"></div>
+                <p class="admin-header-font2" th:text="'활성화된 식당: ' + ${activeRestaurants}"></p>
+                <p class="admin-header-font2" th:text="'비활성화된 식당: ' + ${disabledRestaurants}"></p>
+                <p class="admin-header-font2" th:text="'활성화된 유저: ' + ${activeUsers}"></p>
+                <p class="admin-header-font2" th:text="'비활성화된 유저: ' + ${disabledUsers}"></p>
+                <p class="admin-header-font2" th:text="'신고된 리뷰: ' + ${reportedReviews}"></p>
+                <p class="admin-header-font2" th:text="'답변되지 않은 질문: ' + ${unansweredQNAs}"></p>
+            </div>
+        </div>
+        <div class="logout">
+            <div sec:authorize="isAuthenticated()">
+                <!-- 현재 로그인한 사용자의 아이디(혹은 이름) 표시 -->
+                <p class="navi-font" th:text="${#authentication.principal.username} + ' 관리자님, 환영합니다. 😊'">
+                    <!-- 로그아웃 -->
+                <form method="post" style="display:inline;" th:action="@{/logout}">
+                    <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
+                    <button class="signup" type="submit">로그아웃</button>
+                </form>
+            </div>
+        </div>
+    </section>
+</header>

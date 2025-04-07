@@ -1,6 +1,72 @@
 package com.ezen.matzip.domain.minigame.controller;
 
+import com.ezen.matzip.domain.minigame.service.MiniGameService;
+import com.ezen.matzip.domain.weather.dto.KeywordDTO;
+import jakarta.servlet.http.HttpSession;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
+
+@Controller
+@RequiredArgsConstructor
 public class MiniGameController {
+
+    private final MiniGameService miniGameService;
+
+    @GetMapping("/minigame/first")
+    public String firstMiniGame(Model model, HttpSession session) {
+
+        model.addAttribute("announce", "32강 시작!");
+        List<KeywordDTO>[] firstKeywords = miniGameService.shuffleKeywords();
+        firstKeywords = miniGameService.showKeywords(firstKeywords);
+        session.setAttribute("currentKeywords", firstKeywords);
+        model.addAttribute("currentKeywords", firstKeywords);
+
+        return "domain/minigame/user_minigame";
+    }
+
+    @GetMapping("/minigame/select")
+    public String getSelected(@RequestParam("selected") String selected, HttpSession session, Model model) {
+        return "domain/minigame/user_minigame";
+    }
+
+    @PostMapping("/minigame/select")
+    public String showKeyword(@RequestParam("selected") String selected, HttpSession session, Model model) {
+        List<KeywordDTO>[] currentKeywords = (List<KeywordDTO>[]) session.getAttribute("currentKeywords");
+
+        currentKeywords = miniGameService.sortKeyword(currentKeywords, selected);
+        String announce = miniGameService.checkCurrentRound(currentKeywords);
+
+        if (announce != null) {
+            if (announce.equals("끝!")) {
+                KeywordDTO lastKeyword = miniGameService.foundKeyword(selected);
+                model.addAttribute("lastKeyword", lastKeyword);
+                model.addAttribute("announce", announce);
+                return "domain/minigame/user_minigameresult";
+            } else {
+                model.addAttribute("announce", announce);
+            }
+        }
+
+        currentKeywords = miniGameService.showKeywords(currentKeywords);
+        model.addAttribute("currentKeywords", currentKeywords);
+
+        return "domain/minigame/user_minigame";
+    }
+
+//    @GetMapping("/minigame/last")
+//    public String LastMiniGame(Model model) {
+//
+//        KeywordDTO lastKeyword = miniGameService.lastKeyword(keywords);
+//        model.addAttribute()
+//        return "/domain/minigame/user_minigameresult";
+//    }
+
 }
 
 //minigame/ → 미니게임 기능 (추천 음식 선택)

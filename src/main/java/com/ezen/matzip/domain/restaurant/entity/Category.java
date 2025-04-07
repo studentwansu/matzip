@@ -14,10 +14,16 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Category {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int categoryCode;
     private String category;
 
     @OneToMany(mappedBy = "category", cascade = CascadeType.PERSIST)
     private List<Restaurant> restaurants = new ArrayList<>();
+
+    public Category(int categoryCode, String categoryName) {
+        this.categoryCode = categoryCode;
+        this.category = categoryName;
+    }
 
 }

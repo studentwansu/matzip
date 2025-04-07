@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>restaurant_list</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poor+Story&display=swap" rel="stylesheet">
+    <link href="/css/style_user.css" rel="stylesheet">
+    <link href="/css/header_footer.css" rel="stylesheet">
+    <link href="/css/minigame.css" rel="stylesheet">
+    <script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=fd7786d297e2d4aaab4aa8b6bbb06b88&libraries=services"
+            type="text/javascript"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script th:src="@{/js/myLocation.js}"></script>
+</head>
+
+<body>
+    <div th:replace="~{html/user_header :: userHeader}"></div>
+
+    <div class="body-section">
+        <div class="minigame-container">
+            <h2>🎮축하합니다!🎮</h2>
+            <div class="minigame-imgs">
+                <div class="minigame-imgbox2" th:if="${lastKeyword != null}">
+                    <form action="/search" class="minigame-imgs2">
+                        <button style="background: none; font-size:2vh; flex-direction: column" type="submit">
+                            <img class="minigame-img" th:alt="${lastKeyword.getKeyword()}" th:src="${lastKeyword.getKeywordImgPath()}">
+                            <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
+                            <input name="keyword" th:value="${lastKeyword.getKeyword()}" type="hidden">
+                        </button>
+                    </form>
+                    <div class="minigame-imgbox">
+                        <span style="position:relative; font-size:3vh;" th:text="${lastKeyword.getKeyword()}"></span>
+                        <span style="position:relative; font-size:2vh;" th:text="${lastKeyword.getKeywordDescription()}"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:replace="~{html/user_footer :: userFooter}"></div>
+
+
+</body>
+
+</html>

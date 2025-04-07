@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>사업자 회원정보 수정</title>
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Poor+Story&display=swap" rel="stylesheet">
+    <link href="/css/header_footer.css" rel="stylesheet">
+    <link href="/css/style_store.css" rel="stylesheet">
+    <link href="/css/style_myinfo.css" rel="stylesheet">
+</head>
+<body>
+<!-- header -->
+<header>
+    <!-- store header 아래 복사 -->
+    <div th:replace="~{html/store_header :: storeHeader}"></div>
+</header>
+
+<!-- 사업자 회원정보 수정 폼 -->
+<div class="body-section">
+    <!-- 페이지 상단 제목 -->
+    <div class="navi">
+        <div class="redbutton">
+            <span class="redbutton-font">마이페이지</span>
+        </div>
+        <ul>
+            <li><a class="navi-font" th:href="@{/business/myinfo}">내 정보</a></li>
+            <li><a class="navi-font" th:href="@{/business/restaurant/{restaurantCode}(restaurantCode=${restaurantCode})}">내 식당 정보</a></li>
+            <li><a class="navi-font" th:href="@{/business/regist}" >식당 등록 신청</a></li>
+            <li><a class="navi-font" href="">예약 현황 조회</a></li>
+            <li><a class="navi-font" th:href="@{/business/modify}">식당 정보 수정 요청</a></li>
+            <li><a class="navi-font" href="">고객 리뷰 조회</a></li>
+        </ul>
+    </div>
+    <div class="container-section">
+        <div class="myinfo-container2">
+            <h3>사업자 회원정보 수정</h3>
+            <div class="line-yellow"></div>
+            <br>
+            <br>
+            <br>
+            <br>
+            <!-- 폼 시작 -->
+            <form class="myinfo-container-row" id="storeInfoForm" method="post" th:action="@{/business/myinfo}"
+                  th:object="${user}">
+                <div class="myinfo-container1">
+                    <!-- CSRF 토큰 -->
+                    <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
+                    <dl>
+                        <!-- 상호명 (회사명) -->
+                        <dt>
+                            <span class="label-text">상호명</span>
+                            <input class="myinfo-input" id="name" name="companyName" placeholder="상호명"
+                                   th:value="${user.restaurantName}"/>
+                        </dt>
+                        <!-- 아이디: 수정 불가 -->
+                        <dt>
+                            <span class="label-text">아이디(수정불가)</span>
+                            <input class="myinfo-input" disabled id="id" placeholder="아이디"
+                                   th:value="${user.userId}"/>
+                            <input class="myinfo-input" name="userId" th:value="${user.userId}"
+                                   type="hidden"/>
+                        </dt>
+                        <!-- 비밀번호 및 비밀번호 확인 -->
+                        <dt>
+                            <span class="label-text">비밀번호</span>
+                            <input class="myinfo-input" id="pwd" name="password" placeholder="비밀번호"
+                                   type="password"/>
+                        </dt>
+                        <dt>
+                            <span class="label-text">비밀번호확인</span>
+                            <input class="myinfo-input" id="pwd_check" name="passwordCheck"
+                                   placeholder="비밀번호확인" type="password"/>
+                        </dt>
+                        <dt>
+                            <span class="label-text">비밀번호찾기질문</span>
+                            <select class="myinfo-input" name="passwordQuestion">
+                                <option th:selected="${user.passwordQuestion == '당신의 초등학교는?'}" value="당신의 초등학교는?">당신의 초등학교는?</option>
+                                <option th:selected="${user.passwordQuestion == '당신의 중학교는?'}" value="당신의 중학교는?">당신의 중학교는?</option>
+                                <option th:selected="${user.passwordQuestion == '당신의 고등학교는?'}" value="당신의 고등학교는?">당신의 고등학교는?</option>
+                                <option th:selected="${user.passwordQuestion == '당신의 첫 반려동물은?'}" value="당신의 첫 반려동물은?">당신의 첫 반려동물은?</option>
+                                <option th:selected="${user.passwordQuestion == '당신의 어머니 성함은?'}" value="당신의 어머니 성함은?">당신의 어머니 성함은?</option>
+                                <option th:selected="${user.passwordQuestion == '당신의 아버지 성함은?'}" value="당신의 아버지 성함은?">당신의 아버지 성함은?</option>
+                                <option th:selected="${user.passwordQuestion == '당신의 첫번째 보물은?'}" value="당신의 첫번째 보물은?">당신의 첫번째 보물은?</option>
+                                <option th:selected="${user.passwordQuestion == '당신의 어릴 적 별명은?'}" value="당신의 어릴 적 별명은?">당신의 어릴 적 별명은?</option>
+                                <option th:selected="${user.passwordQuestion == '당신이 태어난 도시는?'}" value="당신이 태어난 도시는?">당신이 태어난 도시는?</option>
+                                <option th:selected="${user.passwordQuestion == '당신이 제일 좋아하는 음식은?'}" value="당신이 제일 좋아하는 음식은?">당신이 제일 좋아하는 음식은?</option>
+                            </select>
+                        </dt>
+                        <dt>
+                            <span class="label-text">비밀번호찾기답변</span>
+                            <input class="myinfo-input" id="pwd_answer" name="passwordAnswer"
+                                   placeholder="비밀번호찾기답"
+                                   th:value="${user.passwordAnswer}"/>
+                        </dt>
+                    </dl>
+                </div>
+
+                <div class="store-inner-container1">
+                    <dl>
+                        <dt>
+                            <span class="label-text">이메일</span>
+                            <input class="myinfo-input" id="email" placeholder="이메일" th:field="*{email}"/>
+                            <p style="color:red;" th:errors="*{email}" th:if="${#fields.hasErrors('email')}">이메일 형식과 맞지
+                                않습니다.</p>
+                        </dt>
+                        <dt>
+                            <span class="label-text">전화번호</span>
+                            <input class="myinfo-input" id="phone" placeholder="전화번호" th:field="*{phoneNumber}"/>
+                            <p th:errors="*{phoneNumber}" th:if="${#fields.hasErrors('phoneNumber')}">전화번호 형식과 맞지
+                                않습니다.</p>
+                        </dt>
+                        <dt>
+                            <span class="label-text">사업자 등록번호(수정 불가)</span>
+                            <input class="myinfo-input" disabled id="number" placeholder="사업자 등록 번호"
+                                   th:value="${user.businessNumber}"/>
+                            <input name="businessNumber" th:value="${user.businessNumber}" type="hidden"/>
+                        </dt>
+                        <!-- 수정 버튼 -->
+                        <div class="myinfo_button">
+                            <div>
+                                <button class="redbutton3 redbutton-font" type="submit">수정하기</button>
+                            </div>
+                        </div>
+                    </dl>
+                </div>
+            </form>
+            <!-- 폼 끝 -->
+        </div>
+    </div>
+</div>
+
+<!-- user footer 아래 복사 -->
+<div th:replace="~{html/user_footer :: userFooter}"></div>
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>북마크 목록</title>
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Poor+Story&display=swap" rel="stylesheet">
+    <link href="/css/style_user.css" rel="stylesheet">
+    <link href="/css/header_footer.css" rel="stylesheet">
+</head>
+<body>
+<!-- 헤더 -->
+<div th:replace="~{html/user_header :: userHeader}"></div>
+
+<div class="body-section">
+    <aside class="sidebar">
+        <h3>마이페이지</h3>
+        <ul>
+            <li><a th:href="@{/user/myinfo}">내 정보</a></li>
+            <li><a href="/page2">예약 목록</a></li>
+            <li><a th:href="@{/user/review/write}">이용 목록</a></li>
+            <li><a th:href="@{/user/bookmarks}">북마크 목록</a></li>
+            <li><a th:href="@{/user/review}">작성 리뷰 목록</a></li>
+        </ul>
+    </aside>
+    <section class="container-bookmarklist">
+        <h2 class="container-title">북마크 목록</h2>
+        <div class="line-yellow"></div>
+        <table class="user-table-class2">
+            <thead>
+            <tr>
+                <th>번호</th>
+                <th>식당</th>
+                <th>대표메뉴</th>
+                <th>위치</th>
+                <th>관리</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr style="cursor:pointer;" th:each="bookmark, iterStat : ${bookmarks}">
+                <td th:text="${iterStat.index + 1}"></td>
+                <td>
+                    <a th:href="@{/restaurant/{restaurantCode}(restaurantCode=${bookmark.getRestaurant().getBusinessCode()})}"
+                       th:text="${bookmark.restaurant.restaurantName}"></a>
+                </td>
+                <td>
+                    <a th:href="@{/restaurant/{restaurantCode}(restaurantCode=${bookmark.getRestaurant().getBusinessCode()})}"
+                       th:text="${bookmark.restaurant.mainMenu}"></a>
+                </td>
+                <td>
+                    <a th:href="@{/restaurant/{restaurantCode}(restaurantCode=${bookmark.getRestaurant().getBusinessCode()})}"
+                       th:text="${bookmark.restaurant.restaurantLocation}"></a>
+                </td>
+                <td>
+                    <form method="post" th:action="@{/user/bookmarks/{bookmarkCode}/delete(bookmarkCode=${bookmark.bookmarkCode})}">
+                        <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
+                        <button class="redbutton4 redbutton-font" onclick="event.stopPropagation();" type="submit">삭제</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="pagination">
+            <!-- 이전 버튼 -->
+            <span th:if="${currentPage > 0}">
+                <a th:href="@{/user/bookmarks(page=${currentPage - 1}, size=${size})}">이전</a>
+            </span>
+            <!-- 페이지 번호 -->
+            <span th:each="i : ${#numbers.sequence(0, totalPages - 1)}">
+                <a th:href="@{/user/bookmarks(page=${i}, size=${size})}"
+                    th:if="${i != currentPage}"
+                    th:text="${i + 1}"></a>
+                <span th:if="${i == currentPage}" th:text="${i + 1}"></span>
+            </span>
+            <!-- 다음 버튼 -->
+            <span th:if="${currentPage < totalPages - 1}">
+                <a th:href="@{/user/bookmarks(page=${currentPage + 1}, size=${size})}">다음</a>
+            </span>
+        </div>
+    </section>
+</div>
+
+<!-- 푸터 -->
+<div th:replace="~{html/user_footer :: userFooter}"></div>
+</body>
+</html>

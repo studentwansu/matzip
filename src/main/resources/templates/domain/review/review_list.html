@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>review_list</title>
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Poor+Story&display=swap" rel="stylesheet">
+    <link href="/css/header_footer.css" rel="stylesheet">
+    <link href="/css/main.css" rel="stylesheet">
+    <link href="/css/review.css" rel="stylesheet">
+    <link href="/css/style_user.css" rel="stylesheet">
+
+</head>
+
+<body>
+<!-- user header 아래 복사 -->
+<div th:replace="~{html/user_header :: userHeader}"></div>
+
+<!-- main -->
+<div class="body-section2">
+    <!-- 사이드바 -->
+    <aside class="sidebar">
+        <h3>마이페이지</h3>
+        <ul>
+            <li><a th:href="@{/user/myinfo}">내 정보</a></li>
+            <li><a href="/page2">예약 목록</a></li>
+            <li><a th:href="@{/user/review/write}">이용 목록</a></li>
+            <li><a th:href="@{/user/bookmarks}">북마크 목록</a></li>
+            <li><a th:href="@{/user/review}">작성 리뷰 목록</a></li>
+        </ul>
+    </aside>
+
+    <!-- 작성 리뷰 목록 -->
+    <div class="review-container-section">
+        <div class="content">
+            <h2>작성 리뷰 목록</h2>
+            <script th:inline="javascript">
+                // Thymeleaf로 데이터를 주입하여 JS에서 사용할 수 있도록 처리
+                let testReview = /*[[${testReview}]]*/ [];
+                console.log("로드된 리뷰 데이터:", testReview); // 로그로 데이터 확인
+            </script>
+            <script defer src="/js/review.js"></script> <!-- JavaScript 파일 로드 -->
+            <div class="line-yellow"></div>
+            <table>
+                <thead>
+                <tr>
+                    <th>번호</th>
+                    <th>작성 날짜</th>
+                    <th>식당</th>
+                    <th>내용</th>
+                    <th>관리</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="review, stat : ${testReview}">
+                    <td th:text="${stat.count}"></td>
+                    <td th:text="${#dates.format(review.reviewDate, 'yyyy-MM-dd HH:mm')}"></td>
+                    <td th:text="${review.restaurantName}"></td>
+                    <td th:text="${review.reviewContent}"></td>
+                    <td>
+                        <!--                    <form th:action="@{/review/myReview/{reviewCode}(reviewCode=${selectedReview.reviewCode})}">-->
+                        <button class="edit-btn"
+                                th:onclick="'openModal(' + ${review.reviewCode} + ', ' + ${review.userCode} + ')'"
+                                type="button">수정
+                        </button>
+                        <!--                    </form>-->
+                        <form method="post"
+                              style="display:inline"
+                              th:action="@{/user/review/delete/{reviewCode}(reviewCode=${review.reviewCode})}"
+                              th:id="'deleteForm-' + ${review.reviewCode}">
+                            <button class="delete-btn">삭제</button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <!-- 모달 -->
+            <div class="modal" id="reviewModal">
+                <div class="modal-content">
+                    <span class="close" onclick="closeModal()">&times;</span>
+                    <h3>리뷰 수정</h3>
+                    <div id="test"></div>
+                    <form action="/user/review/modify" class="reviewForm" enctype="multipart/form-data" id="myform"
+                          method="post">
+
+                        <!--                    <div class="imageContainer">-->
+                        <!--                        &lt;!&ndash; 이미지 미리보기 &ndash;&gt;-->
+                        <!--                        <div class="image-preview" th:each="img : ${selectedReviewImgs}">-->
+                        <!--                            <img th:src="@{${img.reviewImagePath}}" class="preview-img" />-->
+                        <!--                        </div>-->
+                        <!--                    </div>-->
+
+                        <div class="imageContainer">
+                            <th:block th:each="img : ${selectedReviewImgs}">
+                                <div class="image-preview">
+                                    <img class="preview-img" th:src="@{${img.reviewImagePath}}"/>
+                                </div>
+                            </th:block>
+                        </div>
+                        <fieldset id="star-rating">
+                            <input id="rate1" name="rating" type="radio" value="5">
+                            <label for="rate1">★</label>
+                            <input id="rate2" name="rating" type="radio" value="4">
+                            <label for="rate2">★</label>
+                            <input id="rate3" name="rating" type="radio" value="3">
+                            <label for="rate3">★</label>
+                            <input id="rate4" name="rating" type="radio" value="2">
+                            <label for="rate4">★</label>
+                            <input id="rate5" name="rating" type="radio" value="1">
+                            <label for="rate5">★</label>
+                        </fieldset>
+
+                        <input id="hiddenReviewCode" name="reviewCode" type="hidden" value="0">
+                        <input id="hiddenUserCode" name="userCode" type="hidden" value="0">
+                        <textarea id="reviewContent" name="reviewContent"></textarea>
+
+                        <div>
+                            <input accept="image/*" class="fileInput" multiple name="multiFiles" type="file">
+                        </div>
+
+                        <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
+                        <!--                    <input type="submit" value="저장" class="save-btn">-->
+                        <button class="edit-btn" type="submit">저장</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- user footer 아래 복사 -->
+<div th:replace="~{html/user_footer :: userFooter}"></div>
+</body>
+
+</html>

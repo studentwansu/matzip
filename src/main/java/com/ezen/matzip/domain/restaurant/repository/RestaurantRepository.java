@@ -2,6 +2,8 @@ package com.ezen.matzip.domain.restaurant.repository;
 
 import com.ezen.matzip.domain.restaurant.entity.Menu;
 import com.ezen.matzip.domain.restaurant.entity.Restaurant;
+import com.ezen.matzip.domain.restaurant.entity.RestaurantImage;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -9,9 +11,11 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface RestaurantRepository extends JpaRepository<Restaurant, Integer> {
+    Restaurant findByRestaurantCode(Integer restaurantCode);
 
     @Query("SELECT r FROM Restaurant r WHERE r.restaurantUniqueKeywords LIKE %:keyword% " +
             "OR r.restaurantDescription LIKE %:keyword% " +
@@ -34,5 +38,12 @@ public interface RestaurantRepository extends JpaRepository<Restaurant, Integer>
             "OR r.restaurantLocation LIKE CONCAT('%', :keyword, '%') " +
             "ORDER BY score DESC")
     List<Object[]> findRestaurantsByKeywordWithScore(@Param("keyword") String keyword);
+
+    //완수 북마크 기능에 필요
+    Restaurant findByRestaurantCode(int restaurantCode);
+
+    Restaurant findByBusinessCode(int businessCode);
+
+    int countAllByRestaurantActiveStatus(int activeStatus);
 
 }

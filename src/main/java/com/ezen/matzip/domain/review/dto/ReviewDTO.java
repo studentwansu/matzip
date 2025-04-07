@@ -1,10 +1,13 @@
 package com.ezen.matzip.domain.review.dto;
 
+import com.ezen.matzip.domain.restaurant.entity.Restaurant;
+import com.ezen.matzip.domain.review.entity.ReviewImage;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 import java.util.Date;
+import java.util.List;
 
 @Setter
 @Getter
@@ -23,4 +26,21 @@ public class ReviewDTO {
     private int restaurantCode;
     private int reservationCode;
 
+    private String restaurantName;
+    private String userId;
+    private String nationality;
+
+    private List<ReviewImageDTO> reviewImages;
+
+    public void setRestaurantCode(Restaurant restaurant) {
+        this.restaurantCode = restaurant.getRestaurantCode();
+    }
+
+    public void setRestaurantName(Restaurant restaurant) {
+        this.restaurantName = restaurant.getRestaurantName();
+    }
+
+    public List<ReviewImageDTO> getImageList(){
+        return reviewImages;
+    }
 }
