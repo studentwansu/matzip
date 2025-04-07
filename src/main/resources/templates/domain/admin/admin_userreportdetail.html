@@ -45,14 +45,14 @@
             </tr>
             <tr>
                 <td>
-                    작성한 리뷰 목록
+                    신고된 리뷰 목록
                     <ul>
                         <!-- user.reviewList는 유저가 작성한 리뷰 목록 -->
                         <li th:each="review : ${user.reviewList}">
                             리뷰 번호: <span th:text="${review.reviewCode}"></span>
                             <!-- 리뷰 상세 페이지로 이동하는 버튼 (해당 reviewCode 전달) -->
                             <button class="redbutton4" type="button"
-                                    th:onclick="|location.href='/admin/reviewDetail?reviewCode=${review.reviewCode}'|">
+                                    th:onclick="|location.href='/admin/admin_revreportdetail?reviewCode=${review.reviewCode}'|">
                                 리뷰 상세보기
                             </button>
                         </li>
