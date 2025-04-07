@@ -93,19 +93,15 @@ public class RestaurantController {
         }
 //        System.out.println("reviews: " + resultReview);
 
-//        List<RestaurantImage> imgs = restaurantImageRepository.findRestaurantImageByRestaurantCode(restaurantCode);
-//        if (!imgs.isEmpty())
-//        {
-//
-//            List<RestaurantImageDTO> imgDTOs = imgs.stream()
-//                .map(img -> modelMapper.map(img, RestaurantImageDTO.class))
-//                .toList();
-//            model.addAttribute("selectedRestaurantImgs", imgDTOs);
-//        }
-            List<RestaurantImageDTO> imgDTOs = imgs.stream()
+        List<RestaurantImage> restaurantImages = restaurantImageRepository.findRestaurantImageByRestaurantCode(restaurantCode);
+        List<RestaurantImageDTO> imgDTOs = new ArrayList<>();
+        if (!restaurantImages.isEmpty())
+        {
+            imgDTOs = restaurantImages.stream()
                 .map(img -> modelMapper.map(img, RestaurantImageDTO.class))
                 .toList();
             model.addAttribute("selectedRestaurantImgs", imgDTOs);
+        }
 
         model.addAttribute("selectedRestaurant", restaurant);
 
@@ -254,17 +250,15 @@ public class RestaurantController {
                 new File(filePath + "/" + file.getRestaurantSavedName()).delete();
             }
 //            model.addAttribute("message", "파일 업로드 실패!");
-        }
 
+        }
         System.out.println("=== DTO 로그 ===");
         System.out.println(registDTO.toString());
         int restaurantCode = restaurantService.registRestaurant(registDTO,files).getRestaurantCode();
 
 
-
-        return "redirect:/business/restaurant/" + restaurantCode;
+        return "redirect:/restaurant/" + registDTO.getRestaurantCode();
     }
-
 
     @GetMapping("/business/modify")
     public String modifyPage(Principal principal) {
@@ -306,6 +300,7 @@ public class RestaurantController {
     {
         session.setAttribute("lastKeyword", keyword);
         List<RestaurantDTO> restaurants = restaurantService.findByKeywordOrderByScore(keyword);
+//        List<RestaurantImageDTO> restaurantImageDTOS;
         model.addAttribute("restaurantList", restaurants);
         model.addAttribute("myLoc", keyword);
 

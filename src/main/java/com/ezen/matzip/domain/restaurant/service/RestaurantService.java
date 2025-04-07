@@ -170,6 +170,13 @@ public class RestaurantService {
         return filteredList;
     }
 
+    public List<Object[]> findRestaurantsAndImgs(List<RestaurantDTO> restaurantDTOList)
+    {
+//        List<Object[]> list = new ArrayList<>();
+//        list.addAll(restaurantDTOList.)
+        return null;
+    }
+
 //    public List<RestaurantDTO> filteredRestaurantsByCountry(String keyword,)
 
     public String findLocationByRestaurantCode(Integer restaurantCode)

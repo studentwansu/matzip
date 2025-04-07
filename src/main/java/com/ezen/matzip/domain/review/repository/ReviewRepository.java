@@ -43,4 +43,7 @@ public interface ReviewRepository extends JpaRepository<Review, Integer> {
     void updateHiddenFlagByUserCode(@Param("userCode") int userCode, @Param("hiddenFlag") int hiddenFlag);
     //완수 끝
 
+    int countByReviewReportCountGreaterThan(int reviewReportCount);
+
+    int countByHiddenFlag(int hiddenFlag);
 }

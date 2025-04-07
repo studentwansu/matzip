@@ -40,9 +40,10 @@ public interface RestaurantRepository extends JpaRepository<Restaurant, Integer>
     List<Object[]> findRestaurantsByKeywordWithScore(@Param("keyword") String keyword);
 
     //완수 북마크 기능에 필요
-    Restaurant findByRestaurantCode(int businessCode);
+    Restaurant findByRestaurantCode(int restaurantCode);
 
     Restaurant findByBusinessCode(int businessCode);
 
+    int countAllByRestaurantActiveStatus(int activeStatus);
 
 }
