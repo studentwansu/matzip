@@ -47,7 +47,8 @@
                    th:value="${searchCriteria.reportCountThreshold}"
                    oninput="document.getElementById('sliderValue').innerText = this.value">
             <span id="sliderValue" th:text="${searchCriteria.reportCountThreshold}">1</span>
-            <div class="container-search4 navi-font">
+          </div>
+            <div class="container-search3 navi-font">
               <label>
                 <input type="checkbox" name="unprocessed" th:checked="${searchCriteria.unprocessed}" />
                 처리되지 않은 유저
@@ -61,7 +62,6 @@
               <button class="redbutton redbutton-font" type="submit">검색</button>
             </div>
           </div>
-        </div>
       </form>
 
       <div class="container">
