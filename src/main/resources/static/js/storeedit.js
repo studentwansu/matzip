@@ -10,11 +10,11 @@ function addMenu() {
 
     num++;
 
-    // 셀 내부에 직접 <input> 태그 추가
-    input1.innerHTML = `<input type="radio" id="대표메뉴" name="대표메뉴" value="메뉴${num}">`
-    input2.innerHTML = `<input class="store-input-small" type="text" id="메뉴${num}" name="메뉴${num}" placeholder="메뉴명">`;
+    // 셀 내부에 직접 <input/> 태그 추가
+    input1.innerHTML = `<input type="radio" id="mainMenu${num}" name="mainMenu" value=""/>`
+    input2.innerHTML = `<input class="store-input-small" type="text" id="menuName${num}" name="menuName" placeholder="메뉴명" onInput="this.closest('tr').querySelector('input[type=radio]').value = this.value"/>`;
     input3.innerHTML = '------- '
-    input4.innerHTML = `<input class="store-input-small" type="text" id="메뉴${num}가격" name="메뉴${num}가격" placeholder="가격">원`;
+    input4.innerHTML = `<input class="store-input-small" type="text" id="menuPrice${num}" name="menuPrice" placeholder="가격"/>원`;
 }
 
 // 메뉴 삭제버튼

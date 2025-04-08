@@ -35,14 +35,6 @@ public class BusinessController {
             List<Review> recentReviews = reviewAnswerService.getRecentReview(business.getBusinessCode());
             model.addAttribute("businessCode", business.getBusinessCode());  // 👈 main.html에서 사용 가능
             model.addAttribute("recentReviews", recentReviews);
-
-            // RestaurantDTO restaurantDTO = businessService.findRestaurantByUserId(principal.getName());
-            // if (restaurantDTO != null) {
-            //     model.addAttribute("myRestaurantCode", restaurantDTO.getRestaurantCode());
-            // } else {
-            //     // 레스토랑 정보가 없는 경우, 별도의 처리가 필요하다면 여기서 수행
-            //     // 예를 들어, model.addAttribute("restaurantCode", 0); 또는 "등록된 레스토랑이 없습니다" 메시지 추가 등
-            // }
         }
         return "domain/store/store_main";
     }

@@ -288,8 +288,8 @@ button {
 }
 
 .buttonbox2 {
-    position: relative;
-    top: 45.5vh;
+    position: absolute;
+    bottom: 2%;
     left: 28vh;
     justify-content: right;
 }

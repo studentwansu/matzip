@@ -33,7 +33,7 @@
     height: 150px;
     padding: 10px;
     box-sizing: border-box;
-    border: solid 1.5px #D3D3D3;
+    border: solid 1px #ccc;
     border-radius: 5px;
     font-size: 16px;
     resize: none;
@@ -114,7 +114,9 @@
 .preview-img {
     max-width: 100%;
     max-height: 100%;
+    aspect-ratio: 1/1;
     object-fit: cover;
+    border-radius: 2vh;
 }
 
 #month {
@@ -127,7 +129,7 @@
     height: 150px;
     padding: 10px;
     box-sizing: border-box;
-    border: solid 1.5px #D3D3D3;
+    border: solid 1px #ccc;
     border-radius: 5px;
     font-size: 16px;
     resize: none;

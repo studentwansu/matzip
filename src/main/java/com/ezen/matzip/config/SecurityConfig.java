@@ -62,7 +62,7 @@ public class SecurityConfig {
                 )
                 .csrf(withDefaults())
                 .csrf(csrf -> csrf
-                        .ignoringRequestMatchers("/api/**", "/dapi/**", "/html/**", "/checkUserId", "business/review/report", "/search/**", "/js/**"));
+                        .ignoringRequestMatchers("/api/**", "/dapi/**", "/html/**", "/checkUserId", "business/review/report", "/search/**", "/js/**", "/img/**"));
 
         return http.build();
     }

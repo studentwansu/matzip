@@ -20,6 +20,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.ResponseEntity;
@@ -132,27 +133,27 @@ public class RestaurantController {
 
     @PostMapping("/business/regist/apply")
     public String regist(@ModelAttribute RegistDTO registDTO, @RequestParam List<MultipartFile> multiFiles, Principal principal) throws IOException {
-
         // Principal에서 현재 로그인된 사용자 이름 가져오기
         String username = principal.getName();
-        // userService에서 username을 사용하여 businessCode를 가져오기
         Integer businessCode = userIdCheckService.getBusinessCodeByUserid(username);
-        // RegistDTO에 비즈니스 코드 설정
-        registDTO.setBusinessCode(businessCode); // 비즈니스 코드 설정
+        registDTO.setBusinessCode(businessCode);
 
-        Resource resource = resourceLoader.getResource("/img/restaurant");
-        String filePath = null;
+        ClassPathResource resource = new ClassPathResource("static/img/restaurant");
+        String staticPath;
 
-        if (!resource.exists()) {
-            String root = "/img/restaurant";
-            File file = new File(root);
-            file.mkdirs(); // 경로가 없다면 위의 root 경로를 생성하는 메소드
+        try {
+            staticPath = resource.getFile().getAbsolutePath();
+        } catch (IOException e) {
+            // 경로가 없으면 생성
+            File directory = new File("src/main/resources/static/img/restaurant");
+            if (!directory.exists()) {
+                directory.mkdirs();
+            }
+            staticPath = directory.getAbsolutePath();
+        }
 
-            filePath = file.getAbsolutePath();
-        } else filePath = resource.getFile().getAbsolutePath();
-        System.out.println("filePath: " + filePath);
         /** 파일에 관한 정보 저장을 위한 처리 */
-        List<RestaurantImageDTO> files = new ArrayList<>(); // 파일에 관한 정보 저장할 리스트
+        List<RestaurantImageDTO> files = new ArrayList<>();
         List<String> savedFiles = new ArrayList<>();
 
         try {
@@ -165,26 +166,27 @@ public class RestaurantController {
                 String savedFileName = UUID.randomUUID().toString().replace("-", "") + ext;
 
                 /** 파일정보 등록 */
-                files.add(new RestaurantImageDTO("/img/restaurant/" + savedFileName, originFileName, savedFileName));
+                String fileUrl = "/img/restaurant/" + savedFileName;
+                files.add(new RestaurantImageDTO(fileUrl, originFileName, savedFileName));
 
                 /** 파일 저장 */
-                file.transferTo(new File(filePath + "/" + savedFileName));
-                savedFiles.add("/img/restaurant" + savedFileName);
+                File targetFile = new File(staticPath + "/" + savedFileName);
+                file.transferTo(targetFile);
+                savedFiles.add(fileUrl);
 
                 count++;
             }
-
         } catch (Exception e) {
             for (RestaurantImageDTO file : files) {
-                new File(filePath + "/" + file.getRestaurantSavedName()).delete();
+                new File(staticPath + "/" + file.getRestaurantSavedName()).delete();
             }
+            e.printStackTrace(); // 에러 로그 확인
         }
 
         Restaurant registedRestaurant = restaurantService.registRestaurant(registDTO, files);
 
         return "redirect:/business/restaurant/" + registedRestaurant.getRestaurantCode();
     }
-
     @GetMapping("/business/modify")
     public String modifyPage(Model model, Principal principal) {
         String username = principal.getName();
