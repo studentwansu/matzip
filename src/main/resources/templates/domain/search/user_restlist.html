@@ -55,10 +55,8 @@
                     </p>
                 </a>
             </div>
-            <div class="restaurant-images">
-<!--                <img th:alt="${restaurant.}"-->
-                <img alt="음식 사진" src="/img/example.png">
-                <img alt="음식 사진" src="/img/example.png">
+            <div class="restaurant-images" th:each="restImgs, iterStat : ${restaurant.restaurantImages}">
+                <img th:alt="${restImgs.getRestaurantOriginalName()}" th:src="${restImgs.getRestaurantImagePath()}">
             </div>
             <div class="restaurant-icons">
                 <!-- 북마크 버튼 완수 -->

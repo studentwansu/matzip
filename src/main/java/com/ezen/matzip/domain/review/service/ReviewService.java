@@ -41,7 +41,7 @@ public class ReviewService {
         return "https://www.youtube.com/results?search_query=" + URLEncoder.encode(keyword, StandardCharsets.UTF_8);
     }
 
-
+    // 유저의 리뷰 전체 조회
     public List<ReviewDTO> findReviewByUserCode(int userCode) {
 
         List<Object[]> reviewList = reviewRepository.findByUserCode(userCode);
@@ -63,15 +63,15 @@ public class ReviewService {
         return result;
     }
 
-
+    // 리뷰 삭제
     @Transactional
     public void deleteReview(int reviewCode) {
         reviewRepository.deleteById(reviewCode);
     }
 
+    // 리뷰 수정 (기존 이미지 삭제 후 새로 저장)
     @Transactional
     public void modifyReview(ReviewDTO reviewDTO, List<MultipartFile> multiFiles) {
-        System.out.println("수정 요청 받은 리뷰 코드: " + reviewDTO.getReviewCode());
 
         // 기존 리뷰 불러오기
         Review review = reviewRepository.findByReviewCode(reviewDTO.getReviewCode())
@@ -127,21 +127,7 @@ public class ReviewService {
         }
     }
 
-
-    public List<Object> findReviewAndReviewImagesByReviewCode(int reviewCode) {
-        List<Object> result = new ArrayList<>();
-
-        // Optional 처리
-        Review review = reviewRepository.findByReviewCode(reviewCode)
-                .orElseThrow(() -> new IllegalArgumentException("해당 리뷰를 찾을 수 없습니다. 리뷰 코드: " + reviewCode));
-        result.add(review);
-
-        List<ReviewImage> reviewImages = reviewImageRepository.findReviewImagesByReviewCode(reviewCode);
-        result.addAll(reviewImages);
-
-        return result;
-    }
-
+    // 이용 내역 조회
     public List<ReservationDTO> findReservationByUserCode(int userCode) {
         List<Object[]> reservations = reservationRepository.findReservationByUserCode(userCode);
 
@@ -166,6 +152,7 @@ public class ReviewService {
         return result;
     }
 
+    // 리뷰 저장 (이미지 포함)
     @Transactional
     public void writeReview(ReviewDTO reviewDTO, List<ReviewImageDTO> reviewImageDTO) {
         // 레스토랑 조회
