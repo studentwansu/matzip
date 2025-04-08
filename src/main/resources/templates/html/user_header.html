@@ -10,7 +10,7 @@
         </a>
 
         <div class="search-container">
-            <form action="/search">
+            <form th:action="@{/search}">
                 <div class="search-word">
                     <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
                     <input name="keyword" th:value="${session.lastKeyword}" placeholder="검색어를 입력하세요..." type="text">
