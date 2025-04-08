@@ -26,6 +26,7 @@ public interface ReportedUserRepository extends JpaRepository<User, Integer> {
                                             @Param("accountStatuses") List<Integer> accountStatuses,
                                             Pageable pageable);
 
-    @Query("select count(u) from User u where u.accountStatus = :accountStatus")
+    // 신고횟수 1 이상인 경우에만 카운트
+    @Query("select count(u) from User u where u.accountStatus = :accountStatus and u.userReportCount >= 1")
     int countByAccountStatus(@Param("accountStatus") int accountStatus);
 }
