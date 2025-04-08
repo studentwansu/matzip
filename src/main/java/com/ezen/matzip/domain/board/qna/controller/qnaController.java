@@ -48,7 +48,7 @@ public class qnaController {
 
         return "domain/board/qna/user_qna_list";
     }
-
+//
     // 사용자가 본인이 작성한 QnA 상세보기 (다른 사용자의 글은 접근 불가)
     @GetMapping("/board/qna/{id}")
     public String userQnaDetail(@PathVariable String id, Model model, @AuthenticationPrincipal UserDetails userDetails) {
