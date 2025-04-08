@@ -22,7 +22,7 @@
 <body>
 
 <!-- header -->
-<div th:replace="~{html/store_header :: storeHeader}"></div>
+<!--<div th:replace="~{html/store_header :: storeHeader}"></div>-->
 
 <!-- main -->
 <main>
@@ -71,16 +71,12 @@
                             <tr>
                                 <td style="font-size:2vh; width:160px; white-space: nowrap;">키워드</td>
                                 <td>
-                                    <div style="width:320px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-                                        <span style="font-size:1.2vh;"
-                                              th:each="keyword, iterStat : ${restaurant.restaurantKeywords}">
-                                            <span th:text="'#' + ${keyword.getRestaurantKeyword()}"></span>
-                                            <span th:if="${!iterStat.last}" th:text="' '"></span>
-                                        </span>
+                                    <div style="width:320px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display:flex; flex-direction: row;">
+                                        <span th:each="keyword : ${restaurant.restaurantKeywords}"><span
+                                                th:text="'#' + ${keyword.getRestaurantKeyword()} + ' '"></span></span>
                                     </div>
                                 </td>
                             </tr>
-                            <tr>
                                 <td style="font-size:2vh; width:160px; white-space: nowrap;">영업시간</td>
                                 <td style="font-size:1.5vh; white-space: nowrap;">
                                     <span th:text="${#strings.substring(restaurant.restaurantStartTime, 0, 5)}"></span>
@@ -145,13 +141,8 @@
 </main>
 
 <footer>
-    <div th:replace="~{html/user_footer :: userFooter}"></div>
+<!--    <div th:replace="~{html/user_footer :: userFooter}"></div>-->
 </footer>
-
-<script th:inline="javascript">
-    let restLoc = /*[[${restaurant.restaurantLocation}]]*/ "";
-    let myLoc = "";
-</script>
 
 <script src="/js/map.js"></script>
 <script src="/js/myLocation.js"></script>

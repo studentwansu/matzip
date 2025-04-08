@@ -54,11 +54,9 @@
                             <tr>
                                 <td style="font-size:2vh; width:160px; white-space: nowrap;">키워드</td>
                                 <td>
-                                    <div style="width:320px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-                                        <div th:each="keyword : ${restaurant.restaurantKeywords}">
-                                            <span th:text="'#' + ${keyword.getRestaurantKeyword()}"></span>
-<!--                                            <span th:if="${!iterStat.last}" th:text="' '"></span>-->
-                                        </div>
+                                    <div style="width:320px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display:flex; flex-direction: row;">
+                                        <span th:each="keyword : ${restaurant.restaurantKeywords}"><span
+                                                th:text="'#' + ${keyword.getRestaurantKeyword()} + ' '"></span></span>
                                     </div>
                                 </td>
                             </tr>

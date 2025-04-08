@@ -43,7 +43,8 @@
         </div>
 
         <div class="store-info">
-            <form enctype="multipart/form-data" method="post" th:action="@{/business/modify}">
+            <form enctype="multipart/form-data" method="post" onsubmit="removeEmptyKeywords()"
+                  th:action="@{/business/modify}">
                 <div>
                     <input accept="image/*" hidden id="real-file" multiple name="multiFiles" required type="file">
                     <button class="redbutton1 redbutton-font" id="custom-button" type="button">이미지 추가</button>
@@ -87,27 +88,27 @@
                                         <input class="store-input-small2" id="restaurantKeyword1"
                                                name="restaurantKeyword"
                                                placeholder="키워드1" required
-                                               th:value="${currentRestaurant.restaurantKeywords.get(0).getRestaurantKeyword()}"
+                                               th:value="${currentRestaurant.restaurantKeywords.size() > 0 ? currentRestaurant.restaurantKeywords.get(0).getRestaurantKeyword() : ''}"
                                                type="text">
                                         <input class="store-input-small2" id="restaurantKeyword2"
                                                name="restaurantKeyword"
                                                placeholder="키워드2"
-                                               th:value="${currentRestaurant.restaurantKeywords.get(1).getRestaurantKeyword()}"
+                                               th:value="${currentRestaurant.restaurantKeywords.size() > 1 ? currentRestaurant.restaurantKeywords.get(1).getRestaurantKeyword() : ''}"
                                                type="text">
                                         <input class="store-input-small2" id="restaurantKeyword3"
                                                name="restaurantKeyword"
                                                placeholder="키워드3"
-                                               th:value="${currentRestaurant.restaurantKeywords.get(2).getRestaurantKeyword()}"
+                                               th:value="${currentRestaurant.restaurantKeywords.size() > 2 ? currentRestaurant.restaurantKeywords.get(2).getRestaurantKeyword() : ''}"
                                                type="text">
                                         <input class="store-input-small2" id="restaurantKeyword4"
                                                name="restaurantKeyword"
                                                placeholder="키워드4"
-                                               th:value="${currentRestaurant.restaurantKeywords.get(3).getRestaurantKeyword()}"
+                                               th:value="${currentRestaurant.restaurantKeywords.size() > 3 ? currentRestaurant.restaurantKeywords.get(3).getRestaurantKeyword() : ''}"
                                                type="text">
                                         <input class="store-input-small2" id="restaurantKeyword5"
                                                name="restaurantKeyword"
                                                placeholder="키워드5"
-                                               th:value="${currentRestaurant.restaurantKeywords.get(4).getRestaurantKeyword()}"
+                                               th:value="${currentRestaurant.restaurantKeywords.size() > 4 ? currentRestaurant.restaurantKeywords.get(4).getRestaurantKeyword() : ''}"
                                                type="text">
                                     </td>
                                 </tr>

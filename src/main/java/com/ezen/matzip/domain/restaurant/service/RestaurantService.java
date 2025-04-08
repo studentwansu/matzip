@@ -342,7 +342,7 @@ public class RestaurantService {
 
         List<RestaurantImage> oldImages = restaurantImageRepository.findRestaurantImageByRestaurantCode(foundModify.getRestaurantCode());
         for (RestaurantImage img : oldImages) {
-            File oldFile = new File("C:/dev/img/restaurant" + img.getRestaurantImagePath());
+            File oldFile = new File(img.getRestaurantImagePath());
             if (oldFile.exists()) oldFile.delete();
             restaurantImageRepository.delete(img);
         }// 새로운 키워드 추가
@@ -351,8 +351,9 @@ public class RestaurantService {
         String filePath;
 
         try {
-            File fileDir = new File("C:/dev/img/restaurant");
-            if (!fileDir.exists()) fileDir.mkdirs();
+            File fileDir = new File("src/main/resources/static/img/restaurant");
+            if (!fileDir.exists())
+                fileDir.mkdirs();
             filePath = fileDir.getAbsolutePath();
 
             int count = 0;

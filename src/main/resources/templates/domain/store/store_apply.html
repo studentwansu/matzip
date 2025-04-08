@@ -43,7 +43,7 @@
         </div>
 
         <div class="store-info">
-            <form action="/business/regist/apply" enctype="multipart/form-data" method="post">
+            <form action="/business/regist/apply" enctype="multipart/form-data" method="post" onsubmit="removeEmptyKeywords()">
                 <input name="businessCode" th:value="${businessCode}" type="hidden"/>
                 <div>
                     <input accept="image/*" hidden id="real-file" multiple name="multiFiles" required type="file">
