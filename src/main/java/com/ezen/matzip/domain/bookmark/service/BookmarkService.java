@@ -5,6 +5,7 @@ import com.ezen.matzip.domain.bookmark.dto.RestaurantForBookmarkDTO;
 import com.ezen.matzip.domain.bookmark.entity.Bookmark;
 import com.ezen.matzip.domain.bookmark.repository.BookmarkRepository;
 import com.ezen.matzip.domain.restaurant.dto.MenuDTO;
+import com.ezen.matzip.domain.restaurant.dto.RestaurantImageDTO;
 import com.ezen.matzip.domain.restaurant.entity.Restaurant;
 import com.ezen.matzip.domain.restaurant.repository.RestaurantRepository;
 import com.ezen.matzip.domain.user.entity.User;
@@ -46,6 +47,15 @@ public class BookmarkService {
         dto.setRestaurantName(restaurant.getRestaurantName());
         dto.setMainMenu(restaurant.getMainMenu());
         dto.setRestaurantLocation(restaurant.getRestaurantLocation());
+        dto.setRestaurantImages(
+                restaurant.getRestaurantImages().stream()
+                        .map(img -> new RestaurantImageDTO(
+                                img.getRestaurantImagePath(),
+                                img.getRestaurantOriginalName(),
+                                img.getRestaurantSavedName()
+                        ))
+                        .collect(Collectors.toList())
+        );
         dto.setRestaurantMenus(
                 restaurant.getMenus().stream()
                         .map(menu -> new MenuDTO(menu.getMenuCode(), menu.getMenuName(), menu.getMenuPrice(), restaurant))
