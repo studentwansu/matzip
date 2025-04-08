@@ -2,6 +2,11 @@ package com.ezen.matzip.domain.board.qna.controller;
 
 import com.ezen.matzip.domain.board.qna.DTO.qnaDTO;
 import com.ezen.matzip.domain.board.qna.service.qnaService;
+import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -23,18 +28,27 @@ public class qnaController {
     // ========== 사용자 전용 QnA ==========
     // 사용자가 본인의 QnA 목록을 조회
     @GetMapping("/board/qna")
-    public String userQnaList(Model model, @AuthenticationPrincipal UserDetails userDetails) {
+    public String userQnaList(HttpServletRequest request, Model model,
+                              @AuthenticationPrincipal UserDetails userDetails,
+                              @RequestParam(defaultValue = "0") int page,
+                              @RequestParam(defaultValue = "5") int size) {
+        // 로그인된 사용자의 이름을 가져와 작성자로 설정
         String writer = userDetails.getUsername();
-        List<qnaDTO> qnaList = qnaService.getByWriter(writer);
-        model.addAttribute("qnaList", qnaList);
-        // 목록이 비어 있고 등록 성공 메시지가 없을 경우에만 msg를 추가
-        if (qnaList.isEmpty() && !model.containsAttribute("success")) {
-            model.addAttribute("msg", "작성한 내용이 없습니다.");
-        }
+        // 페이지 네비게이션을 위한 Pageable 생성
+        Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
+        Page<qnaDTO> pageResult = qnaService.getByWriter(writer, pageable);
+
+        // QnA 페이지 정보와 목록을 모델에 추가
+        model.addAttribute("page", pageResult);
+        model.addAttribute("qnaList", pageResult.getContent());
+
+        // 현재 요청 URI를 추가 (템플릿에서 필요시 사용)
+        String currentUri = request.getRequestURI();
+        model.addAttribute("currentUri", currentUri);
+
         return "domain/board/qna/user_qna_list";
     }
-
-
+//
     // 사용자가 본인이 작성한 QnA 상세보기 (다른 사용자의 글은 접근 불가)
     @GetMapping("/board/qna/{id}")
     public String userQnaDetail(@PathVariable String id, Model model, @AuthenticationPrincipal UserDetails userDetails) {
@@ -68,9 +82,14 @@ public class qnaController {
     // ========== 관리자 전용 QnA ==========
     // 관리자가 전체 QnA 목록을 조회 (공지사항, FAQ 등과 경로 일치)
     @GetMapping("/admin/board/qna")
-    public String adminQnaList(Model model) {
-        List<qnaDTO> qnaList = qnaService.getAll();
-        model.addAttribute("qnaList", qnaList);
+    public String adminQnaList(Model model,
+                               @RequestParam(defaultValue = "0") int page,
+                               @RequestParam(defaultValue = "8") int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
+        Page<qnaDTO> pageResult = qnaService.getAll(pageable);
+
+        model.addAttribute("page", pageResult);
+        model.addAttribute("qnaList", pageResult.getContent());
         return "domain/board/qna/admin_qna_list";
     }
 

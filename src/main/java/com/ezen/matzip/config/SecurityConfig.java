@@ -73,49 +73,5 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
-//    @Bean
-//    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-//        http
-//                .authorizeHttpRequests(auth -> auth
-//                        .requestMatchers("/", "/main/main", "/login", "/signup", "/signup/**", "/css/**", "/js/**", "/img/**").permitAll()
-//                        .requestMatchers("/user/**").hasRole("USER")
-//                        .requestMatchers("/business/**").hasRole("BUSINESS")
-//                        .requestMatchers("/admin/**").hasRole("ADMIN")
-////                        .anyRequest().authenticated()
-//                                .anyRequest().permitAll()
-//                )
-//                .formLogin(login -> login
-//                        .loginPage("/login")
-//                        // 로그인 폼에서 "userId", "password"라는 필드명을 사용한다면:
-//                        .usernameParameter("userId")
-//                        .passwordParameter("password")
-//                        .successHandler(new LoginSuccessHandler())
-//                        // 로그인 실패 시 에러 파라미터를 붙여 리다이렉트 (옵션)
-//                        .failureUrl("/login?error=true")
-//                        .permitAll()
-//                )
-//                .logout(logout -> logout
-//                        .logoutUrl("/logout")
-//                        .logoutSuccessUrl("/")
-//                        .invalidateHttpSession(true)
-//                        .deleteCookies("JSESSIONID")
-//                        .permitAll()
-//                )
-//                .sessionManagement(session -> session
-//                        .sessionFixation().newSession()
-//                        .maximumSessions(1)
-//                        .maxSessionsPreventsLogin(false)
-//                )
-//                .csrf(withDefaults());
-//
-//        return http.build();
-//    }
-//
-//    @Bean
-//    public PasswordEncoder passwordEncoder() {
-//        return new BCryptPasswordEncoder();
-//    }
-
 }
 

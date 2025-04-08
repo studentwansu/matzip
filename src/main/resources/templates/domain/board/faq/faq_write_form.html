@@ -5,6 +5,8 @@
     <title>FAQ등록</title>
 </head>
 <body>
+<div th:replace="~{html/admin_header :: adminHeader}"></div>
+
 <div class="form-container">
   <h2>FAQ 등록</h2>
   <form th:action="@{/templates/domain/board/faq/write}" method="post">
