@@ -3,6 +3,8 @@ package com.ezen.matzip.domain.board.qna.service;
 import com.ezen.matzip.domain.board.qna.DTO.qnaDTO;
 import com.ezen.matzip.domain.board.qna.entity.qnaEntity;
 import com.ezen.matzip.domain.board.qna.repository.qnaRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 
@@ -53,8 +55,17 @@ public class qnaService {
         qna.writeAnswer(answer);
         qnaRepository.save(qna);
     }
+    // 전체 페이징 조회 (관리자)
+    public Page<qnaDTO> getAll(Pageable pageable) {
+        return qnaRepository.findAll(pageable)
+                .map(qnaDTO::new);
+    }
 
-
+    // 사용자별 페이징 조회
+    public Page<qnaDTO> getByWriter(String writer, Pageable pageable) {
+        return qnaRepository.findByWriter(writer, pageable)
+                .map(qnaDTO::new);
+    }
 }
 
 

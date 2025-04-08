@@ -28,6 +28,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ExtendedModelMap;
 import org.springframework.ui.Model;
@@ -388,6 +389,13 @@ public class RestaurantController {
         return "domain/restaurant/user_restinfo";
     }
     // 완수 끝
+
+    // 희영 식당등록요청 목록조회
+    // 대기 상태인 식당 조회
+    @GetMapping("/pending")
+    public ResponseEntity<List<RestaurantDTO>> getPendingRestaurants() {
+        return ResponseEntity.ok(restaurantService.getPendingRestaurants());
+    }
 }
 
 //restaurant/ → 식당 관리 (등록, 수정, 조회)
