@@ -34,7 +34,7 @@
             <div class="store-info">
                 <div class="store-imgs">
                     <!-- 여기에 이미지 넣기 -->
-                    <div class="store-imgs" th:each="img : ${selectedRestaurantImgs}">
+                    <div class="store-imgs" th:each="img : ${restaurant.restaurantImages}">
                         <img th:src="@{${img.restaurantImagePath}}" class="preview-img" />
                     </div>
                 </div>
@@ -123,7 +123,7 @@
                             <span style="font-size:1.5vh;" th:text="${review.reviewDate}"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
                                 style="font-size:1.5vh;" th:text="${review.rating}"></span><br>
                             <span style="font-size:1.5vh;" th:text="${review.reviewContent}"></span><br>
-                            <div class="reviewimgbox" th:each="img : ${reviewImageMap[review.reviewCode]}">
+                            <div class="reviewimgbox" th:each="img : ${review.reviewImages}">
                                 <img class="reviewimg" th:src="@{${img.reviewImagePath}}">
                             </div>
                             <div class="reviewreply">
@@ -138,11 +138,6 @@
     <footer>
         <div th:replace="~{html/admin_footer :: adminFooter}"></div>
     </footer>
-    <script th:inline="javascript">
-        let restLoc = /*[[${restaurantLocation}]]*/ "";
-        let myLoc = "";
-    </script>
-
     <script src="/js/map.js"></script>
 
 </body>

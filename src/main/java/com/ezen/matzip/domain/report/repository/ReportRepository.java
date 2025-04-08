@@ -46,5 +46,7 @@ public interface ReportRepository extends JpaRepository<Review, Integer> {
     ReportedReviewDTO findReviewDetail(@Param("reviewCode") int reviewCode);
 
     // 처리 상태별 카운트
-    int countByHiddenFlag(int hiddenFlag);
+    @Query("select count(r) from Review r where r.hiddenFlag = :hiddenFlag and r.reviewReportCount >= :minReportCount")
+    int countByHiddenFlagAndMinReportCount(@Param("hiddenFlag") int hiddenFlag, @Param("minReportCount") int minReportCount);
+
 }

@@ -1,4 +1,4 @@
-let geocoder = new kakao.maps.services.Geocoder();
+let geocoder2 = new kakao.maps.services.Geocoder();
 function myLocation() {
     navigator.geolocation.getCurrentPosition(function (position) {
 
@@ -28,7 +28,7 @@ function myLocation() {
 
 function searchDetailAddrFromCoords(coords, callback) {
     // 좌표로 법정동 상세 주소 정보를 요청합니다
-    geocoder.coord2Address(coords.getLng(), coords.getLat(), callback);
+    geocoder2.coord2Address(coords.getLng(), coords.getLat(), callback);
 }
 
 window.MyApp = window.MyApp || {};
