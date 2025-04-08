@@ -50,7 +50,7 @@ public class ReviewAnswerController {
 
         model.addAttribute("reviews", reviews);
         model.addAttribute("businessCode", businessCode);
-        return "domain/review/review_answer";
+        return "domain/store/review_answer";
     }
 
     // 리뷰 상세 보기 (답변 작성용)
@@ -60,7 +60,7 @@ public class ReviewAnswerController {
         List<ReviewImage> reviewImages = reviewImageRepository.findReviewImagesByReviewCode(reviewCode);
         model.addAttribute("review", review);
         model.addAttribute("reviewImages", reviewImages);
-        return "domain/review/review_answer";
+        return "domain/store/review_answer";
     }
 
     // 답변 수정
