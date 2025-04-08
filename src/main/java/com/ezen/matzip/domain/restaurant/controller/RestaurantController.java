@@ -14,6 +14,8 @@ import com.ezen.matzip.domain.restaurant.service.RestaurantService;
 import com.ezen.matzip.domain.review.dto.ReviewDTO;
 import com.ezen.matzip.domain.review.dto.ReviewImageDTO;
 import com.ezen.matzip.domain.review.service.ReviewService;
+import com.ezen.matzip.domain.review.entity.ReviewImage;
+import com.ezen.matzip.domain.review.repository.ReviewImageRepository;
 import com.ezen.matzip.domain.user.dto.UserRequestDTO;
 import com.ezen.matzip.domain.user.entity.Business;
 import com.ezen.matzip.domain.user.entity.User;
@@ -27,6 +29,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ExtendedModelMap;
 import org.springframework.ui.Model;
@@ -36,10 +39,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -69,6 +69,7 @@ public class RestaurantController {
     private RestaurantRepository restaurantRepository;
     @Autowired
     private ReviewService reviewService;
+    private ReviewImageRepository reviewImageRepository;
 
 
     @GetMapping("/restaurant/{restaurantCode}")
@@ -95,21 +96,27 @@ public class RestaurantController {
         }
 //        System.out.println("reviews: " + resultReview);
 
-//        List<RestaurantImage> imgs = restaurantImageRepository.findRestaurantImageByRestaurantCode(restaurantCode);
-//        if (!imgs.isEmpty())
-//        {
-//
-//            List<RestaurantImageDTO> imgDTOs = imgs.stream()
-//                .map(img -> modelMapper.map(img, RestaurantImageDTO.class))
-//                .toList();
-//            model.addAttribute("selectedRestaurantImgs", imgDTOs);
-//        }
-            List<RestaurantImageDTO> imgDTOs = imgs.stream()
+        List<RestaurantImage> restaurantImages = restaurantImageRepository.findRestaurantImageByRestaurantCode(restaurantCode);
+        List<RestaurantImageDTO> imgDTOs = new ArrayList<>();
+        if (!restaurantImages.isEmpty())
+        {
+            imgDTOs = restaurantImages.stream()
                 .map(img -> modelMapper.map(img, RestaurantImageDTO.class))
                 .toList();
             model.addAttribute("selectedRestaurantImgs", imgDTOs);
+        }
 
         model.addAttribute("selectedRestaurant", restaurant);
+
+        Map<Integer, List<ReviewImageDTO>> reviewImageMap = new HashMap<>();
+        for (ReviewDTO review : resultReview) {
+            List<ReviewImage> images = reviewImageRepository.findByReviewCode(review.getReviewCode());
+            List<ReviewImageDTO> imgDTOss = images.stream()
+                    .map(img -> modelMapper.map(img, ReviewImageDTO.class))
+                    .toList();
+            reviewImageMap.put(review.getReviewCode(), imgDTOss);
+        }
+        model.addAttribute("reviewImageMap", reviewImageMap);
 
         // 완수-현재 URL을 모델에 추가
         model.addAttribute("currentUri", request.getRequestURI());
@@ -161,7 +168,11 @@ public class RestaurantController {
         String username = principal.getName();
         int businessCode = userIdCheckService.getBusinessCodeByUserid(username);
 
-
+        Restaurant existingRestaurant = restaurantRepository.findByBusinessCode(businessCode);
+        if (existingRestaurant != null) {
+            // 레스토랑이 이미 등록되어 있으면 등록을 막고 경고 메시지를 반환
+            throw new RuntimeException("이미 식당을 등록 하셨습니다.");
+        }
 
         Model model = new ExtendedModelMap();
         model.addAttribute("businessCode", businessCode);
@@ -179,11 +190,6 @@ public class RestaurantController {
         // userService에서 username을 사용하여 businessCode를 가져오기
         Integer businessCode = userIdCheckService.getBusinessCodeByUserid(username);
 
-        Restaurant existingRestaurant = restaurantRepository.findByBusinessCode(businessCode);
-        if (existingRestaurant != null) {
-            // 레스토랑이 이미 등록되어 있으면 등록을 막고 경고 메시지를 반환
-            throw new RuntimeException("이미 식당을 등록 하셨습니다.");
-        }
 
         // RegistDTO에 비즈니스 코드 설정
         registDTO.setBusinessCode(businessCode); // 비즈니스 코드 설정
@@ -233,17 +239,15 @@ public class RestaurantController {
                 new File(filePath + "/" + file.getRestaurantSavedName()).delete();
             }
 //            model.addAttribute("message", "파일 업로드 실패!");
-        }
 
+        }
         System.out.println("=== DTO 로그 ===");
         System.out.println(registDTO.toString());
         int restaurantCode = restaurantService.registRestaurant(registDTO,files).getRestaurantCode();
 
 
-
-        return "redirect:/business/restaurant/" + restaurantCode;
+        return "redirect:/restaurant/" + registDTO.getRestaurantCode();
     }
-
 
     @GetMapping("/business/modify")
     public String modifyPage(Principal principal) {
@@ -285,6 +289,8 @@ public class RestaurantController {
     {
         session.setAttribute("lastKeyword", keyword);
         List<RestaurantDTO> restaurants = restaurantService.findByKeywordOrderByScore(keyword);
+        restaurants = restaurantService.findRestaurantsAndImgs(restaurants);
+
         model.addAttribute("restaurantList", restaurants);
         model.addAttribute("myLoc", keyword);
 
@@ -300,14 +306,6 @@ public class RestaurantController {
 
         return "domain/search/user_restlist";
     }
-
-//    @GetMapping("/storeinfo")
-//    public String markingLocation(@RequestParam Integer restaurantCode, Model model)
-//    {
-//        String location = restaurantService.findLocationByRestaurantCode(restaurantCode);
-//        model.addAttribute("restaurantLocation", location);
-//        return "/domain/restaurant/store_restinfo";
-//    }
 
     @GetMapping(value = "/search", params = "categoryCode")
     public String filteringRestaurants(@RequestParam int categoryCode, Model model, HttpSession session)
@@ -393,6 +391,13 @@ public class RestaurantController {
         return "domain/restaurant/user_restinfo";
     }
     // 완수 끝
+
+    // 희영 식당등록요청 목록조회
+    // 대기 상태인 식당 조회
+    @GetMapping("/pending")
+    public ResponseEntity<List<RestaurantDTO>> getPendingRestaurants() {
+        return ResponseEntity.ok(restaurantService.getPendingRestaurants());
+    }
 }
 
 //restaurant/ → 식당 관리 (등록, 수정, 조회)

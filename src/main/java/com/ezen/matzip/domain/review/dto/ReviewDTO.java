@@ -40,5 +40,4 @@ public class ReviewDTO {
         this.restaurantName = restaurant.getRestaurantName();
     }
 
-
 }

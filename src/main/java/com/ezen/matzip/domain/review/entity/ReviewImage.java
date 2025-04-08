@@ -1,5 +1,6 @@
 package com.ezen.matzip.domain.review.entity;
 
+import com.ezen.matzip.domain.restaurant.entity.Restaurant;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -21,6 +22,7 @@ public class ReviewImage {
     private String reviewImagePath;
     private String reviewOriginalName;
     private String reviewSaveName;
+
 
     @Builder
     public ReviewImage(Review reviewCode, String reviewImagePath, String reviewOriginalName, String reviewSaveName) {

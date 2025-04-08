@@ -2,6 +2,10 @@ package com.ezen.matzip.domain.board.qna.controller;
 
 import com.ezen.matzip.domain.board.qna.DTO.qnaDTO;
 import com.ezen.matzip.domain.board.qna.service.qnaService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -23,14 +27,16 @@ public class qnaController {
     // ========== 사용자 전용 QnA ==========
     // 사용자가 본인의 QnA 목록을 조회
     @GetMapping("/board/qna")
-    public String userQnaList(Model model, @AuthenticationPrincipal UserDetails userDetails) {
+    public String userQnaList(Model model,
+                              @AuthenticationPrincipal UserDetails userDetails,
+                              @RequestParam(defaultValue = "0") int page,
+                              @RequestParam(defaultValue = "5") int size) {
         String writer = userDetails.getUsername();
-        List<qnaDTO> qnaList = qnaService.getByWriter(writer);
-        model.addAttribute("qnaList", qnaList);
-        // 목록이 비어 있고 등록 성공 메시지가 없을 경우에만 msg를 추가
-        if (qnaList.isEmpty() && !model.containsAttribute("success")) {
-            model.addAttribute("msg", "작성한 내용이 없습니다.");
-        }
+        Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
+        Page<qnaDTO> pageResult = qnaService.getByWriter(writer, pageable);
+
+        model.addAttribute("page", pageResult);
+        model.addAttribute("qnaList", pageResult.getContent());
         return "domain/board/qna/user_qna_list";
     }
 
@@ -68,9 +74,14 @@ public class qnaController {
     // ========== 관리자 전용 QnA ==========
     // 관리자가 전체 QnA 목록을 조회 (공지사항, FAQ 등과 경로 일치)
     @GetMapping("/admin/board/qna")
-    public String adminQnaList(Model model) {
-        List<qnaDTO> qnaList = qnaService.getAll();
-        model.addAttribute("qnaList", qnaList);
+    public String adminQnaList(Model model,
+                               @RequestParam(defaultValue = "0") int page,
+                               @RequestParam(defaultValue = "8") int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
+        Page<qnaDTO> pageResult = qnaService.getAll(pageable);
+
+        model.addAttribute("page", pageResult);
+        model.addAttribute("qnaList", pageResult.getContent());
         return "domain/board/qna/admin_qna_list";
     }
 

@@ -28,7 +28,7 @@ public class faqController {
                 .anyMatch(auth -> auth.getAuthority().equals("ROLE_ADMIN"))) {
             return "domain/board/faq/faq_admin_list";
         }
-        return "admin_faq_list";
+        return "domain/board/faq/faq_list";
     }
 
     // FAQ 상세 조회 (모든 사용자 접근)
