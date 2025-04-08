@@ -42,6 +42,7 @@ public class ReviewController {
     private final ModelMapper modelMapper;
     private final UserService userService;
 
+    // 로그인한 사용자의 리뷰 목록을 조회해서 보여줌
     @GetMapping("/user/review")
     public String findReviewByPrincipal(Model model, Principal principal) {
         User user = userService.findByUserId(principal.getName());
@@ -51,21 +52,7 @@ public class ReviewController {
         return "domain/review/review_list";
     }
 
-    @GetMapping("/user/review/myReview/{reviewCode}")
-    public String findReviewByReviewCode(@PathVariable int reviewCode, Model model) {
-        Review review = reviewRepository.findByReviewCode(reviewCode)
-                .orElseThrow(() -> new IllegalArgumentException("해당 리뷰 없음"));
-
-        List<ReviewImage> imgs = reviewImageRepository.findReviewImagesByReviewCode(reviewCode);
-        List<ReviewImageDTO> imgDTOs = imgs.stream()
-                .map(img -> modelMapper.map(img, ReviewImageDTO.class))
-                .toList();
-
-        model.addAttribute("selectedReview", modelMapper.map(review, ReviewDTO.class));
-        model.addAttribute("selectedReviewImgs", imgDTOs);
-        return "domain/review/review_list";
-    }
-
+    // js로 리뷰 코드에 맞는 리뷰 이미지 가져옴
     @GetMapping("/user/review/imageList/{reviewCode}")
     @ResponseBody
     public List<ReviewImageDTO> getReviewImages(@PathVariable(required = false) int reviewCode) {

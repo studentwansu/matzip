@@ -13,6 +13,7 @@ import com.ezen.matzip.domain.restaurant.repository.RestaurantRepository;
 import com.ezen.matzip.domain.restaurant.service.RestaurantService;
 import com.ezen.matzip.domain.review.dto.ReviewDTO;
 import com.ezen.matzip.domain.review.dto.ReviewImageDTO;
+import com.ezen.matzip.domain.review.service.ReviewService;
 import com.ezen.matzip.domain.review.entity.ReviewImage;
 import com.ezen.matzip.domain.review.repository.ReviewImageRepository;
 import com.ezen.matzip.domain.user.dto.UserRequestDTO;
@@ -67,6 +68,7 @@ public class RestaurantController {
     @Autowired
     private RestaurantRepository restaurantRepository;
     @Autowired
+    private ReviewService reviewService;
     private ReviewImageRepository reviewImageRepository;
 
 
