@@ -6,10 +6,7 @@ import com.ezen.matzip.domain.bookmark.service.BookmarkService;
 import com.ezen.matzip.domain.restaurant.dto.RegistDTO;
 import com.ezen.matzip.domain.restaurant.dto.RestaurantDTO;
 import com.ezen.matzip.domain.restaurant.dto.RestaurantImageDTO;
-import com.ezen.matzip.domain.restaurant.dto.RestaurantKeywordDTO;
-import com.ezen.matzip.domain.restaurant.entity.Regist;
 import com.ezen.matzip.domain.restaurant.entity.Restaurant;
-import com.ezen.matzip.domain.restaurant.repository.RestaurantKeywordRepository;
 import com.ezen.matzip.domain.restaurant.service.RestaurantService;
 import com.ezen.matzip.domain.review.dto.ReviewDTO;
 import com.ezen.matzip.domain.review.dto.ReviewImageDTO;
@@ -23,9 +20,7 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -54,7 +49,6 @@ public class RestaurantController {
     //완수 북마크 기능에 필요
     private final BookmarkService bookmarkService;
     private final UserService userService;
-    private final RestaurantKeywordRepository restaurantKeywordRepository;
 
 
     @GetMapping("/restaurant/{restaurantCode}")
@@ -112,9 +106,11 @@ public class RestaurantController {
     public String getRestaurantDetail2(@PathVariable int restaurantCode, Model model, Principal principal) {
 
         String username = principal.getName();
-        RestaurantDTO restaurant = restaurantService.getRestaurantDetail(restaurantCode);
-        List<ReviewDTO> resultReview = restaurantService.getReviewsByRestaurant(restaurantCode);
-        List<RestaurantImageDTO> imgDTOs = restaurantService.getRestaurantImgs(restaurantCode);
+        int myBusinessCode = userIdCheckService.getBusinessCodeByUserid(username);
+
+        RestaurantDTO restaurant = restaurantService.getRestaurantByBusinessCode(myBusinessCode);
+        List<ReviewDTO> resultReview = restaurantService.getReviewsByRestaurant(restaurant.getRestaurantCode());
+        List<RestaurantImageDTO> imgDTOs = restaurantService.getRestaurantImgs(restaurant.getRestaurantCode());
 
         restaurant.setRestaurantImages(imgDTOs);
 
@@ -212,7 +208,7 @@ public class RestaurantController {
         registDTO.setRestaurantCode(foundRestaurant.getRestaurantCode());
         restaurantService.modifyRestaurant(registDTO, multiFiles);
 
-        return "redirect:/restaurant/" + registDTO.getRestaurantCode();
+        return "redirect:/business/restaurant/" + registDTO.getRestaurantCode();
     }
 
     @GetMapping("/search")

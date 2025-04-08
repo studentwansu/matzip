@@ -29,11 +29,16 @@
             </div>
             <ul>
                 <li><a class="navi-font" th:href="@{/business/myinfo}">내 정보</a></li>
-                <li th:if="${myRestaurantCode != null}"><a class="navi-font" th:href="@{/business/restaurant/{restaurantCode}(restaurantCode=${myRestaurantCode})}">내 식당 정보</a></li>
-                <li th:if="${myRestaurantCode == null}"><a class="navi-font" th:href="@{/business/regist}">식당 등록 신청</a></li>
+                <li th:if="${myRestaurantCode != null}"><a class="navi-font"
+                                                           th:href="@{/business/restaurant/{restaurantCode}(restaurantCode=${myRestaurantCode})}">내
+                    식당 정보</a></li>
+                <li th:if="${myRestaurantCode == null}"><a class="navi-font" th:href="@{/business/regist}">식당 등록 신청</a>
+                </li>
                 <li th:if="${myRestaurantCode != null}"><a class="navi-font" href="">예약 현황 조회</a></li>
-                <li th:if="${myRestaurantCode != null}"><a class="navi-font" th:href="@{/business/modify}">식당 정보 수정 요청</a></li>
-                <li th:if="${myRestaurantCode != null}"><a class="navi-font" th:href="@{/business/answer}">고객 리뷰 조회</a></li>
+                <li th:if="${myRestaurantCode != null}"><a class="navi-font" th:href="@{/business/modify}">식당 정보 수정
+                    요청</a></li>
+                <li th:if="${myRestaurantCode != null}"><a class="navi-font" th:href="@{/business/answer}">고객 리뷰 조회</a>
+                </li>
             </ul>
         </div>
 
@@ -67,12 +72,13 @@
                                 </tr>
                                 <tr>
                                     <td style="font-size:2vh;">전화번호</td>
-                                    <td style="font-size:1.5vh;"><input class="store-input-middle"
-                                                                        id="restaurantContactNumber"
-                                                                        name="restaurantContactNumber"
-                                                                        placeholder="전화번호" required
-                                                                        th:value="${currentRestaurant.restaurantContactNumber}"
-                                                                        type="text">
+                                    <td style="font-size:1.5vh;">
+                                        <input class="store-input-middle"
+                                               id="restaurantContactNumber"
+                                               name="restaurantContactNumber"
+                                               placeholder="전화번호" required
+                                               th:value="${currentRestaurant.restaurantContactNumber}"
+                                               type="text">
                                     </td>
                                 </tr>
                                 <tr>
@@ -109,11 +115,11 @@
                                     <td style="font-size:2vh;">영업시간</td>
                                     <td style="font-size:1.5vh;">
                                         <input name="restaurantStartTime" required
-                                               th:value="${currentRestaurant.getRestaurantStartTime()}"
+                                               th:value="${currentRestaurant.getRestaurantStartTime() + ':00'}"
                                                type="time">
                                         -
                                         <input name="restaurantEndTime" required
-                                               th:value="${currentRestaurant.getRestaurantEndTime()}"
+                                               th:value="${currentRestaurant.getRestaurantEndTime() + ':00'}"
                                                type="time">
                                     </td>
                                 </tr>

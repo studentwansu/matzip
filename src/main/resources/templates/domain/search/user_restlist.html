@@ -49,7 +49,7 @@
                               th:text="', ' + ${restaurant.restaurantMenus.get(1).menuName}"></span>
                     </p>
                     <p>
-                        <span th:each="keyword, iterStat : ${restaurant.restaurantKeywords}"
+                        <span th:each="keyword : ${restaurant.restaurantKeywords}"
                               th:text="'#' + ${keyword.getRestaurantKeyword()} + ${!iterStat.last ? ', ' : ''}">
                         </span>
                     </p>
