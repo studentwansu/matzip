@@ -1,6 +1,7 @@
 package com.ezen.matzip.domain.bookmark.dto;
 
 import com.ezen.matzip.domain.restaurant.dto.MenuDTO;
+import com.ezen.matzip.domain.restaurant.dto.RestaurantImageDTO;
 import com.ezen.matzip.domain.restaurant.dto.RestaurantKeywordDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,4 +21,5 @@ public class RestaurantForBookmarkDTO {
     private List<MenuDTO> restaurantMenus;
     // 템플릿에서 참조하는 키워드 필드
     private List<RestaurantKeywordDTO> restaurantKeywords;
+    private List<RestaurantImageDTO> restaurantImages;
 }
