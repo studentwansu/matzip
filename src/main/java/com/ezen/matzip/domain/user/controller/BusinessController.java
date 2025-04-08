@@ -26,11 +26,6 @@ public class BusinessController {
         this.businessService = businessService;
     }
 
-//    @GetMapping("/business/main")
-//    public String businessMain() {
-//        return "domain/store/store_main";
-//    }
-
     @GetMapping("/business/main")
     public String businessMain(@AuthenticationPrincipal CustomUserDetails userDetails, Model model, Principal principal) {
         if (userDetails != null) {

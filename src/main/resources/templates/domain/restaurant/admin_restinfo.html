@@ -116,20 +116,20 @@
                             <button class="redbutton3 redbutton-font" type="submit">수락</button>
                             <button>뒤로가기</button>
                         </div>
-                        <!--                        <p style="font-size:2.5vh;">리뷰</p><br>-->
-<!--                        <div class="reviewbox" th:each="review : ${reviews}">-->
-<!--                            &lt;!&ndash;                        <span style="font-size:1.5vh;" th:text="${review.유저ID표시}"&ndash;&gt;-->
-<!--                            &lt;!&ndash;                        <span style="font-size:1.5vh;" th:text="${review.유저국적표시}"&ndash;&gt;-->
-<!--                            <span style="font-size:1.5vh;" th:text="${review.reviewDate}"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span-->
-<!--                                style="font-size:1.5vh;" th:text="${review.rating}"></span><br>-->
-<!--                            <span style="font-size:1.5vh;" th:text="${review.reviewContent}"></span><br>-->
-<!--                            <div class="reviewimgbox">-->
-<!--                                <img class="reviewimg" src="/review/img/example.png">-->
-<!--                            </div>-->
-<!--                            <div class="reviewreply">-->
-<!--                                <span style="font-size:1.5vh;" th:text="${review.reviewReply}"></span><br>-->
-<!--                            </div>-->
-<!--                        </div>-->
+                                                <p style="font-size:2.5vh;">리뷰</p><br>
+                        <div class="reviewbox" th:each="review : ${reviews}">
+                            <span style="font-size:1.5vh;" th:text="${review.userId}"></span>
+                            <span style="font-size:1.5vh;" th:text="${review.nationality}"></span>
+                            <span style="font-size:1.5vh;" th:text="${review.reviewDate}"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
+                                style="font-size:1.5vh;" th:text="${review.rating}"></span><br>
+                            <span style="font-size:1.5vh;" th:text="${review.reviewContent}"></span><br>
+                            <div class="reviewimgbox" th:each="img : ${reviewImageMap[review.reviewCode]}">
+                                <img class="reviewimg" th:src="@{${img.reviewImagePath}}">
+                            </div>
+                            <div class="reviewreply">
+                                <span style="font-size:1.5vh;" th:text="${review.reviewReply}"></span><br>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

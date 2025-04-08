@@ -117,15 +117,14 @@
                 <div class="store-inner-container3">
                     <p style="font-size:2.5vh;">리뷰</p><br>
                     <div class="reviewbox" th:each="review : ${reviews}">
-                        <!--                        <span style="font-size:1.5vh;" th:text="${review.유저ID표시}"-->
-                        <!--                        <span style="font-size:1.5vh;" th:text="${review.유저국적표시}"-->
+                        <span style="font-size:1.5vh;" th:text="${review.userId}"></span>
+                        <span style="font-size:1.5vh;" th:text="${review.nationality}"></span>
                         <span style="font-size:1.5vh;" th:text="${review.reviewDate}"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
                             style="font-size:1.5vh;" th:text="${review.rating}"></span><br>
                         <span style="font-size:1.5vh;" th:text="${review.reviewContent}"></span><br>
-                        <div class="reviewimgbox">
-                            <img class="reviewimg" src="/review/img/example.png">
-                            <!--                            <img class="reviewimg" src="/review/img/example.png">-->
-                            <!--                            <img class="reviewimg" src="/review/img/example.png">-->
+                        <div class="reviewimgbox" th:each="img : ${reviewImageMap[review.reviewCode]}">
+                            <img class="reviewimg" th:src="@{${img.reviewImagePath}}">
+                        </div>
                         </div>
                         <div class="reviewreply">
                             <span style="font-size:1.5vh;" th:text="${review.reviewReply}"></span><br>

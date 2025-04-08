@@ -85,9 +85,16 @@
                     <input id="pwd_check" name="passwordCheck" placeholder="비밀번호확인" type="password" />
                     <!-- 비밀번호 찾기 질문 -->
                     <select name="passwordQuestion">
-                        <option value="question1" th:selected="${user.passwordQuestion == 'question1'}">당신의 초등학교는?</option>
-                        <option value="question2" th:selected="${user.passwordQuestion == 'question2'}">당신의 중학교는?</option>
-                        <option value="question3" th:selected="${user.passwordQuestion == 'question3'}">당신의 고등학교는?</option>
+                        <option value="당신의 초등학교는?" th:selected="${user.passwordQuestion == '당신의 초등학교는?'}">당신의 초등학교는?</option>
+                        <option value="당신의 중학교는?" th:selected="${user.passwordQuestion == '당신의 중학교는?'}">당신의 중학교는?</option>
+                        <option value="당신의 고등학교는?" th:selected="${user.passwordQuestion == '당신의 고등학교는?'}">당신의 고등학교는?</option>
+                        <option value="당신의 첫 반려동물은?" th:selected="${user.passwordQuestion == '당신의 첫 반려동물은?'}">당신의 첫 반려동물은?</option>
+                        <option value="당신의 어머니 성함은?" th:selected="${user.passwordQuestion == '당신의 어머니 성함은?'}">당신의 어머니 성함은?</option>
+                        <option value="당신의 아버지 성함은?" th:selected="${user.passwordQuestion == '당신의 아버지 성함은?'}">당신의 아버지 성함은?</option>
+                        <option value="당신의 첫번째 보물은?" th:selected="${user.passwordQuestion == '당신의 첫번째 보물은?'}">당신의 첫번째 보물은?</option>
+                        <option value="당신의 어릴 적 별명은?" th:selected="${user.passwordQuestion == '당신의 어릴 적 별명은?'}">당신의 어릴 적 별명은?</option>
+                        <option value="당신이 태어난 도시는?" th:selected="${user.passwordQuestion == '당신이 태어난 도시는?'}">당신이 태어난 도시는?</option>
+                        <option value="당신이 제일 좋아하는 음식은?" th:selected="${user.passwordQuestion == '당신이 제일 좋아하는 음식은?'}">당신이 제일 좋아하는 음식은?</option>
                     </select>
                     <!-- 비밀번호 찾기 답변 -->
                     <input id="pwd_answer" name="passwordAnswer" placeholder="비밀번호찾기답" th:value="${user.passwordAnswer}" />
@@ -108,6 +115,9 @@
                         <select disabled>
                             <option value="korea" th:selected="${user.nationality == 'korea'}">한국</option>
                             <option value="japan" th:selected="${user.nationality == 'japan'}">일본</option>
+                            <option value="china" th:selected="${user.nationality == 'china'}">중국</option>
+                            <option value="usa" th:selected="${user.nationality == 'usa'}">미국</option>
+                            <option value="france" th:selected="${user.nationality == 'france'}">프랑스</option>
                         </select>
                         <input type="hidden" name="nationality" th:value="${user.nationality}" />
                     </div>
@@ -116,6 +126,8 @@
                     <select name="categoryCode">
                         <option value="1" th:selected="${user.categoryCode == 1}">한식</option>
                         <option value="2" th:selected="${user.categoryCode == 2}">일식</option>
+                        <option value="3" th:selected="${user.categoryCode == 3}">양식</option>
+                        <option value="4" th:selected="${user.categoryCode == 4}">중식</option>
                     </select>
                     <!-- 비건 여부 -->
                     <div class="vegan">

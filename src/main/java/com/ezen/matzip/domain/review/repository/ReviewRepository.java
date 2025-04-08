@@ -24,7 +24,11 @@ public interface ReviewRepository extends JpaRepository<Review, Integer> {
     Optional<Review> findByReviewCode(int reviewCode);
 
     // 식당 코드로 모든 리뷰 가져오기
-    List<Review> findByRestaurantCode(@Param("restaurantCode") Restaurant restaurantCode);
+    @Query("SELECT r, r.restaurantCode, u.userId, u.nationality " +
+            "FROM Review r " +
+            "JOIN User u ON r.userCode = u.userCode " +
+            "WHERE r.restaurantCode = :restaurantCode")
+    List<Object[]> findByRestaurantCode(@Param("restaurantCode") Restaurant restaurantCode);
 
 //    Page<Review> findByUserCode(int userCode, Pageable pageable);
 
@@ -39,4 +43,7 @@ public interface ReviewRepository extends JpaRepository<Review, Integer> {
     void updateHiddenFlagByUserCode(@Param("userCode") int userCode, @Param("hiddenFlag") int hiddenFlag);
     //완수 끝
 
+    int countByReviewReportCountGreaterThan(int reviewReportCount);
+
+    int countByHiddenFlag(int hiddenFlag);
 }
