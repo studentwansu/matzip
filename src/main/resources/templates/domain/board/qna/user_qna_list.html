@@ -85,7 +85,7 @@
         <ul style="list-style:none; display:inline-block; padding:0;">
             <!-- 이전 페이지 -->
             <li th:if="${page.hasPrevious()}" style="display:inline; margin:0 .3em;">
-                <a th:href="@{${#request.requestURI}(page=${page.number - 1}, size=${page.size})}">&laquo; 이전</a>
+                <a th:href="|${#request.requestURI}?page=${page.number - 1}&size=${page.size}|">&laquo; 이전</a>
             </li>
             <li th:if="${!page.hasPrevious()}" style="display:inline; margin:0 .3em; color:#ccc;">
                 &laquo; 이전
@@ -94,9 +94,9 @@
             <!-- 페이지 번호 -->
             <li th:each="i : ${#numbers.sequence(0, page.totalPages - 1)}"
                 style="display:inline; margin:0 .2em;">
-                <a th:href="@{${#request.requestURI}(page=${i}, size=${page.size})}"
+                <a th:href="|${currentUri}?page=${i}&size=${page.size}|"
                    th:text="${i+1}"
-                   th:classappend="${i == page.number} ? 'active'">
+                   th:classappend="${i == page.number} ? 'active' : ''">
                 </a>
             </li>
 
@@ -110,11 +110,7 @@
         </ul>
     </div>
 </main>
-<style>
-    .pagination a { padding: .3em .6em; text-decoration:none; border:1px solid #ddd; color:#333; }
-    .pagination a.active { background:#666; color:#fff; }
-    .pagination a:hover { background:#eee; }
-</style>
+
 <!-- footer -->
 <div id="footer-user"></div>
 <footer>
@@ -131,7 +127,6 @@
                 .slideToggle();
         });
     });
-</script>
 </script>
 
 </body>
