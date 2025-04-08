@@ -13,13 +13,23 @@ public class WebConfig implements WebMvcConfigurer {
     @Autowired
     private StoreInterceptor storeInterceptor;
 
+//    @Override
+//    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+//        registry.addResourceHandler("/img/review/**")
+//                .addResourceLocations("file:///C:/matzip-storage/img/review/");
+//
+//        registry.addResourceHandler("/img/restaurant/**")
+//                .addResourceLocations("file:C:/dev/img/restaurant");
+//    }
+
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        // 기본 정적 리소스 폴더(src/main/resources/static)로 매핑
         registry.addResourceHandler("/img/review/**")
-                .addResourceLocations("file:///C:/matzip-storage/img/review/");
+                .addResourceLocations("classpath:/static/img/review/");
 
         registry.addResourceHandler("/img/restaurant/**")
-                .addResourceLocations("file:C:/dev/img/restaurant");
+                .addResourceLocations("classpath:/static/img/restaurant/");
     }
 
     @Override

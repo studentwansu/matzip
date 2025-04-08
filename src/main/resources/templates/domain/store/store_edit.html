@@ -140,8 +140,8 @@
                             </p>
                             <table id="menu">
                                 <tr th:each="메뉴, status : ${currentRestaurant.getRestaurantMenus()}">
-                                    <td><input name="mainMenu" required th:id="'mainMenu' + ${status.count}"
-                                               th:value="'메뉴' + ${status.count}" type="radio"></td>
+                                    <td><input name="mainMenu" required th:id="'메뉴' + ${status.count}"
+                                               th:value="${메뉴.getMenuName()}" type="radio"></td>
                                     <td><input class="store-input-small" name="menuName"
                                                placeholder="메뉴명"
                                                required th:id="'menuName' + ${status.count}"

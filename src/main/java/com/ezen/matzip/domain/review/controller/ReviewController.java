@@ -13,6 +13,7 @@ import com.ezen.matzip.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Controller;
@@ -110,8 +111,8 @@ public class ReviewController {
         User user = userService.findByUserId(principal.getName());
         reviewDTO.setUserCode(user.getUserCode());
 
-        Resource resource = resourceLoader.getResource("C:/matzip-storage/img/review");
-        String filePath = resource.exists() ? resource.getFile().getAbsolutePath() : new File("C:/matzip-storage/img/review").getAbsolutePath();
+        ClassPathResource resource = new ClassPathResource("static/img/restaurant");
+        String filePath = resource.exists() ? resource.getFile().getAbsolutePath() : new File("src/main/resources/static/img/review").getAbsolutePath();
         new File(filePath).mkdirs();
 
         List<ReviewImageDTO> files = new ArrayList<>();
