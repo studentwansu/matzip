@@ -83,6 +83,22 @@ public class RestaurantService {
         );
     }
 
+    public List<RestaurantImageDTO> getRestaurantImgs(int restaurantCode)
+    {
+        List<RestaurantImage> restaurantImages = restaurantImageRepository.findRestaurantImageByRestaurantCode(restaurantCode);
+        List<RestaurantImageDTO> imgDTOs = new ArrayList<>();
+        if (!restaurantImages.isEmpty()) {
+            imgDTOs = restaurantImages.stream().map(img -> modelMapper.map(img, RestaurantImageDTO.class)).toList();
+        }
+        return imgDTOs;
+    }
+
+    public RestaurantDTO getRestaurantByBusinessCode(int businessCode)
+    {
+        Restaurant restaurant = restaurantRepository.findByBusinessCode(businessCode);
+        return new RestaurantDTO(restaurant);
+    }
+
     public String[] splitKeywords(String keyword)
     {
         String[] keywords = keyword.split("\\s");
@@ -234,7 +250,7 @@ public class RestaurantService {
 
         System.out.println(regist);
         // 레스토랑 저장
-        registRepository.save(regist);
+        restaurantRepository.save(regist);
 
         for (RestaurantImageDTO dto : restaurantImageDTO) {
             RestaurantImage restaurantImage = new RestaurantImage(
@@ -244,6 +260,11 @@ public class RestaurantService {
 
         return regist;
     }
+
+//    public Regist getRegistRestaurant(int businessCode)
+//    {
+//        return registRepository.find
+//    }
 
     @Transactional
     public void modifyRestaurant(RegistDTO registDTO, List<MultipartFile> multiFiles) {

@@ -6,8 +6,6 @@
     <link href="https://fonts.googleapis.com" rel="preconnect">
     <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
     <link href="https://fonts.googleapis.com/css2?family=Poor+Story&display=swap" rel="stylesheet">
-    <!--    <link href="/css/style_admin.css" rel="stylesheet">-->
-    <!--    <link href="/css/style_store.css" rel="stylesheet">-->
     <link href="/css/style_restaurantInfo.css" rel="stylesheet">
     <link href="/css/header_footer.css" rel="stylesheet">
     <script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=fd7786d297e2d4aaab4aa8b6bbb06b88&libraries=services"
@@ -28,7 +26,7 @@
             <div class="store-imgs">
                 <!-- 여기에 이미지 넣기 -->
                 <div class="store-imgs" th:each="img : ${selectedRestaurantImgs}">
-                    <img th:src="@{${img.restaurantImagePath}}" class="preview-img" />
+                    <img class="preview-img" th:src="@{${img.restaurantImagePath}}"/>
                 </div>
             </div>
             <div class="store-container">
@@ -45,7 +43,8 @@
                         <table>
                             <tr>
                                 <td style="font-size:2vh; width:160px; white-space: nowrap;">주소</td>
-                                <td style="font-size:1.5vh;" th:text="${restaurant.restaurantLocation}"></td>
+                                <td id="restaurantLocation" style="font-size:1.5vh;"
+                                    th:text="${restaurant.restaurantLocation}"></td>
                             </tr>
                             <tr>
                                 <td style="font-size:2vh; width:160px; white-space: nowrap;">전화번호</td>
@@ -55,7 +54,8 @@
                                 <td style="font-size:2vh; width:160px; white-space: nowrap;">키워드</td>
                                 <td>
                                     <div style="width:320px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-                                        <span style="font-size:1.2vh;" th:each="keyword, iterStat : ${restaurant.restaurantKeywords}">
+                                        <span style="font-size:1.2vh;"
+                                              th:each="keyword, iterStat : ${restaurant.restaurantKeywords}">
                                             <span th:text="'#' + ${keyword.getRestaurantKeyword()}"></span>
                                             <span th:if="${!iterStat.last}" th:text="' '"></span>
                                         </span>
@@ -96,11 +96,12 @@
                             </a>
                             <form method="post" style="display:inline;" th:action="@{/user/bookmarks/toggle}">
                                 <!-- 수정 후 -->
-                                <input type="hidden" name="redirectUrl" th:value="${currentUri}" />
+                                <input name="redirectUrl" th:value="${currentUri}" type="hidden"/>
                                 <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
                                 <input name="restaurantCode" th:value="${restaurant.restaurantCode}" type="hidden"/>
                                 <button style="background:none; border:none; padding:0;" type="submit">
-                                    <img alt="북마크" th:src="${bookmarked} ? '/img/bookmarked.png' : '/img/bookmark.png'"/>
+                                    <img alt="북마크"
+                                         th:src="${bookmarked} ? '/img/bookmarked.png' : '/img/bookmark.png'"/>
                                 </button>
                             </form>
                             <a href=""><img alt="공유" class="icon" src="/img/share.png"></a>
@@ -122,11 +123,10 @@
                         <span style="font-size:1.5vh;" th:text="${review.reviewDate}"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
                             style="font-size:1.5vh;" th:text="${review.rating}"></span><br>
                         <span style="font-size:1.5vh;" th:text="${review.reviewContent}"></span><br>
-                        <div class="reviewimgbox" th:each="img : ${reviewImageMap[review.reviewCode]}">
-                            <img class="reviewimg" th:src="@{${img.reviewImagePath}}">
+                        <div class="reviewimgbox">
+                            <img class="reviewimg" th:each="img : ${review.reviewImages}" th:if="${img != null}" th:src="@{${img.reviewImagePath}}">
                         </div>
-                        </div>
-                        <div class="reviewreply">
+                        <div class="reviewreply" th:if="${review.reviewReply != null}">
                             <span style="font-size:1.5vh;" th:text="${review.reviewReply}"></span><br>
                         </div>
                     </div>
@@ -137,13 +137,8 @@
 </main>
 
 <footer>
-<div th:replace="~{html/user_footer :: userFooter}"></div>
+    <div th:replace="~{html/user_footer :: userFooter}"></div>
 </footer>
-
-<script th:inline="javascript">
-    let restLoc = /*[[${restaurant.restaurantLocation}]]*/ "";
-    let myLoc = "";
-</script>
 
 <script src="/js/map.js"></script>
 

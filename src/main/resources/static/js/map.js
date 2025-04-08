@@ -1,4 +1,5 @@
 let geocoder = new kakao.maps.services.Geocoder();
+let restLoc = document.getElementById('restaurantLocation').innerText;
 
 let callback = function (result, status) {
     // 정상적으로 검색이 완료됐으면

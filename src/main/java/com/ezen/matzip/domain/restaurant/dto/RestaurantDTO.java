@@ -21,10 +21,6 @@ import java.util.stream.Collectors;
 public class RestaurantDTO {
 
     private String restaurantName;
-    private List<MenuDTO> restaurantMenus;
-    private List<RestaurantKeywordDTO> restaurantKeywords;
-    private List<Review> reviews;
-    private List<RestaurantImageDTO> restaurantImages;
     private int restaurantCode;
     private String restaurantLocation;
     private String restaurantContactNumber;
@@ -39,6 +35,30 @@ public class RestaurantDTO {
     private String restaurantEndTime;
     private int restaurantStatus;
     private String restaurantService;
+    private List<MenuDTO> restaurantMenus;
+    private List<RestaurantKeywordDTO> restaurantKeywords;
+    private List<Review> reviews;
+    private List<RestaurantImageDTO> restaurantImages;
+
+
+
+    public RestaurantDTO (Restaurant restaurant)
+    {
+        this.restaurantName = restaurant.getRestaurantName();
+        this.restaurantCode = restaurant.getRestaurantCode();
+        this.restaurantLocation = restaurant.getRestaurantLocation();
+        this.restaurantContactNumber = restaurant.getRestaurantContactNumber();
+        this.restaurantDescription = restaurant.getRestaurantDescription();
+        this.restaurantRegistrationDate = restaurant.getRestaurantRegistrationDate();
+        this.restaurantActiveStatus = restaurant.getRestaurantActiveStatus();
+        this.restaurantUniqueKeywords = restaurant.getRestaurantUniqueKeywords();
+        this.mainMenu = restaurant.getMainMenu();
+        this.businessCode = restaurant.getBusinessCode();
+        this.categoryCode = new CategoryDTO(restaurant.getCategory().getCategoryCode(), restaurant.getCategory().getCategory());
+        this.restaurantStartTime = restaurant.getRestaurantStartTime().toString();
+        this.restaurantEndTime = restaurant.getRestaurantEndTime().toString();
+        this.restaurantService = restaurant.getRestaurantService();
+    }
 
     public RestaurantDTO (Restaurant restaurant, List<Menu> menus, List<RestaurantKeyword> keywords, List<RestaurantImage> restaurantImages)
     {

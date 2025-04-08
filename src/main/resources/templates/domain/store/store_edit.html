@@ -3,101 +3,126 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>사업자 식당수정</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
     <link href="https://fonts.googleapis.com/css2?family=Poor+Story&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/css/style_store.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="/css/style_store.css" rel="stylesheet">
+    <link href="/css/style_restaurantInfo.css" rel="stylesheet">
+    <link href="/css/header_footer.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 
 </head>
 
 <body>
 
-    <!-- header -->
-    <header>
-        <section class="store-header">
-            <a href="">
-                <img class="logo" src="/img/logo.png">
-            </a>
-            <div class="store-header-container">
-                <div class="store-header-textdiv">
-                    <p class="store-header-font1"> 어쩌구저쩌구 </p>
-                    <div class="line-yellow"></div>
-                    <p class="store-header-font2"> 어쩌구저쩌구</p>
-                </div>
-            </div>
-            <div class="logout">
-                <p class="navi-font">점주님, 환영합니다. 😊</p>
-                <a href="">
-                    <button class="redbutton3 redbutton-font">
-                        로그아웃
-                    </button>
-                </a>
-            </div>
+<!-- header -->
+<div th:replace="~{html/store_header :: storeHeader}"></div>
 
-        </section>
-    </header>
-
-    <!-- main -->
-    <main>
-        <section class="body-section">
-            <div class="navi">
-                <div class="redbutton">
-                    <span class="redbutton-font">마이페이지</span>
-                </div>
-                <ul>
-                    <li><a class="navi-font" th:href="@{/business/myinfo}">내 정보</a></li>
-                    <li><a class="navi-font" th:href="@{/business/restaurant/{restaurantCode}(restaurantCode=${restaurantCode})}">내 식당 정보</a></li>
-                    <li><a class="navi-font" th:href="@{/business/regist}" >식당 등록 신청</a></li>
-                    <li><a class="navi-font" href="">예약 현황 조회</a></li>
-                    <li><a class="navi-font" th:href="@{/business/modify}">식당 정보 수정 요청</a></li>
-                    <li><a class="navi-font" href="">고객 리뷰 조회</a></li>
-                </ul>
+<!-- main -->
+<main>
+    <section class="body-section">
+        <div class="navi">
+            <div class="redbutton">
+                <span class="redbutton-font">마이페이지</span>
             </div>
-            <form action="/business/modify" method="post" enctype="multipart/form-data">
-                <div class="store-info">
-                    <div>
-                        <input type="file" name="multiFiles" class="store-imgs" multiple accept="image/*" required>
-                    </div>
+            <ul>
+                <li><a class="navi-font" th:href="@{/business/myinfo}">내 정보</a></li>
+                <li th:if="${myRestaurantCode != null}"><a class="navi-font" th:href="@{/business/restaurant/{restaurantCode}(restaurantCode=${myRestaurantCode})}">내 식당 정보</a></li>
+                <li th:if="${myRestaurantCode == null}"><a class="navi-font" th:href="@{/business/regist}">식당 등록 신청</a></li>
+                <li th:if="${myRestaurantCode != null}"><a class="navi-font" href="">예약 현황 조회</a></li>
+                <li th:if="${myRestaurantCode != null}"><a class="navi-font" th:href="@{/business/modify}">식당 정보 수정 요청</a></li>
+                <li th:if="${myRestaurantCode != null}"><a class="navi-font" th:href="@{/business/answer}">고객 리뷰 조회</a></li>
+            </ul>
+        </div>
+
+        <div class="store-info">
+            <form enctype="multipart/form-data" method="post" th:action="@{/business/modify}">
+                <div>
+                    <input accept="image/*" hidden id="real-file" multiple name="multiFiles" required type="file">
+                    <button class="redbutton1 redbutton-font" id="custom-button" type="button">이미지 추가</button>
+                    <span id="file-name">선택된 파일 없음</span>
                 </div>
                 <div class="store-container">
                     <div class="upper-container">
                         <div class="store-inner-container1">
-                            <label for="restaurantName">가게명</label>
-                            <input class="store-input-middle" type="text" id="restaurantName" name="restaurantName" placeholder="가게명" required>
                             <table>
                                 <tr>
+                                    <td style="font-size:2vh;">가게명</td>
+                                    <td>
+                                        <input class="store-input-middle" id="restaurantName" name="restaurantName"
+                                               placeholder="가게명"
+                                               required th:value="${currentRestaurant.restaurantName}"
+                                               type="text">
+                                    </td>
+                                </tr>
+                                <tr>
                                     <td style="font-size:2vh;">주소</td>
-                                    <td><input class="store-input-long" type="text" id="restaurantLocation" name="restaurantLocation" placeholder="주소를 입력하세요" required></td>
+                                    <td><input class="store-input-long" id="restaurantLocation"
+                                               name="restaurantLocation"
+                                               placeholder="주소를 입력하세요"
+                                               required th:value="${currentRestaurant.restaurantLocation}" type="text">
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td style="font-size:2vh;">전화번호</td>
-                                    <td style="font-size:1.5vh;"><input class="store-input-middle" type="text" id="restaurantContactNumber" name="restaurantContactNumber" placeholder="전화번호" required>
+                                    <td style="font-size:1.5vh;"><input class="store-input-middle"
+                                                                        id="restaurantContactNumber"
+                                                                        name="restaurantContactNumber"
+                                                                        placeholder="전화번호" required
+                                                                        th:value="${currentRestaurant.restaurantContactNumber}"
+                                                                        type="text">
                                     </td>
                                 </tr>
                                 <tr>
                                     <td style="font-size:2vh;">키워드</td>
                                     <td style="font-size:1.5vh;">
-                                        <input class="store-input-small2" type="text" id="restaurantKeyword1" name="restaurantKeyword" placeholder="키워드1" required>
-                                        <input class="store-input-small2" type="text" id="restaurantKeyword2" name="restaurantKeyword" placeholder="키워드2" >
-                                        <input class="store-input-small2" type="text" id="restaurantKeyword3" name="restaurantKeyword" placeholder="키워드3" >
-                                        <input class="store-input-small2" type="text" id="restaurantKeyword4" name="restaurantKeyword" placeholder="키워드4" >
-                                        <input class="store-input-small2" type="text" id="restaurantKeyword5" name="restaurantKeyword" placeholder="키워드5" >
+                                        <input class="store-input-small2" id="restaurantKeyword1"
+                                               name="restaurantKeyword"
+                                               placeholder="키워드1" required
+                                               th:value="${currentRestaurant.restaurantKeywords.get(0).getRestaurantKeyword()}"
+                                               type="text">
+                                        <input class="store-input-small2" id="restaurantKeyword2"
+                                               name="restaurantKeyword"
+                                               placeholder="키워드2"
+                                               th:value="${currentRestaurant.restaurantKeywords.get(1).getRestaurantKeyword()}"
+                                               type="text">
+                                        <input class="store-input-small2" id="restaurantKeyword3"
+                                               name="restaurantKeyword"
+                                               placeholder="키워드3"
+                                               th:value="${currentRestaurant.restaurantKeywords.get(2).getRestaurantKeyword()}"
+                                               type="text">
+                                        <input class="store-input-small2" id="restaurantKeyword4"
+                                               name="restaurantKeyword"
+                                               placeholder="키워드4"
+                                               th:value="${currentRestaurant.restaurantKeywords.get(3).getRestaurantKeyword()}"
+                                               type="text">
+                                        <input class="store-input-small2" id="restaurantKeyword5"
+                                               name="restaurantKeyword"
+                                               placeholder="키워드5"
+                                               th:value="${currentRestaurant.restaurantKeywords.get(4).getRestaurantKeyword()}"
+                                               type="text">
                                     </td>
                                 </tr>
                                 <tr>
                                     <td style="font-size:2vh;">영업시간</td>
                                     <td style="font-size:1.5vh;">
-                                        <input type="time" name="restaurantStartTime" value="09:00" required>
+                                        <input name="restaurantStartTime" required
+                                               th:value="${currentRestaurant.getRestaurantStartTime()}"
+                                               type="time">
                                         -
-                                        <input type="time" name="restaurantEndTime" value="22:00" required>
+                                        <input name="restaurantEndTime" required
+                                               th:value="${currentRestaurant.getRestaurantEndTime()}"
+                                               type="time">
                                     </td>
                                 </tr>
                                 <tr>
                                     <td style="font-size:2vh;">카테고리</td>
-                                    <select id="restaurantCategory" name="restaurantCategory" required>
+                                    <td><select class="store-input-small2" id="restaurantCategory"
+                                                name="restaurantCategory"
+                                                required
+                                                th:value="${currentRestaurant.getCategoryCode().getCategoryCode()}">
                                         <option value="1">한식</option>
                                         <option value="2">중식</option>
                                         <option value="3">일식</option>
@@ -109,79 +134,69 @@
 
                             </table>
                             <br>
-                            <p style="font-size:2.5vh;">메뉴 <button onclick="addMenu()">추가</button> <button onclick="deleteMenu()">삭제</button></p>
-
+                            <p style="font-size:2.5vh;">메뉴
+                                <button onclick="addMenu()">추가</button>
+                                <button onclick="deleteMenu()">삭제</button>
+                            </p>
                             <table id="menu">
-                                <tr>
-                                    <td><input type="radio" id="mainMenu1" name="mainMenu" value="메뉴1" required></td>
-                                    <td><input class="store-input-small" type="text" id="menuName1" name="menuName" placeholder="메뉴명" required></td>
-                                    <td>---------- </td>
-                                    <td><input class="store-input-small" type="text" id="menuPrice1" name="menuPrice" placeholder="가격" required>원</td>
-                                </tr>
-                                <tr>
-                                    <td><input type="radio" id="mainMenu2" name="mainMenu" value="메뉴2"></td>
-                                    <td><input class="store-input-small" type="text" id="menuName2" name="menuName" placeholder="메뉴명"></td>
-                                    <td>---------- </td>
-                                    <td><input class="store-input-small" type="text" id="menuPrice2" name="menuPrice" placeholder="가격">원</td>
-                                </tr>
-                                <tr>
-                                    <td><input type="radio" id="mainMenu3" name="mainMenu" value="메뉴3"></td>
-                                    <td><input class="store-input-small" type="text" id="menuName3" name="menuName" placeholder="메뉴명"></td>
-                                    <td>---------- </td>
-                                    <td><input class="store-input-small" type="text" id="menuPrice3" name="menuPrice" placeholder="가격">원</td>
-                                </tr>
-                                <tr>
-                                    <td><input type="radio" id="mainMenu4" name="mainMenu" value="메뉴4"></td>
-                                    <td><input class="store-input-small" type="text" id="menuName4" name="menuName" placeholder="메뉴명"></td>
-                                    <td>---------- </td>
-                                    <td><input class="store-input-small" type="text" id="menuPrice4" name="menuPrice" placeholder="가격">원</td>
+                                <tr th:each="메뉴, status : ${currentRestaurant.getRestaurantMenus()}">
+                                    <td><input name="mainMenu" required th:id="'mainMenu' + ${status.count}"
+                                               th:value="'메뉴' + ${status.count}" type="radio"></td>
+                                    <td><input class="store-input-small" name="menuName"
+                                               placeholder="메뉴명"
+                                               required th:id="'menuName' + ${status.count}"
+                                               th:value="${메뉴.getMenuName()}"
+                                               type="text"></td>
+                                    <td>-------</td>
+                                    <td><input class="store-input-small" name="menuPrice"
+                                               placeholder="가격"
+                                               required th:id="'menuPrice' + ${status.count}"
+                                               th:value="${메뉴.getMenuPrice()}"
+                                               type="text">원
+                                    </td>
                                 </tr>
                             </table>
                             <br>
-                            <a href=""><button class="redbutton1">메뉴판 이미지</button></a>
+                            <a href="">
+                                <button class="redbutton1">메뉴판 이미지</button>
+                            </a>
                             <br>
                             <br>
                             <br>
                             <p style="font-size:2.5vh;">편의시설 및 서비스</p>
-                            <p style="font-size:1.5vh;"><input class="store-input-long" type="text" id="restaurantService" name="restaurantService" placeholder="주차, 와이파이, 노키즈존 등의 여부를 입력하세요" required></p>
+                            <p style="font-size:1.5vh;">
+                                <input class="store-input-long" id="restaurantService"
+                                       name="restaurantService"
+                                       placeholder="주차, 와이파이, 노키즈존 등의 여부를 입력하세요"
+                                       required th:value="${currentRestaurant.getRestaurantService()}"
+                                       type="text">
+
+                            </p>
                         </div>
                         <div class="store-inner-container2">
-                            <div>
-                                지도지도
-                            </div>
-                            <div class="introducebox">
+                            <div class="introducebox2">
                                 <p style="font-size:2.5vh;">소개</p>
-                                <textarea class="store-input-large" type="textarea" id="restaurantDescription" name="restaurantDescription" required></textarea>
+                                <textarea class="store-input-large" id="restaurantDescription"
+                                          name="restaurantDescription"
+                                          required th:value="${currentRestaurant.getRestaurantDescription()}"
+                                          type="textarea">
+                                </textarea>
                             </div>
                             <div class="buttonbox2">
                                 <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
-                                <a href=""><input type="submit" class="redbutton1 button" value="전송"></a>
+                                <a href=""><input class="redbutton1 button" type="submit" value="수정요청"></a>
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- <div class="navi">
-                </div> -->
             </form>
-            <!-- <div class="navi">
-            </div> -->
-        </section>
-    </main>
-        
-    <!-- footer -->
-    <footer>
-        <div class="footer-container">
-            <p>Copyright 2025 맛zip All Right Reserved</p>
-            <ul class="footer-menu">
-                <li><a href="#">공지사항</a></li>
-                <li><a href="#">FAQ</a></li>
-                <li><a href="#">Q&A</a></li>
-            </ul>
         </div>
-    </footer>
+    </section>
+</main>
 
-
-    <script src="/js/storeedit.js"></script>
+<!-- footer -->
+<div th:replace="~{html/user_footer :: userFooter}"></div>
+<script src="/js/storeedit.js"></script>
 
 </body>
 

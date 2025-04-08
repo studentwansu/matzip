@@ -27,12 +27,11 @@
         </div>
         <ul>
             <li><a class="navi-font" th:href="@{/business/myinfo}">내 정보</a></li>
-            <li><a class="navi-font"
-                   th:href="@{/business/restaurant/{restaurantCode}(restaurantCode=${restaurantCode})}">내 식당 정보</a></li>
-            <li><a class="navi-font" href="">식당 등록 신청</a></li>
-            <li><a class="navi-font" href="">예약 현황 조회</a></li>
-            <li><a class="navi-font" href="">식당 정보 수정 요청</a></li>
-            <li><a class="navi-font" href="">고객 리뷰 조회</a></li>
+            <li th:if="${myRestaurantCode != null}"><a class="navi-font" th:href="@{/business/restaurant/{restaurantCode}(restaurantCode=${myRestaurantCode})}">내 식당 정보</a></li>
+            <li th:if="${myRestaurantCode == null}"><a class="navi-font" th:href="@{/business/regist}">식당 등록 신청</a></li>
+            <li th:if="${myRestaurantCode != null}"><a class="navi-font" href="">예약 현황 조회</a></li>
+            <li th:if="${myRestaurantCode != null}"><a class="navi-font" th:href="@{/business/modify}">식당 정보 수정 요청</a></li>
+            <li th:if="${myRestaurantCode != null}"><a class="navi-font" th:href="@{/business/answer}">고객 리뷰 조회</a></li>
         </ul>
     </div>
 
@@ -69,6 +68,7 @@
                 <tr>
                     <th class="th-num" scope="col">번호</th>
                     <th class="th-user" scope="col">작성자</th>
+                    <th class="th-nation" scope="col">나라</th>
                     <th class="th-answer" scope="col">답변상태</th>
                     <th class="th-title" scope="col">리뷰작성날짜</th>
                     <th class="th-content" scope="col">답변내용</th>
@@ -79,6 +79,7 @@
                 <tr th:each="review, stat : ${reviews}">
                     <td th:text="${stat.count}"></td>
                     <td th:text="${review.userId}"></td>
+                    <td th:text="${review.nationality}"></td>
                     <td>
                         <button class="reply-complete" th:if="${review.reviewReply != null}">
                             답변완료

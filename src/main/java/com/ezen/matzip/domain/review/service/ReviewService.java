@@ -3,16 +3,15 @@ package com.ezen.matzip.domain.review.service;
 import com.ezen.matzip.domain.reservation.dto.ReservationDTO;
 import com.ezen.matzip.domain.reservation.entity.Reservation;
 import com.ezen.matzip.domain.reservation.repository.ReservationRepository;
+import com.ezen.matzip.domain.restaurant.dto.RestaurantImageDTO;
 import com.ezen.matzip.domain.restaurant.entity.Restaurant;
 import com.ezen.matzip.domain.restaurant.repository.RestaurantRepository;
 import com.ezen.matzip.domain.review.dto.ReviewDTO;
 import com.ezen.matzip.domain.review.dto.ReviewImageDTO;
 import com.ezen.matzip.domain.review.entity.Review;
-import com.ezen.matzip.domain.review.repository.RestaurantReviewRepository;
 import com.ezen.matzip.domain.review.entity.ReviewImage;
 import com.ezen.matzip.domain.review.repository.ReviewImageRepository;
 import com.ezen.matzip.domain.review.repository.ReviewRepository;
-import com.ezen.matzip.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -23,8 +22,9 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.security.Principal;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 
 @Service
@@ -35,13 +35,20 @@ public class ReviewService {
     private final ReviewImageRepository reviewImageRepository;
     private final ReservationRepository reservationRepository;
     private final RestaurantRepository restaurantRepository;
+    private final ModelMapper modelMapper;
 
-    private String generateYoutubeUrl(String menu){
+    private String generateYoutubeUrl(String menu) {
         String keyword = menu + " 레시피";
         return "https://www.youtube.com/results?search_query=" + URLEncoder.encode(keyword, StandardCharsets.UTF_8);
     }
 
+    public List<ReviewImageDTO> getReviewImages(int reviewCode) {
 
+        List<ReviewImage> reviewImages = reviewImageRepository.findByReviewCode(reviewCode);
+        return reviewImages.stream().map(img -> modelMapper.map(img, ReviewImageDTO.class)).toList();
+    }
+
+    // 유저의 리뷰 전체 조회
     public List<ReviewDTO> findReviewByUserCode(int userCode) {
 
         List<Object[]> reviewList = reviewRepository.findByUserCode(userCode);
@@ -63,19 +70,18 @@ public class ReviewService {
         return result;
     }
 
-
+    // 리뷰 삭제
     @Transactional
     public void deleteReview(int reviewCode) {
         reviewRepository.deleteById(reviewCode);
     }
 
+    // 리뷰 수정 (기존 이미지 삭제 후 새로 저장)
     @Transactional
     public void modifyReview(ReviewDTO reviewDTO, List<MultipartFile> multiFiles) {
-        System.out.println("수정 요청 받은 리뷰 코드: " + reviewDTO.getReviewCode());
 
         // 기존 리뷰 불러오기
-        Review review = reviewRepository.findByReviewCode(reviewDTO.getReviewCode())
-                .orElseThrow(() -> new IllegalArgumentException("해당 리뷰 없음"));
+        Review review = reviewRepository.findByReviewCode(reviewDTO.getReviewCode()).orElseThrow(() -> new IllegalArgumentException("해당 리뷰 없음"));
 
         // 기존 리뷰 이미지 삭제 (DB + 파일)
         List<ReviewImage> oldImages = reviewImageRepository.findReviewImagesByReviewCode(review.getReviewCode());
@@ -127,21 +133,7 @@ public class ReviewService {
         }
     }
 
-
-    public List<Object> findReviewAndReviewImagesByReviewCode(int reviewCode) {
-        List<Object> result = new ArrayList<>();
-
-        // Optional 처리
-        Review review = reviewRepository.findByReviewCode(reviewCode)
-                .orElseThrow(() -> new IllegalArgumentException("해당 리뷰를 찾을 수 없습니다. 리뷰 코드: " + reviewCode));
-        result.add(review);
-
-        List<ReviewImage> reviewImages = reviewImageRepository.findReviewImagesByReviewCode(reviewCode);
-        result.addAll(reviewImages);
-
-        return result;
-    }
-
+    // 이용 내역 조회
     public List<ReservationDTO> findReservationByUserCode(int userCode) {
         List<Object[]> reservations = reservationRepository.findReservationByUserCode(userCode);
 
@@ -166,27 +158,20 @@ public class ReviewService {
         return result;
     }
 
+    // 리뷰 저장 (이미지 포함)
     @Transactional
     public void writeReview(ReviewDTO reviewDTO, List<ReviewImageDTO> reviewImageDTO) {
         // 레스토랑 조회
-        Restaurant restaurant = restaurantRepository.findById(reviewDTO.getRestaurantCode())
-                .orElseThrow(() -> new IllegalArgumentException("해당 레스토랑을 찾을 수 없습니다."));
+        Restaurant restaurant = restaurantRepository.findById(reviewDTO.getRestaurantCode()).orElseThrow(() -> new IllegalArgumentException("해당 레스토랑을 찾을 수 없습니다."));
 
         // 리뷰 엔티티 생성
-        Review review = Review.builder()
-                .reviewContent(reviewDTO.getReviewContent())
-                .rating(reviewDTO.getRating())
-                .userCode(reviewDTO.getUserCode())
-                .reservationCode(reviewDTO.getReservationCode())
-                .restaurantCode(restaurant)  // 연관관계 설정
-                .businessCode(restaurant.getBusinessCode())
-                .build();
+        Review review = Review.builder().reviewContent(reviewDTO.getReviewContent()).rating(reviewDTO.getRating()).userCode(reviewDTO.getUserCode()).reservationCode(reviewDTO.getReservationCode()).restaurantCode(restaurant)  // 연관관계 설정
+                .businessCode(restaurant.getBusinessCode()).build();
         review.writeReview();
         reviewRepository.save(review);
 //        List<ReviewImage> reviewImages = new ArrayList<>();
         for (ReviewImageDTO dto : reviewImageDTO) {
-            ReviewImage reviewImage = new ReviewImage(
-                    review, dto.getReviewImagePath(), dto.getReviewOriginalName(), dto.getReviewSaveName());
+            ReviewImage reviewImage = new ReviewImage(review, dto.getReviewImagePath(), dto.getReviewOriginalName(), dto.getReviewSaveName());
             reviewImageRepository.save(reviewImage);
         }
 
