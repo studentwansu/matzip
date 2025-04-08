@@ -48,15 +48,15 @@
             <tr style="cursor:pointer;" th:each="bookmark, iterStat : ${bookmarks}">
                 <td th:text="${iterStat.index + 1}"></td>
                 <td>
-                    <a th:href="@{/restaurant/{restaurantCode}(restaurantCode=${bookmark.getRestaurant().getBusinessCode()})}"
+                    <a th:href="@{/restaurant/{restaurantCode}(restaurantCode=${bookmark.restaurant.restaurantCode})}"
                        th:text="${bookmark.restaurant.restaurantName}"></a>
                 </td>
                 <td>
-                    <a th:href="@{/restaurant/{restaurantCode}(restaurantCode=${bookmark.getRestaurant().getBusinessCode()})}"
+                    <a th:href="@{/restaurant/{restaurantCode}(restaurantCode=${bookmark.restaurant.restaurantCode})}"
                        th:text="${bookmark.restaurant.mainMenu}"></a>
                 </td>
                 <td>
-                    <a th:href="@{/restaurant/{restaurantCode}(restaurantCode=${bookmark.getRestaurant().getBusinessCode()})}"
+                    <a th:href="@{/restaurant/{restaurantCode}(restaurantCode=${bookmark.restaurant.restaurantCode})}"
                        th:text="${bookmark.restaurant.restaurantLocation}"></a>
                 </td>
                 <td>
