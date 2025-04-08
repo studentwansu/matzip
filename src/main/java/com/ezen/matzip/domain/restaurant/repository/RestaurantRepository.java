@@ -44,6 +44,14 @@ public interface RestaurantRepository extends JpaRepository<Restaurant, Integer>
 
     Restaurant findByBusinessCode(int businessCode);
 
+
+//    @Query("SELECT CASE WHEN COUNT(u) > 0 THEN true ELSE false END FROM Restaurant u WHERE u.businessCode = :businessCode")
+//    Restaurant existsByBusinessCode(@Param("businessCode") int businessCode);
+//
+    // 희영 식당등록요청 목록조회에 필요
+    // 상태 코드 기준으로 조회 (예: 대기중인 식당)
+    List<Restaurant> findByRestaurantStatus(int restaurantStatus);
+
     int countAllByRestaurantActiveStatus(int activeStatus);
 
 }

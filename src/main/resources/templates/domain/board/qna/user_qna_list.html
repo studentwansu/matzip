@@ -80,6 +80,35 @@
             <a th:href="@{/board/qna/write}" class="redbutton redbutton-font" style="color:black">작성하기</a>
         </div>
     </section>
+
+    <div class="pagination" style="text-align:center; margin:1em 0;">
+        <ul style="list-style:none; display:inline-block; padding:0;">
+            <!-- 이전 페이지 -->
+            <li th:if="${page.hasPrevious()}" style="display:inline; margin:0 .3em;">
+                <a th:href="|${#request.requestURI}?page=${page.number - 1}&size=${page.size}|">&laquo; 이전</a>
+            </li>
+            <li th:if="${!page.hasPrevious()}" style="display:inline; margin:0 .3em; color:#ccc;">
+                &laquo; 이전
+            </li>
+
+            <!-- 페이지 번호 -->
+            <li th:each="i : ${#numbers.sequence(0, page.totalPages - 1)}"
+                style="display:inline; margin:0 .2em;">
+                <a th:href="|${currentUri}?page=${i}&size=${page.size}|"
+                   th:text="${i+1}"
+                   th:classappend="${i == page.number} ? 'active' : ''">
+                </a>
+            </li>
+
+            <!-- 다음 페이지 -->
+            <li th:if="${page.hasNext()}" style="display:inline; margin:0 .3em;">
+                <a th:href="@{${#request.requestURI}(page=${page.number+1}, size=${page.size})}">다음 &raquo;</a>
+            </li>
+            <li th:if="${!page.hasNext()}" style="display:inline; margin:0 .3em; color:#ccc;">
+                다음 &raquo;
+            </li>
+        </ul>
+    </div>
 </main>
 
 <!-- footer -->
@@ -98,7 +127,6 @@
                 .slideToggle();
         });
     });
-</script>
 </script>
 
 </body>

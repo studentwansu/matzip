@@ -13,6 +13,7 @@ import com.ezen.matzip.domain.restaurant.repository.RestaurantRepository;
 import com.ezen.matzip.domain.restaurant.service.RestaurantService;
 import com.ezen.matzip.domain.review.dto.ReviewDTO;
 import com.ezen.matzip.domain.review.dto.ReviewImageDTO;
+import com.ezen.matzip.domain.review.service.ReviewService;
 import com.ezen.matzip.domain.review.entity.ReviewImage;
 import com.ezen.matzip.domain.review.repository.ReviewImageRepository;
 import com.ezen.matzip.domain.user.dto.UserRequestDTO;
@@ -28,6 +29,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ExtendedModelMap;
 import org.springframework.ui.Model;
@@ -66,6 +68,7 @@ public class RestaurantController {
     @Autowired
     private RestaurantRepository restaurantRepository;
     @Autowired
+    private ReviewService reviewService;
     private ReviewImageRepository reviewImageRepository;
 
 
@@ -158,20 +161,7 @@ public class RestaurantController {
         model.addAttribute("selectedRestaurantImgs", imgDTOs);
 
         return "domain/restaurant/store_restinfo";
-
     }
-
-//    @GetMapping("/restaurant/{restaurantCode}")
-//    public String getReviewImages(@PathVariable(required = false) int reviewCode, Model model) {
-//        List<ReviewImage> images = reviewImageRepository.findByReviewCode(reviewCode);
-//        List<ReviewImageDTO> imgDTOss = images.stream()
-//                .map(img -> modelMapper.map(img, ReviewImageDTO.class))
-//                .toList();
-//
-//        model.addAttribute("selectedRestaurantImgs", imgDTOss);
-//
-//        return "domain/restaurant/store_restinfo";
-//    }
 
     @GetMapping("/business/regist")
     public String registPage(Principal principal) {
@@ -199,7 +189,6 @@ public class RestaurantController {
         String username = principal.getName();
         // userService에서 username을 사용하여 businessCode를 가져오기
         Integer businessCode = userIdCheckService.getBusinessCodeByUserid(username);
-
 
 
         // RegistDTO에 비즈니스 코드 설정
@@ -300,7 +289,8 @@ public class RestaurantController {
     {
         session.setAttribute("lastKeyword", keyword);
         List<RestaurantDTO> restaurants = restaurantService.findByKeywordOrderByScore(keyword);
-//        List<RestaurantImageDTO> restaurantImageDTOS;
+        restaurants = restaurantService.findRestaurantsAndImgs(restaurants);
+
         model.addAttribute("restaurantList", restaurants);
         model.addAttribute("myLoc", keyword);
 
@@ -316,14 +306,6 @@ public class RestaurantController {
 
         return "domain/search/user_restlist";
     }
-
-//    @GetMapping("/storeinfo")
-//    public String markingLocation(@RequestParam Integer restaurantCode, Model model)
-//    {
-//        String location = restaurantService.findLocationByRestaurantCode(restaurantCode);
-//        model.addAttribute("restaurantLocation", location);
-//        return "/domain/restaurant/store_restinfo";
-//    }
 
     @GetMapping(value = "/search", params = "categoryCode")
     public String filteringRestaurants(@RequestParam int categoryCode, Model model, HttpSession session)
@@ -409,6 +391,13 @@ public class RestaurantController {
         return "domain/restaurant/user_restinfo";
     }
     // 완수 끝
+
+    // 희영 식당등록요청 목록조회
+    // 대기 상태인 식당 조회
+    @GetMapping("/pending")
+    public ResponseEntity<List<RestaurantDTO>> getPendingRestaurants() {
+        return ResponseEntity.ok(restaurantService.getPendingRestaurants());
+    }
 }
 
 //restaurant/ → 식당 관리 (등록, 수정, 조회)
