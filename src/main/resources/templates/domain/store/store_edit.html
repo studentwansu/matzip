@@ -11,6 +11,7 @@
     <link href="/css/style_store.css" rel="stylesheet">
     <link href="/css/style_restaurantInfo.css" rel="stylesheet">
     <link href="/css/header_footer.css" rel="stylesheet">
+    <link href="/css/review.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 
 </head>
@@ -46,8 +47,11 @@
             <form enctype="multipart/form-data" method="post" onsubmit="removeEmptyKeywords()"
                   th:action="@{/business/modify}">
                 <div>
-                    <input accept="image/*" hidden id="real-file" multiple name="multiFiles" required type="file">
-                    <button class="redbutton1 redbutton-font" id="custom-button" type="button">이미지 추가</button>
+                    <div class="store-imgs" th:if="${currentRestaurant.restaurantImages != null}">
+                        <img class="preview-img" th:each="img : ${currentRestaurant.restaurantImages}" th:if="${img != null}" th:src="@{${img.restaurantImagePath}}">
+                    </div>
+                    <input accept="image/*" hidden id="real-file" multiple name="multiFiles" type="file" required>
+                    <button class="redbutton1 redbutton-font" id="custom-button" type="button" >이미지 추가</button>
                     <span id="file-name">선택된 파일 없음</span>
                 </div>
                 <div class="store-container">
@@ -185,8 +189,7 @@
                                 <p style="font-size:2.5vh;">소개</p>
                                 <textarea class="store-input-large" id="restaurantDescription"
                                           name="restaurantDescription"
-                                          required th:value="${currentRestaurant.getRestaurantDescription()}"
-                                          type="textarea">
+                                          required th:value="${currentRestaurant.getRestaurantDescription()}">
                                 </textarea>
                             </div>
                             <div class="buttonbox2">
