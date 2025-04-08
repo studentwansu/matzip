@@ -34,13 +34,43 @@ public class ReviewAnswerService {
     private final UserRepository userRepository;
     private final UserReportSyncService userReportSyncService;
 
+//    public List<ReviewDTO> findReviewByBusinessCode(int businessCode) {
+//        List<Object[]> reviews = reviewAnswerRepository.findByBusinessCode(businessCode);
+//
+//        List<ReviewDTO> result = new ArrayList<>();
+//        for (Object[] review : reviews) {
+//            Review e = (Review) review[0];
+//            Restaurant restaurant = (Restaurant) review[1];
+//            ReviewDTO dto = new ReviewDTO();
+//            dto.setUserCode(e.getUserCode());
+//            dto.setRestaurantName(restaurant);
+//            dto.setReviewCode(e.getReviewCode());
+//            dto.setReviewDate(e.getReviewDate());
+//            dto.setReviewContent(e.getReviewContent());
+//            dto.setReviewReply(e.getReviewReply());
+//            dto.setRating(e.getRating());
+//
+//            List<ReviewImage> images = reviewImageRepository.findReviewImagesByReviewCode(e.getReviewCode());
+//            List<ReviewImageDTO> imageDTOs = images.stream()
+//                    .map(img -> modelMapper.map(img, ReviewImageDTO.class))
+//                    .collect(Collectors.toList());
+//            dto.setReviewImages(imageDTOs);
+//
+//            result.add(dto);
+//        }
+//        return result;
+//    }
+
     public List<ReviewDTO> findReviewByBusinessCode(int businessCode) {
-        List<Object[]> reviews = reviewAnswerRepository.findByBusinessCode(businessCode);
+        List<Object[]> reviews = reviewAnswerRepository.findByBusinessCodeWithUserId(businessCode);
 
         List<ReviewDTO> result = new ArrayList<>();
         for (Object[] review : reviews) {
             Review e = (Review) review[0];
             Restaurant restaurant = (Restaurant) review[1];
+            String userId = (String) review[2]; // 🔥 userId도 가져옴
+            String nationality = (String) review[3];
+
             ReviewDTO dto = new ReviewDTO();
             dto.setUserCode(e.getUserCode());
             dto.setRestaurantName(restaurant);
@@ -49,7 +79,8 @@ public class ReviewAnswerService {
             dto.setReviewContent(e.getReviewContent());
             dto.setReviewReply(e.getReviewReply());
             dto.setRating(e.getRating());
-
+            dto.setUserId(userId); // 추가!
+            dto.setNationality(nationality);
             List<ReviewImage> images = reviewImageRepository.findReviewImagesByReviewCode(e.getReviewCode());
             List<ReviewImageDTO> imageDTOs = images.stream()
                     .map(img -> modelMapper.map(img, ReviewImageDTO.class))
@@ -60,6 +91,7 @@ public class ReviewAnswerService {
         }
         return result;
     }
+
 
     public List<ReviewDTO> findReviewByBusinessCodeAndMonth(int businessCode, int month) {
         List<Object[]> reviews = reviewAnswerRepository.findByBusinessCodeAndReviewDate(businessCode, month);

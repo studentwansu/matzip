@@ -28,11 +28,6 @@ public class BusinessService {
     private final RestaurantKeywordRepository restaurantKeywordRepository;
     private final RestaurantImageRepository restaurantImageRepository;
 
-//    @Autowired
-//    public BusinessService(BusinessRepository businessRepository) {
-//        this.businessRepository = businessRepository;
-//    }
-
     public Business findByUserId(String userId) {
         return businessRepository.findByUserId(userId)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found: " + userId));

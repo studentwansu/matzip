@@ -43,18 +43,25 @@ public class RestaurantService {
     public List<ReviewDTO> getReviewsByRestaurant(int restaurantCode)
     {
         Restaurant restaurant = restaurantRepository.findByRestaurantCode(restaurantCode);
-        List<Review> reviews = reviewRepository.findByRestaurantCode(restaurant);
+        List<Object[]> reviews = reviewRepository.findByRestaurantCode(restaurant);
         List<ReviewDTO> result = new ArrayList<>();
-        for (Review review : reviews)
-        {
+
+
+        for (Object[] review : reviews) {
+            Review e = (Review) review[0];
+            String userId = (String) review[2]; // 🔥 userId도 가져옴
+            String nationality = (String) review[3];
+
             ReviewDTO dto = new ReviewDTO();
             dto.setRestaurantName(restaurant);
             dto.setRestaurantCode(restaurant);
-            dto.setReviewCode(review.getReviewCode());
-            dto.setReviewDate(review.getReviewDate());
-            dto.setReviewContent(review.getReviewContent());
-            dto.setReviewReply(review.getReviewReply());
-            dto.setRating(review.getRating());
+            dto.setReviewCode(e.getReviewCode());
+            dto.setReviewDate(e.getReviewDate());
+            dto.setReviewContent(e.getReviewContent());
+            dto.setReviewReply(e.getReviewReply());
+            dto.setRating(e.getRating());
+            dto.setUserId(userId);
+            dto.setNationality(nationality);
 
             result.add(dto);
         }
@@ -162,6 +169,30 @@ public class RestaurantService {
         }
 
         return filteredList;
+    }
+
+    public List<RestaurantDTO> findRestaurantsAndImgs(List<RestaurantDTO> restaurantDTOList)
+    {
+
+        for (int i = 0; i < restaurantDTOList.size(); i++)
+        {
+            List<RestaurantImage> img = restaurantImageRepository.findRestaurantImageByRestaurantCode(restaurantDTOList.get(i).getRestaurantCode());
+            List<RestaurantImageDTO> imgDTOList = new ArrayList<>();
+            for (int j = 0; j < img.size(); j++)
+            {
+                RestaurantImageDTO imgDTO = new RestaurantImageDTO();
+                imgDTO.setRestaurantCode(restaurantDTOList.get(i).getRestaurantCode());
+                imgDTO.setRestaurantImagePath(img.get(j).getRestaurantImagePath());
+                imgDTO.setRestaurantImageCode(img.get(j).getRestaurantImageCode());
+                imgDTO.setRestaurantSavedName(img.get(j).getRestaurantSavedName());
+                imgDTO.setRestaurantOriginalName(img.get(j).getRestaurantOriginalName());
+                imgDTOList.add(imgDTO);
+            }
+
+            restaurantDTOList.get(i).setRestaurantImages(imgDTOList);
+        }
+
+        return restaurantDTOList;
     }
 
 //    public List<RestaurantDTO> filteredRestaurantsByCountry(String keyword,)

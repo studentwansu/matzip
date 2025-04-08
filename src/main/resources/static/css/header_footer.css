@@ -104,6 +104,14 @@
     margin-left: 5px;
 }
 
+.signup {
+    background-color: #fa4032;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 10px;
+    margin-left: 5px;
+}
+
 .menu .menu-btn {
     background: none;
     border: none;
@@ -119,11 +127,24 @@
 /* 기본적으로 메뉴 숨기기 */
 .nav-menu {
     display: none;
+    position:absolute;
+    border-radius: 1vh;
+    background-color: white;
+    border: 1px solid #ccc;
+    top:10vh;
+    right:5vh;
+    width:13vh;
+    height:13vh;
+    text-align: center;
+}
+
+.navi-menu-ul {
+    list-style-type: none;
 }
 
 /* 토글 시 보이도록 */
 .nav-menu.show {
-    display: block;
+    display: flex;
 }
 
 #game {
