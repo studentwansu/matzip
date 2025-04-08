@@ -78,7 +78,3 @@ public class Business {
 
 }
 
-//@ManyToOne
-//@JoinColumn(name="categoryCode")
-//private Category category;
-//private String orderableStatus;

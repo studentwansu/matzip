@@ -19,6 +19,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import com.ezen.matzip.domain.restaurant.enums.RestaurantStatus;
 
 import java.io.File;
 import java.io.IOException;
@@ -184,6 +185,30 @@ public class RestaurantService {
         }
 
         return filteredList;
+    }
+
+    public List<RestaurantDTO> findRestaurantsAndImgs(List<RestaurantDTO> restaurantDTOList)
+    {
+
+        for (int i = 0; i < restaurantDTOList.size(); i++)
+        {
+            List<RestaurantImage> img = restaurantImageRepository.findRestaurantImageByRestaurantCode(restaurantDTOList.get(i).getRestaurantCode());
+            List<RestaurantImageDTO> imgDTOList = new ArrayList<>();
+            for (int j = 0; j < img.size(); j++)
+            {
+                RestaurantImageDTO imgDTO = new RestaurantImageDTO();
+                imgDTO.setRestaurantCode(restaurantDTOList.get(i).getRestaurantCode());
+                imgDTO.setRestaurantImagePath(img.get(j).getRestaurantImagePath());
+                imgDTO.setRestaurantImageCode(img.get(j).getRestaurantImageCode());
+                imgDTO.setRestaurantSavedName(img.get(j).getRestaurantSavedName());
+                imgDTO.setRestaurantOriginalName(img.get(j).getRestaurantOriginalName());
+                imgDTOList.add(imgDTO);
+            }
+
+            restaurantDTOList.get(i).setRestaurantImages(imgDTOList);
+        }
+
+        return restaurantDTOList;
     }
 
 //    public List<RestaurantDTO> filteredRestaurantsByCountry(String keyword,)
@@ -404,4 +429,21 @@ public class RestaurantService {
         return dto;
     }
     //완수 끝
+
+    // 희영 식당등록요청 목록조회
+    public List<RestaurantDTO> getPendingRestaurants() {
+        int pendingCode = RestaurantStatus.PENDING.getCode();
+        List<Restaurant> pendingList = restaurantRepository.findByRestaurantStatus(pendingCode);
+        return pendingList.stream()
+                .map(RestaurantDTO::fromEntity)
+                .collect(Collectors.toList());
+    }
+    public void updateRestaurantStatus(int restaurantCode, int statusCode) {
+        Restaurant restaurant = restaurantRepository.findById(restaurantCode)
+                .orElseThrow(() -> new IllegalArgumentException("해당 식당을 찾을 수 없습니다."));
+        restaurant.setRestaurantStatus(statusCode);
+        restaurantRepository.save(restaurant);
+    }
+
+
 }

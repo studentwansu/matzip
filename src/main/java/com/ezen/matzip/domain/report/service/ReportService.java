@@ -52,7 +52,9 @@ public class ReportService {
     }
 
     public int countByHiddenFlag(int hiddenFlag) {
-        return reportRepository.countByHiddenFlag(hiddenFlag);
+//        return reportRepository.countByHiddenFlag(hiddenFlag);
+        // 처리되지 않은 리뷰는 신고 수가 최소 1 이상인 것만 세도록 minReportCount를 1로 지정
+        return reportRepository.countByHiddenFlagAndMinReportCount(hiddenFlag, 1);
     }
 
     @Transactional

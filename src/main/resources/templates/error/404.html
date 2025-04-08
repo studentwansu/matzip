@@ -5,7 +5,18 @@
 <head>
   <meta charset="UTF-8">
   <title>404 - 페이지를 찾을 수 없습니다</title>
-  <link rel="stylesheet" th:href="@{/css/style.css}">
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
+  <link href="https://fonts.googleapis.com/css2?family=Poor+Story&display=swap" rel="stylesheet">
+  <script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=fd7786d297e2d4aaab4aa8b6bbb06b88&libraries=services"
+          type="text/javascript"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script th:src="@{/js/myLocation.js}"></script>
+  <script th:src="@{/js/weather.js}"></script>
+  <link href="/css/header_footer.css" rel="stylesheet">
+  <link rel="stylesheet" th:href="@{/css/header_footer.css}">
+  <link rel="stylesheet" th:href="@{/css/style_user.css}">
 </head>
 <body>
 <!-- 헤더: 역할에 따라 다른 프래그먼트 포함 -->
@@ -19,10 +30,8 @@
 </div>
 
 <!-- 404 에러 컨텐츠 -->
-<div class="error-container" style="text-align: center; padding: 50px;">
   <!-- 문구가 들어간 이미지 (error404.png) 사용 -->
-  <img src="/img/example.png" alt="404 Error Image" style="max-width: 100%; height: auto;">
-</div>
+  <img src="/img/error404.png" alt="404 Error Image" style="max-width: 100%; height: auto; aspect-ratio: 1 / 1;">
 
 <!-- 푸터: 관리자와 비로그인/일반 사용자/사업자는 다른 푸터 적용 -->
 <div>

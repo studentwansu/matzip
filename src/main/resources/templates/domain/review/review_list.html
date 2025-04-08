@@ -34,9 +34,9 @@
     </aside>
 
     <!-- 작성 리뷰 목록 -->
-    <div class="review-container-section">
-        <div class="content">
-            <h2>작성 리뷰 목록</h2>
+<!--    <div class="review-container-section">-->
+        <div class="container-bookmarklist">
+            <h2 class="container-title">작성 리뷰 목록</h2>
             <script th:inline="javascript">
                 // Thymeleaf로 데이터를 주입하여 JS에서 사용할 수 있도록 처리
                 let testReview = /*[[${testReview}]]*/ [];
@@ -77,6 +77,23 @@
                 </tr>
                 </tbody>
             </table>
+<!--            <div class="pagination">-->
+<!--                &lt;!&ndash; 이전 버튼 &ndash;&gt;-->
+<!--                <span th:if="${currentPage > 0}">-->
+<!--                <a th:href="@{/user/bookmarks(page=${currentPage - 1}, size=${size})}">이전</a>-->
+<!--            </span>-->
+<!--                &lt;!&ndash; 페이지 번호 &ndash;&gt;-->
+<!--                <span th:each="i : ${#numbers.sequence(0, totalPages - 1)}">-->
+<!--                <a th:href="@{/user/bookmarks(page=${i}, size=${size})}"-->
+<!--                   th:if="${i != currentPage}"-->
+<!--                   th:text="${i + 1}"></a>-->
+<!--                <span th:if="${i == currentPage}" th:text="${i + 1}"></span>-->
+<!--            </span>-->
+<!--                &lt;!&ndash; 다음 버튼 &ndash;&gt;-->
+<!--                <span th:if="${currentPage < totalPages - 1}">-->
+<!--                <a th:href="@{/user/bookmarks(page=${currentPage + 1}, size=${size})}">다음</a>-->
+<!--            </span>-->
+<!--            </div>-->
 
             <!-- 모달 -->
             <div class="modal" id="reviewModal">
@@ -130,7 +147,7 @@
             </div>
         </div>
     </div>
-</div>
+<!--</div>-->
 
 <!-- user footer 아래 복사 -->
 <div th:replace="~{html/user_footer :: userFooter}"></div>

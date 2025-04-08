@@ -44,13 +44,6 @@ public class SingupController {
 
         System.out.println("userRequestDTO : " + userRequestDTO);
 
-        // 유효성 검사 오류 처리
-//        if (bindingResult.hasErrors()) {
-//            model.addAttribute("errorMessage", "회원가입 양식을 올바르게 작성해주세요.");
-//            return "domain/sign/user_signup";
-//        }
-//
-//        try {
             // 디버깅 로그 추가
             System.out.println("🚀 회원가입 요청 받음: " + userRequestDTO.getUserId());
 
@@ -59,12 +52,6 @@ public class SingupController {
 
             model.addAttribute("message", "회원가입이 성공적으로 완료되었습니다.");
             return "redirect:/login";  // 로그인 페이지로 리다이렉트
-//
-//        } catch (RuntimeException e) {
-//            System.err.println("❌ 회원가입 실패: " + e.getMessage());
-//            model.addAttribute("errorMessage", "회원가입에 실패했습니다: " + e.getMessage());
-//            return "domain/sign/user_signup";
-//        }
     }
 
     @GetMapping("/signup/business")

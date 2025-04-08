@@ -55,7 +55,7 @@
                     <th style="text-align:right;">날짜</th>
                 </tr>
                 </thead>
-                <tbody th:each="qna, stat : ${qnaList}">
+                <tbody th:each="qna,stat : ${qnaList}">
                 <!-- 제목/상태/날짜 행 -->
                 <tr>
                     <td th:text="${stat.index + 1}" style="text-align:center;"></td>
@@ -93,8 +93,34 @@
             </table>
         </div>
     </div>
+    <!-- 페이징 UI -->
+    <div class="pagination" style="text-align:center; margin:1em 0;">
+        <ul style="list-style:none; display:inline-block; padding:0;">
+            <!-- 이전 -->
+            <li th:if="${page.hasPrevious()}" style="display:inline; margin:0 .3em;">
+                <a th:href="@{/admin/board/qna(page=${page.number - 1},size=${page.size})}">&laquo; 이전</a>
+            </li>
+            <li th:unless="${page.hasPrevious()}" style="display:inline; margin:0 .3em; color:#ccc;">
+                &laquo; 이전
+            </li>
+            <!-- 페이지 번호 -->
+            <li th:each="i : ${#numbers.sequence(0, page.totalPages -1)}"
+                style="display:inline; margin:0 .2em;">
+                <a th:href="@{/admin/board/qna(page=${i},size=${page.size})}"
+                   th:text="${i+1}"
+                   th:classappend="${i == page.number} ? 'active'">
+                </a>
+            </li>
+            <!-- 다음 -->
+            <li th:if="${page.hasNext()}" style="display:inline; margin:0 .3em;">
+                <a th:href="@{/admin/board/qna(page=${page.number + 1},size=${page.size})}">다음 &raquo;</a>
+            </li>
+            <li th:unless="${page.hasNext()}" style="display:inline; margin:0 .3em; color:#ccc;">
+                다음 &raquo;
+            </li>
+        </ul>
+    </div>
 </main>
-
 <!-- footer -->
 <footer>
     <p>Copyright 2025 맛zip All Right Reserved</p>

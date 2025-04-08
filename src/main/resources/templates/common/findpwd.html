@@ -7,8 +7,15 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poor+Story&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="CSS/header_footer.css">
-    <link rel="stylesheet" href="CSS/password.css">
+    <script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=fd7786d297e2d4aaab4aa8b6bbb06b88&libraries=services"
+            type="text/javascript"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script th:src="@{/js/myLocation.js}"></script>
+    <script th:src="@{/js/weather.js}"></script>
+
+    <link rel="stylesheet" href="/css/header_footer.css">
+    <link rel="stylesheet" href="/css/password.css">
 
     <meta name="_csrf" th:content="${_csrf.token}"/>
     <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
@@ -165,15 +172,15 @@
             <label for="passwordQuestion">회원가입 시 선택한 질문: </label>
             <select id="passwordQuestion" name="passwordQuestion" required>
                 <option value="당신의 초등학교는?">당신의 초등학교는?</option>
-                <option value="내가 좋아하는 음식 이름은?">내가 좋아하는 음식 이름은?</option>
-                <option value="내가 다니던 학교 이름은?">내가 다니던 학교 이름은?</option>
-                <option value="내가 가본 나라 이름은?">내가 가본 나라 이름은?</option>
-                <option value="내가 좋아하는 동물의 종류는?">내가 좋아하는 동물의 종류는?</option>
-                <option value="내가 아끼는 보물 1호는?">내가 아끼는 보물 1호는?</option>
-                <option value="나의 취미는?">나의 취미는?</option>
-                <option value="내가 좋아하는 음악은?">내가 좋아하는 음악은?</option>
-                <option value="내가 좋아하는 영화는?">내가 좋아하는 영화는?</option>
-                <option value="내가 좋아하는 가수는?">내가 좋아하는 가수는?</option>
+                <option value="당신의 중학교는?">당신의 중학교는?</option>
+                <option value="당신의 고등학교는?">당신의 고등학교는?</option>
+                <option value="당신의 첫 반려동물은?">당신의 첫 반려동물은?</option>
+                <option value="당신의 어머니 성함은?">당신의 어머니 성함은?</option>
+                <option value="당신의 아버지 성함은?">당신의 아버지 성함은?</option>
+                <option value="당신의 첫번째 보물은?">당신의 첫번째 보물은?</option>
+                <option value="당신의 어릴 적 별명은?">당신의 어릴 적 별명은?</option>
+                <option value="당신이 태어난 도시는?">당신이 태어난 도시는?</option>
+                <option value="당신이 제일 좋아하는 음식은?">당신이 제일 좋아하는 음식은?</option>
             </select>
             <input id="passwordAnswer" name="passwordAnswer" placeholder="비밀번호찾기답" required>
             <button type="button" class="password_button" onclick="verifyUser()">본인 확인</button>
