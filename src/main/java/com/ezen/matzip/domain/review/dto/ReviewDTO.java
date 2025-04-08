@@ -40,8 +40,5 @@ public class ReviewDTO {
         this.restaurantName = restaurant.getRestaurantName();
     }
 
-    public List<ReviewImageDTO> getImageList(){
-        return reviewImages;
-    }
 
 }

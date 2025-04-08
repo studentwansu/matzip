@@ -12,6 +12,8 @@ import com.ezen.matzip.domain.restaurant.repository.RestaurantImageRepository;
 import com.ezen.matzip.domain.restaurant.repository.RestaurantRepository;
 import com.ezen.matzip.domain.restaurant.service.RestaurantService;
 import com.ezen.matzip.domain.review.dto.ReviewDTO;
+import com.ezen.matzip.domain.review.dto.ReviewImageDTO;
+import com.ezen.matzip.domain.review.service.ReviewService;
 import com.ezen.matzip.domain.user.dto.UserRequestDTO;
 import com.ezen.matzip.domain.user.entity.Business;
 import com.ezen.matzip.domain.user.entity.User;
@@ -65,6 +67,8 @@ public class RestaurantController {
     private final UserService userService;
     @Autowired
     private RestaurantRepository restaurantRepository;
+    @Autowired
+    private ReviewService reviewService;
 
 
     @GetMapping("/restaurant/{restaurantCode}")
