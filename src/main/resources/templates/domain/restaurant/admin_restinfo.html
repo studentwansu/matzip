@@ -3,143 +3,142 @@
 <head>
     <meta charset="UTF-8">
     <title>관리자 식당정보조회</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
     <link href="https://fonts.googleapis.com/css2?family=Poor+Story&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/css/style_admin.css">
-    <link rel="stylesheet" href="/css/style_restaurantInfo.css">
+    <link href="/css/style_admin.css" rel="stylesheet">
+    <link href="/css/style_restaurantInfo.css" rel="stylesheet">
     <link href="/css/review.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=fd7786d297e2d4aaab4aa8b6bbb06b88&libraries=services"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=fd7786d297e2d4aaab4aa8b6bbb06b88&libraries=services"
+            type="text/javascript"></script>
 
 </head>
 <body>
 
 <div th:replace="~{html/admin_header :: adminHeader}"></div>
 
-    <main>
-        <section class="body-section">
-            <div class="navi">
-                <div class="redbutton">
-                    <span class="redbutton-font">마이페이지</span>
-                </div>
-                <ul>
-                    <li><a class="navi-font" th:href="@{/business/myinfo}">내 정보</a></li>
-                    <li><a class="navi-font" th:href="@{/business/restaurant}">내 식당 정보</a></li>
-                    <li><a class="navi-font" href="">식당 등록 신청</a></li>
-                    <li><a class="navi-font" href="">예약 현황 조회</a></li>
-                    <li><a class="navi-font" href="">식당 정보 수정 요청</a></li>
-                    <li><a class="navi-font" href="">고객 리뷰 조회</a></li>
-                </ul>
+<main>
+    <section class="body-section">
+        <div class="navi">
+            <div class="redbutton">
+                <span class="redbutton-font">마이페이지</span>
             </div>
-            <div class="store-info">
-                <div class="store-imgs">
-                    <!-- 여기에 이미지 넣기 -->
-                    <div class="store-imgs" th:each="img : ${restaurant.restaurantImages}">
-                        <img class="preview-img" th:src="@{${img.restaurantImagePath}}" />
-                    </div>
+            <ul>
+                <li><a class="navi-font" th:href="@{/business/myinfo}">내 정보</a></li>
+                <li><a class="navi-font" th:href="@{/business/restaurant}">내 식당 정보</a></li>
+                <li><a class="navi-font" href="">식당 등록 신청</a></li>
+                <li><a class="navi-font" href="">예약 현황 조회</a></li>
+                <li><a class="navi-font" href="">식당 정보 수정 요청</a></li>
+                <li><a class="navi-font" href="">고객 리뷰 조회</a></li>
+            </ul>
+        </div>
+        <div class="store-info">
+            <div class="store-imgs">
+                <!-- 여기에 이미지 넣기 -->
+                <div class="store-imgs" th:each="img : ${restaurant.restaurantImages}">
+                    <img class="preview-img" th:src="@{${img.restaurantImagePath}}"/>
                 </div>
-                <div class="store-container">
-                    <div class="upper-container">
-                        <div class="store-inner-container1">
-                            <p style="font-size:2.5vh;" th:text="${restaurant.restaurantName}"></p>
-                            <!--                            <span style="font-size:1.5vh; color:#747474;">서울숲 | 파스타, 돈마호크</span>-->
-                            <i class="fa fa-star" style="color:red;"></i> <!-- 꽉 찬 별 -->
-                            <i class="fa fa-star" style="color:red;"></i> <!-- 꽉 찬 별 -->
-                            <i class="fa fa-star" style="color:red;"></i> <!-- 꽉 찬 별 -->
-                            <i class="fa fa-star" style="color:red;"></i> <!-- 꽉 찬 별 -->
-                            <i class="fa fa-star-half-alt" style="color:red;"></i> <!-- 반쪽 별 -->
-                            <br>
-                            <table>
-                                <tr>
-                                    <td style="font-size:2vh; width:160px; white-space: nowrap;">주소</td>
-                                    <td style="font-size:1.5vh;" th:text="${restaurant.restaurantLocation}"></td>
-                                </tr>
-                                <tr>
-                                    <td style="font-size:2vh; width:160px; white-space: nowrap;">전화번호</td>
-                                    <td style="font-size:1.5vh;" th:text="${restaurant.restaurantContactNumber}"></td>
-                                </tr>
-                                <tr>
-                                    <td style="font-size:2vh; width:160px; white-space: nowrap;">키워드</td>
-                                    <td>
-                                        <div style="width:320px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-                                        <span style="font-size:1.2vh;" th:each="keyword, iterStat : ${restaurant.restaurantKeywords}">
-                                            <span th:text="'#' + ${keyword.getRestaurantKeyword()}"></span>
-                                            <span th:if="${!iterStat.last}" th:text="' '"></span>
-                                        </span>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="font-size:2vh; width:160px; white-space: nowrap;">영업시간</td>
-                                    <td style="font-size:1.5vh; white-space: nowrap;">
-                                        <span th:text="${#strings.substring(restaurant.restaurantStartTime, 0, 5)}"></span>
-                                        <span> - </span>
-                                        <span th:text="${#strings.substring(restaurant.restaurantEndTime, 0, 5)}"></span>
-                                    </td>
-                                </tr>
-                            </table>
-                            <br>
-                            <p style="font-size:2.5vh;">메뉴</p>
-                            <table>
-                                <tr th:each="menu : ${restaurant.getRestaurantMenus()}">
-                                    <td th:text="${menu.getMenuName()}"></td>
-                                    <td th:text="' --- ' + ${menu.getMenuPrice()}"></td>
-                                </tr>
-                            </table>
-                            <br>
-                            <a href="">
-                                <button class="redbutton1">메뉴판 이미지</button>
-                            </a>
-                            <br>
-                            <br>
-                            <br>
-                            <p style="font-size:2.5vh;">편의시설 및 서비스</p> <br>
-                            <p style="font-size:1.5vh;" th:text="${restaurant.restaurantService}"></p>
-                        </div>
-                        <div class="store-inner-container2">
-                            <div class="buttonbox">
-<!--                                <button th:class="${restaurant.restaurantStatus == 1 ? 'greenbutton1' : 'redbutton1'}"-->
-<!--                                        th:text="${restaurant.restaurantStatus == 1 ? '등록완료' : '등록전'}">-->
-<!--                                </button>-->
-                            </div>
-                            <div class="mapbox">
-                                <div id="map" style="width:100%;height:30vh;"></div>
-                            </div>
-                            <div class="introducebox">
-                                <p style="font-size:2.5vh;">소개</p>
-                                <pre style="font-size:2vh;" th:text="${restaurant.restaurantDescription}"></pre>
-                            </div>
-                        </div>
+            </div>
+            <div class="store-container">
+                <div class="upper-container">
+                    <div class="store-inner-container1">
+                        <p style="font-size:2.5vh;" th:text="${restaurant.restaurantName}"></p>
+                        <!--                            <span style="font-size:1.5vh; color:#747474;">서울숲 | 파스타, 돈마호크</span>-->
+                        <i class="fa fa-star" style="color:red;"></i> <!-- 꽉 찬 별 -->
+                        <i class="fa fa-star" style="color:red;"></i> <!-- 꽉 찬 별 -->
+                        <i class="fa fa-star" style="color:red;"></i> <!-- 꽉 찬 별 -->
+                        <i class="fa fa-star" style="color:red;"></i> <!-- 꽉 찬 별 -->
+                        <i class="fa fa-star-half-alt" style="color:red;"></i> <!-- 반쪽 별 -->
+                        <br>
+                        <table>
+                            <tr>
+                                <td style="font-size:2vh; width:160px; white-space: nowrap;">주소</td>
+                                <td style="font-size:1.5vh;" th:text="${restaurant.restaurantLocation}"></td>
+                            </tr>
+                            <tr>
+                                <td style="font-size:2vh; width:160px; white-space: nowrap;">전화번호</td>
+                                <td style="font-size:1.5vh;" th:text="${restaurant.restaurantContactNumber}"></td>
+                            </tr>
+                            <tr>
+                                <td style="font-size:2vh; width:160px; white-space: nowrap;">키워드</td>
+                                <td>
+                                    <div style="width:320px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display:flex; flex-direction: row;">
+                                        <span th:each="keyword : ${restaurant.restaurantKeywords}"><span
+                                                th:text="'#' + ${keyword.getRestaurantKeyword()} + ' '"></span></span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="font-size:2vh; width:160px; white-space: nowrap;">영업시간</td>
+                                <td style="font-size:1.5vh; white-space: nowrap;">
+                                    <span th:text="${#strings.substring(restaurant.restaurantStartTime, 0, 5)}"></span>
+                                    <span> - </span>
+                                    <span th:text="${#strings.substring(restaurant.restaurantEndTime, 0, 5)}"></span>
+                                </td>
+                            </tr>
+                        </table>
+                        <br>
+                        <p style="font-size:2.5vh;">메뉴</p>
+                        <table>
+                            <tr th:each="menu : ${restaurant.getRestaurantMenus()}">
+                                <td th:text="${menu.getMenuName()}"></td>
+                                <td th:text="' --- ' + ${menu.getMenuPrice()}"></td>
+                            </tr>
+                        </table>
+                        <br>
+                        <a href="">
+                            <button class="redbutton1">메뉴판 이미지</button>
+                        </a>
+                        <br>
+                        <br>
+                        <br>
+                        <p style="font-size:2.5vh;">편의시설 및 서비스</p> <br>
+                        <p style="font-size:1.5vh;" th:text="${restaurant.restaurantService}"></p>
                     </div>
-                    <div class="store-inner-container3">
+                    <div class="store-inner-container2">
                         <div class="buttonbox">
-                            <button class="redbutton3 redbutton-font" type="submit">수락</button>
-                            <button>뒤로가기</button>
+                            <!--                                <button th:class="${restaurant.restaurantStatus == 1 ? 'greenbutton1' : 'redbutton1'}"-->
+                            <!--                                        th:text="${restaurant.restaurantStatus == 1 ? '등록완료' : '등록전'}">-->
+                            <!--                                </button>-->
                         </div>
-                                                <p style="font-size:2.5vh;">리뷰</p><br>
-                        <div class="reviewbox" th:each="review : ${reviews}">
-                            <span style="font-size:1.5vh;" th:text="${review.userId}"></span>
-                            <span style="font-size:1.5vh;" th:text="${review.nationality}"></span>
-                            <span style="font-size:1.5vh;" th:text="${review.reviewDate}"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
-                                style="font-size:1.5vh;" th:text="${review.rating}"></span><br>
-                            <span style="font-size:1.5vh;" th:text="${review.reviewContent}"></span><br>
-                            <div class="reviewimgbox" th:each="img : ${review.reviewImages}">
-                                <img class="reviewimg" th:src="@{${img.reviewImagePath}}">
-                            </div>
-                            <div class="reviewreply">
-                                <span style="font-size:1.5vh;" th:text="${review.reviewReply}"></span><br>
-                            </div>
+                        <div class="mapbox">
+                            <div id="map" style="width:100%;height:30vh;"></div>
+                        </div>
+                        <div class="introducebox">
+                            <p style="font-size:2.5vh;">소개</p>
+                            <pre style="font-size:2vh;" th:text="${restaurant.restaurantDescription}"></pre>
+                        </div>
+                    </div>
+                </div>
+                <div class="store-inner-container3">
+                    <div class="buttonbox">
+                        <button class="redbutton3 redbutton-font" type="submit">수락</button>
+                        <button>뒤로가기</button>
+                    </div>
+                    <p style="font-size:2.5vh;">리뷰</p><br>
+                    <div class="reviewbox" th:each="review : ${reviews}">
+                        <span style="font-size:1.5vh;" th:text="${review.userId}"></span>
+                        <span style="font-size:1.5vh;" th:text="${review.nationality}"></span>
+                        <span style="font-size:1.5vh;" th:text="${review.reviewDate}"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
+                            style="font-size:1.5vh;" th:text="${review.rating}"></span><br>
+                        <span style="font-size:1.5vh;" th:text="${review.reviewContent}"></span><br>
+                        <div class="reviewimgbox" th:each="img : ${review.reviewImages}">
+                            <img class="reviewimg" th:src="@{${img.reviewImagePath}}">
+                        </div>
+                        <div class="reviewreply">
+                            <span style="font-size:1.5vh;" th:text="${review.reviewReply}"></span><br>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
-    </main>
-    <footer>
-        <div th:replace="~{html/admin_footer :: adminFooter}"></div>
-    </footer>
-    <script src="/js/map.js"></script>
+        </div>
+    </section>
+</main>
+<footer>
+    <div th:replace="~{html/admin_footer :: adminFooter}"></div>
+</footer>
+<script src="/js/map.js"></script>
 
 </body>
 </html>

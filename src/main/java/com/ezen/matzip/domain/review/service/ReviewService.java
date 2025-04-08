@@ -86,7 +86,7 @@ public class ReviewService {
         // 기존 리뷰 이미지 삭제 (DB + 파일)
         List<ReviewImage> oldImages = reviewImageRepository.findReviewImagesByReviewCode(review.getReviewCode());
         for (ReviewImage img : oldImages) {
-            File oldFile = new File("C:/matzip-storage/img/review" + img.getReviewImagePath());
+            File oldFile = new File(img.getReviewImagePath());
             if (oldFile.exists()) oldFile.delete();
             reviewImageRepository.delete(img);
         }
@@ -100,7 +100,7 @@ public class ReviewService {
         String filePath;
 
         try {
-            File fileDir = new File("C:/matzip-storage/img/review");
+            File fileDir = new File("src/main/resources/static/img/review");
             if (!fileDir.exists()) fileDir.mkdirs();
             filePath = fileDir.getAbsolutePath();
 

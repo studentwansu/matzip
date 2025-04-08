@@ -42,3 +42,14 @@ document.getElementById('real-file').addEventListener('change', function () {
         fileNameDisplay.textContent = '선택된 파일 없음';
     }
 });
+
+function removeEmptyKeywords() {
+    // 키워드2~5 중에서 값이 비어있는 입력 필드 비활성화
+    for (let i = 2; i <= 5; i++) {
+        let keywordInput = document.getElementById('restaurantKeyword' + i);
+        if (keywordInput.value.trim() === '') {
+            keywordInput.disabled = true; // 비활성화하면 폼 제출 시 전송되지 않음
+        }
+    }
+    return true; // 폼 제출 계속 진행
+}

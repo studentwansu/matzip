@@ -43,10 +43,10 @@
         </div>
 
         <div class="store-info">
-            <form action="/business/regist/apply" enctype="multipart/form-data" method="post">
+            <form action="/business/regist/apply" enctype="multipart/form-data" method="post" onsubmit="removeEmptyKeywords()">
                 <input name="businessCode" th:value="${businessCode}" type="hidden"/>
                 <div>
-                    <input accept="image/*" hidden id="real-file" multiple name="multiFiles" required type="file">
+                    <input accept="image/*" hidden id="real-file" multiple name="multiFiles" type="file" required oninvalid="this.setCustomValidity('이미지를 하나 이상 첨부하세요.')">
                     <button class="redbutton1 redbutton-font" id="custom-button" type="button">이미지 추가</button>
                     <span id="file-name">선택된 파일 없음</span>
                 </div>
