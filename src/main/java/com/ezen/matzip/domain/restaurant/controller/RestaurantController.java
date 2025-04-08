@@ -6,8 +6,10 @@ import com.ezen.matzip.domain.bookmark.service.BookmarkService;
 import com.ezen.matzip.domain.restaurant.dto.RegistDTO;
 import com.ezen.matzip.domain.restaurant.dto.RestaurantDTO;
 import com.ezen.matzip.domain.restaurant.dto.RestaurantImageDTO;
+import com.ezen.matzip.domain.restaurant.dto.RestaurantKeywordDTO;
 import com.ezen.matzip.domain.restaurant.entity.Regist;
 import com.ezen.matzip.domain.restaurant.entity.Restaurant;
+import com.ezen.matzip.domain.restaurant.repository.RestaurantKeywordRepository;
 import com.ezen.matzip.domain.restaurant.service.RestaurantService;
 import com.ezen.matzip.domain.review.dto.ReviewDTO;
 import com.ezen.matzip.domain.review.dto.ReviewImageDTO;
@@ -52,6 +54,7 @@ public class RestaurantController {
     //완수 북마크 기능에 필요
     private final BookmarkService bookmarkService;
     private final UserService userService;
+    private final RestaurantKeywordRepository restaurantKeywordRepository;
 
 
     @GetMapping("/restaurant/{restaurantCode}")
@@ -192,7 +195,6 @@ public class RestaurantController {
         String username = principal.getName();
         int businessCode = userIdCheckService.getBusinessCodeByUserid(username);
         RestaurantDTO foundRestaurant = restaurantService.getRestaurantByBusinessCode(businessCode);
-
         model.addAttribute("currentRestaurant", foundRestaurant);
         model.addAttribute("businessCode", businessCode);
 
