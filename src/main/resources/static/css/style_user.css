@@ -347,6 +347,12 @@ pre {
 
 
 .container-section {
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    left: 25.5%;
+}
+.container-section2 {
     width: 110vh;
     min-height: 27vh;
     align-items: center;
@@ -356,6 +362,7 @@ pre {
     margin-bottom: 5%;
     padding-left: 3.5vh;
 }
+
 
 .container-font1 {
     font-size: 3vh;

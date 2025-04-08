@@ -1,7 +1,6 @@
 // 메뉴 추가버튼
 const $menu = document.getElementById("menu");
 let num = $menu.querySelectorAll("tr").length;
-
 function addMenu() {
     let newMenu = $menu.insertRow();
     let input1 = newMenu.insertCell(0);
@@ -14,7 +13,7 @@ function addMenu() {
     // 셀 내부에 직접 <input> 태그 추가
     input1.innerHTML = `<input type="radio" id="대표메뉴" name="대표메뉴" value="메뉴${num}">`
     input2.innerHTML = `<input class="store-input-small" type="text" id="메뉴${num}" name="메뉴${num}" placeholder="메뉴명">`;
-    input3.innerHTML = '---------- '
+    input3.innerHTML = '------- '
     input4.innerHTML = `<input class="store-input-small" type="text" id="메뉴${num}가격" name="메뉴${num}가격" placeholder="가격">원`;
 }
 
@@ -27,3 +26,19 @@ function deleteMenu() {
     } else
         alert("더 이상 삭제할 수 없습니다!");
 }
+
+document.getElementById('custom-button').addEventListener('click', function () {
+    document.getElementById('real-file').click(); // 숨겨진 파일 input 클릭
+});
+
+document.getElementById('real-file').addEventListener('change', function () {
+    const fileInput = this;
+    const fileNameDisplay = document.getElementById('file-name');
+
+    if (fileInput.files.length > 0) {
+        const names = Array.from(fileInput.files).map(f => f.name).join(', ');
+        fileNameDisplay.textContent = names;
+    } else {
+        fileNameDisplay.textContent = '선택된 파일 없음';
+    }
+});

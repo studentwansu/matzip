@@ -40,13 +40,13 @@
                         <input class="custom-input" type="checkbox" id="sortName" name="sort">
                         식당명 순으로 정렬
                     </label>
-                </div>
 
                 <div class="container-search3">
                     <input class="admin-input-long navi-font" type="text" id="keyword" name="keyword"
                            placeholder="식당명 및 키워드 검색">
                     <button id="btn-search" class="redbutton">검색</button>
                 </div>
+
 
                 <div class="container-storelist">
                     <div class="container-title">
@@ -66,7 +66,8 @@
                         <!-- JS가 여기다 <tr>들을 넣어줄 거예요 -->
                         </tbody>
                     </table>
-                </div>
+
+   
             </div>
     </section>
 </main>
@@ -79,6 +80,7 @@
         <li class="footer-font"><a href="">Q&A</a></li>
     </ul> -->
 </footer>
+
 <!-- (1) 검색창 & 정렬 체크박스 -->
 <div class="container-search">
     <div class="container-search2 navi-font">
@@ -125,11 +127,13 @@
                 loadPendingRestaurants('date', getCurrentKeyword());
             } else {
                 loadPendingRestaurants(null, getCurrentKeyword());
+
             }
         });
         sortNameCb.addEventListener('change', () => {
             if (sortNameCb.checked) {
                 sortDateCb.checked = false;
+
                 loadPendingRestaurants('name', getCurrentKeyword());
             } else {
                 loadPendingRestaurants(null, getCurrentKeyword());
@@ -162,10 +166,13 @@
                         new Date(b.restaurantRegistrationDate) - new Date(a.restaurantRegistrationDate)
                     );
                 } else if (sortBy === 'date') {
+
                     data.sort((a, b) =>
                         new Date(b.restaurantRegistrationDate) - new Date(a.restaurantRegistrationDate)
                     );
                 } else if (sortBy === 'name') {
+
+
                     data.sort((a, b) =>
                         a.restaurantName.localeCompare(b.restaurantName)
                     );
@@ -180,6 +187,7 @@
         tbody.innerHTML = '';
         data.forEach(r => {
             const tr = document.createElement('tr');
+
             tr.innerHTML = `
       <td style="width:1vh;">
         <button class="redbutton4" onclick="handleApprove(${r.restaurantCode})">수락</button>
@@ -193,12 +201,14 @@
       </td>
       <td style="text-align:center;">${r.restaurantCode}</td>
     `;
+
             tbody.appendChild(tr);
         });
     }
 
     function formatDate(dateStr) {
         const d = new Date(dateStr);
+
         return `${d.getFullYear()}. ${String(d.getMonth() + 1).padStart(2, '0')}. ${String(d.getDate()).padStart(2, '0')}. `
             + `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
     }
@@ -206,25 +216,30 @@
     function handleApprove(code) {
         fetch(`/admin/restaurants/${code}/approve`, {method: 'PATCH'})
             .then(r => r.ok ? loadPendingRestaurants(getCurrentSort(), getCurrentKeyword()) : alert('승인 실패'));
+
     }
 
     function handleReject(code) {
         fetch(`/admin/restaurants/${code}/reject`, {method: 'PATCH'})
+
             .then(r => r.ok ? loadPendingRestaurants(getCurrentSort(), getCurrentKeyword()) : alert('반려 실패'));
     }
 
     // 현재 체크된 정렬 기준
+
     function getCurrentSort() {
         if (document.getElementById('sortDate').checked) return 'date';
         if (document.getElementById('sortName').checked) return 'name';
         return null;
     }
 
+
     // 현재 검색어
     function getCurrentKeyword() {
         return document.getElementById('keyword').value.trim() || null;
     }
 </script>
+
 
 </body>
 </html>
