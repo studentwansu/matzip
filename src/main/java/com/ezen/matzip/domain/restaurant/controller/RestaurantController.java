@@ -390,12 +390,6 @@ public class RestaurantController {
     }
     // 완수 끝
 
-    // 희영 식당등록요청 목록조회
-    // 대기 상태인 식당 조회
-    @GetMapping("/pending")
-    public ResponseEntity<List<RestaurantDTO>> getPendingRestaurants() {
-        return ResponseEntity.ok(restaurantService.getPendingRestaurants());
-    }
 }
 
 //restaurant/ → 식당 관리 (등록, 수정, 조회)
