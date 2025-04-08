@@ -81,6 +81,13 @@
     left: 85%;
 }
 
+.user-myinfo_button
+{
+    position: absolute;
+    top: 74%;
+    left: 65%;
+}
+
 .myinfo-inner-container1 {
     position: relative;
     width: 40vh;
