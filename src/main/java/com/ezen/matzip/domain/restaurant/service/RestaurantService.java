@@ -97,13 +97,10 @@ public class RestaurantService {
     public RestaurantDTO getRestaurantByBusinessCode(int businessCode)
     {
         Restaurant restaurant = restaurantRepository.findByBusinessCode(businessCode);
-        return new RestaurantDTO(restaurant);
-    }
-
-    public String[] splitKeywords(String keyword)
-    {
-        String[] keywords = keyword.split("\\s");
-        return keywords;
+        List<Menu> menusList = menuRepository.findByRestaurantCode(restaurant);
+        List<RestaurantKeyword> keywordsList = restaurantKeywordRepository.findByRestaurantCode(restaurant);
+        List<RestaurantImage> imagesList = restaurantImageRepository.findRestaurantImageByRestaurantCode(restaurant);
+        return new RestaurantDTO(restaurant, menusList, keywordsList, imagesList);
     }
 
     public List<RestaurantDTO> findByKeywordOrderByScore(String keyword)
@@ -285,11 +282,6 @@ public class RestaurantService {
 
         return regist;
     }
-
-//    public Regist getRegistRestaurant(int businessCode)
-//    {
-//        return registRepository.find
-//    }
 
     @Transactional
     public void modifyRestaurant(RegistDTO registDTO, List<MultipartFile> multiFiles) {
