@@ -232,9 +232,14 @@ public class RestaurantController {
     }
 
     @GetMapping(value = "/search", params = "categoryCode")
-    public String filteringRestaurants(@RequestParam int categoryCode, Model model, HttpSession session) {
+    public String filteringRestaurants(@RequestParam int categoryCode, Model model, HttpSession session, Principal principal) {
         String keyword = (String) session.getAttribute("lastKeyword");
-        List<RestaurantDTO> restaurants = restaurantService.filteredRestaurantsByCategory(keyword, categoryCode);
+        String nationality = null;
+        if (principal != null) {
+            User user = userService.findByUserId(principal.getName());
+            nationality = user.getNationality();
+        }
+        List<RestaurantDTO> restaurants = restaurantService.filteredRestaurantsByCategory(keyword, categoryCode, nationality);
         model.addAttribute("restaurantList", restaurants);
         return "domain/search/user_restlist";
     }

@@ -22,7 +22,6 @@
 </head>
 
 <body id="weatherBody" onload="currentWeather();">
-<!-- user header 아래 복사 -->
 <div th:replace="~{html/user_header :: userHeader}"></div>
 
 <!-- main -->
@@ -30,7 +29,7 @@
     <div class="container-main">
         <form action="/weather/hashtags">
             <input name="weatherCondition" type="hidden" value=""/>
-            <p id="weatherHashtags"></p>
+            <p name="weatherHashtags"></p>
         </form>
         <div class="line-yellow-100"></div>
         <div class="food-list" id="food-list">
@@ -41,31 +40,41 @@
     </div>
 
     <div class="container-main">
-        <p>#중국인에게추천 #보리밥 #해물탕 #감자탕</p>
+        <form action="/weather/hashtags">
+            <input name="weatherCondition" type="hidden" value=""/>
+            <p name="weatherHashtags"></p>
+        </form>
         <div class="line-yellow-100"></div>
-        <!--        <div class="food-list">-->
-        <!--                <div class="food-item"><img src="/img/삼계탕.jpg" alt="삼계탕">-->
-        <!--                    <p>보리밥</p>-->
-        <!--                </div>-->
-        <!--                <div class="food-item"><img src="/img/삼계탕.jpg" alt="삼계탕">-->
-        <!--                    <p>해물탕</p>-->
-        <!--                </div>-->
-        <!--                <div class="food-item"><img src="/img/삼계탕.jpg" alt="삼계탕">-->
-        <!--                    <p>감자탕</p>-->
-        <!--                </div>-->
-        <!--                <div class="food-item"><img src="/img/삼계탕.jpg" alt="삼계탕">-->
-        <!--                    <p>감자탕</p>-->
-        <!--                </div>-->
-        <!--                <div class="food-item"><img src="/img/삼계탕.jpg" alt="삼계탕">-->
-        <!--                    <p>감자탕</p>-->
-        <!--                </div>-->
+        <div class="food-list" id="food-list1">
+            <form action="/weather" id="weatherTest1">
+                <input name="recommendKeywords" type="hidden" value=""/>
+            </form>
+        </div>
     </div>
+
+<!--    <div class="container-main">-->
+<!--        <p>#중국인에게추천 #보리밥 #해물탕 #감자탕</p>-->
+<!--        <div class="line-yellow-100"></div>-->
+<!--        &lt;!&ndash;        <div class="food-list">&ndash;&gt;-->
+<!--        &lt;!&ndash;                <div class="food-item"><img src="/img/삼계탕.jpg" alt="삼계탕">&ndash;&gt;-->
+<!--        &lt;!&ndash;                    <p>보리밥</p>&ndash;&gt;-->
+<!--        &lt;!&ndash;                </div>&ndash;&gt;-->
+<!--        &lt;!&ndash;                <div class="food-item"><img src="/img/삼계탕.jpg" alt="삼계탕">&ndash;&gt;-->
+<!--        &lt;!&ndash;                    <p>해물탕</p>&ndash;&gt;-->
+<!--        &lt;!&ndash;                </div>&ndash;&gt;-->
+<!--        &lt;!&ndash;                <div class="food-item"><img src="/img/삼계탕.jpg" alt="삼계탕">&ndash;&gt;-->
+<!--        &lt;!&ndash;                    <p>감자탕</p>&ndash;&gt;-->
+<!--        &lt;!&ndash;                </div>&ndash;&gt;-->
+<!--        &lt;!&ndash;                <div class="food-item"><img src="/img/삼계탕.jpg" alt="삼계탕">&ndash;&gt;-->
+<!--        &lt;!&ndash;                    <p>감자탕</p>&ndash;&gt;-->
+<!--        &lt;!&ndash;                </div>&ndash;&gt;-->
+<!--        &lt;!&ndash;                <div class="food-item"><img src="/img/삼계탕.jpg" alt="삼계탕">&ndash;&gt;-->
+<!--        &lt;!&ndash;                    <p>감자탕</p>&ndash;&gt;-->
+<!--        &lt;!&ndash;                </div>&ndash;&gt;-->
+<!--    </div>-->
 </section>
 
-<!-- user footer 아래 복사 -->
-<footer>
-    <div th:replace="~{html/user_footer :: userFooter}"></div>
-</footer>
+<div th:replace="~{html/user_footer :: userFooter}"></div>
 
 </body>
 </html>

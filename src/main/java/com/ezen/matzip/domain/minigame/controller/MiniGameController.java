@@ -58,15 +58,6 @@ public class MiniGameController {
 
         return "domain/minigame/user_minigame";
     }
-
-//    @GetMapping("/minigame/last")
-//    public String LastMiniGame(Model model) {
-//
-//        KeywordDTO lastKeyword = miniGameService.lastKeyword(keywords);
-//        model.addAttribute()
-//        return "/domain/minigame/user_minigameresult";
-//    }
-
 }
 
 //minigame/ → 미니게임 기능 (추천 음식 선택)

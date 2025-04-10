@@ -44,7 +44,6 @@ public interface RestaurantRepository extends JpaRepository<Restaurant, Integer>
 
     Restaurant findByBusinessCode(int businessCode);
 
-
 //    @Query("SELECT CASE WHEN COUNT(u) > 0 THEN true ELSE false END FROM Restaurant u WHERE u.businessCode = :businessCode")
 //    Restaurant existsByBusinessCode(@Param("businessCode") int businessCode);
 //

@@ -52,19 +52,13 @@ public class MiniGameService {
     public String checkCurrentRound(List<KeywordDTO>[] keywords)
     {
         if (keywords[0].size() > 2 && keywords[2].isEmpty())
-        {
             return (keywords[0].size()) + "강 시작!";
-        }
         else if (keywords[0].size() == 2 && keywords[2].isEmpty())
-        {
             return "결승!";
-        }
         else if (keywords[0].isEmpty() && keywords[2].size() == 1)
-        {
             return "끝!";
-        }
 
-            return null;
+        return null;
     }
 
     public List<KeywordDTO>[] sortKeyword(List<KeywordDTO>[] remainedKeywords, String selected) {

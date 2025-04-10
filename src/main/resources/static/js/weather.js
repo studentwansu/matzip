@@ -1,8 +1,7 @@
 async function currentWeather() {
     myLocation2();
-    document.addEventListener('locationReady', async function(event) {
+    document.addEventListener('locationReady', async function (event) {
         MyApp.currentCoords = event.detail;
-        // console.log(event.detail);
         const API_KEY = '03b12504013ff688dca9c9c6e11188cd';
         const lat = parseFloat(MyApp.currentCoords.Ma.toFixed(2));
         const lon = parseFloat(MyApp.currentCoords.La.toFixed(2));
@@ -17,46 +16,36 @@ async function currentWeather() {
             weatherInputValue.value = weatherKeyword;
             weatherInputValue2.value = weatherKeyword;
 
-            $.ajax({
-                type: "POST",
-                url: "/weather/hashtags",
-                contentType: "application/json",
-                dataType: "text",
-                data: JSON.stringify({ weatherKeyword: weatherKeyword }),
-                beforeSend: function(xhr) {
-                    const csrfToken = $("meta[name='_csrf']").attr("content");
-                    const csrfHeader = $("meta[name='_csrf_header']").attr("content");
-                    xhr.setRequestHeader(csrfHeader, csrfToken);
-                },
-                success: function (data) {
-                    let hashtags = "";
-                    hashtags += data;
-                    $('p[id="weatherHashtags"]').text(hashtags);
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    console.error("음식 추천을 불러오지 못했습니다.");
-                    console.error("상태:", textStatus);
-                    console.error("오류:", errorThrown);
-                    console.error("응답:", jqXHR.responseText);
-                }
-            });
 
-            $.ajax({
-                type: "POST",
-                url: "/weather",
-                contentType: "application/json",
-                dataType: "json",
-                data: JSON.stringify({ weatherKeyword: weatherKeyword }),
-                beforeSend: function(xhr) {
-                    const csrfToken = $("meta[name='_csrf']").attr("content");
-                    const csrfHeader = $("meta[name='_csrf_header']").attr("content");
-                    xhr.setRequestHeader(csrfHeader, csrfToken);
-                },
-                success: function (data) {
-                    let foodListHtml = "";
-                    data.forEach(food => {
-                        console.log(food.keyword);
-                        foodListHtml += `
+            // CSRF 토큰 가져오기
+            const csrfToken = document.querySelector("meta[name='_csrf']").getAttribute("content");
+            const csrfHeader = document.querySelector("meta[name='_csrf_header']").getAttribute("content");
+
+            // 해더 설정
+            const headers = {
+                'Content-Type': 'application/json'
+            };
+            headers[csrfHeader] = csrfToken;
+
+            // 해시태그와 음식 정보를 동시에 요청
+            const hashtagPromise = axios.post("/weather/hashtags", {weatherKeyword: weatherKeyword}, {headers: headers});
+
+            const foodPromise = axios.post("/weather", {weatherKeyword: weatherKeyword}, {headers: headers});
+
+            // 두 요청이 모두 완료될 때까지 기다림
+            const [hashtagResponse, foodResponse] = await Promise.all([hashtagPromise, foodPromise]);
+
+            // 해시태그 처리
+            const hashtagData = hashtagResponse.data;
+            let hashtags = "";
+            hashtags += hashtagData;
+            document.querySelector('p[name="weatherHashtags"]').innerHTML = hashtags;
+
+            // 음식 목록 처리
+            const foodData = foodResponse.data;
+            let foodListHtml = "";
+            foodData.forEach(food => {
+                foodListHtml += `
                 <form action="/search">
                     <div class="food-item">
                         <button style="text-decoration: none; color: inherit; display: block; cursor: pointer; background: none;" type="submit">
@@ -66,21 +55,13 @@ async function currentWeather() {
                         </button>
                     </div>
                 </form>`;
-                    });
-                    $(".food-list").html(foodListHtml);
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    console.error("음식 추천을 불러오지 못했습니다.");
-                    console.error("상태:", textStatus);
-                    console.error("오류:", errorThrown);
-                    console.error("응답:", jqXHR.responseText);
-                }
             });
-
-
+            document.querySelector(".food-list").innerHTML = foodListHtml;
 
         } catch (error) {
-            console.error("날씨 정보를 가져오는 데 실패했습니다.", error);
+            console.error("날씨 정보 또는 추천 데이터를 가져오는 데 실패했습니다:", error);
+            // 에러 표시
+            document.querySelector(".food-list").innerHTML = "<p>날씨 정보를 가져올 수 없습니다. 나중에 다시 시도해주세요.</p>";
         }
     });
 }

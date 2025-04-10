@@ -46,4 +46,14 @@ public interface ReviewRepository extends JpaRepository<Review, Integer> {
     int countByReviewReportCountGreaterThan(int reviewReportCount);
 
     int countByHiddenFlag(int hiddenFlag);
+
+    List<Review> findAllByUserCode(int userCode);
+
+    @Query("SELECT AVG(r.rating) FROM Review r " +
+            "JOIN User u ON r.userCode = u.userCode " +
+            "WHERE u.nationality = :nationality " +
+            "AND r.restaurantCode = :restaurantCode")
+    Double getAverageByNationalityAndRestaurant(
+            @Param("nationality") String nationality,
+            @Param("restaurantCode") Restaurant restaurantCode);
 }

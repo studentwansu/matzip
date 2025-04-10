@@ -33,7 +33,6 @@ function searchDetailAddrFromCoords(coords, callback) {
 
 window.MyApp = window.MyApp || {};
 
-
 function myLocation2() {
     navigator.geolocation.getCurrentPosition(function (position) {
         // position은 현재 사용자의 위치 정보를 가지고 있음
