@@ -18,25 +18,20 @@ public class FragmentController {
 //    }
 
     // 사업자
-    @GetMapping("/fragments/storeheader")
-    public String getStoreHeader() {
-        return "html/store_header";
-    }
-
-    @GetMapping("/fragments/storefooter")
-    public String getStoreFooter() {
-        return "html/store_footer";
-    }
-
-    // 관리자
-    @GetMapping("/fragments/adminheader")
-    public String getAdminHeader() {
-        return "html/admin_header";
-    }
-
-    @GetMapping("/fragments/adminfooter")
-    public String getAdminFooter() {
-        return "html/admin_footer";
-    }
+//    @GetMapping("/fragments/storeheader")
+//    public String getStoreHeader() {
+//        return "html/store_header";
+//    }
+//
+//    // 관리자
+//    @GetMapping("/fragments/adminheader")
+//    public String getAdminHeader() {
+//        return "html/admin_header";
+//    }
+//
+//    @GetMapping("/fragments/adminfooter")
+//    public String getAdminFooter() {
+//        return "html/admin_footer";
+//    }
 
 }

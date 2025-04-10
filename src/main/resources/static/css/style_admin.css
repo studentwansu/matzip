@@ -57,14 +57,12 @@ a {
 }
 
 .admin-header-font1 {
-    font-family: "Poor Story";
     font-size: 2vh;
     color: #747474;
 }
 
 .admin-header-font2 {
-    font-family: "Poor Story";
-    font-size: 2vh;
+    font-size: 15px;
     color:black;
 }
 

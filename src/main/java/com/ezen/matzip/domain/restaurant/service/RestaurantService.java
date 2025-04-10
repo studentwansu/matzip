@@ -1,25 +1,20 @@
 package com.ezen.matzip.domain.restaurant.service;
 
 import com.ezen.matzip.domain.bookmark.dto.RestaurantForBookmarkDTO;
-import com.ezen.matzip.domain.restaurant.dto.MenuDTO;
-import com.ezen.matzip.domain.restaurant.dto.RegistDTO;
-import com.ezen.matzip.domain.restaurant.dto.RestaurantDTO;
 import com.ezen.matzip.domain.restaurant.dto.*;
 import com.ezen.matzip.domain.restaurant.entity.*;
+import com.ezen.matzip.domain.restaurant.enums.RestaurantStatus;
 import com.ezen.matzip.domain.restaurant.repository.*;
 import com.ezen.matzip.domain.review.dto.ReviewDTO;
-import com.ezen.matzip.domain.review.dto.ReviewImageDTO;
 import com.ezen.matzip.domain.review.entity.Review;
-import com.ezen.matzip.domain.review.entity.ReviewImage;
 import com.ezen.matzip.domain.review.repository.ReviewRepository;
-import com.ezen.matzip.domain.user.entity.Business;
+import com.ezen.matzip.domain.user.entity.User;
+import com.ezen.matzip.domain.user.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import com.ezen.matzip.domain.restaurant.enums.RestaurantStatus;
 
 import java.io.File;
 import java.io.IOException;
@@ -39,9 +34,9 @@ public class RestaurantService {
     private final ModelMapper modelMapper;
     private final RegistRepository registRepository;
     private final RestaurantImageRepository restaurantImageRepository;
+    private final UserRepository userRepository;
 
-    public List<ReviewDTO> getReviewsByRestaurant(int restaurantCode)
-    {
+    public List<ReviewDTO> getReviewsByRestaurant(int restaurantCode) {
         Restaurant restaurant = restaurantRepository.findByRestaurantCode(restaurantCode);
         List<Object[]> reviews = reviewRepository.findByRestaurantCode(restaurant);
         List<ReviewDTO> result = new ArrayList<>();
@@ -76,16 +71,10 @@ public class RestaurantService {
         } else {
             System.out.println("✅ restaurantCode " + restaurantCode + "에 해당하는 레스토랑 이름: " + restaurant.getRestaurantName());
         }
-        return new RestaurantDTO(
-                restaurant,
-                menuRepository.findByRestaurantCode(restaurant),
-                restaurantKeywordRepository.findByRestaurantCode(restaurant),
-                restaurantImageRepository.findRestaurantImageByRestaurantCode(restaurant)
-        );
+        return new RestaurantDTO(restaurant, menuRepository.findByRestaurantCode(restaurant), restaurantKeywordRepository.findByRestaurantCode(restaurant), restaurantImageRepository.findRestaurantImageByRestaurantCode(restaurant));
     }
 
-    public List<RestaurantImageDTO> getRestaurantImgs(int restaurantCode)
-    {
+    public List<RestaurantImageDTO> getRestaurantImgs(int restaurantCode) {
         List<RestaurantImage> restaurantImages = restaurantImageRepository.findRestaurantImageByRestaurantCode(restaurantCode);
         List<RestaurantImageDTO> imgDTOs = new ArrayList<>();
         if (!restaurantImages.isEmpty()) {
@@ -94,8 +83,7 @@ public class RestaurantService {
         return imgDTOs;
     }
 
-    public RestaurantDTO getRestaurantByBusinessCode(int businessCode)
-    {
+    public RestaurantDTO getRestaurantByBusinessCode(int businessCode) {
         Restaurant restaurant = restaurantRepository.findByBusinessCode(businessCode);
         List<Menu> menusList = menuRepository.findByRestaurantCode(restaurant);
         List<RestaurantKeyword> keywordsList = restaurantKeywordRepository.findByRestaurantCode(restaurant);
@@ -103,8 +91,7 @@ public class RestaurantService {
         return new RestaurantDTO(restaurant, menusList, keywordsList, imagesList);
     }
 
-    public List<RestaurantDTO> findByKeywordOrderByScore(String keyword)
-    {
+    public List<RestaurantDTO> findByKeywordOrderByScore(String keyword) {
         List<Object[]> foundByMenu = menuRepository.findRestaurantAndScoreByMenuName(keyword);
         List<Object[]> foundByRestInfo = restaurantRepository.findRestaurantsByKeywordWithScore(keyword);
         List<Object[]> foundByKeyword = restaurantKeywordRepository.findRestaurantAndScoreByRestaurantKeyword(keyword);
@@ -116,47 +103,31 @@ public class RestaurantService {
             Integer score = ((Number) fmenu[1]).intValue();
 
             if (rest.getRestaurantStatus() != 0) {
-                resultSet.put(
-                        new RestaurantDTO(
-                                rest,
-                                menuRepository.findByRestaurantCode(rest),
-                                restaurantKeywordRepository.findByRestaurantCode(rest),
-                                restaurantImageRepository.findRestaurantImageByRestaurantCode(rest)
-                        ), score
-                );
+                resultSet.put(new RestaurantDTO(rest, menuRepository.findByRestaurantCode(rest), restaurantKeywordRepository.findByRestaurantCode(rest), restaurantImageRepository.findRestaurantImageByRestaurantCode(rest)), score);
             }
         }
 
         for (Object[] frest : foundByRestInfo) {
             Restaurant rest = (Restaurant) frest[0];
             Integer score = ((Number) frest[1]).intValue();
-            RestaurantDTO dto = new RestaurantDTO(rest,
-                    menuRepository.findByRestaurantCode(rest),
-                    restaurantKeywordRepository.findByRestaurantCode(rest),
-                    restaurantImageRepository.findRestaurantImageByRestaurantCode(rest));
+            RestaurantDTO dto = new RestaurantDTO(rest, menuRepository.findByRestaurantCode(rest), restaurantKeywordRepository.findByRestaurantCode(rest), restaurantImageRepository.findRestaurantImageByRestaurantCode(rest));
             if (rest.getRestaurantStatus() != 0) {
                 if (resultSet.containsKey(dto)) {
                     Integer newScore = resultSet.get(dto) + score;
                     resultSet.put(dto, newScore);
-                } else
-                    resultSet.put(dto, score);
+                } else resultSet.put(dto, score);
             }
         }
 
-        for (Object[] fkeyw : foundByKeyword)
-        {
-            Restaurant rest = (Restaurant)fkeyw[0];
+        for (Object[] fkeyw : foundByKeyword) {
+            Restaurant rest = (Restaurant) fkeyw[0];
             Integer score = ((Number) fkeyw[1]).intValue();
-            RestaurantDTO dto = new RestaurantDTO(rest,
-                    menuRepository.findByRestaurantCode(rest),
-                    restaurantKeywordRepository.findByRestaurantCode(rest),
-                    restaurantImageRepository.findRestaurantImageByRestaurantCode(rest));
-            if(rest.getRestaurantStatus() != 0) {
+            RestaurantDTO dto = new RestaurantDTO(rest, menuRepository.findByRestaurantCode(rest), restaurantKeywordRepository.findByRestaurantCode(rest), restaurantImageRepository.findRestaurantImageByRestaurantCode(rest));
+            if (rest.getRestaurantStatus() != 0) {
                 if (resultSet.containsKey(dto)) {
                     Integer newScore = resultSet.get(dto) + score;
                     resultSet.put(dto, newScore);
-                } else
-                    resultSet.put(dto, score);
+                } else resultSet.put(dto, score);
             }
         }
 
@@ -169,30 +140,59 @@ public class RestaurantService {
         return finalList;
     }
 
-    public List<RestaurantDTO> filteredRestaurantsByCategory(String keyword, int category)
-    {
+    public List<RestaurantDTO> filteredRestaurantsByCategory(String keyword, int category, String nationality) {
+
         List<RestaurantDTO> list = findByKeywordOrderByScore(keyword);
         List<RestaurantDTO> filteredList = new ArrayList<>();
-        for (RestaurantDTO dto : list)
+
+        if (category < 6) {
+            for (RestaurantDTO dto : list) {
+                if (dto.getCategoryCode().getCategoryCode() == category) {
+                    filteredList.add(dto);
+                }
+            }
+        }
+        else // 만약 '내 나라'를 선택했다면
         {
-            if (dto.getCategoryCode().getCategoryCode() == category)
+            List<User> users = userRepository.findByNationality(nationality);
+            List<Restaurant> restaurants = new ArrayList<>();
+            List<Review> reviews = new ArrayList<>();
+            Map<Restaurant, Double> restaurantsWithRating = new HashMap<>();
+
+            for (User user : users)
+                reviews.addAll(reviewRepository.findAllByUserCode(user.getUserCode()));
+
+            for (Review review : reviews)
             {
+                Restaurant foundRestaurant = restaurantRepository.findByRestaurantCode(review.getRestaurantCode().getRestaurantCode());
+                if (!restaurants.contains(foundRestaurant))
+                    restaurants.add(foundRestaurant);
+            }
+
+            for (Restaurant restaurant : restaurants)
+            {
+                Double rating = reviewRepository.getAverageByNationalityAndRestaurant(nationality, restaurant);
+                restaurantsWithRating.put(restaurant, rating);
+            }
+
+            List<Map.Entry<Restaurant, Double>> sortedList = new ArrayList<>(restaurantsWithRating.entrySet());
+            sortedList.sort(Map.Entry.comparingByValue(Comparator.reverseOrder()));
+
+            for (Map.Entry<Restaurant, Double> restaurant : sortedList)
+            {
+                RestaurantDTO dto = new RestaurantDTO(restaurant.getKey(), menuRepository.findByRestaurantCode(restaurant.getKey()), restaurantKeywordRepository.findByRestaurantCode(restaurant.getKey()), restaurantImageRepository.findRestaurantImageByRestaurantCode(restaurant.getKey()));
                 filteredList.add(dto);
             }
         }
-
         return filteredList;
     }
 
-    public List<RestaurantDTO> findRestaurantsAndImgs(List<RestaurantDTO> restaurantDTOList)
-    {
+    public List<RestaurantDTO> findRestaurantsAndImgs(List<RestaurantDTO> restaurantDTOList) {
 
-        for (int i = 0; i < restaurantDTOList.size(); i++)
-        {
+        for (int i = 0; i < restaurantDTOList.size(); i++) {
             List<RestaurantImage> img = restaurantImageRepository.findRestaurantImageByRestaurantCode(restaurantDTOList.get(i).getRestaurantCode());
             List<RestaurantImageDTO> imgDTOList = new ArrayList<>();
-            for (int j = 0; j < img.size(); j++)
-            {
+            for (int j = 0; j < img.size(); j++) {
                 RestaurantImageDTO imgDTO = new RestaurantImageDTO();
                 imgDTO.setRestaurantCode(restaurantDTOList.get(i).getRestaurantCode());
                 imgDTO.setRestaurantImagePath(img.get(j).getRestaurantImagePath());
@@ -208,10 +208,7 @@ public class RestaurantService {
         return restaurantDTOList;
     }
 
-//    public List<RestaurantDTO> filteredRestaurantsByCountry(String keyword,)
-
-    public String findLocationByRestaurantCode(Integer restaurantCode)
-    {
+    public String findLocationByRestaurantCode(Integer restaurantCode) {
         Restaurant restaurant = restaurantRepository.findByRestaurantCode(restaurantCode);
         System.out.println("location: " + restaurant.getRestaurantLocation());
         return restaurant.getRestaurantLocation();
@@ -232,19 +229,7 @@ public class RestaurantService {
         Category category = convertToCategory(registDTO.getRestaurantCategory());
 
         // 레스토랑 객체 생성
-        Restaurant regist = new Restaurant(
-                registDTO.getRestaurantCode(),
-                registDTO.getRestaurantName(),
-                registDTO.getRestaurantLocation(),
-                registDTO.getRestaurantContactNumber(),
-                registDTO.getRestaurantDescription(),
-                registDTO.getMainMenu(),
-                startTime,
-                endTime,
-                registDTO.getRestaurantService(),
-                category,
-                registDTO.getBusinessCode()
-        );
+        Restaurant regist = new Restaurant(registDTO.getRestaurantCode(), registDTO.getRestaurantName(), registDTO.getRestaurantLocation(), registDTO.getRestaurantContactNumber(), registDTO.getRestaurantDescription(), registDTO.getMainMenu(), startTime, endTime, registDTO.getRestaurantService(), category, registDTO.getBusinessCode());
 
         // 추가적인 레스토랑 속성 설정
         regist.setRestaurantRegistrationDate(new Date());
@@ -253,20 +238,16 @@ public class RestaurantService {
         regist.setRestaurantStatus(0);
 
         // 메뉴 추가
-        List<Menu> menuList = IntStream.range(0, registDTO.getMenuName().size())
-                .mapToObj(i -> {
-                    // 레스토랑 객체를 Menu 생성자에 전달
-                    Menu menu = new Menu(registDTO.getMenuName().get(i), registDTO.getMenuPrice().get(i), regist);
-                    return menu;
-                })
-                .collect(Collectors.toList());
+        List<Menu> menuList = IntStream.range(0, registDTO.getMenuName().size()).mapToObj(i -> {
+            // 레스토랑 객체를 Menu 생성자에 전달
+            Menu menu = new Menu(registDTO.getMenuName().get(i), registDTO.getMenuPrice().get(i), regist);
+            return menu;
+        }).collect(Collectors.toList());
 
         regist.setMenus(menuList);
 
         // 키워드 추가
-        List<RestaurantKeyword> keywordList = registDTO.getRestaurantKeyword().stream()
-                .map(keyword -> new RestaurantKeyword(keyword, regist))
-                .collect(Collectors.toList());
+        List<RestaurantKeyword> keywordList = registDTO.getRestaurantKeyword().stream().map(keyword -> new RestaurantKeyword(keyword, regist)).collect(Collectors.toList());
 
         regist.setRestaurantKeywords(keywordList);
 
@@ -275,8 +256,7 @@ public class RestaurantService {
         restaurantRepository.save(regist);
 
         for (RestaurantImageDTO dto : restaurantImageDTO) {
-            RestaurantImage restaurantImage = new RestaurantImage(
-                    regist, dto.getRestaurantImagePath(), dto.getRestaurantOriginalName(), dto.getRestaurantSavedName());
+            RestaurantImage restaurantImage = new RestaurantImage(regist, dto.getRestaurantImagePath(), dto.getRestaurantOriginalName(), dto.getRestaurantSavedName());
             restaurantImageRepository.save(restaurantImage);
         }
 
@@ -298,18 +278,7 @@ public class RestaurantService {
         Category category = convertToCategory(registDTO.getRestaurantCategory());
 
         // 레스토랑 수정
-        foundModify.Modify(
-                registDTO.getRestaurantCode(),
-                registDTO.getRestaurantName(),
-                registDTO.getRestaurantLocation(),
-                registDTO.getRestaurantContactNumber(),
-                registDTO.getRestaurantDescription(),
-                registDTO.getMainMenu(),
-                startTime,
-                endTime,
-                registDTO.getRestaurantService(),
-                category,
-                registDTO.getBusinessCode());
+        foundModify.Modify(registDTO.getRestaurantCode(), registDTO.getRestaurantName(), registDTO.getRestaurantLocation(), registDTO.getRestaurantContactNumber(), registDTO.getRestaurantDescription(), registDTO.getMainMenu(), startTime, endTime, registDTO.getRestaurantService(), category, registDTO.getBusinessCode());
 
 
         List<Menu> foundMenus = menuRepository.findByRestaurantCode(foundModify);
@@ -317,13 +286,11 @@ public class RestaurantService {
             menuRepository.delete(menu);
         }
         // 새로운 메뉴 객체 리스트 생성
-        List<Menu> newMenus = IntStream.range(0, registDTO.getMenuName().size())
-                .mapToObj(i -> {
-                    Menu menu = new Menu(registDTO.getMenuName().get(i), registDTO.getMenuPrice().get(i));
-                    menu.setRestaurantCode(foundModify);  // 새로운 메뉴에 레스토랑 코드 설정
-                    return menu;
-                })
-                .collect(Collectors.toList());
+        List<Menu> newMenus = IntStream.range(0, registDTO.getMenuName().size()).mapToObj(i -> {
+            Menu menu = new Menu(registDTO.getMenuName().get(i), registDTO.getMenuPrice().get(i));
+            menu.setRestaurantCode(foundModify);  // 새로운 메뉴에 레스토랑 코드 설정
+            return menu;
+        }).collect(Collectors.toList());
 
         // 새로운 메뉴 리스트 추가
         foundModify.getMenus().addAll(newMenus);
@@ -335,8 +302,7 @@ public class RestaurantService {
         }
         foundModify.getRestaurantKeywords().clear(); // 기존 키워드 삭제
 
-        List<RestaurantKeyword> keywordList = registDTO.getRestaurantKeyword().stream()
-                .map(keyword -> new RestaurantKeyword(keyword, foundModify)) // 새로운 키워드 추가
+        List<RestaurantKeyword> keywordList = registDTO.getRestaurantKeyword().stream().map(keyword -> new RestaurantKeyword(keyword, foundModify)) // 새로운 키워드 추가
                 .collect(Collectors.toList());
         foundModify.getRestaurantKeywords().addAll(keywordList);
 
@@ -352,8 +318,7 @@ public class RestaurantService {
 
         try {
             File fileDir = new File("src/main/resources/static/img/restaurant");
-            if (!fileDir.exists())
-                fileDir.mkdirs();
+            if (!fileDir.exists()) fileDir.mkdirs();
             filePath = fileDir.getAbsolutePath();
 
             int count = 0;
@@ -374,8 +339,7 @@ public class RestaurantService {
             }
 
             for (RestaurantImageDTO dto : files) {
-                RestaurantImage restaurantImage = new RestaurantImage(
-                        foundModify, dto.getRestaurantImagePath(), dto.getRestaurantOriginalName(), dto.getRestaurantSavedName());
+                RestaurantImage restaurantImage = new RestaurantImage(foundModify, dto.getRestaurantImagePath(), dto.getRestaurantOriginalName(), dto.getRestaurantSavedName());
                 restaurantImageRepository.save(restaurantImage);
             }
 
@@ -405,20 +369,9 @@ public class RestaurantService {
         dto.setRestaurantName(restaurant.getRestaurantName());
         dto.setMainMenu(restaurant.getMainMenu());
         dto.setRestaurantLocation(restaurant.getRestaurantLocation());
-        dto.setRestaurantMenus(
-                restaurant.getMenus().stream()
-                        .map(menu -> new MenuDTO(menu.getMenuCode(), menu.getMenuName(), menu.getMenuPrice(), restaurant))
-                        .collect(Collectors.toList())
-        );
+        dto.setRestaurantMenus(restaurant.getMenus().stream().map(menu -> new MenuDTO(menu.getMenuCode(), menu.getMenuName(), menu.getMenuPrice(), restaurant)).collect(Collectors.toList()));
         // 변환: restaurant 엔티티에 있는 키워드들을 RestaurantKeywordDTO 리스트로 매핑
-        dto.setRestaurantKeywords(
-                restaurant.getRestaurantKeywords().stream()
-                        .map(keyword -> new RestaurantKeywordDTO(
-                                keyword.getRestaurantKeywordCode(),
-                                keyword.getRestaurantCode().getRestaurantCode(),
-                                keyword.getRestaurantKeyword()))
-                        .collect(Collectors.toList())
-        );
+        dto.setRestaurantKeywords(restaurant.getRestaurantKeywords().stream().map(keyword -> new RestaurantKeywordDTO(keyword.getRestaurantKeywordCode(), keyword.getRestaurantCode().getRestaurantCode(), keyword.getRestaurantKeyword())).collect(Collectors.toList()));
         return dto;
     }
     //완수 끝
@@ -427,13 +380,11 @@ public class RestaurantService {
     public List<RestaurantDTO> getPendingRestaurants() {
         int pendingCode = RestaurantStatus.PENDING.getCode();
         List<Restaurant> pendingList = restaurantRepository.findByRestaurantStatus(pendingCode);
-        return pendingList.stream()
-                .map(RestaurantDTO::fromEntity)
-                .collect(Collectors.toList());
+        return pendingList.stream().map(RestaurantDTO::fromEntity).collect(Collectors.toList());
     }
+
     public void updateRestaurantStatus(int restaurantCode, int statusCode) {
-        Restaurant restaurant = restaurantRepository.findById(restaurantCode)
-                .orElseThrow(() -> new IllegalArgumentException("해당 식당을 찾을 수 없습니다."));
+        Restaurant restaurant = restaurantRepository.findById(restaurantCode).orElseThrow(() -> new IllegalArgumentException("해당 식당을 찾을 수 없습니다."));
         restaurant.setRestaurantStatus(statusCode);
         restaurantRepository.save(restaurant);
     }
