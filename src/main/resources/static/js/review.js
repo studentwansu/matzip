@@ -35,6 +35,7 @@ function openModal(reviewCode, userCode) {
     formContainer.innerHTML = ''; // 이미지 초기화
 
     console.log("이미지 가져올 리뷰코드:", reviewCode);
+
     fetch(`/user/review/imageList/${reviewCode}`)
         .then(res => res.json())
         .then(data => {
@@ -43,12 +44,12 @@ function openModal(reviewCode, userCode) {
             } else {
                 data.forEach(image => {
                     const div = document.createElement('div');
-                    div.classList.add("image-preview"); // 이 클래스 중요함!
+                    div.classList.add("image-preview");
 
                     const img = document.createElement('img');
                     img.src = '/' + image.reviewImagePath.replace(/^\/+/, '');
                     img.alt = '리뷰 이미지';
-                    img.classList.add("preview-img"); // 스타일 입히려면 꼭 필요!
+                    img.classList.add("preview-img");
 
                     div.appendChild(img);
                     formContainer.appendChild(div);

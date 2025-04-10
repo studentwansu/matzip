@@ -111,7 +111,8 @@ public class ReviewController {
         User user = userService.findByUserId(principal.getName());
         reviewDTO.setUserCode(user.getUserCode());
 
-        ClassPathResource resource = new ClassPathResource("static/img/restaurant");
+        // 저장 경로 설정
+        ClassPathResource resource = new ClassPathResource("static/img/review");
         String filePath = resource.exists() ? resource.getFile().getAbsolutePath() : new File("src/main/resources/static/img/review").getAbsolutePath();
         new File(filePath).mkdirs();
 

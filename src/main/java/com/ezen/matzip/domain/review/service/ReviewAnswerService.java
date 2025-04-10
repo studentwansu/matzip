@@ -114,6 +114,7 @@ public class ReviewAnswerService {
         return result;
     }
 
+    // 사업자 메인페이지에서 최근 리뷰 5개만 조회
     public List<Review> getRecentReview(int businessCode) {
         return reviewAnswerRepository.findTop5ReviewByBusinessCodeOrderByReviewDateDesc(businessCode);
     }
