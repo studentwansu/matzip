@@ -77,23 +77,6 @@
                 </tr>
                 </tbody>
             </table>
-<!--            <div class="pagination">-->
-<!--                &lt;!&ndash; 이전 버튼 &ndash;&gt;-->
-<!--                <span th:if="${currentPage > 0}">-->
-<!--                <a th:href="@{/user/bookmarks(page=${currentPage - 1}, size=${size})}">이전</a>-->
-<!--            </span>-->
-<!--                &lt;!&ndash; 페이지 번호 &ndash;&gt;-->
-<!--                <span th:each="i : ${#numbers.sequence(0, totalPages - 1)}">-->
-<!--                <a th:href="@{/user/bookmarks(page=${i}, size=${size})}"-->
-<!--                   th:if="${i != currentPage}"-->
-<!--                   th:text="${i + 1}"></a>-->
-<!--                <span th:if="${i == currentPage}" th:text="${i + 1}"></span>-->
-<!--            </span>-->
-<!--                &lt;!&ndash; 다음 버튼 &ndash;&gt;-->
-<!--                <span th:if="${currentPage < totalPages - 1}">-->
-<!--                <a th:href="@{/user/bookmarks(page=${currentPage + 1}, size=${size})}">다음</a>-->
-<!--            </span>-->
-<!--            </div>-->
 
             <!-- 모달 -->
             <div class="modal" id="reviewModal">
@@ -103,14 +86,6 @@
                     <div id="test"></div>
                     <form action="/user/review/modify" class="reviewForm" enctype="multipart/form-data" id="myform"
                           method="post">
-
-                        <!--                    <div class="imageContainer">-->
-                        <!--                        &lt;!&ndash; 이미지 미리보기 &ndash;&gt;-->
-                        <!--                        <div class="image-preview" th:each="img : ${selectedReviewImgs}">-->
-                        <!--                            <img th:src="@{${img.reviewImagePath}}" class="preview-img" />-->
-                        <!--                        </div>-->
-                        <!--                    </div>-->
-
                         <div class="imageContainer">
                             <th:block th:each="img : ${selectedReviewImgs}">
                                 <div class="image-preview">
