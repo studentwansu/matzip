@@ -5,9 +5,10 @@
         </a>
         <div class="store-header-container">
             <div class="store-header-textdiv">
-                <p class="store-header-font1"> 어쩌구저쩌구 </p>
+                <p class="store-header-font1"> 💡Tip💡 </p>
                 <div class="line-yellow"></div>
-                <p class="store-header-font2"> 어쩌구저쩌구</p>
+                <p class="store-header-font2"> 1. 키워드는 총 다섯개까지 등록 가능하며, 검색 결과에 영향을 줍니다❗ 신중하게 작성하세요. <br>
+                2. 식당은 한 아이디당 하나만 등록 가능합니다❗ 추가 등록 필요 시 관리자에게 Q&A를 남겨주세요. </p>
             </div>
         </div>
         <div class="logout">
@@ -18,7 +19,7 @@
             <!-- POST 방식 로그아웃 폼 -->
             <form th:action="@{/logout}" method="post">
                 <!-- CSRF 토큰 추가 -->
-                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+<!--                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />-->
                 <button type="submit" class="redbutton3 redbutton-font">
                     로그아웃
                 </button>
