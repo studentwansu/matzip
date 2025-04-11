@@ -116,8 +116,10 @@
                     <div class="reviewbox" th:each="review : ${reviews}">
                         <span style="font-size:1.5vh;" th:text="${review.userId}"></span>
                         <span style="font-size:1.5vh;" th:text="${review.nationality}"></span>
-                        <span style="font-size:1.5vh;" th:text="${review.reviewDate}"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
-                            style="font-size:1.5vh;" th:text="${review.rating}"></span><br>
+                        <span style="font-size:1.5vh;" th:text="${review.reviewDate}"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <span th:each="i : ${#numbers.sequence(1, 5)}">
+                            <i class="fa fa-star" th:style="${review.rating >= i ? 'color:yellow;' : 'color:black;'}"></i>
+                        </span><br>
                         <span style="font-size:1.5vh;" th:text="${review.reviewContent}"></span><br>
                         <div class="reviewimgbox">
                             <img class="reviewimg" th:each="img : ${review.reviewImages}" th:if="${img != null}" th:src="@{${img.reviewImagePath}}">
