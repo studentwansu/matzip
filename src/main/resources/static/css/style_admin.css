@@ -37,40 +37,6 @@ a {
     font-size: 1.6vh;
 }
 
-.admin-header {
-    height: 26vh;
-    width: 100%;
-    background-color: #fff3e0;
-    padding: 1vh 5%;
-    display: flex;
-    align-items: center;
-}
-.admin-header-container {
-    width: 88vh;
-    height: 16vh;
-    background-color: white;
-    border: 1px solid #747474;
-    border-radius: 2vh;
-    display:flex;
-    position:absolute;
-    left: 25.5%;
-}
-
-.admin-header-font1 {
-    font-size: 2vh;
-    color: #747474;
-}
-
-.admin-header-font2 {
-    font-size: 15px;
-    color:black;
-}
-
-.admin-header-textdiv {
-    margin-left: 3.5vh;
-    margin-top: 1vh;
-}
-
 .logout {
     position:absolute;
     display:flex;
