@@ -97,9 +97,9 @@
                     </div>
                     <div class="store-inner-container2">
                         <div class="buttonbox">
-                            <!--                                <button th:class="${restaurant.restaurantStatus == 1 ? 'greenbutton1' : 'redbutton1'}"-->
-                            <!--                                        th:text="${restaurant.restaurantStatus == 1 ? '등록완료' : '등록전'}">-->
-                            <!--                                </button>-->
+                            <button th:class="${restaurant.restaurantStatus == 1 ? 'greenbutton1' : 'redbutton1'}"
+                                    th:text="${restaurant.restaurantStatus == 1 ? '등록완료' : '등록전'}">
+                            </button>
                         </div>
                         <div class="mapbox">
                             <div id="map" style="width:100%;height:30vh;"></div>
@@ -119,8 +119,10 @@
                     <div class="reviewbox" th:each="review : ${reviews}">
                         <span style="font-size:1.5vh;" th:text="${review.userId}"></span>
                         <span style="font-size:1.5vh;" th:text="${review.nationality}"></span>
-                        <span style="font-size:1.5vh;" th:text="${review.reviewDate}"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
-                            style="font-size:1.5vh;" th:text="${review.rating}"></span><br>
+                        <span style="font-size:1.5vh;" th:text="${review.reviewDate}"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <span th:each="i : ${#numbers.sequence(1, 5)}">
+                            <i class="fa fa-star" th:style="${review.rating >= i ? 'color:yellow;' : 'color:black;'}"></i>
+                        </span><br>
                         <span style="font-size:1.5vh;" th:text="${review.reviewContent}"></span><br>
                         <div class="reviewimgbox" th:each="img : ${review.reviewImages}">
                             <img class="reviewimg" th:src="@{${img.reviewImagePath}}">
