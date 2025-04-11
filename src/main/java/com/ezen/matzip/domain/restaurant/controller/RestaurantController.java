@@ -29,10 +29,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -84,6 +81,10 @@ public class RestaurantController {
             // 로그인하지 않은 경우 false로 처리
             model.addAttribute("bookmarked", false);
         }
+
+        Double rating = reviewService.getAverageReviewRating(restaurant);
+        model.addAttribute("rating", rating);
+
         return "domain/restaurant/user_restinfo";
     }
 
@@ -98,6 +99,9 @@ public class RestaurantController {
 
         model.addAttribute("restaurant", restaurant);
         model.addAttribute("reviews", resultReview);
+
+        Double rating = reviewService.getAverageReviewRating(restaurant);
+        model.addAttribute("rating", rating);
 
         return "domain/restaurant/admin_restinfo";
     }
@@ -116,6 +120,9 @@ public class RestaurantController {
 
         model.addAttribute("restaurant", restaurant);
         model.addAttribute("reviews", resultReview);
+
+        Double rating = reviewService.getAverageReviewRating(restaurant);
+        model.addAttribute("rating", rating);
 
         return "domain/restaurant/store_restinfo";
     }
@@ -216,8 +223,8 @@ public class RestaurantController {
         session.setAttribute("lastKeyword", keyword);
         List<RestaurantDTO> restaurants = restaurantService.findByKeywordOrderByScore(keyword);
         restaurants = restaurantService.findRestaurantsAndImgs(restaurants);
-
-        model.addAttribute("restaurantList", restaurants);
+        Map<RestaurantDTO, Double> restaurantsWithRating = restaurantService.restaurantAndRating(restaurants);
+        model.addAttribute("restaurantList", restaurantsWithRating);
         model.addAttribute("myLoc", keyword);
 
         //완수- 북마크 기능에 필요
@@ -240,7 +247,8 @@ public class RestaurantController {
             nationality = user.getNationality();
         }
         List<RestaurantDTO> restaurants = restaurantService.filteredRestaurantsByCategory(keyword, categoryCode, nationality);
-        model.addAttribute("restaurantList", restaurants);
+        Map<RestaurantDTO, Double> restaurantsWithRating = restaurantService.restaurantAndRating(restaurants);
+        model.addAttribute("restaurantList", restaurantsWithRating);
         return "domain/search/user_restlist";
     }
 

@@ -140,6 +140,20 @@ public class RestaurantService {
         return finalList;
     }
 
+    public Map<RestaurantDTO, Double> restaurantAndRating(List<RestaurantDTO> restaurants)
+    {
+        Map<RestaurantDTO, Double> result = new HashMap<>();
+        for (RestaurantDTO rest : restaurants)
+        {
+            Restaurant restaurant = restaurantRepository.findByRestaurantCode(rest.getRestaurantCode());
+            Double rating = reviewRepository.findAverageRatingByRestaurantCode(restaurant);
+
+            result.put(rest, rating);
+        }
+
+        return result;
+    }
+
     public List<RestaurantDTO> filteredRestaurantsByCategory(String keyword, int category, String nationality) {
 
         List<RestaurantDTO> list = findByKeywordOrderByScore(keyword);
