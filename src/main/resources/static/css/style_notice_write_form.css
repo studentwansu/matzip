@@ -284,9 +284,9 @@ a {
 
 }
 
-.container {
+.notice-container {
     width: 88vh;
-    height: 29vh;
+    height: 60vh;
     align-items: center;
     background-color: white;
     border: 1px solid #747474;
@@ -312,6 +312,11 @@ a {
     display: inline-block;
     font-size:1.6vh;
 
+}
+.board-table {
+    font-size: 13px;
+    width: 100%;
+    border-top: 1px solid #ccc;
 }
 
 .admit-input {

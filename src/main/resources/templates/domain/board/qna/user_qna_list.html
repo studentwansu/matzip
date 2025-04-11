@@ -8,7 +8,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poor+Story&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/css/style_user.css">
+    <link rel="stylesheet" href="/css/style_notice_list.css">
+    <link rel="stylesheet" href="/css/header_footer.css">
     <script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=fd7786d297e2d4aaab4aa8b6bbb06b88&libraries=services"
             type="text/javascript"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
@@ -25,13 +26,12 @@
 </header>
 
 <main>
-    <section class="body-section">
-        <div class="container-title" style="justify-content:center;">
-            <span class="container-font1">Q&A</span>
+   <section class="content-container">
+        <div class="container-title1" style="justify-content:center;">
+            <h2 class="container-font1">Q&A</h2>
         </div>
         <!-- 목록 페이지는 팝업용 메시지 영역 대신 confirm 스크립트에서 처리 -->
-        <div class="line-yellow-100"></div>
-        <table class="user-table-class">
+        <table class="board-table">
             <thead>
             <tr>
                 <th style="width:3vh; text-align:center;">번호</th>
@@ -119,8 +119,8 @@
 
 <!-- 팝업창 처리 스크립트 (msg 값이 전달되면 confirm 팝업을 띄움) -->
 <script>
-    $(document).ready(function(){
-        $(".qna-title").click(function(e){
+    $(document).ready(function () {
+        $(".qna-title").click(function (e) {
             e.preventDefault();
             $(this).closest("tr")
                 .next(".qna-content-row")

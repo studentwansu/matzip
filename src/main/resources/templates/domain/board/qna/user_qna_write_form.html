@@ -7,7 +7,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poor+Story&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/static/css/style_user.css">
+  <link href="/css/style_notice_write_form.css" rel="stylesheet">
+  <link href="/css/header_footer.css" rel="stylesheet">
   <script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=fd7786d297e2d4aaab4aa8b6bbb06b88&libraries=services"
           type="text/javascript"></script>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
@@ -37,9 +38,9 @@
         <textarea class="user-input" id="title" name="title" placeholder="글 제목을 입력하세요." rows="1" cols="168"></textarea><br><br>
         <textarea class="user-input" id="content" name="content" placeholder="글 내용 작성" rows="18" cols="168"></textarea><br><br>
         <div class="buttonbox5">
-          <button type="button" class="redbutton3 redbutton-font" style="font-size:1.5vh;">이미지등록</button>
-          <button type="submit" class="redbutton3 redbutton-font">등록</button>
-          <a href="">뒤로가기</a>
+          <button type="button"  style="font-size:">이미지등록</button>
+          <button type="submit">등록</button>
+          <a th:href="@{/board/qna}" class="btn btn-secondary">뒤로가기</a>
         </div>
       </form>
     </div>
