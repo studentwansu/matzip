@@ -44,8 +44,8 @@
         <div class="store-info">
             <div class="store-imgs">
                 <!-- 여기에 이미지 넣기 -->
-                <div class="store-imgs" th:each="img : ${restaurant.restaurantImages}">
-                    <img class="preview-img" th:src="@{${img.restaurantImagePath}}"/>
+                <div class="store-imgs">
+                    <img class="preview-img" th:each="img : ${restaurant.restaurantImages}" th:if="${img != null}" th:src="@{${img.restaurantImagePath}}">
                 </div>
             </div>
             <div class="store-container">

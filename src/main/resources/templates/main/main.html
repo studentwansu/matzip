@@ -38,40 +38,62 @@
             </form>
         </div>
     </div>
-
     <div class="container-main">
-        <form action="/weather/hashtags">
-            <input name="weatherCondition" type="hidden" value=""/>
-            <p name="weatherHashtags"></p>
-        </form>
+        <p>#외국인이좋아하는한식🌺 #Top5 #떡볶이 #불고기 #삼계탕 #갈비찜 #닭갈비 #ForForigners💖</p>
         <div class="line-yellow-100"></div>
-        <div class="food-list" id="food-list1">
-            <form action="/weather" id="weatherTest1">
-                <input name="recommendKeywords" type="hidden" value=""/>
+        <div class="food-list">
+            <form action="/search">
+                <div class="food-item">
+                    <button style="text-decoration: none; color: inherit; display: block; cursor: pointer; background: none;"
+                            type="submit">
+                        <img class="main-img" src="/img/food/ddeokbokki.jpg">
+                        <p style="font-size: 1.6vh;">떡볶이(Ddeokbokki)</p>
+                        <input name="keyword" type="hidden" value="떡볶이">
+                    </button>
+                </div>
+            </form>
+            <form action="/search">
+                <div class="food-item">
+                    <button style="text-decoration: none; color: inherit; display: block; cursor: pointer; background: none;"
+                            type="submit">
+                        <img class="main-img" src="/img/food/Bulgogi.jpg">
+                        <p style="font-size: 1.6vh;">불고기(Bulgogi)</p>
+                        <input name="keyword" type="hidden" value="불고기">
+                    </button>
+                </div>
+            </form>
+            <form action="/search">
+                <div class="food-item">
+                    <button style="text-decoration: none; color: inherit; display: block; cursor: pointer; background: none;"
+                            type="submit">
+                        <img class="main-img" src="/img/food/samgyetang.jpg">
+                        <p style="font-size: 1.6vh;">삼계탕(Samgyetang)</p>
+                        <input name="keyword" type="hidden" value="삼계탕">
+                    </button>
+                </div>
+            </form>
+            <form action="/search">
+                <div class="food-item">
+                    <button style="text-decoration: none; color: inherit; display: block; cursor: pointer; background: none;"
+                            type="submit">
+                        <img class="main-img" src="/img/food/GalbiJjim.jpg">
+                        <p style="font-size: 1.6vh;">갈비찜(GalbiJjim)</p>
+                        <input name="keyword" type="hidden" value="갈비찜">
+                    </button>
+                </div>
+            </form>
+            <form action="/search">
+                <div class="food-item">
+                    <button style="text-decoration: none; color: inherit; display: block; cursor: pointer; background: none;"
+                            type="submit">
+                        <img class="main-img" src="/img/food/Dakgalbi.jpg">
+                        <p style="font-size: 1.6vh;">닭갈비(Dakgalbi)</p>
+                        <input name="keyword" type="hidden" value="닭갈비">
+                    </button>
+                </div>
             </form>
         </div>
     </div>
-
-<!--    <div class="container-main">-->
-<!--        <p>#중국인에게추천 #보리밥 #해물탕 #감자탕</p>-->
-<!--        <div class="line-yellow-100"></div>-->
-<!--        &lt;!&ndash;        <div class="food-list">&ndash;&gt;-->
-<!--        &lt;!&ndash;                <div class="food-item"><img src="/img/삼계탕.jpg" alt="삼계탕">&ndash;&gt;-->
-<!--        &lt;!&ndash;                    <p>보리밥</p>&ndash;&gt;-->
-<!--        &lt;!&ndash;                </div>&ndash;&gt;-->
-<!--        &lt;!&ndash;                <div class="food-item"><img src="/img/삼계탕.jpg" alt="삼계탕">&ndash;&gt;-->
-<!--        &lt;!&ndash;                    <p>해물탕</p>&ndash;&gt;-->
-<!--        &lt;!&ndash;                </div>&ndash;&gt;-->
-<!--        &lt;!&ndash;                <div class="food-item"><img src="/img/삼계탕.jpg" alt="삼계탕">&ndash;&gt;-->
-<!--        &lt;!&ndash;                    <p>감자탕</p>&ndash;&gt;-->
-<!--        &lt;!&ndash;                </div>&ndash;&gt;-->
-<!--        &lt;!&ndash;                <div class="food-item"><img src="/img/삼계탕.jpg" alt="삼계탕">&ndash;&gt;-->
-<!--        &lt;!&ndash;                    <p>감자탕</p>&ndash;&gt;-->
-<!--        &lt;!&ndash;                </div>&ndash;&gt;-->
-<!--        &lt;!&ndash;                <div class="food-item"><img src="/img/삼계탕.jpg" alt="삼계탕">&ndash;&gt;-->
-<!--        &lt;!&ndash;                    <p>감자탕</p>&ndash;&gt;-->
-<!--        &lt;!&ndash;                </div>&ndash;&gt;-->
-<!--    </div>-->
 </section>
 
 <div th:replace="~{html/user_footer :: userFooter}"></div>

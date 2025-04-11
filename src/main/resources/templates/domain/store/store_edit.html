@@ -46,6 +46,7 @@
         <div class="store-info">
             <form enctype="multipart/form-data" method="post" onsubmit="removeEmptyKeywords()"
                   th:action="@{/business/modify}">
+                <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
                 <div>
                     <div class="store-imgs" th:if="${currentRestaurant.restaurantImages != null}">
                         <img class="preview-img" th:each="img : ${currentRestaurant.restaurantImages}" th:if="${img != null}" th:src="@{${img.restaurantImagePath}}">
@@ -193,8 +194,7 @@
                                 </textarea>
                             </div>
                             <div class="buttonbox2">
-                                <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
-                                <a href=""><input class="redbutton1 button" type="submit" value="수정요청"></a>
+                                <a href=""><input class="redbutton1" type="submit" value="수정요청"></a>
                             </div>
                         </div>
                     </div>
