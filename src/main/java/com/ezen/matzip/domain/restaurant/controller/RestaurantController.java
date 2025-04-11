@@ -81,6 +81,10 @@ public class RestaurantController {
             // 로그인하지 않은 경우 false로 처리
             model.addAttribute("bookmarked", false);
         }
+
+        Double rating = reviewService.getAverageReviewRating(restaurant);
+        model.addAttribute("rating", rating);
+
         return "domain/restaurant/user_restinfo";
     }
 
@@ -95,6 +99,9 @@ public class RestaurantController {
 
         model.addAttribute("restaurant", restaurant);
         model.addAttribute("reviews", resultReview);
+
+        Double rating = reviewService.getAverageReviewRating(restaurant);
+        model.addAttribute("rating", rating);
 
         return "domain/restaurant/admin_restinfo";
     }
@@ -113,6 +120,9 @@ public class RestaurantController {
 
         model.addAttribute("restaurant", restaurant);
         model.addAttribute("reviews", resultReview);
+
+        Double rating = reviewService.getAverageReviewRating(restaurant);
+        model.addAttribute("rating", rating);
 
         return "domain/restaurant/store_restinfo";
     }

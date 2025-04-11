@@ -3,6 +3,7 @@ package com.ezen.matzip.domain.review.service;
 import com.ezen.matzip.domain.reservation.dto.ReservationDTO;
 import com.ezen.matzip.domain.reservation.entity.Reservation;
 import com.ezen.matzip.domain.reservation.repository.ReservationRepository;
+import com.ezen.matzip.domain.restaurant.dto.RestaurantDTO;
 import com.ezen.matzip.domain.restaurant.dto.RestaurantImageDTO;
 import com.ezen.matzip.domain.restaurant.entity.Restaurant;
 import com.ezen.matzip.domain.restaurant.repository.RestaurantRepository;
@@ -175,6 +176,12 @@ public class ReviewService {
             reviewImageRepository.save(reviewImage);
         }
 
+    }
+
+    public Double getAverageReviewRating(RestaurantDTO restaurantDTO)
+    {
+        Restaurant restaurant = restaurantRepository.findByRestaurantCode(restaurantDTO.getRestaurantCode());
+        return reviewRepository.findAverageRatingByRestaurantCode(restaurant);
     }
 
 }

@@ -9,6 +9,7 @@
     <link href="/css/style_restaurantInfo.css" rel="stylesheet">
     <link href="/css/header_footer.css" rel="stylesheet">
     <link href="/css/review.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=fd7786d297e2d4aaab4aa8b6bbb06b88&libraries=services"
             type="text/javascript"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
@@ -34,12 +35,9 @@
                 <div class="upper-container">
                     <div class="store-inner-container1">
                         <p style="font-size:2.5vh;" th:text="${restaurant.restaurantName}"></p>
-                        <!--                            <span style="font-size:1.5vh; color:#747474;">서울숲 | 파스타, 돈마호크</span>-->
-                        <i class="fa fa-star" style="color:red;"></i> <!-- 꽉 찬 별 -->
-                        <i class="fa fa-star" style="color:red;"></i> <!-- 꽉 찬 별 -->
-                        <i class="fa fa-star" style="color:red;"></i> <!-- 꽉 찬 별 -->
-                        <i class="fa fa-star" style="color:red;"></i> <!-- 꽉 찬 별 -->
-                        <i class="fa fa-star-half-alt" style="color:red;"></i> <!-- 반쪽 별 -->
+                        <span th:each="i : ${#numbers.sequence(1, 5)}">
+                            <i class="fa fa-star" th:style="${rating >= i ? 'color:yellow;' : 'color:black;'}"></i>
+                        </span>
                         <br>
                         <table>
                             <tr>
