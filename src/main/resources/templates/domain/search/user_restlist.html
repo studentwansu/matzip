@@ -39,37 +39,43 @@
         <div class="restaurant-card" th:each="restaurant: ${restaurantList}">
             <div class="restaurant-info">
                 <a style="text-decoration: none; color: inherit; display: block; cursor: pointer;"
-                   th:href="@{/restaurant/{restaurantCode}(restaurantCode=${restaurant.restaurantCode})}">
-                    <h3 th:text="${restaurant.restaurantName}"></h3>
-                    <p>⭐⭐⭐⭐⭐</p>
+                   th:href="@{/restaurant/{restaurantCode}(restaurantCode=${restaurant.key.restaurantCode})}">
+                    <h3 th:text="${restaurant.key.restaurantName}"></h3>
+                    <p>
+                        <span th:each="i : ${#numbers.sequence(1, 5)}"
+                            th:text="${restaurant.value >= i ? '⭐' : '☆'}"></span>
+                    </p>
                     <div>
-                            <span th:if="${!restaurant.restaurantMenus.isEmpty()}"
-                                  th:text="${restaurant.restaurantMenus.get(0).menuName}"></span>
-                            <span th:if="${restaurant.restaurantMenus.size() > 1}"
-                              th:text="', ' + ${restaurant.restaurantMenus.get(1).menuName}"></span>
+                            <span th:if="${!restaurant.key.restaurantMenus.isEmpty()}"
+                                  th:text="${restaurant.key.restaurantMenus.get(0).menuName}"></span>
+                        <span th:if="${restaurant.key.restaurantMenus.size() > 1}"
+                              th:text="', ' + ${restaurant.key.restaurantMenus.get(1).menuName}"></span>
                     </div>
                     <div style="display:flex; flex-direction: row;">
-                        <span th:each="keyword : ${restaurant.restaurantKeywords}"><span th:text="'#' + ${keyword.getRestaurantKeyword()} + ' '"></span></span>
+                        <span th:each="keyword : ${restaurant.key.restaurantKeywords}"><span
+                                th:text="'#' + ${keyword.getRestaurantKeyword()} + ' '"></span></span>
                     </div>
                 </a>
             </div>
-            <div class="restaurant-images" th:each="restImgs, iterStat : ${restaurant.restaurantImages}">
+            <div class="restaurant-images" th:each="restImgs, iterStat : ${restaurant.key.restaurantImages}">
                 <img th:alt="${restImgs.getRestaurantOriginalName()}" th:src="${restImgs.getRestaurantImagePath()}">
             </div>
             <div class="restaurant-icons">
                 <!-- 북마크 버튼 완수 -->
                 <form method="post" style="display:inline;" th:action="@{/user/bookmarks/toggle}">
                     <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
-                    <input name="restaurantCode" th:value="${restaurant.restaurantCode}" type="hidden"/>
+                    <input name="restaurantCode" th:value="${restaurant.key.restaurantCode}" type="hidden"/>
                     <input name="redirectUrl" th:value="${currentUri}" type="hidden"/>
                     <button style="background:none; border:none; padding:0;" type="submit">
                         <img alt="북마크됨"
-                             class="icon" src="/img/bookmarked.png" th:if="${bookmarkedRestaurantCodes != null and bookmarkedRestaurantCodes.contains(restaurant.restaurantCode)}">
+                             class="icon" src="/img/bookmarked.png"
+                             th:if="${bookmarkedRestaurantCodes != null and bookmarkedRestaurantCodes.contains(restaurant.restaurantCode)}">
                         <img alt="북마크 추가"
-                             class="icon" src="/img/bookmark.png" th:unless="${bookmarkedRestaurantCodes != null and bookmarkedRestaurantCodes.contains(restaurant.restaurantCode)}">
+                             class="icon" src="/img/bookmark.png"
+                             th:unless="${bookmarkedRestaurantCodes != null and bookmarkedRestaurantCodes.contains(restaurant.restaurantCode)}">
                     </button>
                 </form>
-                <a th:href="@{/restaurant/storeinfo(restaurantCode=${restaurant.restaurantCode})}">
+                <a th:href="@{/restaurant/storeinfo(restaurantCode=${restaurant.key.restaurantCode})}">
                     <img alt="이동" class="icon" src="/img/share.png">
                 </a>
             </div>

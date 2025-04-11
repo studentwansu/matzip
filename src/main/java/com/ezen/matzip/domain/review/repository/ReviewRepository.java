@@ -1,5 +1,6 @@
 package com.ezen.matzip.domain.review.repository;
 
+import com.ezen.matzip.domain.restaurant.dto.RestaurantDTO;
 import com.ezen.matzip.domain.restaurant.entity.Restaurant;
 import com.ezen.matzip.domain.review.entity.Review;
 import org.springframework.data.domain.Page;
@@ -56,4 +57,11 @@ public interface ReviewRepository extends JpaRepository<Review, Integer> {
     Double getAverageByNationalityAndRestaurant(
             @Param("nationality") String nationality,
             @Param("restaurantCode") Restaurant restaurantCode);
+
+
+    @Query("SELECT AVG(r.rating) FROM Review r WHERE r.restaurantCode = :restaurantCode")
+    Double findAverageRatingByRestaurantCode(@Param("restaurantCode") Restaurant restaurantCode);
+
+
+//    Double findAverageRatingByRestaurantCode(RestaurantDTO restaurant);
 }

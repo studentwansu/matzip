@@ -48,9 +48,13 @@ button {
     width: 88vh;
     height: 28vh;
     border-radius: 2vh;
-    background-color: white;
+    /*background-color: white;*/
     margin-bottom: 2vh;
+    display:flex;
     flex-direction: row;
+    /*align-items: center;*/
+    justify-items: center;
+    justify-content: center;
 }
 
 .store-container {
