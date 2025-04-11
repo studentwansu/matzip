@@ -44,7 +44,7 @@
   <div class="notice-container">
     <div class="board-table">
       <h2>공지사항 등록</h2>
-      <form action="/board/notice/write" method="post" onsubmit="return copyEditableContent();">
+      <form action="/admin/board/notice/create" method="post" onsubmit="return copyEditableContent();">
         <!-- CSRF 토큰 필드 (CSRF 사용 시) -->
         <input type="hidden" th:if="${_csrf != null}" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
 

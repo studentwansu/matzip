@@ -73,7 +73,7 @@ public class noticeController {
     @PostMapping("/admin/board/notice/create")
     public String createNotice(@RequestParam String title, @RequestParam String content) {
         noticeService.createNotice(title, content); // 새 공지사항 등록 처리
-        return "redirect:/admin/board/notice/notice_write_form";
+        return "redirect:/admin/board/notice/write";
     }
 
     /**

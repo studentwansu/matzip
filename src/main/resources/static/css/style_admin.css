@@ -211,6 +211,11 @@ a {
     font-size: 2vh;
     color: white;
 }
+.redbutton-font1 {
+    font-size: 1vh;
+    color: white;
+}
+
 
 .buttonbox {
     position: absolute;
