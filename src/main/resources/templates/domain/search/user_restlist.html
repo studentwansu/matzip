@@ -70,10 +70,10 @@
                     <button style="background:none; border:none; padding:0;" type="submit">
                         <img alt="북마크됨"
                              class="icon" src="/img/bookmarked.png"
-                             th:if="${bookmarkedRestaurantCodes != null and bookmarkedRestaurantCodes.contains(restaurant.restaurantCode)}">
+                             th:if="${bookmarkedRestaurantCodes != null and bookmarkedRestaurantCodes.contains(restaurant.key.restaurantCode)}">
                         <img alt="북마크 추가"
                              class="icon" src="/img/bookmark.png"
-                             th:unless="${bookmarkedRestaurantCodes != null and bookmarkedRestaurantCodes.contains(restaurant.restaurantCode)}">
+                             th:unless="${bookmarkedRestaurantCodes != null and bookmarkedRestaurantCodes.contains(restaurant.key.restaurantCode)}">
                     </button>
                 </form>
                 <a th:href="@{/restaurant/storeinfo(restaurantCode=${restaurant.key.restaurantCode})}">
