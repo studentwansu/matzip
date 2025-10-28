@@ -1,6 +1,6 @@
 package com.ezen.matzip.domain.board.qna.DTO;
 
-import com.ezen.matzip.domain.board.qna.entity.qnaEntity;
+import com.ezen.matzip.domain.board.qna.entity.QnaEntity;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
@@ -16,7 +16,7 @@ public class qnaDTO {
     private LocalDateTime createdAt;
     private LocalDateTime answeredAt;
 
-    public qnaDTO(qnaEntity entity) {
+    public qnaDTO(QnaEntity entity) {
         this.id = entity.getId();
         this.title = entity.getTitle();
         this.content = entity.getContent();

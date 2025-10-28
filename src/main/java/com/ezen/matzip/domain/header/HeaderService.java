@@ -1,6 +1,6 @@
 package com.ezen.matzip.domain.header;
 
-import com.ezen.matzip.domain.board.qna.repository.qnaRepository;
+import com.ezen.matzip.domain.board.qna.repository.QnaRepository;
 import com.ezen.matzip.domain.restaurant.repository.RestaurantRepository;
 import com.ezen.matzip.domain.review.repository.ReviewRepository;
 import com.ezen.matzip.domain.user.repository.UserRepository;
@@ -13,7 +13,7 @@ public class HeaderService {
     private final UserRepository userRepository;
     private final RestaurantRepository restaurantRepository;
     private final ReviewRepository reviewRepository;
-    private final qnaRepository qnaRepository;
+    private final QnaRepository qnaRepository;
 
     public int getRestaurantActiveNum()
     {

@@ -32,7 +32,9 @@ dependencies {
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
-    runtimeOnly 'com.mysql:mysql-connector-j'
+    // --- 이 부분이 수정되었습니다 ---
+    implementation 'com.mysql:mysql-connector-j' // runtimeOnly -> implementation 으로 변경
+    // --------------------------------
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'

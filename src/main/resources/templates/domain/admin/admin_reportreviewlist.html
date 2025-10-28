@@ -1,229 +1,118 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <title>신고된 리뷰 조회 페이지</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poor+Story&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/style_admin.css">
   <link rel="stylesheet" href="/css/header_footer.css">
-
-  <!-- 예시용 리셋/기본 CSS -->
-  <style>
-    /* 임시 스타일링 (필요에 따라 별도 CSS 파일로 분리) */
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: sans-serif;
-    }
-
-    body {
-      background-color: #f9f9f9;
-      color: #333;
-    }
-
-    header {
-      background-color: #fef7e0;
-      padding: 1rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .logo {
-      font-weight: bold;
-      font-size: 1.2rem;
-    }
-    .user-menu a {
-      margin-left: 1rem;
-      text-decoration: none;
-      color: #333;
-      font-size: 0.9rem;
-    }
-
-    .container {
-      display: flex;
-      width: 90%;
-      margin: 2rem auto;
-    }
-
-    /* 왼쪽 사이드바 */
-    nav.sidebar {
-      width: 200px;
-      margin-right: 2rem;
-    }
-    nav.sidebar ul {
-      list-style: none;
-    }
-    nav.sidebar li {
-      margin-bottom: 1rem;
-    }
-    nav.sidebar a {
-      text-decoration: none;
-      color: #333;
-      padding: 0.5rem 0.75rem;
-      display: block;
-      background-color: #fff;
-      border-radius: 4px;
-    }
-    nav.sidebar a:hover {
-      background-color: #f0f0f0;
-    }
-    nav.sidebar a.active {
-      background-color: #ffeb99;
-    }
-
-    /* 메인 컨텐츠 영역 */
-    main {
-      flex: 1;
-      background-color: #fff;
-      border-radius: 4px;
-      padding: 1.5rem;
-    }
-
-    .tab-menu {
-      margin-bottom: 1rem;
-    }
-    .tab-menu button {
-      background-color: #eee;
-      border: none;
-      padding: 0.5rem 1rem;
-      margin-right: 0.5rem;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-    .tab-menu button.active {
-      background-color: #ffd300;
-    }
-
-    .review-summary {
-      margin-bottom: 1rem;
-      font-size: 0.9rem;
-      color: #666;
-    }
-
-    .review-list {
-      width: 100%;
-      border-collapse: collapse;
-    }
-    .review-list thead {
-      background-color: #fafafa;
-    }
-    .review-list th, .review-list td {
-      text-align: left;
-      padding: 0.75rem;
-      border-bottom: 1px solid #ddd;
-      font-size: 0.9rem;
-    }
-    .review-list th {
-      width: 150px;
-    }
-    .review-list td.status-pending {
-      color: red;
-    }
-    .review-list td.status-complete {
-      color: green;
-    }
-
-    /* 하단 푸터 */
-    footer {
-      text-align: center;
-      margin-top: 2rem;
-      font-size: 0.8rem;
-      color: #999;
-    }
-  </style>
 </head>
 <body>
-<!-- 헤더 영역 -->
-<header>
-  <div class="logo">맛.z.i.p POOMAP</div>
-  <div class="user-menu">
-    <span>관리자님, 환영합니다.</span>
-    <a href="#">로그아웃</a>
-  </div>
-</header>
+<!-- 헤더 영역 (기존 헤더 프래그먼트 사용) -->
+<div th:replace="~{html/admin_header :: adminHeader}"></div>
 
 <!-- 콘텐츠 래퍼 -->
 <div class="container">
-  <!-- 사이드바 -->
-  <div class="navi">
-    <div class="redbutton">
-      <span class="redbutton-font">마이페이지</span>
-    </div>
-    <ul>
-      <li><a th:href="@{/admin/restaurants/apply-list}" class="navi-font">식당 등록 신청 조회</a></li>
-      <li><a href="" class="navi-font">식당 정보 수정 요청 조회</a></li>
-      <li><a th:href="@{/admin/admin_revreportlist}" class="navi-font">신고 리뷰 조회</a></li>
-      <li><a th:href="@{/admin/reportedUsers}" class="navi-font">신고된 유저 계정 조회</a>
-      <li><a th:href="@{/board/notice/list}" class="navi-font">공지사항</a></li>
-      <li><a th:href="@{/board/faq/list}" class="navi-font">FAQ(자주 묻는 질문)</a></li>
-      <li><a th:href="@{/admin/board/qna}" class="navi-font">문의사항</a></li>
-      <li><a href="" class="navi-font">식당 목록 조회</a></li>
-    </ul>
-  </div>
-    <ul>
-      <li><a href="#">메인</a></li>
-      <li><a href="#" class="active">신고된 리뷰</a></li>
-      <li><a href="#">차단된 리뷰</a></li>
-      <li><a href="#">유저 차단</a></li>
-    </ul>
-  </nav>
+  <!-- 사이드바 (기존 사이드바 프래그먼트 사용) -->
+  <div th:replace="~{html/admin_sidebar :: adminSidebar}"></div>
 
   <!-- 메인 컨텐츠 -->
   <main>
-    <!-- 상단 탭/필터 -->
-    <div class="tab-menu">
-      <button class="active">전체</button>
-      <button>미처리</button>
-      <button>처리</button>
-    </div>
+    <h2>신고된 리뷰 목록</h2>
+
+    <!-- 필터 및 검색 폼 -->
+    <form id="filterForm" th:action="@{/admin/admin_revreportlist}" method="get">
+      <div class="filter-controls">
+        <span>신고 횟수 필터:</span>
+        <input type="number" name="reportCountThreshold" th:value="${criteria.reportCountThreshold}" min="1" style="width: 60px;">
+
+        <label>
+          <input type="checkbox" name="unprocessed" value="true" th:checked="${criteria.unprocessed}"> 미처리
+        </label>
+        <label>
+          <input type="checkbox" name="processed" value="true" th:checked="${criteria.processed}"> 처리
+        </label>
+
+        <input type="text" name="userId" th:value="${criteria.userId}" placeholder="작성자 ID 검색">
+
+        <button type="submit">검색</button>
+      </div>
+    </form>
 
     <!-- 신고된 리뷰 통계/개요 -->
     <div class="review-summary">
-      처리되지 않은 리뷰 17건 / 처리된 리뷰 30건
+      <p>
+        처리되지 않은 리뷰 <b th:text="${unprocessedCount}">0</b>건 /
+        처리된 리뷰 <b th:text="${processedCount}">0</b>건
+      </p>
     </div>
 
     <!-- 테이블 목록 -->
     <table class="review-list">
       <thead>
       <tr>
-        <th>리뷰 번호</th>
-        <th>작성자</th>
+        <th>리뷰 코드</th>
+        <th>작성자 ID</th>
+        <th>신고 횟수</th>
         <th>리뷰 내용</th>
-        <th>신고 사유</th>
         <th>처리 상태</th>
-        <th>등록일</th>
+        <th>작성일</th>
       </tr>
       </thead>
       <tbody>
-      <!-- 반복구간 예시 -->
-      <tr>
-        <td>1024</td>
-        <td>user123</td>
-        <td>리뷰 내용 예시입니다.</td>
-        <td>욕설/비방</td>
-        <td class="status-pending">미처리</td>
-        <td>2025-04-01</td>
+      <!-- 리뷰가 없을 경우 -->
+      <tr th:if="${reviews.isEmpty()}">
+        <td colspan="6" style="text-align: center;">신고된 리뷰가 없습니다.</td>
       </tr>
-      <tr>
-        <td>1025</td>
-        <td>foodlover</td>
-        <td>이 리뷰는 처리되었습니다.</td>
-        <td>부적절한 이미지</td>
-        <td class="status-complete">처리완료</td>
-        <td>2025-04-02</td>
+      <!-- 리뷰 반복 구간 -->
+      <tr th:each="review : ${reviews}">
+        <td th:text="${review.reviewCode}">999</td>
+        <td th:text="${review.userId}">user99</td>
+        <td th:text="${review.reviewReportCount}">99</td>
+        <td>
+          <!-- 리뷰 상세 페이지로 이동하는 링크 -->
+          <a th:href="@{/admin/report/review/{reviewCode}(reviewCode=${review.reviewCode})}" th:text="${#strings.abbreviate(review.reviewContent, 30)}">
+            리뷰 내용...
+          </a>
+        </td>
+        <td>
+          <!-- 처리 상태에 따라 다른 텍스트 표시 -->
+          <span th:if="${review.hiddenFlag == 0}" style="color: red;">미처리</span>
+          <span th:if="${review.hiddenFlag == 1}" style="color: green;">처리 완료</span>
+        </td>
+        <td th:text="${#temporals.format(review.reviewDate, 'yyyy-MM-dd')}">2025-10-28</td>
       </tr>
-      <!-- //반복구간 예시 -->
       </tbody>
     </table>
+
+    <!-- 페이지네이션 -->
+    <div class="pagination" th:if="${!reviews.isEmpty()}">
+      <!-- 이전 페이지 -->
+      <a th:if="${reviews.hasPrevious()}"
+         th:href="@{/admin/admin_revreportlist(page=${reviews.number}, reportCountThreshold=${criteria.reportCountThreshold}, unprocessed=${criteria.unprocessed}, processed=${criteria.processed}, userId=${criteria.userId})}">
+        &lt;
+      </a>
+
+      <!-- 페이지 번호 -->
+      <span th:each="pageNum : ${#numbers.sequence(0, reviews.totalPages - 1)}">
+                <a th:if="${pageNum != reviews.number}"
+                   th:href="@{/admin/admin_revreportlist(page=${pageNum + 1}, reportCountThreshold=${criteria.reportCountThreshold}, unprocessed=${criteria.unprocessed}, processed=${criteria.processed}, userId=${criteria.userId})}"
+                   th:text="${pageNum + 1}"></a>
+                <strong th:if="${pageNum == reviews.number}" th:text="${pageNum + 1}"></strong>
+            </span>
+
+      <!-- 다음 페이지 -->
+      <a th:if="${reviews.hasNext()}"
+         th:href="@{/admin/admin_revreportlist(page=${reviews.number + 2}, reportCountThreshold=${criteria.reportCountThreshold}, unprocessed=${criteria.unprocessed}, processed=${criteria.processed}, userId=${criteria.userId})}">
+        &gt;
+      </a>
+    </div>
   </main>
 </div>
 
-<!-- 푸터 -->
-<footer>
-  Copyright 2025 맛.z.i.p All Right Reserved
-</footer>
+<!-- 푸터 (기존 푸터 프래그먼트 사용) -->
+<div th:replace="~{html/admin_footer :: adminFooter}"></div>
 </body>
 </html>

@@ -12,7 +12,7 @@ import java.util.UUID;
 @Getter
 @NoArgsConstructor
 @Table(name = "notice")
-public class noticeEntity {
+public class NoticeEntity {
 
     @Id
     private String id;
@@ -32,7 +32,7 @@ public class noticeEntity {
     }
 
     // 생성자
-    public noticeEntity(String title, String content) {
+    public NoticeEntity(String title, String content) {
         this.title = title;
         this.content = content;
         this.createdAt = LocalDateTime.now();

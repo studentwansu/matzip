@@ -1,10 +1,7 @@
 package com.ezen.matzip.domain.board.notice.dto;
 
-import com.ezen.matzip.domain.board.notice.entity.noticeEntity;
-import lombok.AllArgsConstructor;
+import com.ezen.matzip.domain.board.notice.entity.NoticeEntity;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.time.LocalDateTime;
 
@@ -16,7 +13,7 @@ public class noticeDTO {
     private String content;
     private LocalDateTime createdAt;
 
-    public noticeDTO(noticeEntity notice) {
+    public noticeDTO(NoticeEntity notice) {
         this.id = notice.getId();
         this.title = notice.getTitle();
         this.content = notice.getContent();
