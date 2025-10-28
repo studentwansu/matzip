@@ -57,8 +57,14 @@
         <h2>로그인</h2>
         <br>
         <br>
+        <!-- URL에 'error' 파라미터가 있을 때만 이 div를 보여줍니다. -->
         <div th:if="${param.error}">
-            <p>로그인 실패: 아이디 또는 비밀번호를 확인하세요.</p>
+            <!--
+                URL의 'message' 파라미터 값을 빨간 글씨로 보여줍니다.
+                (예: /login?error=true&message=관리자에+의해+...)
+                Thymeleaf가 param.message를 통해 자동으로 URL 디코딩을 해줍니다.
+            -->
+            <p style="color: red; font-weight: bold;" th:text="${param.message}"></p>
         </div>
         <form action="/login" method="post" class="login-form">
             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
