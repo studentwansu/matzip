@@ -1,5 +1,6 @@
 package com.ezen.matzip.config;
 
+import com.ezen.matzip.domain.user.service.CustomAuthFailureHandler;
 import com.ezen.matzip.domain.user.service.LoginSuccessHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,11 +21,13 @@ import static org.springframework.security.config.Customizer.withDefaults;
 public class SecurityConfig {
 
     private final LoginSuccessHandler loginSuccessHandler;
+    private final CustomAuthFailureHandler customAuthFailureHandler; // <-- 1. 핸들러 주입받기
 //
 //    // 생성자 주입으로 LoginSuccessHandler 받기
-    public SecurityConfig(LoginSuccessHandler loginSuccessHandler) {
-        this.loginSuccessHandler = loginSuccessHandler;
-    }
+public SecurityConfig(LoginSuccessHandler loginSuccessHandler, CustomAuthFailureHandler customAuthFailureHandler) {
+    this.loginSuccessHandler = loginSuccessHandler;
+    this.customAuthFailureHandler = customAuthFailureHandler; // <-- 2. 핸들러 초기화
+}
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -45,7 +48,10 @@ public class SecurityConfig {
                         .usernameParameter("userId")
                         .passwordParameter("password")
                         .successHandler(loginSuccessHandler)
-                        .failureUrl("/login?error=true")
+                        // --- ★★★ 이 부분이 수정됩니다 ★★★ ---
+                        // .failureUrl("/login?error=true") // 기존 코드는 주석 처리하거나 삭제
+                        .failureHandler(customAuthFailureHandler) // <-- 3. 방금 만든 핸들러를 등록
+                        // --- ★★★ 수정 끝 ★★★ ---
                         .permitAll()
                 )
                 .logout(logout -> logout
