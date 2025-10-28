@@ -35,18 +35,25 @@ public class ReportController {
         int unprocessedCount = reportService.countByHiddenFlag(0);
         int processedCount = reportService.countByHiddenFlag(1);
 
-        // 신고 횟수 슬라이더 최대값 (현재 페이지 리뷰 중 최대 신고 수, 없으면 1)
-        int maxReportCount = reviewPage.getContent().stream().mapToInt(ReportedReviewDTO::getReportCount).max().orElse(1);
+        // --- 이 부분이 올바르게 수정되었는지 다시 한번 확인해주세요 ---
 
-        model.addAttribute("reviews", reviewPage.getContent());
-        model.addAttribute("currentPage", page);
-        model.addAttribute("totalPages", reviewPage.getTotalPages());
+        // 1. 모델에 'reviews'라는 이름으로 'Page' 객체 전체를 넘겨줍니다.
+        model.addAttribute("reviews", reviewPage);
+
+        // 2. ★★★ 모델에 'criteria'라는 이름으로 검색 조건 객체를 넘겨줍니다. ★★★
+        model.addAttribute("searchCriteria", criteria);
+
+        // 3. 나머지 필요한 데이터들을 넘겨줍니다.
         model.addAttribute("unprocessedCount", unprocessedCount);
         model.addAttribute("processedCount", processedCount);
-        model.addAttribute("searchCriteria", criteria);
-        model.addAttribute("maxReportCount", maxReportCount);
 
-        return "domain/admin/admin_revreportlist";  // 템플릿 경로에 맞게 작성 (예: src/main/resources/templates/domain/admin/admin_revreportlist.html)
+        // 페이지네이션용 추가
+        model.addAttribute("totalPages", Math.max(1, reviewPage.getTotalPages()));
+        model.addAttribute("currentPage", reviewPage.getNumber() + 1);
+
+        // --- 수정 끝 ---
+
+        return "domain/admin/admin_revreportlist";
     }
 
     @GetMapping("/admin_revreportdetail")

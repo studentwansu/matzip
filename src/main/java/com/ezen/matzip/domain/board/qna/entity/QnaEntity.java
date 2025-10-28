@@ -1,4 +1,4 @@
-package com.ezen.matzip.domain.board.faq.entity;
+package com.ezen.matzip.domain.board.qna.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -8,36 +8,42 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
-@Table(name = "faq")
+@Table(name = "qna")
 @Getter
 @NoArgsConstructor
-public class faqEntity {
+public class QnaEntity {
 
     @Id
     private String id;
-    @Column(name = "faq_title")
+
     private String title;
-    @Column(name = "faq_content")
     private String content;
-    @Column(name = "faq_created_at")
+    private String writer;
+
+    private String answer;
     private LocalDateTime createdAt;
+    private LocalDateTime answeredAt;
 
     @PrePersist
     public void prePersist() {
-        if (this.id == null) {
-            this.id = UUID.randomUUID().toString();
-        }
+        this.id = UUID.randomUUID().toString();
         this.createdAt = LocalDateTime.now();
     }
 
-    public faqEntity(String title, String content) {
+    public QnaEntity(String title, String content, String writer) {
         this.title = title;
         this.content = content;
+        this.writer = writer;
     }
 
     public void update(String title, String content) {
         this.title = title;
         this.content = content;
+    }
+
+    public void writeAnswer(String answer) {
+        this.answer = answer;
+        this.answeredAt = LocalDateTime.now();
     }
 }
 

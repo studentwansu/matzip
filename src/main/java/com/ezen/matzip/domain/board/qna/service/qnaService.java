@@ -1,8 +1,8 @@
 package com.ezen.matzip.domain.board.qna.service;
 
 import com.ezen.matzip.domain.board.qna.DTO.qnaDTO;
-import com.ezen.matzip.domain.board.qna.entity.qnaEntity;
-import com.ezen.matzip.domain.board.qna.repository.qnaRepository;
+import com.ezen.matzip.domain.board.qna.entity.QnaEntity;
+import com.ezen.matzip.domain.board.qna.repository.QnaRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -13,9 +13,9 @@ import java.util.stream.Collectors;
 @Service
 public class qnaService {
 
-    private final qnaRepository qnaRepository;
+    private final QnaRepository qnaRepository;
 
-    public qnaService(qnaRepository qnaRepository) {
+    public qnaService(QnaRepository qnaRepository) {
         this.qnaRepository = qnaRepository;
     }
 
@@ -27,7 +27,7 @@ public class qnaService {
     }
 
     public void create(String title, String content, String writer) {
-        qnaEntity qna = new qnaEntity(title, content, writer);
+        QnaEntity qna = new QnaEntity(title, content, writer);
         qnaRepository.save(qna);
     }
 
@@ -50,7 +50,7 @@ public class qnaService {
 
     // 관리자 기능: 답변 수정 메소드 추가
     public void updateAnswer(String id, String answer) {
-        qnaEntity qna = qnaRepository.findById(id)
+        QnaEntity qna = qnaRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Q&A가 존재하지 않습니다."));
         qna.writeAnswer(answer);
         qnaRepository.save(qna);
