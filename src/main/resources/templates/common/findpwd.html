@@ -11,6 +11,15 @@
             type="text/javascript"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- === 아래 4줄이 핵심 추가 코드입니다 === -->
+    <link href="/css/style_user.css" rel="stylesheet"> <!-- 메인 스타일 시트 추가 -->
+    <script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=fd7786d297e2d4aaab4aa8b6bbb06b88&libraries=services"
+            type="text/javascript"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- ===================================== -->
+
     <script th:src="@{/js/myLocation.js}"></script>
     <script th:src="@{/js/weather.js}"></script>
 
@@ -163,8 +172,8 @@
 </header>
 
 <!-- main -->
-<div class="main-container">
-    <section class="password_search">
+<div class="body-section"> <!-- 중앙 정렬을 위해 login.html의 구조를 사용 -->
+    <section class="password_search"> <!-- 흰색 박스 스타일을 위해 원래 클래스 이름을 사용 -->
         <h2>비밀번호 찾기</h2>
         <form id="verifyForm">
             <input id="name" name="name" placeholder="이름" required>
