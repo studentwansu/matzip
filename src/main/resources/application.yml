@@ -4,16 +4,16 @@ spring:
     name: matzip
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://54.180.86.92:3306/matzipdb
-    username: matzip
-    password: matzip
+    url: jdbc:mysql://localhost:3306/matzip  # <-- 수정됨
+    username: root                         # <-- 수정됨
+    password: root            # <-- ★★★ 본인 비밀번호로 수정하세요 ★★★
   thymeleaf:
-      prefix: classpath:/templates/
-      suffix: .html
+    prefix: classpath:/templates/
+    suffix: .html
 
   jpa:
     hibernate:
-      ddl-auto: none
+      ddl-auto: none # 그대로 유지 (DB 테이블을 자동으로 건드리지 않겠다는 의미)
     show-sql: true
     open-in-view: true
     properties:
@@ -34,7 +34,3 @@ spring:
       org.hibernate: DEBUG
       org.hibernate.SQL: DEBUG
       org.hibernate.type: TRACE
-
-
-
-
