@@ -10,5 +10,5 @@ import lombok.ToString;
 public class WeatherKeywordDTO {
     private int weatherKeywordCode;
     private int weatherCode;
-    private int KeywordCode;
+    private int keywordCode;
 }
