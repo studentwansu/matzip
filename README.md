@@ -40,16 +40,16 @@
 
 <img src="./images/39.png" width="900">
 
-### 40.png
+## 트러블슈팅: 인증 로직 개선
 <img src="./images/40.png" width="900">
 
-### 41.png
+## 트러블슈팅: 인가 방식 개선
 <img src="./images/41.png" width="900">
 
-### 42.png
+## 트러블슈팅: 세션/컨텍스트 구조 개선
 <img src="./images/42.png" width="900">
 
-### 43.png
+## 트러블슈팅: 세션 매니저 개선
 <img src="./images/43.png" width="900">
 
 ## 프로젝트 회고
