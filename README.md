@@ -4,10 +4,10 @@
 ## 프로젝트 개요
 <img src="./images/26.png" width="900">
 
-## 기술 스택
+## 아키텍처
 <img src="./images/27.png" width="900">
 
-## 아키텍처
+## 기술 스택
 <img src="./images/28.png" width="900">
 
 ## WBS 
