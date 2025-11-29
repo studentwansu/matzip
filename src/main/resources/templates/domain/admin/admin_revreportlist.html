@@ -35,9 +35,7 @@
             </ul>
         </div>
 
-        <!-- 메인 컨텐츠 영역 -->
         <div class="container-section">
-            <!-- 검색 및 필터 영역 -->
             <form th:action="@{/admin/admin_revreportlist}" method="get">
                 <div class="container-search">
                     <div class="container-search2 navi-font">
@@ -65,7 +63,6 @@
             </form>
 
             <div class="container">
-            <!-- 처리된/처리되지 않은 리뷰 건수 표시 -->
             <div class="container-title">
                 <span class="container-font1">
                     처리되지 않은 리뷰 <span th:text="${unprocessedCount}">0</span>건 /
@@ -75,7 +72,6 @@
             </div>
             <div class="line-yellow"></div>
 
-            <!-- 리뷰 목록 테이블 -->
             <table class="table-class">
                 <thead>
                 <tr>
@@ -112,7 +108,6 @@
                 </tbody>
             </table>
 
-            <!-- 페이지네이션 -->
             <div class="pagination">
                 <span th:if="${currentPage > 1}">
                     <a th:href="@{/admin/admin_revreportlist(page=${currentPage-1},

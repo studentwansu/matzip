@@ -17,9 +17,7 @@ public class CustomUserDetails implements UserDetails {
     private final String username;
     private final String password;
     private final Role role;
-    // 일반 회원
     private User user;
-    // Business 정보 보관 (사업자 로그인 시에만 사용)
     private Business business;
 
     public CustomUserDetails(User user) {
@@ -33,7 +31,7 @@ public class CustomUserDetails implements UserDetails {
         this.username = business.getUserId();
         this.password = business.getPassword();
         this.role = business.getRole();
-        this.business = business; // Business 객체를 저장
+        this.business = business;
     }
 
     @Override

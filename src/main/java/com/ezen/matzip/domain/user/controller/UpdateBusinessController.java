@@ -48,11 +48,9 @@ public class UpdateBusinessController {
             return "domain/store/store_myinfo";
         }
 
-        // 중복 체크: 이메일 (현재 사업자 제외)
         if (businessRepository.existsByEmailAndUserIdNot(formBusiness.getEmail(), existingBusiness.getUserId())) {
             result.rejectValue("email", "error.business", "중복된 이메일 입니다.");
         }
-        // 중복 체크: 전화번호 (현재 사업자 제외)
         if (businessRepository.existsByPhoneNumberAndUserIdNot(formBusiness.getPhoneNumber(), existingBusiness.getUserId())) {
             result.rejectValue("phoneNumber", "error.business", "중복된 전화번호 입니다.");
         }
@@ -74,7 +72,6 @@ public class UpdateBusinessController {
         );
 
         if (result.hasErrors()) {
-//            model.addAttribute("user", existingBusiness);
             return "domain/store/store_myinfo";
         }
 

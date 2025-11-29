@@ -65,7 +65,6 @@ public class User {
         this.password = newPassword;
     }
 
-    // 회원정보 수정 시 업데이트할 수 있는 필드들을 한 번에 변경하는 메서드
     public void updateUserInfo(String name,
                                String email,
                                String phoneNumber,

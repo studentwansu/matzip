@@ -15,7 +15,7 @@ public interface ReportRepository extends JpaRepository<Review, Integer> {
     @Query("select new com.ezen.matzip.domain.report.dto.ReportedReviewDTO(" +
             "r.reviewCode, " +
             "r.hiddenFlag, " +
-            "r.restaurantCode.restaurantCode, " +  // 👈 여기!
+            "r.restaurantCode.restaurantCode, " +
             "usr.userId, " +
             "r.reviewReportCount, " +
             "r.reviewContent, " +
@@ -45,7 +45,6 @@ public interface ReportRepository extends JpaRepository<Review, Integer> {
             "and r.reviewCode = :reviewCode")
     ReportedReviewDTO findReviewDetail(@Param("reviewCode") int reviewCode);
 
-    // 처리 상태별 카운트
     @Query("select count(r) from Review r where r.hiddenFlag = :hiddenFlag and r.reviewReportCount >= :minReportCount")
     int countByHiddenFlagAndMinReportCount(@Param("hiddenFlag") int hiddenFlag, @Param("minReportCount") int minReportCount);
 

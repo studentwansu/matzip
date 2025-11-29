@@ -14,15 +14,13 @@ public class ReportedUserDetailController {
 
     private final ReportedUserDetailService userDetailService;
 
-    // GET: 신고된 유저 상세 페이지 (userId 기준으로 조회)
     @GetMapping("/reportedUserDetail")
     public String getReportedUserDetail(@RequestParam("userId") String userId, Model model) {
         ReportedUserDetailDTO userDetail = userDetailService.getUserDetail(userId);
         model.addAttribute("user", userDetail);
-        return "domain/admin/admin_userreportdetail"; // Thymeleaf 템플릿 경로
+        return "domain/admin/admin_userreportdetail";
     }
 
-    // POST: 정지 처리/해제 요청 (userCode와 userId를 파라미터로 받음)
     @PostMapping("/updateUserStatus")
     public String updateUserStatus(@RequestParam("userCode") int userCode,
                                    @RequestParam("userId") String userId) {

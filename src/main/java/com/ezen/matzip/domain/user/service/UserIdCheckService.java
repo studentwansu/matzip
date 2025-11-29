@@ -1,7 +1,6 @@
 package com.ezen.matzip.domain.user.service;
 
 import com.ezen.matzip.domain.user.entity.Business;
-import com.ezen.matzip.domain.user.entity.User;
 import com.ezen.matzip.domain.user.repository.BusinessRepository;
 import com.ezen.matzip.domain.user.repository.UserRepository;
 import org.springframework.stereotype.Service;
@@ -20,7 +19,6 @@ public class UserIdCheckService {
     }
 
     public boolean isUserIdAvailable(String userId) {
-        // 로그로 확인
         boolean existsInUser = userRepository.existsByUserId(userId);
         boolean existsInBusiness = businessRepository.existsByUserId(userId);
         System.out.println("userId: " + userId + " - exists in User: " + existsInUser + ", exists in Business: " + existsInBusiness);

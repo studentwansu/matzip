@@ -22,7 +22,7 @@ public class BusinessController {
     public String businessMain(@AuthenticationPrincipal CustomUserDetails userDetails, Model model) {
         if (userDetails != null) {
 
-            Business business = userDetails.getBusiness();  // 👈 로그인한 유저 객체
+            Business business = userDetails.getBusiness();
 
             List<Review> recentReviews = reviewAnswerService.getRecentReview(business.getBusinessCode());
             model.addAttribute("recentReviews", recentReviews);

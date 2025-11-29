@@ -1,7 +1,6 @@
 package com.ezen.matzip.domain.review.entity;
 
 import com.ezen.matzip.domain.restaurant.entity.Restaurant;
-import com.ezen.matzip.domain.user.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -35,8 +34,6 @@ public class Review {
 
     private int reservationCode;
 
-//    @OneToMany
-//    @JoinColumn(name = "review_code")
     @OneToMany(mappedBy = "reviewCode", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ReviewImage> reviewImageList = new ArrayList<>();
 
@@ -84,8 +81,6 @@ public class Review {
     public void modifyAnswer(String reviewReply){
         this.reviewReply = reviewReply;
     }
-
-//    setter 필요한 필드만 setter 만들어서 사용
 
     //완수-리뷰신고기능에 필요
     public void incrementReportCount() {

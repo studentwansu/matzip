@@ -4,23 +4,22 @@ spring:
     name: matzip
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/matzip  # <-- 수정됨
-    username: root                         # <-- 수정됨
-    password: root            # <-- ★★★ 본인 비밀번호로 수정하세요 ★★★
+    url: jdbc:mysql://localhost:3306/matzip
+    username: root
+    password: root
   thymeleaf:
     prefix: classpath:/templates/
     suffix: .html
 
   jpa:
     hibernate:
-      ddl-auto: none # 그대로 유지 (DB 테이블을 자동으로 건드리지 않겠다는 의미)
+      ddl-auto: none
     show-sql: true
     open-in-view: true
     properties:
       hibernate:
         format_sql: true
         dialect: org.hibernate.dialect.MySQLDialect
-        # 트랜잭션 전략 추가
         current_session_context_class: org.springframework.orm.hibernate5.SpringSessionContext
 
   transaction:

@@ -1,6 +1,5 @@
 package com.ezen.matzip.domain.review.entity;
 
-import com.ezen.matzip.domain.restaurant.entity.Restaurant;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;

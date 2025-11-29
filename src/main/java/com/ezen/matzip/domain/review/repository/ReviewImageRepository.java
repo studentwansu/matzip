@@ -1,7 +1,5 @@
 package com.ezen.matzip.domain.review.repository;
 
-import com.ezen.matzip.domain.restaurant.entity.Restaurant;
-import com.ezen.matzip.domain.review.entity.Review;
 import com.ezen.matzip.domain.review.entity.ReviewImage;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

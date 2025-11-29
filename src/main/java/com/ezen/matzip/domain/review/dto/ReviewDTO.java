@@ -1,7 +1,6 @@
 package com.ezen.matzip.domain.review.dto;
 
 import com.ezen.matzip.domain.restaurant.entity.Restaurant;
-import com.ezen.matzip.domain.review.entity.ReviewImage;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;

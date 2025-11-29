@@ -33,7 +33,6 @@
     <div class="container-section">
         <div class="container">
         <div class="container-title">
-            <!-- 계정 상태에 따른 버튼 텍스트 표시 -->
             <button class="redbutton4" th:if="${user.banned == false}">정지되지 않음</button>
             <button class="redbutton4" th:if="${user.banned == true}">정지됨</button>
             <span class="container-font1">유저 코드: <span th:text="${user.userCode}"></span></span>
@@ -50,10 +49,8 @@
                 <td>
                     신고된 리뷰 목록
                     <ul>
-                        <!-- user.reviewList는 유저가 작성한 리뷰 목록 -->
                         <li th:each="review : ${user.reviewList}">
                             리뷰 번호: <span th:text="${review.reviewCode}"></span>
-                            <!-- 리뷰 상세 페이지로 이동하는 버튼 (해당 reviewCode 전달) -->
                             <button class="redbutton4" type="button"
                                     th:onclick="|location.href='/admin/admin_revreportdetail?reviewCode=${review.reviewCode}'|">
                                 리뷰 상세보기
@@ -64,14 +61,12 @@
             </tr>
         </table>
         <div>
-            <!-- 정지 처리/해제 토글 폼 (userId도 함께 전송하여 상세 페이지 복귀 처리) -->
             <form th:action="@{/admin/updateUserStatus}" method="post">
                 <input type="hidden" name="userCode" th:value="${user.userCode}" />
                 <input type="hidden" name="userId" th:value="${user.userId}" />
                 <button type="submit" class="redbutton4"
                         th:text="${user.banned == false ? '정지 처리' : '정지 해제'}"></button>
             </form>
-            <!-- 뒤로가기 버튼 -->
             <button class="redbutton4" onclick="window.location.href='/admin/reportedUsers'">뒤로가기</button>
         </div>
     </div>

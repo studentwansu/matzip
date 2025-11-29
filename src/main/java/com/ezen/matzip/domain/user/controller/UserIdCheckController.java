@@ -21,7 +21,7 @@ public class UserIdCheckController {
     @PostMapping("/checkUserId")
     @ResponseBody
     public Map<String, Object> checkUserId(@RequestParam("userId") String userId) {
-        userId = userId.trim(); // 서버측에서도 trim
+        userId = userId.trim();
         boolean available = userIdCheckService.isUserIdAvailable(userId);
         Map<String, Object> response = new HashMap<>();
         response.put("available", available);

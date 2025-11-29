@@ -34,33 +34,6 @@ public class ReviewAnswerService {
     private final UserRepository userRepository;
     private final UserReportSyncService userReportSyncService;
 
-//    public List<ReviewDTO> findReviewByBusinessCode(int businessCode) {
-//        List<Object[]> reviews = reviewAnswerRepository.findByBusinessCode(businessCode);
-//
-//        List<ReviewDTO> result = new ArrayList<>();
-//        for (Object[] review : reviews) {
-//            Review e = (Review) review[0];
-//            Restaurant restaurant = (Restaurant) review[1];
-//            ReviewDTO dto = new ReviewDTO();
-//            dto.setUserCode(e.getUserCode());
-//            dto.setRestaurantName(restaurant);
-//            dto.setReviewCode(e.getReviewCode());
-//            dto.setReviewDate(e.getReviewDate());
-//            dto.setReviewContent(e.getReviewContent());
-//            dto.setReviewReply(e.getReviewReply());
-//            dto.setRating(e.getRating());
-//
-//            List<ReviewImage> images = reviewImageRepository.findReviewImagesByReviewCode(e.getReviewCode());
-//            List<ReviewImageDTO> imageDTOs = images.stream()
-//                    .map(img -> modelMapper.map(img, ReviewImageDTO.class))
-//                    .collect(Collectors.toList());
-//            dto.setReviewImages(imageDTOs);
-//
-//            result.add(dto);
-//        }
-//        return result;
-//    }
-
     public List<ReviewDTO> findReviewByBusinessCode(int businessCode) {
         List<Object[]> reviews = reviewAnswerRepository.findByBusinessCodeWithUserId(businessCode);
 
@@ -68,7 +41,7 @@ public class ReviewAnswerService {
         for (Object[] review : reviews) {
             Review e = (Review) review[0];
             Restaurant restaurant = (Restaurant) review[1];
-            String userId = (String) review[2]; // 🔥 userId도 가져옴
+            String userId = (String) review[2];
             String nationality = (String) review[3];
 
             ReviewDTO dto = new ReviewDTO();
@@ -161,10 +134,9 @@ public class ReviewAnswerService {
         review.incrementReportCount();
         reviewAnswerRepository.save(review);
 
-        // 신고 대상이 일반 유저인 경우에만 동기화 (예: Role.USER)
         User user = userRepository.findById(review.getUserCode())
                 .orElseThrow(() -> new IllegalArgumentException("해당 유저가 없습니다."));
-        if (user.getRole() == Role.USER) {  // Role 비교는 실제 구현에 맞게 수정
+        if (user.getRole() == Role.USER) {
             userReportSyncService.updateUserReportCount(review.getUserCode());
         }
     }

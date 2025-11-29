@@ -7,16 +7,10 @@ import com.ezen.matzip.domain.restaurant.repository.RestaurantImageRepository;
 import com.ezen.matzip.domain.restaurant.repository.RestaurantKeywordRepository;
 import com.ezen.matzip.domain.restaurant.repository.RestaurantRepository;
 import com.ezen.matzip.domain.user.entity.Business;
-import com.ezen.matzip.domain.user.entity.User;
 import com.ezen.matzip.domain.user.repository.BusinessRepository;
-import com.ezen.matzip.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
-import java.security.Principal;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor

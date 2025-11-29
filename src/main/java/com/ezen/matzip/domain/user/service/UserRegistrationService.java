@@ -20,12 +20,10 @@ public class UserRegistrationService {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
     }
-    @Transactional(rollbackOn = Exception.class)  // 모든 예외에 대해 롤백
+    @Transactional(rollbackOn = Exception.class)
     public User register(UserRequestDTO dto) {
-        // 디버깅용 로그
-        System.out.println("🚀 회원가입 시도: " + dto.getUserId());
+        System.out.println("회원가입 시도: " + dto.getUserId());
 
-        // 중복 검사
         if (userRepository.existsByUserId(dto.getUserId())) {
             throw new RuntimeException("이미 존재하는 아이디입니다.");
         }
@@ -47,13 +45,12 @@ public class UserRegistrationService {
                     .accountStatus(0)
                     .build();
 
-            // DB 저장
             User savedUser = userRepository.save(user);
-            System.out.println("✅ 회원가입 성공: " + savedUser.getUserId());
+            System.out.println("회원가입 성공: " + savedUser.getUserId());
             return savedUser;
 
         } catch (Exception e) {
-            System.err.println("❌ 회원가입 중 오류 발생: " + e.getMessage());
+            System.err.println("회원가입 중 오류 발생: " + e.getMessage());
             throw new RuntimeException("회원가입 중 오류 발생: " + e.getMessage());
         }
     }

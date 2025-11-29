@@ -6,7 +6,6 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -20,7 +19,7 @@ public class Business {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "business_code")
-    private Integer businessCode;           //pk
+    private Integer businessCode;
 
     @Column(name = "user_id",nullable = false,unique = true)
     private String userId;              //아이디

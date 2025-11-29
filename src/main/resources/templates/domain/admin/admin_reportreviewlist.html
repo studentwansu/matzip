@@ -10,19 +10,14 @@
   <link rel="stylesheet" href="/css/header_footer.css">
 </head>
 <body>
-<!-- 헤더 영역 (기존 헤더 프래그먼트 사용) -->
 <div th:replace="~{html/admin_header :: adminHeader}"></div>
 
-<!-- 콘텐츠 래퍼 -->
 <div class="container">
-  <!-- 사이드바 (기존 사이드바 프래그먼트 사용) -->
   <div th:replace="~{html/admin_sidebar :: adminSidebar}"></div>
 
-  <!-- 메인 컨텐츠 -->
   <main>
     <h2>신고된 리뷰 목록</h2>
 
-    <!-- 필터 및 검색 폼 -->
     <form id="filterForm" th:action="@{/admin/admin_revreportlist}" method="get">
       <div class="filter-controls">
         <span>신고 횟수 필터:</span>
@@ -41,7 +36,6 @@
       </div>
     </form>
 
-    <!-- 신고된 리뷰 통계/개요 -->
     <div class="review-summary">
       <p>
         처리되지 않은 리뷰 <b th:text="${unprocessedCount}">0</b>건 /
@@ -49,7 +43,6 @@
       </p>
     </div>
 
-    <!-- 테이블 목록 -->
     <table class="review-list">
       <thead>
       <tr>
@@ -62,23 +55,19 @@
       </tr>
       </thead>
       <tbody>
-      <!-- 리뷰가 없을 경우 -->
       <tr th:if="${reviews.isEmpty()}">
         <td colspan="6" style="text-align: center;">신고된 리뷰가 없습니다.</td>
       </tr>
-      <!-- 리뷰 반복 구간 -->
       <tr th:each="review : ${reviews}">
         <td th:text="${review.reviewCode}">999</td>
         <td th:text="${review.userId}">user99</td>
         <td th:text="${review.reviewReportCount}">99</td>
         <td>
-          <!-- 리뷰 상세 페이지로 이동하는 링크 -->
           <a th:href="@{/admin/report/review/{reviewCode}(reviewCode=${review.reviewCode})}" th:text="${#strings.abbreviate(review.reviewContent, 30)}">
             리뷰 내용...
           </a>
         </td>
         <td>
-          <!-- 처리 상태에 따라 다른 텍스트 표시 -->
           <span th:if="${review.hiddenFlag == 0}" style="color: red;">미처리</span>
           <span th:if="${review.hiddenFlag == 1}" style="color: green;">처리 완료</span>
         </td>
@@ -87,15 +76,12 @@
       </tbody>
     </table>
 
-    <!-- 페이지네이션 -->
     <div class="pagination" th:if="${!reviews.isEmpty()}">
-      <!-- 이전 페이지 -->
       <a th:if="${reviews.hasPrevious()}"
          th:href="@{/admin/admin_revreportlist(page=${reviews.number}, reportCountThreshold=${criteria.reportCountThreshold}, unprocessed=${criteria.unprocessed}, processed=${criteria.processed}, userId=${criteria.userId})}">
         &lt;
       </a>
 
-      <!-- 페이지 번호 -->
       <span th:each="pageNum : ${#numbers.sequence(0, reviews.totalPages - 1)}">
                 <a th:if="${pageNum != reviews.number}"
                    th:href="@{/admin/admin_revreportlist(page=${pageNum + 1}, reportCountThreshold=${criteria.reportCountThreshold}, unprocessed=${criteria.unprocessed}, processed=${criteria.processed}, userId=${criteria.userId})}"
@@ -103,7 +89,6 @@
                 <strong th:if="${pageNum == reviews.number}" th:text="${pageNum + 1}"></strong>
             </span>
 
-      <!-- 다음 페이지 -->
       <a th:if="${reviews.hasNext()}"
          th:href="@{/admin/admin_revreportlist(page=${reviews.number + 2}, reportCountThreshold=${criteria.reportCountThreshold}, unprocessed=${criteria.unprocessed}, processed=${criteria.processed}, userId=${criteria.userId})}">
         &gt;
@@ -112,7 +97,6 @@
   </main>
 </div>
 
-<!-- 푸터 (기존 푸터 프래그먼트 사용) -->
 <div th:replace="~{html/admin_footer :: adminFooter}"></div>
 </body>
 </html>

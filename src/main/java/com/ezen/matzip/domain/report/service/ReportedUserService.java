@@ -18,8 +18,7 @@ public class ReportedUserService {
 
     private final ReportedUserRepository reportedUserRepository;
 
-    public Page<ReportedUserDTO> getReportedUsers(SearchCriteria criteria, int page) {// 계정 상태를 통해 처리 여부를 판단:
-        // 0: 처리되지 않은 유저 (계정 활성화됨), 1: 처리된 유저 (계정 정지됨)
+    public Page<ReportedUserDTO> getReportedUsers(SearchCriteria criteria, int page) {
         List<Integer> accountStatuses = new ArrayList<>();
         if (criteria.isUnprocessed()) {
             accountStatuses.add(0);
@@ -27,7 +26,6 @@ public class ReportedUserService {
         if (criteria.isProcessed()) {
             accountStatuses.add(1);
         }
-        // 둘 다 선택되지 않은 경우 전체(0,1)를 조회
         if (accountStatuses.isEmpty()) {
             accountStatuses.add(0);
             accountStatuses.add(1);

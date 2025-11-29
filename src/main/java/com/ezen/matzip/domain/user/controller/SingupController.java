@@ -44,14 +44,13 @@ public class SingupController {
 
         System.out.println("userRequestDTO : " + userRequestDTO);
 
-            // 디버깅 로그 추가
-            System.out.println("🚀 회원가입 요청 받음: " + userRequestDTO.getUserId());
+            System.out.println("회원가입 요청 받음: " + userRequestDTO.getUserId());
 
             userRegistrationService.register(userRequestDTO);
-            System.out.println("✅ 회원가입 성공: " + userRequestDTO.getUserId());
+            System.out.println("회원가입 성공: " + userRequestDTO.getUserId());
 
             model.addAttribute("message", "회원가입이 성공적으로 완료되었습니다.");
-            return "redirect:/login";  // 로그인 페이지로 리다이렉트
+            return "redirect:/login";
     }
 
     @GetMapping("/signup/business")
@@ -64,7 +63,6 @@ public class SingupController {
     public String registerBusiness(@Valid @ModelAttribute("businessRequestDTO") BusinessRequestDTO businessRequestDTO,
                                    BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-            // 유효성 검사 오류 메시지를 콘솔에 출력
             bindingResult.getAllErrors().forEach(error -> System.out.println(error.getDefaultMessage()));
             return "domain/sign/store_signup";
         }
@@ -74,7 +72,6 @@ public class SingupController {
             model.addAttribute("errorMessage", e.getMessage());
             return "domain/sign/store_signup";
         }
-        // 회원가입 성공 후 로그인 페이지로 리다이렉트
         return "redirect:/login";
     }
 }

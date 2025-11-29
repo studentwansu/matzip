@@ -1,12 +1,9 @@
 package com.ezen.matzip.domain.review.dto;
 
-import com.ezen.matzip.domain.review.entity.ReviewImage;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-
-import java.util.List;
 
 @Setter
 @Getter

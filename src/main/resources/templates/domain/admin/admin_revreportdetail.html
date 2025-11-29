@@ -32,7 +32,6 @@
   <div class="container-section">
     <div class="container">
     <div class="container-title">
-      <!-- 처리 상태에 따른 버튼 텍스트 표시 -->
       <button class="redbutton4" th:if="${review.hiddenFlag == 0}">처리되지 않음</button>
       <button class="redbutton4" th:if="${review.hiddenFlag == 1}">처리됨</button>
       <span class="container-font1">리뷰 번호: <span th:text="${review.reviewCode}"></span></span>
@@ -61,13 +60,11 @@
       </tr>
     </table>
     <div>
-      <!-- 리뷰 상태 토글 폼 -->
       <form th:action="@{/admin/updateReviewStatus}" method="post">
         <input type="hidden" name="reviewCode" th:value="${review.reviewCode}" />
         <button type="submit" class="redbutton4"
                 th:text="${review.hiddenFlag == 0 ? '숨김' : '숨김 해제'}"></button>
       </form>
-      <!-- 뒤로가기 버튼 -->
       <button class="redbutton4" onclick="window.location.href='/admin/admin_revreportlist'">뒤로가기</button>
     </div>
   </div>

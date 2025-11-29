@@ -32,7 +32,6 @@ public class ReportedUserController {
 
         int unprocessedCount = reportedUserService.countByAccountStatus(0);
         int processedCount = reportedUserService.countByAccountStatus(1);
-        // 최대 신고 횟수 (조회된 유저 중 가장 높은 신고 수, 없으면 1)
         int maxReportCount = userPage.getContent().stream()
                 .mapToInt(ReportedUserDTO::getUserReportCount)
                 .max().orElse(1);
@@ -45,6 +44,6 @@ public class ReportedUserController {
         model.addAttribute("searchCriteria", criteria);
         model.addAttribute("maxReportCount", maxReportCount);
 
-        return "domain/admin/admin_userreportlist"; // 템플릿 경로에 맞게 수정
+        return "domain/admin/admin_userreportlist";
     }
 }
