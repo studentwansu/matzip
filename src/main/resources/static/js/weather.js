@@ -2,13 +2,11 @@ async function currentWeather() {
     myLocation2();
     document.addEventListener('locationReady', async function (event) {
         MyApp.currentCoords = event.detail;
-        const API_KEY = '7b796a5a1863f135b688aca260fcc97b';
         const lat = parseFloat(MyApp.currentCoords.Ma.toFixed(2));
         const lon = parseFloat(MyApp.currentCoords.La.toFixed(2));
-        const apiURL = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`;
 
         try {
-            const response = await axios.get(apiURL);
+            const response = await axios.get('/weather/current', {params: {lat: lat, lon: lon}});
             const weatherKeyword = response.data.weather[0].main;  // 현재 날씨 정보
 
             const weatherInputValue = document.querySelector('input[name="recommendKeywords"]');

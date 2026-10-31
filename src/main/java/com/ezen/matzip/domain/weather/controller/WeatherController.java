@@ -5,8 +5,11 @@ import com.ezen.matzip.domain.weather.entity.Weather;
 import com.ezen.matzip.domain.weather.service.WeatherService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
@@ -16,6 +19,18 @@ import java.util.List;
 @RequiredArgsConstructor
 public class WeatherController {
     private final WeatherService weatherService;
+    private final RestTemplate restTemplate = new RestTemplate();
+
+    @Value("${weather.api.key}")
+    private String weatherApiKey;
+
+    @GetMapping(value = "/weather/current", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public String getCurrentWeather(@RequestParam double lat, @RequestParam double lon) {
+        return restTemplate.getForObject(
+                "https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={key}&units=metric",
+                String.class, lat, lon, weatherApiKey);
+    }
 
     @PostMapping("/weather")
     @ResponseBody

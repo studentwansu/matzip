@@ -4,9 +4,9 @@ spring:
     name: matzip
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/matzip
-    username: root
-    password: root
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
   thymeleaf:
     prefix: classpath:/templates/
     suffix: .html
@@ -33,3 +33,7 @@ spring:
       org.hibernate: DEBUG
       org.hibernate.SQL: DEBUG
       org.hibernate.type: TRACE
+
+weather:
+  api:
+    key: ${OPENWEATHER_API_KEY}
