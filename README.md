@@ -54,3 +54,13 @@
 
 ## 프로젝트 회고
 <img src="./images/44.png" width="900">
+
+## 실행에 필요한 환경변수
+값은 저장소에 넣지 않습니다. 실행 환경(셸 또는 IDE 실행 설정)에 아래 이름으로 넣어 주세요. 하나라도 없으면 애플리케이션이 시작되지 않습니다.
+
+| 이름 | 용도 |
+|:--|:--|
+| `DB_URL` | MySQL 접속 주소(jdbc 형식) |
+| `DB_USERNAME` | DB 사용자 이름 |
+| `DB_PASSWORD` | DB 비밀번호 |
+| `OPENWEATHER_API_KEY` | OpenWeatherMap API 키(서버가 `/weather/current`에서 사용) |
